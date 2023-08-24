@@ -8,7 +8,7 @@ interface ButtonProps {
 
   onClick?: () => void;
 
-  href: string;
+  href?: string;
 }
 
 const Button = ({ isHeader, label, href }: ButtonProps) => {
