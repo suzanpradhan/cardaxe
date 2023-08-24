@@ -10,7 +10,7 @@ const Header = () => {
     { headingName: 'About', headingHref: '/' },
     { headingName: 'Pricing', headingHref: '/' },
     { headingName: 'Services', headingHref: '/' },
-    { headingName: 'Login', headingHref: '/' },
+    { headingName: 'Login', headingHref: '/login' },
     { headingName: 'Register', headingHref: '/register' },
   ];
   return (
