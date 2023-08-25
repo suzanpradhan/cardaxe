@@ -2,8 +2,12 @@ import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import axios, { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-type Z_SCHEMA_NAME = 'full_name' | 'email' | 'password' | 'confirmPassword';
+type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
 
 type REGISTRATION_FEILDS_PROPS = {
   placeholder: string;
@@ -13,7 +17,7 @@ type REGISTRATION_FEILDS_PROPS = {
 
 const RegisterationSchema = z
   .object({
-    full_name: z.string().min(2, { message: 'Must be at least 2 characters' }),
+    fullname: z.string().min(2, { message: 'Must be at least 2 characters' }),
     email: z.string().email().trim(),
     password: z
       .string()
@@ -22,7 +26,8 @@ const RegisterationSchema = z
     confirmPassword: z
       .string()
       .min(8, { message: 'Must be more than 8 characters' })
-      .max(24, { message: 'Must be less than 24 characters' }),
+      .max(24, { message: 'Must be less than 24 characters' })
+      .optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -35,7 +40,7 @@ const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
   {
     placeholder: 'Full Name',
     type: 'text',
-    zSchemaName: 'full_name',
+    zSchemaName: 'fullname',
   },
   {
     placeholder: 'Email',
@@ -55,9 +60,30 @@ const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
 ];
 
 const RegisterationForm: React.FC = () => {
-  const submitData = (data: RegistrationSchemaType) => {
-    console.log(data);
+  const router = useRouter();
+
+  const submitData = async (data: RegistrationSchemaType) => {
+    delete data.confirmPassword;
+
+    axios({
+      method: 'post',
+      url: 'http://127.0.0.1:8000/api/user/register/',
+      data: data,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response);
+        const message = response.data.msg;
+        router.push('/login');
+        toast.success(message);
+      })
+      .catch(function (AxiosError) {
+        console.log(AxiosError.response.data.errors.errors[0]);
+        const message = AxiosError.response.data.errors.errors[0];
+        toast.error(message);
+      });
   };
+
   const {
     register,
     handleSubmit,

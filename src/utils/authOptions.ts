@@ -1,0 +1,85 @@
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import { apiPaths } from '../app/api/apiConstants';
+
+export const authOptions: NextAuthOptions = {
+  secret: process.env.JWT_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: {
+          label: 'Email',
+          type: 'email',
+        },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        try {
+          const res = await fetch(apiPaths.login, {
+            method: 'POST',
+            body: JSON.stringify(credentials),
+            headers: { 'Content-Type': 'application/json' },
+          });
+
+          const data = await res.json();
+          if (data.error) {
+            throw data;
+            // return null;
+          }
+          if (!data?.error && data) {
+            return {
+              id: '1',
+              token: data.data.token,
+            };
+          }
+          return null;
+        } catch (err) {
+          console.log(err);
+          return null;
+        }
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, user, trigger }) {
+      // if (trigger == 'update') {
+      //   const response = await fetch(
+      //     `${apiPaths.baseUrl}${apiPaths.profileUrl}`,
+      //     {
+      //       method: 'GET',
+      //       headers: {
+      //         authorization: `Bearer ${token.token}`,
+      //         accept: 'application/json',
+      //       },
+      //     }
+      //   );
+      //   if (response.ok) {
+      //     const responseData = await response.json();
+      //     token.name = responseData.data.user.name;
+      //     token.profile_image = responseData.data.user.profile_image;
+      //     return Promise.resolve(token);
+      //   }
+      // }
+
+      if (user) {
+        token.id = user.id;
+        token.token = user.token;
+      }
+      return Promise.resolve(token);
+    },
+    async session({ session, token }) {
+      session.user = token;
+
+      return Promise.resolve(session);
+    },
+  },
+  pages: {
+    signIn: '/login',
+    signOut: '/login',
+  },
+};

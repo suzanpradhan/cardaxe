@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
-import axios, { AxiosError } from 'axios';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 type zSchemaName = 'email' | 'password';
@@ -38,8 +38,6 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 ];
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -48,20 +46,19 @@ const LoginForm: React.FC = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const [toogleState, setToogleState] = useState<Boolean>(true);
+  const router = useRouter();
 
   const submitData = async (data: LoginSchemaType) => {
-    const payLoad = data;
-    try {
-      const { data } = await axios.post('/api/auth/login', payLoad);
-      alert(JSON.stringify(data));
-      router.push('/dashboard');
-    } catch (e) {
-      const error = e as AxiosError;
-      alert(error.message);
+    console.log(data);
+    const res = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      callbackUrl: 'http://localhost:3000/',
+      redirect: false,
+    });
+    if (res?.error) {
+      router.push('/login');
     }
-
-    setToogleState(!toogleState);
   };
 
   return (

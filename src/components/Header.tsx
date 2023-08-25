@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import Button from './Button';
 
 interface HEADER_HEADING_PROPS {

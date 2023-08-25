@@ -5,7 +5,6 @@ import LoginForm from '@/components/LoginForm';
 import Link from 'next/link';
 import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import axios from 'axios';
 
 const page = () => {
   return (
