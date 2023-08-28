@@ -5,6 +5,9 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import InputComp from './InputComp';
 
 type zSchemaName = 'email' | 'password';
 
@@ -53,10 +56,12 @@ const LoginForm: React.FC = () => {
     const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
-      callbackUrl: 'http://localhost:3000/',
+      callbackUrl: '/dashboard',
       redirect: false,
     });
+
     if (res?.error) {
+      toast.error('Username or password error');
       router.push('/login');
     }
   };
@@ -73,13 +78,12 @@ const LoginForm: React.FC = () => {
       >
         {LOGIN_FEILDS.map((item, index) => (
           <div key={index} className="h-12">
-            <input
-              type={item.type}
+            <InputComp
+              inputType={item.type}
               placeholder={item.placeholder}
-              className="w-full bg-input placeholder:text-placeholder border-inputBorder border-1 rounded-md p-2"
-              required
-              {...register(item.zSchemaName)}
-            ></input>
+              register={register}
+              name={item.zSchemaName}
+            />
             {errors[item.zSchemaName] && (
               <p className="text-xs text-red-600">
                 {errors[item.zSchemaName]?.message}
@@ -88,7 +92,8 @@ const LoginForm: React.FC = () => {
           </div>
         ))}
         <Link
-          href="/"
+          href="/confirmEmail"
+          type="button"
           className="text-gray-400 text-right -mt-1 hover:underline hover:text-blue-500"
         >
           Forgot Password

@@ -1,24 +1,23 @@
-import React from 'react';
-import { z } from 'zod';
+'use client';
+
+import InputComp from '@/components/InputComp';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import InputComp from './InputComp';
+import { z } from 'zod';
 
-type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
+type Z_SCHEMA_NAME = 'email' | 'password' | 'confirmPassword';
 
-type REGISTRATION_FEILDS_PROPS = {
+type INPUT_FEILDS_PROPS = {
   placeholder: string;
   type: string;
   zSchemaName: Z_SCHEMA_NAME;
 };
 
-const RegisterationSchema = z
+const ForgotPasswordSchema = z
   .object({
-    fullname: z.string().min(2, { message: 'Must be at least 2 characters' }),
     email: z.string().email().trim(),
     password: z
       .string()
@@ -35,14 +34,9 @@ const RegisterationSchema = z
     path: ['confirmPassword'],
   });
 
-type RegistrationSchemaType = z.infer<typeof RegisterationSchema>;
+type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
 
-const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
-  {
-    placeholder: 'Full Name',
-    type: 'text',
-    zSchemaName: 'fullname',
-  },
+const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
   {
     placeholder: 'Email',
     type: 'email',
@@ -60,47 +54,44 @@ const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
   },
 ];
 
-const RegisterationForm: React.FC = () => {
-  const router = useRouter();
-
-  const submitData = async (data: RegistrationSchemaType) => {
-    delete data.confirmPassword;
-
-    axios({
-      method: 'post',
-      url: 'http://127.0.0.1:8000/api/user/register/',
-      data: data,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then(function (response) {
-        console.log(response);
-        const message = response.data.msg;
-        router.push('/login');
-        toast.success(message);
-      })
-      .catch(function (AxiosError) {
-        console.log(AxiosError.response.data.errors.errors[0]);
-        const message = AxiosError.response.data.errors.errors[0];
-        toast.error(message);
-      });
-  };
-
+const page = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegistrationSchemaType>({
-    resolver: zodResolver(RegisterationSchema),
+  } = useForm<ForgotPasswordSchemaType>({
+    resolver: zodResolver(ForgotPasswordSchema),
   });
+
+  const submit = async (data: ForgotPasswordSchemaType) => {
+    axios({
+      method: 'post',
+      url: 'http://127.0.0.1:8000/api/user/http://127.0.0.1:8000/api/user/changeCurrentPassword/',
+      data: data,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        toast.success('Your password has been reset');
+      })
+      .catch(function (AxiosError) {
+        const message = AxiosError.response.data.errors.errors[0];
+        console.log(message);
+        toast.error('Some error occured please wait');
+      });
+  };
+
   return (
-    <div className="flex flex-col ">
-      <h1 className="text-4xl font-extrabold py-3">cardaxe.</h1>
+    <div className="flex flex-col w-110 mx-auto my-48">
+      <h1 className="text-4xl font-extrabold ">cardaxe.</h1>
+      <p className="pb-">
+        Confirm your email, enter new password and confirm it to change.
+      </p>
       <form
-        className="flex flex-col gap-4 py-2"
-        onSubmit={handleSubmit(submitData)}
+        className="flex flex-col gap-4 pt-2 w-110 my-6"
+        onSubmit={handleSubmit(submit)}
       >
-        {REGISTRATION_FEILDS.map((item, index) => (
-          <div key={index} className="h-12">
+        {INPUT_FEILDS.map((item, index) => (
+          <div className="h-12" key={index}>
             <InputComp
               inputType={item.type}
               placeholder={item.placeholder}
@@ -114,12 +105,15 @@ const RegisterationForm: React.FC = () => {
             )}
           </div>
         ))}
-        <button type="submit" className="bg-blue-500 rounded-md p-2 text-white">
-          Register
+        <button
+          type="submit"
+          className="bg-blue-500 rounded-md p-2 text-white disabled:bg-inputBorder"
+        >
+          Reset Password
         </button>
       </form>
     </div>
   );
 };
 
-export default RegisterationForm;
+export default page;

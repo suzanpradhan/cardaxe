@@ -1,15 +1,26 @@
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import Link from 'next/link';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
 import { AiFillTwitterCircle } from 'react-icons/ai';
+import { signIn } from 'next-auth/react';
 
 const AutoAuthorize = () => {
+  const handleSignIn = () => {
+    signIn('google', {
+      callbackUrl: '/dashboard',
+    });
+  };
+
   return (
     <div className="flex gap-4 justify-center">
-      <Link href="https://www.google.com/" className="text-2xl p-2 shadow-md">
+      <button className="text-2xl p-2 shadow-md" onClick={handleSignIn}>
         <FcGoogle />
-      </Link>
+      </button>
       <Link href="https://www.facebook.com/" className="text-2xl p-2 shadow-md">
         <SiFacebook className="text-blue-700" />
       </Link>
