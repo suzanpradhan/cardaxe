@@ -41,6 +41,7 @@ module.exports = {
         input: '#f7f7f7',
         placeholder: '#3a3a3a',
         inputBorder: '#e6e6e6',
+        inputDisabled: '#e6e6e6',
       },
       borderWidth: {
         1: '1px',
