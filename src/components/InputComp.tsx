@@ -1,12 +1,14 @@
 import clsx from 'clsx';
+import { type } from 'os';
 import React from 'react';
 
 type InputCompProps = {
   inputType: string;
-  placeholder: string;
+  placeholder?: string;
   register: any;
   name: any;
   disableInput?: boolean;
+  inputLabel?: string;
 };
 
 const InputComp = ({
@@ -15,18 +17,49 @@ const InputComp = ({
   register,
   name,
   disableInput,
+  inputLabel,
 }: InputCompProps) => {
   return (
-    <input
-      type={inputType}
-      placeholder={placeholder}
-      className={clsx(
-        'w-full bg-input placeholder:text-placeholder border-inputBorder border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600'
+    <div>
+      {inputLabel && (
+        <label htmlFor={name} className="pb-2">
+          {inputLabel}
+        </label>
       )}
-      required
-      {...register(name)}
-      disabled={disableInput}
-    ></input>
+      {name === 'logo' ? (
+        inputLabel && (
+          <>
+            <label
+              htmlFor={name}
+              className={clsx(
+                'mt-2 block w-full bg-input placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50'
+              )}
+            >
+              {placeholder}
+            </label>
+            <input
+              id={name}
+              type={inputType}
+              placeholder={placeholder}
+              className="hidden"
+              required
+              {...register(name)}
+              disabled={disableInput}
+            ></input>
+          </>
+        )
+      ) : (
+        <input
+          id={name}
+          type={inputType}
+          placeholder={placeholder}
+          className="mt-1 w-full bg-input placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600"
+          required
+          {...register(name)}
+          disabled={disableInput}
+        ></input>
+      )}
+    </div>
   );
 };
 

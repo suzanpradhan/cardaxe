@@ -1,6 +1,8 @@
 'use client';
 
+import ButtonForm from '@/components/ButtonForm';
 import InputComp from '@/components/InputComp';
+import FormWrapper from '@/components/dashboard/FormWrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import React from 'react';
@@ -82,36 +84,34 @@ const page = () => {
 
   return (
     <div className="flex flex-col w-110 mx-auto my-48">
-      <h1 className="text-4xl font-extrabold ">cardaxe.</h1>
-      <p className="pb-">
-        Confirm your email, enter new password and confirm it to change.
-      </p>
-      <form
-        className="flex flex-col gap-4 pt-2 w-110 my-6"
-        onSubmit={handleSubmit(submit)}
+      <FormWrapper
+        titleText={true}
+        description={
+          'Confirm your email, enter new password and confirm it to change.'
+        }
       >
-        {INPUT_FEILDS.map((item, index) => (
-          <div className="h-12" key={index}>
-            <InputComp
-              inputType={item.type}
-              placeholder={item.placeholder}
-              register={register}
-              name={item.zSchemaName}
-            />
-            {errors[item.zSchemaName] && (
-              <p className="text-xs text-red-600">
-                {errors[item.zSchemaName]?.message}
-              </p>
-            )}
-          </div>
-        ))}
-        <button
-          type="submit"
-          className="bg-blue-500 rounded-md p-2 text-white disabled:bg-inputBorder"
+        <form
+          className="flex flex-col gap-4 pt-2 my-6"
+          onSubmit={handleSubmit(submit)}
         >
-          Reset Password
-        </button>
-      </form>
+          {INPUT_FEILDS.map((item, index) => (
+            <div className="h-12" key={index}>
+              <InputComp
+                inputType={item.type}
+                placeholder={item.placeholder}
+                register={register}
+                name={item.zSchemaName}
+              />
+              {errors[item.zSchemaName] && (
+                <p className="text-xs text-red-600">
+                  {errors[item.zSchemaName]?.message}
+                </p>
+              )}
+            </div>
+          ))}
+          <ButtonForm label="Reset Password" />
+        </form>
+      </FormWrapper>
     </div>
   );
 };

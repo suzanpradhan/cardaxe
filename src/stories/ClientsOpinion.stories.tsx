@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import square_image from '../../public/square_image.jpg';
 
-import ClientsOpinion from '../components/ClientsOpinion';
+import ClientsOpinion from '../components/landingPage/ClientsOpinion';
 
 const meta = {
   title: 'Example/ClientsOpinion',

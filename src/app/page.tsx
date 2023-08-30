@@ -3,22 +3,22 @@
 import Image from 'next/image';
 import homepage_background from '../../public/homepage_background.png';
 import Header from '@/components/Header';
-import HeadingWithText from '@/components/HeadingWithText';
-import Button from '@/components/Button';
-import Features from '@/components/Features';
+import HeadingWithText from '@/components/landingPage/HeadingWithText';
+import Features from '@/components/landingPage/Features';
 import square_image from '../../public/square_image.jpg';
-import CardWithImage from '@/components/CardWithImage';
-import CardWithImageSmall from '@/components/CardWithImageSmall';
-import Caraousel from '@/components/Caraousel';
-import ContentHeading from '@/components/ContentHeading';
+import CardWithImage from '@/components/landingPage/CardWithImage';
+import CardWithImageSmall from '@/components/landingPage/CardWithImageSmall';
+import Caraousel from '@/components/landingPage/Caraousel';
+import ContentHeading from '@/components/landingPage/ContentHeading';
 import Footer from '@/components/Footer';
 import clsx from 'clsx';
-import FaqCollection from '@/components/FaqCollection';
+import FaqCollection from '@/components/landingPage/FaqCollection';
+import ButtonRounded from '@/components/ButtonRounded';
 
 export default function Home() {
   return (
     <main className="relative bg-">
-      <div className="w-full h-screen absolute top-0 left-0 -z-10">
+      <div className="w-full  h-screen min-h-fitall absolute top-0 left-0 -z-10">
         <Image
           src={homepage_background}
           alt="image"
@@ -34,7 +34,7 @@ export default function Home() {
             headingText="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             paragraphText="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit."
           />
-          <Button href="/dashboard" isHeader={false} label="Get Started" />
+          <ButtonRounded isHeader={false} label="Get Started" href="/login" />
         </div>
         <div className="pt-40 flex justify-between">
           <Features
@@ -133,7 +133,7 @@ export default function Home() {
             hic minima assumenda iusto praesentium culpa modi cupiditate ipsam!
             Eos.
           </p>
-          <Button label="Get Started" href="/dashboard"/>
+          <ButtonRounded label="Get Started" href="/register" />
         </div>
         <div className="text flex flex-col gap-16 p-20 max-w-4xl mx-auto">
           <ContentHeading

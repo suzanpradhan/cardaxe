@@ -1,4 +1,4 @@
-import square_image from '../../public/square_image.jpg';
+import square_image from '../../../public/square_image.jpg';
 import { EffectCoverflow, Navigation, Zoom } from 'swiper/modules';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/zoom';
 import ClientsOpinion from './ClientsOpinion';
-import { clientOpinion } from '../app/module';
+import { clientOpinion } from '../../app/module';
 
 const Caraousel = () => {
   return (

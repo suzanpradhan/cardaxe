@@ -39,12 +39,14 @@ const LoginLayout = ({
     return <p>loading...</p>;
   }
 
-  return (
-    <section>
-      <nav></nav>
-      {children}
-    </section>
-  );
+  if (status === 'unauthenticated') {
+    return (
+      <section>
+        <nav></nav>
+        {children}
+      </section>
+    );
+  }
 };
 
 export default LoginLayout;

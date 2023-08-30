@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Faq from '../components/Faq';
+import Faq from '../components/landingPage/Faq';
 
 const meta = {
   title: 'Example/Faq',

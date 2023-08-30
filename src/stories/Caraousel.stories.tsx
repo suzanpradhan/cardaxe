@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Caraousel from '../components/Caraousel';
+import Caraousel from '../components/landingPage/Caraousel';
 
 const meta = {
   title: 'Example/Caraousel',

@@ -11,7 +11,7 @@ interface ButtonProps {
   href?: string;
 }
 
-const Button = ({ isHeader, label, href }: ButtonProps) => {
+const ButtonRounded = ({ isHeader, label, href }: ButtonProps) => {
   return (
     <div>
       {href && (
@@ -32,4 +32,4 @@ const Button = ({ isHeader, label, href }: ButtonProps) => {
   );
 };
 
-export default Button;
+export default ButtonRounded;

@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/dashboard/Sidebar';
+import TitleText from '@/components/TitleText';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -19,7 +20,6 @@ enum Status {
 }
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const [activeTab, setActiveTab] = useState<number>(1);
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -28,8 +28,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       router.push('/login');
       return;
     }
-    //Runs only on the first render
-  }, [status]);
+  }, [session]);
 
   if (status === Status.loading) {
     return <p>loading...</p>;
@@ -38,7 +37,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   if (status === Status.authenticated) {
     return (
       <section className="flex ">
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="md:hidden">
+          <TitleText isSideBarComp />
+          <Sidebar />
+        </div>
+        <div className="hidden md:block">
+          <TitleText isSideBarComp />
+          <Sidebar />
+        </div>
         {children}
       </section>
     );
