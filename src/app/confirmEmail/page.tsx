@@ -1,6 +1,8 @@
 'use client';
 
+import ButtonForm from '@/components/ButtonForm';
 import InputComp from '@/components/InputComp';
+import FormWrapper from '@/components/dashboard/FormWrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -46,32 +48,29 @@ const page = () => {
   };
   return (
     <div className="flex flex-col w-140 mx-auto my-48">
-      <h1 className="text-4xl font-extrabold ">cardaxe.</h1>
-      <p className="pb-3">Please enter the registered verified email id.</p>
-      <form
-        className="flex flex-col gap-4 pt-2"
-        onSubmit={handleSubmit(submit)}
+      <FormWrapper
+        titleText={true}
+        description={'Please enter the registered verified email id.'}
       >
-        <div className="h-12">
-          <InputComp
-            inputType="email"
-            placeholder="Registered Email"
-            register={register}
-            name="email"
-            disableInput={disableInput}
-          />
-          {errors.email && (
-            <p className="text-xs text-red-600">{errors.email?.message}</p>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 rounded-md p-2 text-white disabled:bg-inputBorder"
-          disabled={disableInput}
+        <form
+          className="flex flex-col gap-4 pt-2"
+          onSubmit={handleSubmit(submit)}
         >
-          Send email
-        </button>
-      </form>
+          <div className="h-12">
+            <InputComp
+              inputType="email"
+              placeholder="Registered Email"
+              register={register}
+              name="email"
+              disableInput={disableInput}
+            />
+            {errors.email && (
+              <p className="text-xs text-red-600">{errors.email?.message}</p>
+            )}
+          </div>
+          <ButtonForm label="Send Email" disableInput={disableInput} />
+        </form>
+      </FormWrapper>
     </div>
   );
 };

@@ -7,7 +7,9 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import InputComp from './InputComp';
+import InputComp from '../InputComp';
+import FormWrapper from '../dashboard/FormWrapper';
+import ButtonForm from '../ButtonForm';
 
 type zSchemaName = 'email' | 'password';
 
@@ -67,42 +69,43 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col ">
-      <h1 className="text-4xl font-extrabold ">cardaxe.</h1>
-      <p className="pb-3">
-        To keep connected with us please login to your personal account
-      </p>
+    <FormWrapper
+      titleText={true}
+      description={
+        'To keep connected with us please login to your personal account'
+      }
+    >
       <form
-        className="flex flex-col gap-4 pt-2"
+        className="flex flex-col gap-4 py-2"
         onSubmit={handleSubmit(submitData)}
       >
-        {LOGIN_FEILDS.map((item, index) => (
-          <div key={index} className="h-12">
-            <InputComp
-              inputType={item.type}
-              placeholder={item.placeholder}
-              register={register}
-              name={item.zSchemaName}
-            />
-            {errors[item.zSchemaName] && (
-              <p className="text-xs text-red-600">
-                {errors[item.zSchemaName]?.message}
-              </p>
-            )}
-          </div>
-        ))}
-        <Link
-          href="/confirmEmail"
-          type="button"
-          className="text-gray-400 text-right -mt-1 hover:underline hover:text-blue-500"
-        >
-          Forgot Password
-        </Link>
-        <button type="submit" className="bg-blue-500 rounded-md p-2 text-white">
-          Login
-        </button>
+        <div className="flex flex-col ">
+          {LOGIN_FEILDS.map((item, index) => (
+            <div key={index} className="h-16">
+              <InputComp
+                inputType={item.type}
+                placeholder={item.placeholder}
+                register={register}
+                name={item.zSchemaName}
+              />
+              {errors[item.zSchemaName] && (
+                <p className="text-xs text-red-600">
+                  {errors[item.zSchemaName]?.message}
+                </p>
+              )}
+            </div>
+          ))}
+          <Link
+            href="/confirmEmail"
+            type="button"
+            className="text-gray-400 text-right -mt-2 mb-2 hover:underline hover:text-blue-600"
+          >
+            Forgot Password
+          </Link>
+          <ButtonForm label="Login" />
+        </div>
       </form>
-    </div>
+    </FormWrapper>
   );
 };
 

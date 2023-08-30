@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import FaqCollection from '../components/FaqCollection';
+import FaqCollection from '../components/landingPage/FaqCollection';
 
 const meta = {
   title: 'Example/FaqCollection',

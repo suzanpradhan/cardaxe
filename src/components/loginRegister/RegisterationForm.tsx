@@ -6,7 +6,9 @@ import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import InputComp from './InputComp';
+import InputComp from '../InputComp';
+import FormWrapper from '../dashboard/FormWrapper';
+import ButtonForm from '../ButtonForm';
 
 type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
 
@@ -93,32 +95,31 @@ const RegisterationForm: React.FC = () => {
     resolver: zodResolver(RegisterationSchema),
   });
   return (
-    <div className="flex flex-col ">
-      <h1 className="text-4xl font-extrabold py-3">cardaxe.</h1>
-      <form
-        className="flex flex-col gap-4 py-2"
-        onSubmit={handleSubmit(submitData)}
-      >
-        {REGISTRATION_FEILDS.map((item, index) => (
-          <div key={index} className="h-12">
-            <InputComp
-              inputType={item.type}
-              placeholder={item.placeholder}
-              register={register}
-              name={item.zSchemaName}
-            />
-            {errors[item.zSchemaName] && (
-              <p className="text-xs text-red-600">
-                {errors[item.zSchemaName]?.message}
-              </p>
-            )}
-          </div>
-        ))}
-        <button type="submit" className="bg-blue-500 rounded-md p-2 text-white">
-          Register
-        </button>
-      </form>
-    </div>
+    <FormWrapper titleText={true}>
+      <div className="flex flex-col ">
+        <form
+          className="flex flex-col gap-4 py-2"
+          onSubmit={handleSubmit(submitData)}
+        >
+          {REGISTRATION_FEILDS.map((item, index) => (
+            <div key={index} className="h-12">
+              <InputComp
+                inputType={item.type}
+                placeholder={item.placeholder}
+                register={register}
+                name={item.zSchemaName}
+              />
+              {errors[item.zSchemaName] && (
+                <p className="text-xs text-red-600">
+                  {errors[item.zSchemaName]?.message}
+                </p>
+              )}
+            </div>
+          ))}
+          <ButtonForm label="Register" />
+        </form>
+      </div>
+    </FormWrapper>
   );
 };
 

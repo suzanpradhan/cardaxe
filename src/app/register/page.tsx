@@ -1,7 +1,7 @@
 'use client';
 
-import AutoAuthorize from '@/components/AutoAuthorize';
-import RegisterationForm from '@/components/RegisterationForm';
+import AutoAuthorize from '@/components/loginRegister/AutoAuthorize';
+import RegisterationForm from '@/components/loginRegister/RegisterationForm';
 import Link from 'next/link';
 import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
@@ -22,9 +22,9 @@ const page = () => {
         <div className="flex-grow flex-shrink-0 w-80  md:w-96 flex flex-col justify-center">
           <RegisterationForm />
           <div className="flex items-center gap-10 mt-10 mb-5">
-            <div className="h-0 grow border-1 border-inputBorder "></div>
+            <div className="h-0 grow border-1 border-componentBgGrey "></div>
             <p className="inline">or</p>
-            <div className="h-0 grow border-1 border-inputBorder "></div>
+            <div className="h-0 grow border-1 border-componentBgGrey "></div>
           </div>
           <AutoAuthorize />
         </div>

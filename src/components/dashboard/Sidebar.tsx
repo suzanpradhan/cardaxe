@@ -8,22 +8,25 @@ import {
   Profile2User,
   ProfileCircle,
 } from 'iconsax-react';
-import TitleText from './TitleText';
-import clsx from 'clsx';
+import TitleText from '../TitleText';
+import SidebarElements from './SidebarElements';
 
-interface SidebarProps {
-  activeTab: number;
-  setActiveTab: Dispatch<SetStateAction<number>>;
-}
+export type SidebarNavElementsProps = {
+  id: number;
+  label: string;
+  link: string;
+  icon: React.JSX.Element;
+};
 
 const ICONS_SIZE = '30';
 const ICONS_VARIANT = 'Bold';
 const ICONS_CLASSNAME = 'inline';
 
-const SIDEBAR_NAV_ELEMENTS = [
+const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
   {
     id: 1,
     label: 'Home',
+    link: '',
     icon: (
       <Home
         size={ICONS_SIZE}
@@ -35,6 +38,7 @@ const SIDEBAR_NAV_ELEMENTS = [
   {
     id: 2,
     label: 'My Cards',
+    link: 'mycards',
     icon: (
       <Cards
         size={ICONS_SIZE}
@@ -46,6 +50,8 @@ const SIDEBAR_NAV_ELEMENTS = [
   {
     id: 3,
     label: 'Messages',
+    link: 'messages',
+
     icon: (
       <Messages3
         size={ICONS_SIZE}
@@ -57,6 +63,8 @@ const SIDEBAR_NAV_ELEMENTS = [
   {
     id: 4,
     label: 'Teams',
+    link: 'teams',
+
     icon: (
       <Profile2User
         size={ICONS_SIZE}
@@ -68,6 +76,8 @@ const SIDEBAR_NAV_ELEMENTS = [
   {
     id: 5,
     label: 'Notification',
+    link: 'notification',
+
     icon: (
       <NotificationBing
         size={ICONS_SIZE}
@@ -79,6 +89,8 @@ const SIDEBAR_NAV_ELEMENTS = [
   {
     id: 6,
     label: 'Analytics',
+    link: 'analytics',
+
     icon: (
       <Activity
         size={ICONS_SIZE}
@@ -90,6 +102,8 @@ const SIDEBAR_NAV_ELEMENTS = [
   {
     id: 7,
     label: 'Profile',
+    link: 'profile',
+
     icon: (
       <ProfileCircle
         size={ICONS_SIZE}
@@ -99,32 +113,13 @@ const SIDEBAR_NAV_ELEMENTS = [
     ),
   },
 ];
-const Sidebar = ({ activeTab, setActiveTab }: SidebarProps) => {
+const Sidebar = () => {
   return (
-    <div className="w-96  flex flex-col gap-8 border-r-2 h-screen p-8">
-      <TitleText />
-      <ul className="flex flex-col gap-2">
-        {SIDEBAR_NAV_ELEMENTS.map((item) => (
-          <li
-            key={item.id}
-            className={clsx(
-              'p-3 rounded-lg',
-              activeTab === item.id
-                ? 'bg-blue-200 text-blue-700'
-                : 'text-slate-700'
-            )}
-          >
-            <button
-              onClick={() => setActiveTab(item.id)}
-              className="flex gap-3 items-center w-full"
-            >
-              {item.icon}
-              {item.label}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className=" flex gap-2 justify-between fixed bg-slate-400 rounded-t-xl h-20 p-2 bottom-0 w-full  border-r-2 md:rounded-none md:justify-normal md:bg-transparent md:flex-col md:static md:p-8 md:h-screen md:max-w-6xl md:basis-130 md:shrink ">
+      {SIDEBAR_NAV_ELEMENTS.map((item) => (
+        <SidebarElements item={item} key={item.id} />
+      ))}
+    </ul>
   );
 };
 

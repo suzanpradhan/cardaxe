@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import square_image from '../../public/square_image.jpg';
 
-import Features from '../components/Features';
+import Features from '../components/landingPage/Features';
 
 const meta = {
   title: 'Example/Features',

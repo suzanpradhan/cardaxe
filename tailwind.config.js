@@ -27,6 +27,9 @@ module.exports = {
         140: '40rem',
         160: '50rem',
       },
+      minHeight: {
+        fitall: '40rem',
+      },
       flexBasis: {
         110: '28rem',
         120: '32rem',
@@ -38,9 +41,13 @@ module.exports = {
       },
       colors: {
         banner: '#878c90',
-        input: '#f7f7f7',
-        placeholder: '#3a3a3a',
-        inputBorder: '#e6e6e6',
+        // input: '#f7f7f7',
+        inputBgGrey: '#f7f7f7',
+        inputPlaceholder: '#3a3a3a',
+        // placeholder: '#3a3a3a',
+        // inputBorder: '#e6e6e6',
+        borderMain: '#e6e6e6',
+        componentBgGrey: '#e6e6e6',
         inputDisabled: '#e6e6e6',
       },
       borderWidth: {

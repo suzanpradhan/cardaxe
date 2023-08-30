@@ -1,10 +1,22 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
 
-const TitleText = () => {
+type TitleTextProps = {
+  isSideBarComp?: boolean;
+};
+
+const TitleText = ({ isSideBarComp }: TitleTextProps) => {
   return (
-    <Link href={'/'}>
-      <h1 className="text-4xl font-extrabold">cardaxe.</h1>
+    <Link href={'/'} className="w-80">
+      <h1
+        className={clsx(
+          'text-4xl font-extrabold',
+          isSideBarComp && 'md:border-r-2'
+        )}
+      >
+        cardaxe.
+      </h1>
     </Link>
   );
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ContentHeading from '../components/ContentHeading';
+import ContentHeading from '../components/landingPage/ContentHeading';
 
 const meta = {
   title: 'Example/ContentHeading ',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import square_image from '../../public/square_image.jpg';
 
-import CardWithImageSmall from '../components/CardWithImageSmall';
+import CardWithImageSmall from '../components/landingPage/CardWithImageSmall';
 
 const meta = {
   title: 'Example/CardWithImageSmall',
