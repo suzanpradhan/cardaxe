@@ -1,17 +1,11 @@
 import React from 'react';
-import FormWrapper from './FormWrapper';
+import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import clsx from 'clsx';
-
-type InputFeildsProps = {
-  label: string;
-  placeholder: string;
-  type: string;
-  zSchemaName: string;
-};
+import { InputFieldProps } from '@/types/appTypes';
 
 const ACCEPTED_IMAGE_TYPES = [
   'image/jpeg',
@@ -37,29 +31,33 @@ const NewTeamSchema = z.object({
 
 type NewTeamSchemaType = z.infer<typeof NewTeamSchema>;
 
-const INPUT_FEILDS: InputFeildsProps[] = [
+const INPUT_FEILDS: InputFieldProps[] = [
   {
-    label: 'Team or Organization Name',
+    inputCompType: 'normal',
+    inputLabel: 'Team or Organization Name',
     placeholder: 'e.g. Sharp Venture',
-    type: 'text',
+    inputType: 'text',
     zSchemaName: 'teamOrOrganizationName',
   },
   {
-    label: 'Logo',
+    inputCompType: 'file',
+    inputLabel: 'Logo',
     placeholder: 'Choose Image',
-    type: 'file',
+    inputType: 'file',
     zSchemaName: 'logo',
   },
   {
-    label: 'Category',
+    inputCompType: 'select',
+    inputLabel: 'Category',
     placeholder: 'Select Team Category',
-    type: 'text',
+    inputType: 'text',
     zSchemaName: 'category',
   },
   {
-    label: 'Bio',
+    inputCompType: 'textArea',
+    inputLabel: 'Bio',
     placeholder: '',
-    type: 'text',
+    inputType: 'text',
     zSchemaName: 'bio',
   },
 ];
@@ -84,44 +82,25 @@ const CreateNewTeam = () => {
       <form
         className="flex flex-col gap-4 py-2"
         onSubmit={handleSubmit(submitData)}
-      ></form>
-
-      {INPUT_FEILDS.slice(0, SHOW_ITEMS).map((item, index) => (
-        <div key={index} className="h-24">
-          <InputComp
-            inputType={item.type}
-            placeholder={item.placeholder}
-            register={register}
-            name={item.zSchemaName}
-            inputLabel={item.label}
-          />
-          {/* {errors[item.zSchemaName] && (
+      >
+        {INPUT_FEILDS.map((item, index) => (
+          <div key={index} className="h-24">
+            <InputComp
+              inputCompType={item.inputCompType}
+              inputType={item.inputType}
+              placeholder={item.placeholder}
+              register={register}
+              zSchemaName={item.zSchemaName}
+              inputLabel={item.inputLabel}
+            />
+            {/* {errors[item.zSchemaName] && (
             <p className="text-xs text-red-600">
-              {errors[item.zSchemaName]?.message}
+            {errors[item.zSchemaName]?.message}
             </p>
           )} */}
-        </div>
-      ))}
-      <div className="h-24">
-        <label htmlFor="select">Category</label>
-        <select
-          id="select"
-          className="mt-2 w-full bg-input placeholder:text-placeholder border-inputBorder border-1 rounded-md p-2"
-          {...register('category')}
-        >
-          <option value={''}>--Please select option--</option>
-          <option value={'option1'}>Option 1</option>
-          <option value={'option2'}>Option 2</option>
-          <option value={'option5'}>Option 5</option>
-        </select>
-      </div>
-      <div className="h-40">
-        <label htmlFor="select">Bio</label>
-        <textarea
-          id="select"
-          className="h-full mt-2 w-full bg-input placeholder:text-placeholder border-inputBorder border-1 rounded-md p-2"
-        />
-      </div>
+          </div>
+        ))}
+      </form>
       <p></p>
     </div>
   );

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InputComp from '../InputComp';
-import FormWrapper from '../dashboard/FormWrapper';
+import FormWrapper from '../FormWrapper';
 import ButtonForm from '../ButtonForm';
 
 type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
