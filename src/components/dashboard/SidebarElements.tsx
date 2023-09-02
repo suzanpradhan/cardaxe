@@ -20,7 +20,7 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
   return (
     <li
       className={clsx(
-        'p-3 rounded-lg  hover:text-blue-700',
+        'p-3 rounded-lg  hover:text-blue-700 min-w-fit',
         toggle ? 'bg-blue-200 text-blue-700' : 'text-slate-700'
       )}
     >

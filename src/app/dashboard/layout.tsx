@@ -36,16 +36,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (status === Status.authenticated) {
     return (
-      <section className="flex ">
+      <section className="grid md:grid-flow-cols lg:grid-cols-dashboard-layout">
+        {/* for movile view */}
+        <div className="h-20 md:hidden">
+          <TitleText isSideBarComp />
+        </div>
         <div className="md:hidden">
+          <Sidebar />
+        </div>
+        {/* for web view */}
+        <div className="hidden md:block md:max-w-sm">
           <TitleText isSideBarComp />
           <Sidebar />
         </div>
-        <div className="hidden md:block">
-          <TitleText isSideBarComp />
-          <Sidebar />
-        </div>
-        {children}
+        <div>{children}</div>
       </section>
     );
   }

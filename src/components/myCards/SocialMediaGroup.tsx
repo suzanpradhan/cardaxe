@@ -1,5 +1,5 @@
 import React from 'react';
-import FormWrapper from './FormWrapper';
+import FormWrapper from '../FormWrapper';
 import facebook_image from '../../../public/facebook_image.png';
 import instagram_image from '../../../public/instagram_image.png';
 import linkedin_image from '../../../public/linkedin_image.png';

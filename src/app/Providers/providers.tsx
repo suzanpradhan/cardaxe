@@ -2,13 +2,19 @@
 
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import { store } from '../GlobalRedux/store';
 
 interface Props {
   children: ReactNode;
 }
 
 function Providers({ children }: Props) {
-  return <SessionProvider>{children}</SessionProvider>;
+  return (
+    <Provider store={store}>
+      <SessionProvider>{children}</SessionProvider>;
+    </Provider>
+  );
 }
 
 export default Providers;

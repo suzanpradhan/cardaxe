@@ -53,6 +53,9 @@ module.exports = {
       borderWidth: {
         1: '1px',
       },
+      gridTemplateColumns: {
+        'dashboard-layout': '20% 80%',
+      },
     },
   },
   plugins: [],

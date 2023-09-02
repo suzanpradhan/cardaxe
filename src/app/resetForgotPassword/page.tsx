@@ -2,7 +2,7 @@
 
 import ButtonForm from '@/components/ButtonForm';
 import InputComp from '@/components/InputComp';
-import FormWrapper from '@/components/dashboard/FormWrapper';
+import FormWrapper from '@/components/FormWrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import React from 'react';
