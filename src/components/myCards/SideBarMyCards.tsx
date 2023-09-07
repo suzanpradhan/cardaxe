@@ -42,24 +42,24 @@ const SideBarMyCards = () => {
     index: number,
     item: SideBarElementProps
   ) => {
-    router.push(`/dashboard/myCards/builder/${item.link}`);
+    router.push(`/dashboard/builder/${item.link}`);
     setToggleTab(index);
   };
 
   useEffect(() => {
-    if (pathName.endsWith('/dashboard/myCards/builder')) {
+    if (pathName.endsWith('/builder')) {
       setToggleTab(0);
-    } else if (pathName.endsWith('/dashboard/myCards/builder/contents')) {
+    } else if (pathName.endsWith('/builder/contents')) {
       setToggleTab(1);
-    } else if (pathName.endsWith('/dashboard/myCards/builder/designs')) {
+    } else if (pathName.endsWith('/builder/designs')) {
       setToggleTab(2);
-    } else if (pathName.endsWith('/dashboard/myCards/builder/infos')) {
+    } else if (pathName.endsWith('//builder/infos')) {
       setToggleTab(3);
     }
   }, [pathName]);
 
   return (
-    <div className="w-28 flex flex-col gap-4 h-full text-slate-600">
+    <div className="basis-1/12 flex flex-col gap-4 h-full text-slate-600">
       {MY_APP_SIDE_BAR_ELEMENTS.map((item, index) => (
         <button
           key={index}

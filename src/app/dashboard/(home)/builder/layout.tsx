@@ -1,5 +1,6 @@
 'use client';
 import AppBar from '@/components/dashboard/AppBar';
+import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
 import React from 'react';
 
@@ -9,7 +10,8 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <AppBar />
       <div className="flex gap-6">
         <SideBarMyCards />
-        <div className="w-full">{children}</div>
+        <div className="basis-2/5 min-w-[100px]">{children}</div>
+        <PreviewSection />
       </div>
     </div>
   );

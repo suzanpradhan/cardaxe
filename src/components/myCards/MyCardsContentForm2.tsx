@@ -7,14 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { InputFieldProps } from '@/types/appTypes';
 import { RootState } from '@/app/GlobalRedux/store';
 import { useSelector } from 'react-redux';
-
-const MyCardContentFormSchema = z.object({
-  phone: z.string(),
-  website: z.string(),
-  email: z.string(),
-  isDefault: z.boolean(),
-});
-type MyCardContentFormSchemaType = z.infer<typeof MyCardContentFormSchema>;
+import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -34,22 +27,10 @@ const INPUT_FEILDS: InputFieldProps[] = [
   },
 ];
 
-const MyCardsContentForm2 = () => {
-  const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues = cardState.contentForm;
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<MyCardContentFormSchemaType>({
-    defaultValues,
-    resolver: zodResolver(MyCardContentFormSchema),
-  });
-
+const MyCardsContentForm2 = ({ register }: { register: RegisterType }) => {
   return (
     <FormWrapper>
-      <form className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {INPUT_FEILDS.map((item: InputFieldProps, index: number) => (
           <InputComp
             inputType="text"
@@ -60,7 +41,7 @@ const MyCardsContentForm2 = () => {
             key={index}
           />
         ))}
-      </form>
+      </div>
     </FormWrapper>
   );
 };

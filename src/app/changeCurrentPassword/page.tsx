@@ -9,6 +9,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
+import { apiPaths } from '../api/apiConstants';
 
 type Z_SCHEMA_NAME = 'email' | 'password' | 'confirmPassword';
 
@@ -68,7 +69,8 @@ const page = () => {
   const submit = async (data: ForgotPasswordSchemaType) => {
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/api/user/http://127.0.0.1:8000/api/user/changeCurrentPassword/',
+      url: apiPaths.baseUrl + apiPaths.changeCurrentPassword,
+      // url: '/http://127.0.0.1:8000/api/user/changeCurrentPassword/',
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
@@ -100,7 +102,7 @@ const page = () => {
                 inputType={item.type}
                 placeholder={item.placeholder}
                 register={register}
-                name={item.zSchemaName}
+                zSchemaName={item.zSchemaName}
               />
               {errors[item.zSchemaName] && (
                 <p className="text-xs text-red-600">

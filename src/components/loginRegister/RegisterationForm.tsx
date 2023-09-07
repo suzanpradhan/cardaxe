@@ -67,6 +67,7 @@ const RegisterationForm: React.FC = () => {
 
   const submitData = async (data: RegistrationSchemaType) => {
     delete data.confirmPassword;
+    console.log(data);
 
     axios({
       method: 'post',
@@ -81,8 +82,8 @@ const RegisterationForm: React.FC = () => {
         toast.success(message);
       })
       .catch(function (AxiosError) {
-        console.log(AxiosError.response.data.errors.errors[0]);
-        const message = AxiosError.response.data.errors.errors[0];
+        console.log(AxiosError);
+        const message = AxiosError;
         toast.error(message);
       });
   };
@@ -107,7 +108,7 @@ const RegisterationForm: React.FC = () => {
                 inputType={item.type}
                 placeholder={item.placeholder}
                 register={register}
-                name={item.zSchemaName}
+                zSchemaName={item.zSchemaName}
               />
               {errors[item.zSchemaName] && (
                 <p className="text-xs text-red-600">

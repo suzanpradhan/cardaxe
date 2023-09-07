@@ -2,21 +2,8 @@ import React, { useEffect } from 'react';
 import FormWrapper from '../FormWrapper';
 import { z } from 'zod';
 import InputComp from '../InputComp';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { RootState } from '@/app/GlobalRedux/store';
-import { useSelector } from 'react-redux';
 import { InputFieldProps } from '@/types/appTypes';
-
-const MyCardContentForm1Schema = z.object({
-  prefix: z.string(),
-  firstName: z.string(),
-  middleName: z.string(),
-  lastName: z.string(),
-  suffix: z.string(),
-  bio: z.string(),
-});
-type MyCardContentForm1SchemaType = z.infer<typeof MyCardContentForm1Schema>;
+import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -51,22 +38,10 @@ const INPUT_FEILDS: InputFieldProps[] = [
   },
 ];
 
-const MyCardsContentForm1 = () => {
-  const cardState = useSelector((state: RootState) => state.card);
-
-  const defaultValues = cardState.contentForm;
-
-  const {
-    register,
-    formState: { errors },
-  } = useForm<MyCardContentForm1SchemaType>({
-    defaultValues,
-    resolver: zodResolver(MyCardContentForm1Schema),
-  });
-
+const MyCardsContentForm1 = ({ register }: { register: RegisterType }) => {
   return (
     <FormWrapper>
-      <form className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {INPUT_FEILDS.map((item: InputFieldProps, index: number) => (
           <InputComp
             inputCompType={item.inputCompType}
@@ -77,7 +52,7 @@ const MyCardsContentForm1 = () => {
             key={index}
           />
         ))}
-      </form>
+      </div>
     </FormWrapper>
   );
 };

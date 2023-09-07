@@ -7,7 +7,7 @@ const page = () => {
   return (
     <div className="p-4 ">
       <CardTemplate />
-      {/* <button onClick={() => signOut()}>signout</button> */}
+      <button onClick={() => signOut()}>signout</button>
     </div>
   );
 };

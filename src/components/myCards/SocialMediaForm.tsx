@@ -62,7 +62,7 @@ const SocialMediaForm = ({
             inputType={item.type}
             placeholder={index === 0 ? placeholder : 'Display Text'}
             register={register}
-            name={item.zSchemaName}
+            zSchemaName={item.zSchemaName}
           />
         ))}
       </div>

@@ -36,11 +36,12 @@ const page = () => {
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-      .then(function (response) {
-        toast.info('You will be redirected via email.');
+      .then((response) => {
+        console.log(response);
+        toast.info(response.data.msg);
         setDisableInput(true);
       })
-      .catch(function (AxiosError) {
+      .catch((AxiosError) => {
         const message = AxiosError.response.data.errors.errors[0];
         console.log(message);
         toast.error(message);
@@ -61,7 +62,7 @@ const page = () => {
               inputType="email"
               placeholder="Registered Email"
               register={register}
-              name="email"
+              zSchemaName="email"
               disableInput={disableInput}
             />
             {errors.email && (

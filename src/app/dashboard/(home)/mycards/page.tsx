@@ -5,7 +5,7 @@ import React from 'react';
 const page = () => {
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/dashboard/myCards/builder/`);
+    router.push(`/dashboard/builder/`);
   };
   return (
     <div>

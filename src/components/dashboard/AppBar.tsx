@@ -4,8 +4,8 @@ const appBarLabel = 'My Personal Card';
 
 const AppBar = () => {
   return (
-    <div className="flex w-full gap-3 h-10">
-      <div className="px-2 grow bg-input rounded-lg flex items-center gap-2">
+    <div className="flex w-full gap-3 h-14 ">
+      <div className="px-2 grow h-full bg-componentBgGrey rounded-lg flex items-center gap-2">
         <p className="inline text-slate-500">Label:</p>
         <h2 className="inline font-extrabold">{appBarLabel}</h2>
       </div>

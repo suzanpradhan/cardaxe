@@ -13,25 +13,9 @@ const SwitchFormSchema = z.object({
 type SwitchFormSchemaType = z.infer<typeof SwitchFormSchema>;
 
 const MyCardsContentSwitch = ({ label }: { label: string }) => {
-  const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues = cardState.contentForm;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SwitchFormSchemaType>({
-    defaultValues,
-    resolver: zodResolver(SwitchFormSchema),
-  });
   return (
     <FormWrapper>
-      <InputComp
-        zSchemaName="isDefault"
-        inputCompType="switch"
-        inputLabel={label}
-        inputType="checkbox"
-        register={register}
-      />
+      
     </FormWrapper>
   );
 };

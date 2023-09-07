@@ -35,6 +35,7 @@ module.exports = {
         120: '32rem',
         130: '36rem',
         140: '40rem',
+        160: '50rem',
       },
       boxShadow: {
         '3xl': '0px 10px 20px 10px rgba(0, 0, 0, .2)',

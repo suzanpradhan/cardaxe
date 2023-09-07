@@ -9,8 +9,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
+import { useParams, useRouter } from 'next/navigation';
 
-type Z_SCHEMA_NAME = 'password' | 'confirmPassword';
+type Z_SCHEMA_NAME = 'password' | 'password2';
 
 type INPUT_FEILDS_PROPS = {
   placeholder: string;
@@ -24,13 +25,13 @@ const ForgotPasswordSchema = z
       .string()
       .min(8, { message: 'Must be more than 8 characters' })
       .max(24, { message: 'Must be less than 24 characters' }),
-    confirmPassword: z
+    password2: z
       .string()
       .min(8, { message: 'Must be more than 8 characters' })
       .max(24, { message: 'Must be less than 24 characters' })
       .optional(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.password2, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   });
@@ -46,7 +47,7 @@ const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
   {
     placeholder: 'Confirm Password',
     type: 'password',
-    zSchemaName: 'confirmPassword',
+    zSchemaName: 'password2',
   },
 ];
 
@@ -58,21 +59,23 @@ const page = () => {
   } = useForm<ForgotPasswordSchemaType>({
     resolver: zodResolver(ForgotPasswordSchema),
   });
+  const params = useParams();
+  const router = useRouter();
 
   const submit = async (data: ForgotPasswordSchemaType) => {
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/api/user/http://127.0.0.1:8000/api/user/reset-password/',
+      url: `http://127.0.0.1:8000/api/user/reset-password/${params.uid}/${params.token}/`,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then(function (response) {
         toast.success('Your password has been reset');
+        router.push('/login');
       })
-      .catch(function (AxiosError) {
-        const message = AxiosError.response.data.errors.errors[0];
-        console.log(message);
-        toast.error('Some error occured please wait');
+      .catch(function (error) {
+        console.error(error.message);
+        toast.error(error.message);
       });
   };
 
@@ -92,7 +95,7 @@ const page = () => {
                 inputType={item.type}
                 placeholder={item.placeholder}
                 register={register}
-                name={item.zSchemaName}
+                zSchemaName={item.zSchemaName}
               />
               {errors[item.zSchemaName] && (
                 <p className="text-xs text-red-600">
