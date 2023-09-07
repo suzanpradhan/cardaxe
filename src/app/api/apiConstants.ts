@@ -1,4 +1,9 @@
 export const apiPaths = {
-  register: 'http://127.0.0.1:8000/api/user/register/',
-  login: 'http://127.0.0.1:8000/api/user/login/',
+  serverUrl: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}` + '/api/',
+  register: 'user/register/',
+  login: 'user/login/',
+  changeCurrentPassword: 'user/changeCurrentPassword/',
+  getCardTemplates: 'card/templates/',
+  updateContent: 'card/update-content/',
 };

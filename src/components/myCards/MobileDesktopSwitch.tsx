@@ -37,7 +37,7 @@ const MobileDesktopSwitch = () => {
           key={index}
           onClick={(e) => handleClick(e, item)}
           className={clsx(
-            ' rounded flex px-3 py-2 mb-16',
+            ' rounded flex px-3 py-2',
             view === item.value
               ? 'text-white bg-black '
               : 'text-slate-500 bg-componentBgGrey'

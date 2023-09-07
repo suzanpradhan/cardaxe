@@ -29,7 +29,7 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
         className="flex gap-3 items-center w-full"
       >
         {item.icon}
-        <span className="hidden md:inline">{item.label}</span>
+        <span className="hidden lg:block">{item.label}</span>
       </button>
     </li>
   );

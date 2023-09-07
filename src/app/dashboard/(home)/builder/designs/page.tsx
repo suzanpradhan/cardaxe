@@ -1,18 +1,15 @@
 'use client';
 
-import CardPreview from '@/components/myCards/CardPreview';
+import CardPreview from '@/components/myCards/PreviewSection';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import React from 'react';
 
 const page = () => {
   return (
-    <div className="flex gap-6 ">
-      <div>
-        <MyCardsDesignForm />
-        <MyCardsDesignSwitch />
-      </div>
-      <CardPreview />
+    <div className="flex gap-4 flex-col">
+      <MyCardsDesignForm />
+      <MyCardsDesignSwitch />
     </div>
   );
 };

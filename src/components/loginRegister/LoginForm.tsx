@@ -6,10 +6,10 @@ import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import InputComp from '../InputComp';
 import FormWrapper from '../FormWrapper';
 import ButtonForm from '../ButtonForm';
+import { apiPaths } from '@/app/api/apiConstants';
 
 type zSchemaName = 'email' | 'password';
 
@@ -61,9 +61,11 @@ const LoginForm: React.FC = () => {
       callbackUrl: '/dashboard',
       redirect: false,
     });
-
-    if (res?.error) {
+    if (!res?.error) {
+      toast.success('Succefully logged in');
+    } else if (res?.error) {
       toast.error('Username or password error');
+      console.log(res.error);
       router.push('/login');
     }
   };
@@ -86,7 +88,7 @@ const LoginForm: React.FC = () => {
                 inputType={item.type}
                 placeholder={item.placeholder}
                 register={register}
-                name={item.zSchemaName}
+                zSchemaName={item.zSchemaName}
               />
               {errors[item.zSchemaName] && (
                 <p className="text-xs text-red-600">

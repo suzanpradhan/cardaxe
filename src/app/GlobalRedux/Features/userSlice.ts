@@ -2,7 +2,7 @@
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export interface CardState {
+export interface UserState {
   contentForm: {
     prefix: string;
     firstName: string;
@@ -18,6 +18,8 @@ export interface CardState {
     phone: string;
     website: string;
     email: string;
+
+    isDefault: boolean;
   };
 
   designForm: {
@@ -36,10 +38,6 @@ export interface CardState {
     url: string[];
     displayText: string[];
   };
-
-  otherForms: {
-    isDefault: boolean;
-  };
 }
 
 const initialState: CardState = {
@@ -56,6 +54,7 @@ const initialState: CardState = {
     website: 'info@somecomp.com',
     phone: '9987456321',
     email: 'some@email.com',
+    isDefault: true,
   },
   designForm: {
     backgroundColor: '#f23f37',
@@ -70,10 +69,6 @@ const initialState: CardState = {
     cardId: 123456789,
     url: ['www.some.com'],
     displayText: ['Displaytxt'],
-  },
-  
-  otherForms: {
-    isDefault: true,
   },
 };
 

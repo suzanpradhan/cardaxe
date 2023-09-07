@@ -1,10 +1,15 @@
-import { RootState } from '@/app/GlobalRedux/store';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import clsx from 'clsx';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { CardState, updateValues } from '@/app/GlobalRedux/Features/cardSlice';
+import React, { useState } from 'react';
 import { InputFieldProps } from '@/types/appTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/GlobalRedux/store';
+import {
+  CardState,
+  updateContentForm,
+  updateDesignForm,
+  updateInfosForm,
+} from '@/app/GlobalRedux/Features/cardSlice';
+import { Eye, EyeSlash } from 'iconsax-react';
 
 const InputComp = ({
   inputCompType,
@@ -16,36 +21,41 @@ const InputComp = ({
   inputLabel,
   className,
 }: InputFieldProps) => {
+  const [showPassword, toggleShowPassword] = useState<boolean>(false);
   const dispatch = useDispatch();
-
-  const cardState = useSelector((state: RootState) => state.card);
+  const cardState: CardState = useSelector((state: RootState) => state.card);
 
   const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, files } = e.target;
-    let updatedState: CardState;
+    const stateValue =
+      type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
 
-    if (type === 'file') {
-      const localImageUrl = files && window.URL.createObjectURL(files[0]);
-      updatedState = { ...cardState, [name]: localImageUrl };
-    } else {
-      updatedState = { ...cardState, [name]: value };
-      console.log(updatedState.designForm.backgroundColor);
+    if (cardState.contentForm.hasOwnProperty(name)) {
+      const updatedFormState: CardState['contentForm'] = {
+        ...cardState.contentForm,
+        [name]: stateValue,
+      };
+      dispatch(updateContentForm(updatedFormState));
+    } else if (cardState.designForm.hasOwnProperty(name)) {
+      const updatedFormState: CardState['designForm'] =
+        name !== 'backgroundColor'
+          ? {
+              ...cardState.designForm,
+              [name]: stateValue,
+            }
+          : {
+              ...cardState.designForm,
+              [name]: stateValue,
+              backgroundImage: null,
+            };
+      dispatch(updateDesignForm(updatedFormState));
+    } else if (cardState.designForm.hasOwnProperty(name)) {
+      const updatedFormState: CardState['infosForm'] = {
+        ...cardState.infosForm,
+        [name]: stateValue,
+      };
+      dispatch(updateInfosForm(updatedFormState));
     }
-    // if (name in cardState) {
-    // } else {
-    //   const stateObject = Object.keys(cardState).find(
-    //     (
-    //       item:
-    //         | CardState['contentForm']
-    //         | CardState['designForm']
-    //         | CardState['infosForm']
-    //         | string
-    //     ) => !(typeof item === 'string') && name in item
-    //   );
-    //   console.log(stateObject);
-    // }
-    dispatch(updateValues(updatedState));
-    console.log(name, value);
   };
 
   let inputComp: React.JSX.Element | undefined = undefined;
@@ -62,7 +72,7 @@ const InputComp = ({
             {...register(zSchemaName, {
               onChange: onHandleChange,
             })}
-            className="h-full bg-input border-inputBorder border-1 rounded-md w-full"
+            className="h-full bg-inputBgGrey border-inputBorder border-1 rounded-md w-full"
           />
         </div>
       </div>
@@ -75,7 +85,7 @@ const InputComp = ({
         </label>
         <select
           id={zSchemaName}
-          className="mt-2 w-full bg-input placeholder:text-placeholder border-inputBorder border-1 rounded-md p-2"
+          className="mt-2 w-full bg-inputBgGrey placeholder:text-placeholder border-inputBorder border-1 rounded-md p-2"
           {...register(zSchemaName, {
             onChange: onHandleChange,
           })}
@@ -172,6 +182,31 @@ const InputComp = ({
           onChange: onHandleChange,
         })}
       />
+    );
+  } else if (inputType === 'password') {
+    inputComp = (
+      <div className="relative">
+        <input
+          id={zSchemaName}
+          type={showPassword ? 'text' : 'password'}
+          placeholder={placeholder}
+          className={clsx(
+            'mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600'
+          )}
+          {...register(zSchemaName)}
+          disabled={disableInput}
+        />
+        <button
+          className="absolute top-3 right-2"
+          onClick={() => toggleShowPassword(!showPassword)}
+        >
+          {showPassword ? (
+            <EyeSlash size="24" className="text-gray-500" />
+          ) : (
+            <Eye size="24" className="text-gray-500" />
+          )}
+        </button>
+      </div>
     );
   } else {
     inputComp = (

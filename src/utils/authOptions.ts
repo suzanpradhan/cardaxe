@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 import { apiPaths } from '../app/api/apiConstants';
+import { toast } from 'react-toastify';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
@@ -21,14 +22,14 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const res = await fetch(apiPaths.login, {
+          const res = await fetch(`${apiPaths.baseUrl}${apiPaths.login}`, {
             method: 'POST',
             body: JSON.stringify(credentials),
             headers: { 'Content-Type': 'application/json' },
           });
           const data = await res.json();
-          console.log(data);
           if (data.errors) {
+            console.log(data.errors);
             // throw data;
             return null;
           }
@@ -95,6 +96,6 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/login',
-    signOut: '/login',
+    signOut: '/dashboard',
   },
 };
