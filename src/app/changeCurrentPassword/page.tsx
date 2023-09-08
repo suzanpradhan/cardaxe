@@ -10,8 +10,10 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { apiPaths } from '../api/apiConstants';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-type Z_SCHEMA_NAME = 'email' | 'password' | 'confirmPassword';
+type Z_SCHEMA_NAME = 'current_password' | 'new_password' | 'new_repassword';
 
 type INPUT_FEILDS_PROPS = {
   placeholder: string;
@@ -21,39 +23,42 @@ type INPUT_FEILDS_PROPS = {
 
 const ForgotPasswordSchema = z
   .object({
-    email: z.string().email().trim(),
-    password: z
+    current_password: z
       .string()
       .min(8, { message: 'Must be more than 8 characters' })
       .max(24, { message: 'Must be less than 24 characters' }),
-    confirmPassword: z
+    new_password: z
+      .string()
+      .min(8, { message: 'Must be more than 8 characters' })
+      .max(24, { message: 'Must be less than 24 characters' }),
+    new_repassword: z
       .string()
       .min(8, { message: 'Must be more than 8 characters' })
       .max(24, { message: 'Must be less than 24 characters' })
       .optional(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.new_password === data.new_repassword, {
     message: 'Passwords do not match',
-    path: ['confirmPassword'],
+    path: ['newRepassword'],
   });
 
 type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
 
 const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
   {
-    placeholder: 'Email',
-    type: 'email',
-    zSchemaName: 'email',
+    placeholder: 'Current Password',
+    type: 'password',
+    zSchemaName: 'current_password',
   },
   {
-    placeholder: 'Password',
+    placeholder: 'New Password',
     type: 'password',
-    zSchemaName: 'password',
+    zSchemaName: 'new_password',
   },
   {
-    placeholder: 'Confirm Password',
+    placeholder: 'Confirm New Password',
     type: 'password',
-    zSchemaName: 'confirmPassword',
+    zSchemaName: 'new_repassword',
   },
 ];
 
@@ -66,21 +71,31 @@ const page = () => {
     resolver: zodResolver(ForgotPasswordSchema),
   });
 
+  const { data: session } = useSession();
+  const router = useRouter();
+
   const submit = async (data: ForgotPasswordSchemaType) => {
+    console.log(session?.user?.token);
     axios({
       method: 'post',
-      url: apiPaths.baseUrl + apiPaths.changeCurrentPassword,
-      // url: '/http://127.0.0.1:8000/api/user/changeCurrentPassword/',
+      url: `${apiPaths.baseUrl}${apiPaths.changeCurrentPassword}`,
       data: data,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        Authorization: `JWT ${session?.user?.token}`,
+      },
     })
       .then(function (response) {
         toast.success('Your password has been reset');
+        router.push('/dashboard');
       })
-      .catch(function (AxiosError) {
-        const message = AxiosError.response.data.errors.errors[0];
-        console.log(message);
-        toast.error('Some error occured please wait');
+
+      .catch(function (error) {
+        console.log(error);
+        error.response.data.errors.detail &&
+          toast.error(error.response.data.errors.detail);
+        error?.response?.data?.errors?.errors[0] &&
+          toast.error(error?.response?.data?.errors?.errors[0]);
       });
   };
 

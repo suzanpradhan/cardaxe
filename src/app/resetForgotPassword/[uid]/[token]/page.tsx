@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { useParams, useRouter } from 'next/navigation';
+import { apiPaths } from '@/app/api/apiConstants';
 
 type Z_SCHEMA_NAME = 'password' | 'password2';
 
@@ -65,7 +66,7 @@ const page = () => {
   const submit = async (data: ForgotPasswordSchemaType) => {
     axios({
       method: 'post',
-      url: `http://127.0.0.1:8000/api/user/reset-password/${params.uid}/${params.token}/`,
+      url: `${apiPaths.baseUrl}${apiPaths.resetPassword}${params.uid}/${params.token}/`,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })

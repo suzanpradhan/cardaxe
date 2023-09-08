@@ -3,7 +3,8 @@ export const apiPaths = {
   baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}` + '/api/',
   register: 'user/register/',
   login: 'user/login/',
-  changeCurrentPassword: 'user/changeCurrentPassword/',
+  changeCurrentPassword: 'user/change-password/',
+  resetPassword: 'user/reset-password/',
   getCardTemplates: 'card/templates/',
   updateContent: 'card/update-content/',
 };
