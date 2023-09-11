@@ -38,6 +38,7 @@ const SocialMedia = () => {
     <FormWrapper>
       {SOCIAL_MEDIA_FEILDS.map((item, index) => (
         <SocialMediaForm
+          key={index}
           socialLinkName={item.socialLinkName}
           socialLinkTitle={item.socialLinkTitle}
           socialLinkLogo={item.socialLinkLogo}

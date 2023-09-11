@@ -4,39 +4,21 @@ import InputComp from '../InputComp';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/GlobalRedux/store';
 
-const ACCEPTED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/gif',
-];
-const MAX_FILE_SIZE = 5242880; // 5MB in bytes
+// const ACCEPTED_IMAGE_TYPES = [
+//   'image/jpeg',
+//   'image/jpg',
+//   'image/png',
+//   'image/gif',
+// ];
+// const MAX_FILE_SIZE = 5242880; // 5MB in bytes
 
 const MyCardDesignFormSchema = z.object({
   backgroundColor: z.string(),
   backgroundImage: z.string(),
-  // .instanceof(File)
-  // .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-  //   message: 'Invalid file type. Accepted types: JPEG, JPG, PNG, GIF.',
-  // })
-  // .refine((file) => file.size <= MAX_FILE_SIZE, {
-  //   message: `File size exceeds ${MAX_FILE_SIZE / 1024 / 1024}`,
-  // })
-  // .optional(),
-
   logoUrl: z.string(),
-  // .instanceof(File)
-  // .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-  //   message: 'Invalid file type. Accepted types: JPEG, JPG, PNG, GIF.',
-  // })
-  // .refine((file) => file.size <= MAX_FILE_SIZE, {
-  //   message: `File size exceeds ${MAX_FILE_SIZE / 1024 / 1024}`,
-  // })
-  // .optional(),
   prefix: z.string(),
 });
 type MyCardDesignFormSchemaType = z.infer<typeof MyCardDesignFormSchema>;
@@ -50,11 +32,7 @@ const MyCardsDesignForm = () => {
     prefix: cardState.contentForm.prefix,
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<MyCardDesignFormSchemaType>({
+  const { register, handleSubmit } = useForm<MyCardDesignFormSchemaType>({
     defaultValues,
     resolver: zodResolver(MyCardDesignFormSchema),
   });

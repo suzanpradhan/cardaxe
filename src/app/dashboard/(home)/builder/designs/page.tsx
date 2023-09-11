@@ -5,7 +5,7 @@ import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import React from 'react';
 
-const page = () => {
+const Designpage = () => {
   return (
     <div className="flex gap-4 flex-col">
       <MyCardsDesignForm />
@@ -14,4 +14,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Designpage;

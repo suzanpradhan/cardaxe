@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '@/components/dashboard/Sidebar';
 import TitleText from '@/components/TitleText';

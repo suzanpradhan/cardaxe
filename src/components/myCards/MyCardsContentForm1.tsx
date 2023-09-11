@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FormWrapper from '../FormWrapper';
-import { z } from 'zod';
 import InputComp from '../InputComp';
 import { InputFieldProps } from '@/types/appTypes';
 import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';

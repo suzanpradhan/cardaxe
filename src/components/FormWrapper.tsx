@@ -11,7 +11,6 @@ interface FormCardProps {
 
 const FormWrapper = ({
   children,
-  onSubmit,
   className,
   titleText,
   description,

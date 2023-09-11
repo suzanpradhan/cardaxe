@@ -1,10 +1,8 @@
 import React from 'react';
-import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import clsx from 'clsx';
 import { InputFieldProps } from '@/types/appTypes';
 
 const ACCEPTED_IMAGE_TYPES = [
@@ -62,15 +60,8 @@ const INPUT_FEILDS: InputFieldProps[] = [
   },
 ];
 
-const SHOW_ITEMS = 2;
-const SHOW_LAST_ELEMENT = 4;
-
 const CreateNewTeam = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<NewTeamSchemaType>({
+  const { register, handleSubmit } = useForm<NewTeamSchemaType>({
     resolver: zodResolver(NewTeamSchema),
   });
   const submitData = (data: NewTeamSchemaType) => {

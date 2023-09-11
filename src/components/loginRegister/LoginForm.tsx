@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 import InputComp from '../InputComp';
 import FormWrapper from '../FormWrapper';
 import ButtonForm from '../ButtonForm';
-import { apiPaths } from '@/app/api/apiConstants';
 
 type zSchemaName = 'email' | 'password';
 

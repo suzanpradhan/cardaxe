@@ -62,7 +62,7 @@ const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
   },
 ];
 
-const page = () => {
+const ChangeCurrentPassword = () => {
   const {
     register,
     handleSubmit,
@@ -133,4 +133,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ChangeCurrentPassword;

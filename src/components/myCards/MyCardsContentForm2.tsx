@@ -1,12 +1,7 @@
 import React from 'react';
 import FormWrapper from '../FormWrapper';
-import { z } from 'zod';
 import InputComp from '../InputComp';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { InputFieldProps } from '@/types/appTypes';
-import { RootState } from '@/app/GlobalRedux/store';
-import { useSelector } from 'react-redux';
 import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';
 
 const INPUT_FEILDS: InputFieldProps[] = [

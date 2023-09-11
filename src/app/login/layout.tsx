@@ -3,8 +3,6 @@
 import { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -17,7 +15,7 @@ const LoginLayout = ({
   children: React.ReactNode;
 }) => {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   // useEffect(() => {
   //   if (status === 'authenticated') {

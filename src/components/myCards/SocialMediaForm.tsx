@@ -32,15 +32,11 @@ const INPUT_FEILDS = [
 
 const SocialMediaForm = ({
   socialLinkTitle,
-  socialLinkName,
+  // socialLinkName,
   socialLinkLogo,
   placeholder,
 }: SocialMediaFormProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SocialsFormSchemaType>({
+  const { register } = useForm<SocialsFormSchemaType>({
     resolver: zodResolver(SocialsFormSchema),
   });
 

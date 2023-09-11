@@ -4,18 +4,18 @@ import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const page = () => {
+const DashboardPage = () => {
   const router = useRouter();
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = () => {
     router.push('./changeCurrentPassword');
   };
   return (
     <div className="p-4 ">
       <CardTemplate />
-      <button onClick={(e) => handleClick(e)}>Change password</button>
+      <button onClick={() => handleClick()}>Change password</button>
       <button onClick={() => signOut()}>signout</button>
     </div>
   );
 };
 
-export default page;
+export default DashboardPage;

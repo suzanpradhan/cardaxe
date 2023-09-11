@@ -32,11 +32,7 @@ const INPUT_FIELDS = [
 const MyCardsDesignSwitch = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const defaultValues = cardState.designForm;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SwitchFormSchemaType>({
+  const { register } = useForm<SwitchFormSchemaType>({
     defaultValues,
     resolver: zodResolver(SwitchFormSchema),
   });

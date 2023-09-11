@@ -2,7 +2,7 @@ import { Call, Sms, Location, Send2 } from 'iconsax-react';
 import React from 'react';
 
 const ICON_SIZE = '32';
-const ICON_CLASSNAME = 'text-grey-200';
+// const ICON_CLASSNAME = 'text-grey-200';
 
 const CONTACT_INFO = [
   {

@@ -5,14 +5,6 @@ import { RootState } from '@/app/GlobalRedux/store';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
-const CARD_DETAILS = {
-  cardHolder: 'Adam Smith',
-  logo: logo,
-  cardNumber: 5065454093,
-  email: 'info@websiteurl.com',
-  url: 'websiteurl.com',
-};
-
 const CardTemplate = () => {
   const cardState = useSelector((state: RootState) => state.card);
   return (

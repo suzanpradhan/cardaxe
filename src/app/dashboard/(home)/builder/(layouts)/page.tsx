@@ -6,10 +6,16 @@ import Parser from 'react-html-parser';
 
 import React from 'react';
 
-const layouts = () => {
+const LayoutPage = () => {
   const { isLoading, isError, isSuccess, data, error } = useGetCardsQuery('');
 
-  return <div>{data && Parser(data[0].html_code)}</div>;
+  return (
+    <div>
+      {isSuccess && data && Parser(data[0].html_code)}
+      {isLoading && 'Loading...'}
+      {isError && error && 'Error...'}
+    </div>
+  );
 };
 
-export default layouts;
+export default LayoutPage;

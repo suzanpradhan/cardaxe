@@ -2,15 +2,11 @@
 import { RootState } from '@/app/GlobalRedux/store';
 import { useUpdateContentsMutation } from '@/app/api/redux/api';
 import ButtonForm from '@/components/ButtonForm';
-import InputComp from '@/components/InputComp';
 import MyCardsContentForm1 from '@/components/myCards/MyCardsContentForm1';
 import MyCardsContentForm2 from '@/components/myCards/MyCardsContentForm2';
 import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
-import SwitchInput from '@/components/myCards/MyCardsContentSwitch';
-import { CardContentType, InputFieldProps } from '@/types/appTypes';
 import { camelToSnake } from '@/utils/generalFunctions';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams } from 'next/navigation';
 import React from 'react';
 import { UseFormRegister, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -50,15 +46,11 @@ const ContentFormSchema = z.object({
 
 type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
 
-const page = () => {
+const ContentsPage = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const defaultValues = cardState.contentForm;
   const [updateContent] = useUpdateContentsMutation();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ContentFormSchemaType>({
+  const { register, handleSubmit } = useForm<ContentFormSchemaType>({
     defaultValues,
     resolver: zodResolver(ContentFormSchema),
   });
@@ -66,9 +58,8 @@ const page = () => {
   const submitData = async () => {
     const newdata = camelToSnake(cardState.contentForm);
     console.log(newdata);
-    const id = 1
-    await updateContent({id ,...newdata}).then((res) => console.log(res));
-    
+    const id = 1;
+    await updateContent({ id, ...newdata }).then((res) => console.log(res));
   };
 
   // console.log(errors);
@@ -90,4 +81,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ContentsPage;

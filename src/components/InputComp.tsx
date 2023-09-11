@@ -35,13 +35,15 @@ const InputComp = ({
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
 
-    if (cardState.contentForm.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(cardState.contentForm, name)) {
       const updatedFormState: CardState['contentForm'] = {
         ...cardState.contentForm,
         [name]: stateValue,
       };
       dispatch(updateContentForm(updatedFormState));
-    } else if (cardState.designForm.hasOwnProperty(name)) {
+    } else if (
+      Object.prototype.hasOwnProperty.call(cardState.designForm, name)
+    ) {
       const updatedFormState: CardState['designForm'] =
         name !== 'backgroundColor'
           ? {
@@ -54,7 +56,9 @@ const InputComp = ({
               backgroundImage: null,
             };
       dispatch(updateDesignForm(updatedFormState));
-    } else if (cardState.designForm.hasOwnProperty(name)) {
+    } else if (
+      Object.prototype.hasOwnProperty.call(cardState.infosForm, name)
+    ) {
       const updatedFormState: CardState['infosForm'] = {
         ...cardState.infosForm,
         [name]: stateValue,
@@ -116,6 +120,7 @@ const InputComp = ({
           type={inputType}
           role="switch"
           id={zSchemaName}
+          aria-checked="true"
           {...register(zSchemaName, {
             onChange: onHandleChange,
           })}

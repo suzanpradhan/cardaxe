@@ -1,9 +1,8 @@
-import { NextAuthOptions, User } from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 import { apiPaths } from '../app/api/apiConstants';
-import { toast } from 'react-toastify';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
@@ -57,7 +56,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger }) {
+    async jwt({ token, user }) {
       console.log('testing', user);
       // if (trigger == 'update') {
       //   const response = await fetch(

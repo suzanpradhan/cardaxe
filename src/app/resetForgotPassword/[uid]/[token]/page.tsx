@@ -52,7 +52,7 @@ const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
   },
 ];
 
-const page = () => {
+const ResetPage = () => {
   const {
     register,
     handleSubmit,
@@ -70,7 +70,7 @@ const page = () => {
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-      .then(function (response) {
+      .then(function () {
         toast.success('Your password has been reset');
         router.push('/login');
       })
@@ -112,4 +112,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ResetPage;

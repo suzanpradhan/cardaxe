@@ -17,7 +17,7 @@ const ForgotPasswordSchema = z.object({
 
 type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
 
-const page = () => {
+const ConfirmEmail = () => {
   const [disableInput, setDisableInput] = useState<boolean>(false);
   const {
     register,
@@ -76,4 +76,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ConfirmEmail;

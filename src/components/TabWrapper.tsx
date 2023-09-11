@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-interface TabWrapperProps {
-  className?: string;
-}
+// interface TabWrapperProps {
+//   className?: string;
+// }
 
 const TAB_ELEMENTS = ['Profile', 'Analytics', 'Access Control', 'Setings'];
 
-const Tabwrapper = ({ className }: TabWrapperProps) => {
+const Tabwrapper = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
     <ul className="flex ">

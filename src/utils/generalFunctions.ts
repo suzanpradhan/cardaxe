@@ -1,6 +1,5 @@
 import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
 import { CardContentType, SnakeCardContentType } from '@/types/appTypes';
-import { TypeOf } from 'zod';
 
 export const fistLetterToLowerCase = (inputString: string) => {
   if (inputString.length === 0) {
@@ -29,7 +28,7 @@ export const camelToSnake = (obj: CardContentType): SnakeCardContentType => {
   const snakeObjTest: Record<string, any> = {};
 
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const snakeKey = key.replace(
         /[A-Z]/g,
         (match) => `_${match.toLowerCase()}`

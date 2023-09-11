@@ -24,9 +24,9 @@ export const cardApi = createApi({
       transformResponse: (response: { data: SnakeCardContentType }) =>
         response.data,
       transformErrorResponse: (
-        response: { status: string | number },
-        meta,
-        arg
+        response: { status: string | number }
+        // meta,
+        // arg
       ) => response.status,
     }),
   }),
