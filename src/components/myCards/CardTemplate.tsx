@@ -18,7 +18,7 @@ const CardTemplate = () => {
   return (
     <div
       className={clsx(
-        '  w-96 h-60 rounded-lg p-6 grid grid-cols-2 mx-auto relative bg-transparent 2xl:h-72 2xl:w-130'
+        '  w-full h-60 rounded-lg p-6 grid grid-cols-2 mx-auto relative bg-transparent 2xl:h-72 2xl:w-130'
       )}
     >
       {cardState.designForm.backgroundImage ? (

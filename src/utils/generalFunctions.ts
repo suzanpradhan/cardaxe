@@ -46,6 +46,13 @@ export const camelToSnake = (obj: CardContentType): SnakeCardContentType => {
   return snakeObj;
 };
 
+export const convertStringToHTML = (htmlString: string) => {
+  const parser = new DOMParser();
+  const html = parser.parseFromString(htmlString, 'text/html');
+
+  return html.body;
+};
+
 // export const handleStateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //   const dispatch = useDispatch();
 //   const cardState: CardState = useSelector((state: RootState) => state.card);

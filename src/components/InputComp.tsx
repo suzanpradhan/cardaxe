@@ -25,6 +25,11 @@ const InputComp = ({
   const dispatch = useDispatch();
   const cardState: CardState = useSelector((state: RootState) => state.card);
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    toggleShowPassword(!showPassword);
+  };
+
   const onHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, files } = e.target;
     const stateValue =
@@ -198,7 +203,7 @@ const InputComp = ({
         />
         <button
           className="absolute top-3 right-2"
-          onClick={() => toggleShowPassword(!showPassword)}
+          onClick={(e) => handleClick(e)}
         >
           {showPassword ? (
             <EyeSlash size="24" className="text-gray-500" />

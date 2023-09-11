@@ -11,10 +11,15 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
     router.push('/dashboard/' + item.link);
   };
   useEffect(() => {
-    if (item.label !== 'Home') {
-      setToggle(pathName.startsWith('/dashboard/' + item.link) ? true : false);
+    if (item.label === 'Home') {
+      setToggle(pathName.endsWith('/dashboard'));
+    } else if (item.label === 'My Cards') {
+      setToggle(
+        pathName.startsWith('/dashboard/' + item.link) ||
+          pathName.includes('/dashboard/builder')
+      );
     } else {
-      setToggle(pathName.endsWith('/dashboard') ? true : false);
+      setToggle(pathName.startsWith('/dashboard/' + item.link));
     }
   }, [pathName, setToggle, item]);
   return (

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '@/components/dashboard/Sidebar';
 import TitleText from '@/components/TitleText';
+import { toast } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -26,33 +27,32 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (status === Status.unauthenticated) {
       router.push('/login');
+      toast.info('Please login to continue');
       return;
     }
   }, [session]);
-
-  if (status === Status.loading) {
-    return <p>loading...</p>;
-  }
-
-  if (status === Status.authenticated) {
-    return (
-      <section className="grid items-start relative md:grid-flow-cols lg:grid-cols-dashboard-layout">
-        {/* for movile view */}
-        <div className="h-20 md:hidden">
-          <TitleText isSideBarComp />
-        </div>
-        <div className="z-10 md:hidden">
-          <Sidebar />
-        </div>
-        {/* for web view */}
-        <div className="md:w-full md:sticky md:top-0 hidden  md:block  md:h-screen">
-          <TitleText isSideBarComp />
-          <Sidebar />
-        </div>
-        <div className="scroll-smooth overflow-auto">{children}</div>
-      </section>
-    );
-  }
+  return (
+    <div>
+      {status === Status.loading && <section>Loading</section>}
+      {status === Status.authenticated && (
+        <section className="grid items-start relative md:grid-flow-cols lg:grid-cols-dashboard-layout">
+          {/* for movile view */}
+          <div className="h-20 md:hidden">
+            <TitleText isSideBarComp />
+          </div>
+          <div className="z-10 md:hidden">
+            <Sidebar />
+          </div>
+          {/* for web view */}
+          <div className="md:w-full md:sticky md:top-0 hidden  md:block  md:h-screen">
+            <TitleText isSideBarComp />
+            <Sidebar />
+          </div>
+          <div className="scroll-smooth overflow-auto">{children}</div>
+        </section>
+      )}
+    </div>
+  );
 };
 
 export default DashboardLayout;

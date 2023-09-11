@@ -20,33 +20,24 @@ const LoginLayout = ({
   const { data: session, status } = useSession();
 
   // useEffect(() => {
-  //   // if (status === 'authenticated') {
-  //   //   router.push('./dashboard');
-  //   //   return;
-  //   // }
-  //   //Runs only on the first render
-  // }, [status, session]);
+  //   if (status === 'authenticated') {
+  //     toast.success('User already logged in');
+  //     router.push('./dashboard');
+  //     return;
+  //   }
+  // }, [status]);
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      toast.success('User already logged in');
-      router.push('./dashboard');
-      return;
-    }
-  }, [status]);
-
-  if (status === 'loading') {
-    return <p>loading...</p>;
+  if (status === 'authenticated') {
+    router.push('./dashboard');
+    return;
   }
 
-  if (status === 'unauthenticated') {
-    return (
-      <section>
-        <nav></nav>
-        {children}
-      </section>
-    );
-  }
+  return (
+    <section>
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'unauthenticated' && children}
+    </section>
+  );
 };
 
 export default LoginLayout;
