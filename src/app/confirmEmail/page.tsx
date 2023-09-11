@@ -5,7 +5,6 @@ import InputComp from '@/components/InputComp';
 import FormWrapper from '@/components/FormWrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
