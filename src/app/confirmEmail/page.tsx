@@ -27,8 +27,6 @@ const ConfirmEmail = () => {
     resolver: zodResolver(ForgotPasswordSchema),
   });
 
-  const router = useRouter();
-
   const submit = async (data: ForgotPasswordSchemaType) => {
     axios({
       method: 'post',

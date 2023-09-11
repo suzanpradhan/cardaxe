@@ -85,7 +85,7 @@ const ChangeCurrentPassword = () => {
         Authorization: `JWT ${session?.user?.token}`,
       },
     })
-      .then(function (response) {
+      .then(function () {
         toast.success('Your password has been reset');
         router.push('/dashboard');
       })

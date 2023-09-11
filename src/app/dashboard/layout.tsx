@@ -30,7 +30,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       toast.info('Please login to continue');
       return;
     }
-  }, [session]);
+  }, [session, router, status]);
   return (
     <div>
       {status === Status.loading && <section>Loading</section>}

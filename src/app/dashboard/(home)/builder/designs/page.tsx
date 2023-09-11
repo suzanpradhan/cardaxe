@@ -1,6 +1,5 @@
 'use client';
 
-import CardPreview from '@/components/myCards/PreviewSection';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import React from 'react';

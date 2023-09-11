@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../../public/logo.png';
 import Image from 'next/image';
 import { RootState } from '@/app/GlobalRedux/store';
 import { useSelector } from 'react-redux';
