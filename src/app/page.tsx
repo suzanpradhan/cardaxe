@@ -34,7 +34,7 @@ export default function Home() {
             headingText="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             paragraphText="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit."
           />
-          <Button isHeader={false} label="Get Started" />
+          <Button href="/dashboard" isHeader={false} label="Get Started" />
         </div>
         <div className="pt-40 flex justify-between">
           <Features
@@ -133,7 +133,7 @@ export default function Home() {
             hic minima assumenda iusto praesentium culpa modi cupiditate ipsam!
             Eos.
           </p>
-          <Button label="Get Started" />
+          <Button label="Get Started" href="/dashboard"/>
         </div>
         <div className="text flex flex-col gap-16 p-20 max-w-4xl mx-auto">
           <ContentHeading
