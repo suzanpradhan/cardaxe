@@ -10,16 +10,6 @@ import ClientsOpinion from './ClientsOpinion';
 import { clientOpinion } from '../app/module';
 
 const Caraousel = () => {
-  const params = {
-    spaceBetween: 30,
-    slidesPerView: 3,
-    modules: Zoom,
-    Navigation,
-    navigation: true,
-    zoom: true,
-    className: 'w-full my-8',
-    on: {},
-  };
   return (
     <Swiper
       spaceBetween={30}

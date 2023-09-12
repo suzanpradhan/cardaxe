@@ -25,6 +25,7 @@ const RegisterationForm = () => {
       <form className="flex flex-col gap-4 py-2">
         {REGISTRATION_ITEMS.map((item, index) => (
           <input
+            key={index}
             type={item.type}
             placeholder={item.placeholder}
             className="bg-input placeholder:text-placeholder border-inputBorder border-1 rounded-sm p-2"

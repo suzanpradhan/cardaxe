@@ -10,6 +10,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const content1: Story = {
+export const Content1: Story = {
   args: { headingTitle: 'Quod maxime placeat option facere possimus' },
 };

@@ -10,7 +10,7 @@ const page = () => {
     <main className="flex h-screen">
       <div className="h-full bg-banner  w-140 relative">
         <h2 className=" text-white  px-20 text-4xl font-extrabold absolute top-64 right-10">
-          "Its so impactful it might just change your life..."
+          &quot;Its so impactful it might just change your life...&quot;
         </h2>
       </div>
       <div className="flex flex-col flex-grow items-center p-4">

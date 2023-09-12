@@ -11,13 +11,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const list1: Story = {
+export const List1: Story = {
   args: {
     listItems: ['About', 'Services', 'Pricing', 'Blog'],
   },
 };
 
-export const list2: Story = {
+export const List2: Story = {
   args: {
     listItems: [
       'Help and Support',
