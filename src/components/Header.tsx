@@ -1,4 +1,5 @@
-import Button from './Button';
+import Button from './ButtonRounded';
+import TitleText from './TitleText';
 
 interface HEADER_HEADING_PROPS {
   headingName: string;
@@ -10,12 +11,12 @@ const Header = () => {
     { headingName: 'About', headingHref: '/' },
     { headingName: 'Pricing', headingHref: '/' },
     { headingName: 'Services', headingHref: '/' },
-    { headingName: 'Login', headingHref: '/' },
+    { headingName: 'Login', headingHref: '/login' },
     { headingName: 'Register', headingHref: '/register' },
   ];
   return (
     <div className="flex justify-between py-8">
-      <h1 className="text-4xl font-extrabold">cardaxe.</h1>
+      <TitleText />
       <nav className="flex">
         {HEADER_HEADINGS.map((heading, index) => (
           <Button

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import FaqCollection from '../components/FaqCollection';
+import FaqCollection from '../components/landingPage/FaqCollection';
 
 const meta = {
   title: 'Example/FaqCollection',
@@ -11,6 +11,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Main: Story = {
+export const MyFaqCollection: Story = {
   args: {},
 };
