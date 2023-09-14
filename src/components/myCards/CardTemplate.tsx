@@ -36,7 +36,7 @@ const CardTemplate = () => {
       </h1>
       <div
         id="logo"
-        className="col-span-1 col-start-2 h-20 w-20  relative justify-self-end"
+        className="col-span-1 col-start-2 h-20 w-20  relative justify-self-end bg-transparent"
       >
         {cardState.designForm.logoUrl && (
           <Image
@@ -45,6 +45,7 @@ const CardTemplate = () => {
             fill
             objectFit="contain"
             sizes="(max-width: 768px) 100vw, 300px"
+            className="bg-transparent"
           />
         )}
       </div>
