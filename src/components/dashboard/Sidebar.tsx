@@ -37,7 +37,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
   {
     id: 2,
     label: 'My Cards',
-    link: 'myCards',
+    link: 'mycards',
     icon: (
       <Cards
         size={ICONS_SIZE}
