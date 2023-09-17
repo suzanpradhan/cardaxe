@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputComp from '../InputComp';
 import FormWrapper from '../FormWrapper';
 import ButtonForm from '../ButtonForm';
+import { apiPaths } from '@/app/api/apiConstants';
 
 type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
 
@@ -71,7 +72,7 @@ const RegisterationForm: React.FC = () => {
 
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/api/user/register/',
+      url: `${apiPaths.baseUrl}${apiPaths.register}`,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
