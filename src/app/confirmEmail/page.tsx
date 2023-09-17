@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
+import { apiPaths } from '../api/apiConstants';
 
 const ForgotPasswordSchema = z.object({
   email: z.string().email().trim(),
@@ -29,7 +30,7 @@ const ConfirmEmail = () => {
   const submit = async (data: ForgotPasswordSchemaType) => {
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/api/user/send-forgot-password-email/',
+      url: `${apiPaths.baseUrl}${apiPaths.sendForgotPasswordEmail}`,
       data: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     })

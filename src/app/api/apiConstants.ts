@@ -5,6 +5,7 @@ export const apiPaths = {
   login: 'user/login/',
   changeCurrentPassword: 'user/change-password/',
   resetPassword: 'user/reset-password/',
+  sendForgotPasswordEmail: 'user/send-forgot-password-email/',
   getCardTemplates: 'card/templates/',
   updateContent: 'card/update-content/',
 };
