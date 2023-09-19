@@ -2,7 +2,12 @@
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export interface CardState {
+export type InfosFormStateType = {
+  url: string;
+  displayText: string;
+};
+
+export type CardState = {
   contentForm: {
     prefix: string;
     firstName: string;
@@ -31,16 +36,16 @@ export interface CardState {
   };
 
   infosForm: {
-    cardId: number;
-    cardInfosId: number;
-    url: string[];
-    displayText: string[];
+    instagram: InfosFormStateType;
+    facebook: InfosFormStateType;
+    linkedIn: InfosFormStateType;
+    twitter: InfosFormStateType;
   };
 
   otherForms: {
     isDefault: boolean;
   };
-}
+};
 
 const initialState: CardState = {
   contentForm: {
@@ -66,12 +71,24 @@ const initialState: CardState = {
     darkMode: false,
   },
   infosForm: {
-    cardInfosId: 1234,
-    cardId: 123456789,
-    url: ['www.some.com'],
-    displayText: ['Displaytxt'],
+    instagram: {
+      url: 'www.instagram.com',
+      displayText: 'Adam Sandler',
+    },
+    facebook: {
+      url: 'www.facebook.com',
+      displayText: 'Adam Sandler',
+    },
+    linkedIn: {
+      url: 'www.linkdedin.com',
+      displayText: 'Adam Sandler',
+    },
+    twitter: {
+      url: 'www.twitter.com',
+      displayText: 'Adam Sandler',
+    },
   },
-  
+
   otherForms: {
     isDefault: true,
   },
@@ -96,16 +113,6 @@ export const cardSlice = createSlice({
     updateInfosForm: (state, action: PayloadAction<CardState['infosForm']>) => {
       state.infosForm = { ...action.payload };
     },
-    // updateValues: (state, action: PayloadAction<UpdatedStateObjectType>) => {
-    //   const { payloadObject, payloadName } = action.payload;
-    //   if (payloadName === 'contentForm') {
-    //     state.contentForm = { ...state.contentForm, ...payloadObject };
-    //   } else if (payloadName === 'designForm') {
-    //     state.designForm = { ...state.designForm, ...payloadObject };
-    //   } else if (payloadName === 'infosForm') {
-    //     state.infosForm = { ...state.infosForm, ...payloadObject };
-    //   }
-    // },
   },
 });
 

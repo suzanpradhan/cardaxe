@@ -17,13 +17,7 @@ export type InputFieldProps = {
   inputLabel?: string;
   className?: string;
   options?: string[];
-  onHandleChange?: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    stateObject:
-      | CardState['contentForm']
-      | CardState['designForm']
-      | CardState['infosForm']
-  ) => void;
+  socialLinkName?: string;
 };
 
 export type CardTemplatesType = {

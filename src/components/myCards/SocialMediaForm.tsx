@@ -22,7 +22,7 @@ type SocialsFormSchemaType = z.infer<typeof SocialsFormSchema>;
 const INPUT_FEILDS = [
   {
     type: 'text',
-    zSchemaName: 'socialLink',
+    zSchemaName: 'url',
   },
   {
     type: 'text',
@@ -32,7 +32,7 @@ const INPUT_FEILDS = [
 
 const SocialMediaForm = ({
   socialLinkTitle,
-  // socialLinkName,
+  socialLinkName,
   socialLinkLogo,
   placeholder,
 }: SocialMediaFormProps) => {
@@ -54,6 +54,8 @@ const SocialMediaForm = ({
       <div className="shrink-1 flex flex-col gap-1 grow">
         {INPUT_FEILDS.map((item, index) => (
           <InputComp
+            inputCompType="normal"
+            socialLinkName={socialLinkName}
             key={index}
             inputType={item.type}
             placeholder={index === 0 ? placeholder : 'Display Text'}

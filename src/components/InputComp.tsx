@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/GlobalRedux/store';
 import {
   CardState,
+  InfosFormStateType,
   updateContentForm,
   updateDesignForm,
   updateInfosForm,
 } from '@/app/GlobalRedux/Features/cardSlice';
 import { Eye, EyeSlash } from 'iconsax-react';
+import produce from 'immer';
+import SocialMediaForm from './myCards/SocialMediaForm';
 
 const InputComp = ({
   inputCompType,
@@ -20,6 +23,7 @@ const InputComp = ({
   disableInput,
   inputLabel,
   className,
+  socialLinkName,
 }: InputFieldProps) => {
   const [showPassword, toggleShowPassword] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -56,14 +60,31 @@ const InputComp = ({
               backgroundImage: null,
             };
       dispatch(updateDesignForm(updatedFormState));
-    } else if (
-      Object.prototype.hasOwnProperty.call(cardState.infosForm, name)
-    ) {
-      const updatedFormState: CardState['infosForm'] = {
-        ...cardState.infosForm,
-        [name]: stateValue,
-      };
+    }
+    // (
+    //   Object.prototype.hasOwnProperty.call(
+    //     cardState.infosForm[socialLinkName as keyof CardState['infosForm']],
+    //     name
+    //   )
+    // )
+    else {
+      console.log(cardState);
+      const updatedFormState: CardState['infosForm'] = produce(
+        cardState.infosForm,
+        (draft: CardState['infosForm']) => {
+          draft[socialLinkName as keyof CardState['infosForm']][
+            name as keyof InfosFormStateType
+          ] = stateValue;
+        }
+      );
+      console.log(updatedFormState);
       dispatch(updateInfosForm(updatedFormState));
+
+      // const updatedFormState: CardState['infosForm'] = {
+      //   ...cardState.infosForm,
+      //   [name]: stateValue,
+      // };
+      // dispatch(updateInfosForm(updatedFormState));
     }
   };
 
@@ -219,6 +240,7 @@ const InputComp = ({
       </div>
     );
   } else {
+    // for login and register
     inputComp = (
       <input
         id={zSchemaName}
