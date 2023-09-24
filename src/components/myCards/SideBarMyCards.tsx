@@ -65,8 +65,8 @@ const SideBarMyCards = () => {
           key={index}
           onClick={(e) => handleClick(e, index, item)}
           className={clsx(
-            'flex flex-col items-center h-24 justify-center rounded-md hover:text-blue-600',
-            toggleTab !== index ? 'text-slate-600' : 'text-blue-700 bg-blue-200'
+            'flex flex-col items-center h-24 justify-center rounded-md hover:text-blueTheme',
+            toggleTab !== index ? 'text-grayfont' : 'text-blueTheme bg-blueBg'
           )}
         >
           {item.icon}

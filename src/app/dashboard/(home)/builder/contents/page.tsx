@@ -8,25 +8,9 @@ import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
 import { camelToSnake } from '@/utils/generalFunctions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { UseFormRegister, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { z } from 'zod';
-
-export type RegisterType = UseFormRegister<{
-  prefix: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  suffix: string;
-  bio: string;
-  phone: string;
-  website: string;
-  email: string;
-  // isDefault: boolean;
-  designation: string;
-  department: string;
-  company: string;
-}>;
 
 const ContentFormSchema = z.object({
   prefix: z.string(),
@@ -59,7 +43,9 @@ const ContentsPage = () => {
     const newdata = camelToSnake(cardState.contentForm);
     console.log(newdata);
     const id = 1;
-    await updateContent({ id, ...newdata }).then((res) => console.log(res));
+    await updateContent({ id, ...newdata })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   // console.log(errors);
@@ -69,13 +55,6 @@ const ContentsPage = () => {
       <MyCardsContentForm1 register={register} />
       <MyCardsContentForm2 register={register} />
       <MyCardsContentForm3 register={register} />
-      {/* <InputComp
-        zSchemaName="isDefault"
-        inputCompType="switch"
-        inputLabel="Is Default?"
-        inputType="checkbox"
-        register={register}
-      /> */}
       <ButtonForm label="submit" />
     </form>
   );

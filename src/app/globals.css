@@ -154,3 +154,8 @@ select {
   margin-top: 10px;
   margin-left: 10px;
 }
+
+.css-13cymwt-control {
+  background-color: transparent !important;
+  border-width: 0px !important;
+}

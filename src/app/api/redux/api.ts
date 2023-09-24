@@ -12,10 +12,7 @@ export const cardApi = createApi({
       query: () => `${apiPaths.getCardTemplates}`,
     }),
 
-    updateContents: builder.mutation<
-      SnakeCardContentType,
-      SnakeCardContentType
-    >({
+    updateContents: builder.mutation<Record<string, any>, Record<string, any>>({
       query: ({ id, ...cardDesign }) => ({
         url: `${apiPaths.updateContent}${id}/`,
         method: 'PUT',

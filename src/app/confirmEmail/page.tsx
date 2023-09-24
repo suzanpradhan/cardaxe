@@ -64,7 +64,7 @@ const ConfirmEmail = () => {
               disableInput={disableInput}
             />
             {errors.email && (
-              <p className="text-xs text-red-600">{errors.email?.message}</p>
+              <p className="text-xs text-redError">{errors.email?.message}</p>
             )}
           </div>
           <ButtonForm label="Send Email" disableInput={disableInput} />

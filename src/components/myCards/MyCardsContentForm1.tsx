@@ -2,7 +2,7 @@ import React from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 import { InputFieldProps } from '@/types/appTypes';
-import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';
+import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -37,7 +37,17 @@ const INPUT_FEILDS: InputFieldProps[] = [
   },
 ];
 
-const MyCardsContentForm1 = ({ register }: { register: RegisterType }) => {
+const MyCardsContentForm1 = ({
+  register,
+}: {
+  register: Record<string, any>;
+}) => {
+  const selectOptions = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
   return (
     <FormWrapper>
       <div className="flex flex-col gap-3">
@@ -51,6 +61,12 @@ const MyCardsContentForm1 = ({ register }: { register: RegisterType }) => {
             key={index}
           />
         ))}
+        <InputComp
+          zSchemaName="none"
+          inputCompType="select"
+          options={selectOptions}
+          inputLabel="Tags"
+        />
       </div>
     </FormWrapper>
   );

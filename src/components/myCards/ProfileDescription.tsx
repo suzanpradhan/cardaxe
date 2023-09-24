@@ -17,18 +17,18 @@ const PROFILE_DETAILS_BUTTONS = [
     key={1}
     size="50"
     variant="Bulk"
-    className="active:ring-blue-600 active:ring-2 hover:shadow-md rounded-full text-blue-600"
+    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
   />,
   <Share
     key={2}
     size="50"
-    className="active:ring-blue-600 active:ring-2 hover:shadow-md rounded-full text-blue-600"
+    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
     variant="Bold"
   />,
   <MoreCircle
     key={3}
     size="50"
-    className="active:ring-blue-600 active:ring-2 hover:shadow-md rounded-full text-blue-600"
+    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
     variant="Bulk"
   />,
 ];
@@ -39,7 +39,7 @@ const ProfileDescription = () => {
   return (
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
-        <div className="bg-blue-600 h-[120px] w-[120px] relative rounded-full">
+        <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full">
           {cardState.designForm.logoUrl && (
             <Image
               src={cardState.designForm.logoUrl}

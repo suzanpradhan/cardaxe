@@ -90,7 +90,7 @@ const LoginForm: React.FC = () => {
                 zSchemaName={item.zSchemaName}
               />
               {errors[item.zSchemaName] && (
-                <p className="text-xs text-red-600">
+                <p className="text-xs text-redError">
                   {errors[item.zSchemaName]?.message}
                 </p>
               )}
@@ -99,7 +99,7 @@ const LoginForm: React.FC = () => {
           <Link
             href="/confirmEmail"
             type="button"
-            className="text-gray-400 text-right -mt-2 mb-2 hover:underline hover:text-blue-600"
+            className="text-grayfont text-right -mt-2 mb-2 hover:underline hover:text-blueTheme"
           >
             Forgot Password
           </Link>

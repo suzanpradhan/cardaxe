@@ -69,14 +69,6 @@ const MyCardsDesignForm = () => {
           inputLabel="Background Image"
           placeholder="Choose Image"
         />
-        {/* <InputComp
-          inputCompType="normal"
-          inputType="text"
-          zSchemaName="prefix"
-          register={register}
-          inputLabel="Prefix"
-          placeholder="asdfds"
-        /> */}
         <InputComp
           inputCompType="file"
           inputType="file"

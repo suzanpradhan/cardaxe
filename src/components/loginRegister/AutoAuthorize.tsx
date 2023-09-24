@@ -18,10 +18,10 @@ const AutoAuthorize = () => {
         <FcGoogle />
       </button>
       <Link href="https://www.facebook.com/" className="text-2xl p-2 shadow-md">
-        <SiFacebook className="text-blue-700" />
+        <SiFacebook className="text-blueTheme" />
       </Link>
       <Link href="https://www.twitter.com/" className="text-2xl p-2 shadow-md">
-        <AiFillTwitterCircle className="text-blue-700" />
+        <AiFillTwitterCircle className="text-blueTheme" />
       </Link>
     </div>
   );

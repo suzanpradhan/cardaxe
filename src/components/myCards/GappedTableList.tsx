@@ -27,7 +27,7 @@ const GappedTableList = ({ list }: Props) => {
             />
           </div>
           <p className="grow font-bold shrink">{item.name}</p>
-          <ArrowRight2 size="28" variant="Outline" className="text-gray-500" />
+          <ArrowRight2 size="28" variant="Outline" className="text-grayfont" />
         </div>
       ))}
     </div>

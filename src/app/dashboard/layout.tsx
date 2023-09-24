@@ -27,9 +27,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [session, router, status]);
   return (
     <div>
-      {status === Status.loading && <section>Loading</section>}
+      {status === Status.loading && <section>Loading...</section>}
       {status === Status.authenticated && (
-        <section className="grid items-start relative md:grid-flow-cols lg:grid-cols-dashboard-layout">
+        <section className="grid items-start relative sm:grid-flow-cols md:grid-cols-dashboard-layout">
           {/* for movile view */}
           <div className="h-20 md:hidden">
             <TitleText isSideBarComp />
@@ -38,7 +38,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <Sidebar />
           </div>
           {/* for web view */}
-          <div className="md:w-full md:sticky md:top-0 hidden  md:block  md:h-screen">
+          <div className="sm:w-full sm:sticky sm:top-0 hidden  sm:block  sm:h-screen">
             <TitleText isSideBarComp />
             <Sidebar />
           </div>

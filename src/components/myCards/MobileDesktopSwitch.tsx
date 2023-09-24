@@ -40,7 +40,7 @@ const MobileDesktopSwitch = () => {
             ' rounded flex px-3 py-2',
             view === item.value
               ? 'text-white bg-black '
-              : 'text-slate-500 bg-componentBgGrey'
+              : 'text-grayfont bg-componentBgGrey'
           )}
         >
           {item.icon}

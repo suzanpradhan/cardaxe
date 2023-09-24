@@ -2,7 +2,7 @@ import React from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 import { InputFieldProps } from '@/types/appTypes';
-import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';
+import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -22,7 +22,11 @@ const INPUT_FEILDS: InputFieldProps[] = [
   },
 ];
 
-const MyCardsContentForm2 = ({ register }: { register: RegisterType }) => {
+const MyCardsContentForm2 = ({
+  register,
+}: {
+  register: Record<string, any>;
+}) => {
   return (
     <FormWrapper>
       <div className="flex flex-col gap-3">

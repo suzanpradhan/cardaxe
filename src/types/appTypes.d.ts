@@ -16,7 +16,7 @@ export type InputFieldProps = {
   disableInput?: boolean;
   inputLabel?: string;
   className?: string;
-  options?: string[];
+  options?: { value: string; label: string }[];
   socialLinkName?: string;
 };
 

@@ -3,15 +3,12 @@ import Image from 'next/image';
 import { RootState } from '@/app/GlobalRedux/store';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
+import CardLayout from './CardLayout';
 
 const CardTemplate = () => {
   const cardState = useSelector((state: RootState) => state.card);
   return (
-    <div
-      className={clsx(
-        '  w-full h-60 rounded-lg p-6 grid grid-cols-2 mx-auto relative bg-transparent 2xl:h-72 2xl:w-130'
-      )}
-    >
+    <CardLayout>
       {cardState.designForm.backgroundImage ? (
         <Image
           src={cardState.designForm.backgroundImage as string}
@@ -51,14 +48,11 @@ const CardTemplate = () => {
       </div>
 
       <div className="col-span-2">
-        <p>{cardState.infosForm.cardId}</p>
         <p>{cardState.contentForm.email}</p>
       </div>
-      <h2 className="col-span-2 self-end font-bold">
-        {cardState.infosForm.url}
-      </h2>
+      <h2 className="col-span-2 self-end font-bold"></h2>
       <p>{cardState.designForm.backgroundColor}</p>
-    </div>
+    </CardLayout>
   );
 };
 

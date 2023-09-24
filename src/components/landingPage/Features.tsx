@@ -9,7 +9,7 @@ interface Props {
 const Features = ({ headingText, paragraphText, featurePic }: Props) => {
   return (
     <div className="flex flex-col gap-1 items-center w-72 text-center text-black">
-      <div className="w-24 h-24 rounded-full bg-orange-500 relative mb-4">
+      <div className="w-24 h-24 rounded-full relative mb-4">
         <Image
           src={featurePic}
           alt="image"

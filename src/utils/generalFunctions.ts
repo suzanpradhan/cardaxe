@@ -24,8 +24,8 @@ export const findObjectContainingElement = (
   return null; // Return null if the element was not found in any object.
 };
 
-export const camelToSnake = (obj: CardContentType): SnakeCardContentType => {
-  const snakeObjTest: Record<string, any> = {};
+export const camelToSnake = <T>(obj: T): Record<string, any> => {
+  const snakeObj: Record<string, any> = {};
 
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -33,17 +33,33 @@ export const camelToSnake = (obj: CardContentType): SnakeCardContentType => {
         /[A-Z]/g,
         (match) => `_${match.toLowerCase()}`
       );
-      snakeObjTest[snakeKey as keyof typeof snakeObj] =
-        obj[key as keyof typeof obj];
+      snakeObj[snakeKey] = obj[key];
     }
   }
 
-  const snakeObj: SnakeCardContentType = {
-    ...snakeObjTest,
-  } as SnakeCardContentType;
-
   return snakeObj;
 };
+
+// export const camelToSnake = <T>(obj: T): T => {
+//   const snakeObjTest: Record<string, any> = {};
+
+//   for (const key in obj) {
+//     if (Object.prototype.hasOwnProperty.call(obj, key)) {
+//       const snakeKey = key.replace(
+//         /[A-Z]/g,
+//         (match) => `_${match.toLowerCase()}`
+//       );
+//       snakeObjTest[snakeKey as keyof typeof snakeObj] =
+//         obj[key as keyof typeof obj];
+//     }
+//   }
+
+//   const snakeObj = {
+//     ...snakeObjTest,
+//   };
+
+//   return snakeObj;
+// };
 
 export const convertStringToHTML = (htmlString: string) => {
   const parser = new DOMParser();

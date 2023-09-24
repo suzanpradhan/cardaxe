@@ -33,10 +33,10 @@ const ContactInfo = () => {
       {CONTACT_INFO.map((item, index) => (
         <div key={index} className="flex justify-between p-2">
           <div className="grid">
-            <p className="text-gray-500">{item.contactType}</p>
+            <p className="text-grayfont">{item.contactType}</p>
             <h2 className="text-lg font-bold">{item.contactID}</h2>
           </div>
-          <div className="text-gray-500 rounded-full bg-componentBgGrey h-12 w-12 flex justify-center items-center">
+          <div className="text-grayfont rounded-full bg-componentBgGrey h-12 w-12 flex justify-center items-center">
             {item.icon}
           </div>
         </div>

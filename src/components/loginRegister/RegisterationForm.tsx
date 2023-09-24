@@ -112,7 +112,7 @@ const RegisterationForm: React.FC = () => {
                 zSchemaName={item.zSchemaName}
               />
               {errors[item.zSchemaName] && (
-                <p className="text-xs text-red-600">
+                <p className="text-xs text-redError">
                   {errors[item.zSchemaName]?.message}
                 </p>
               )}
