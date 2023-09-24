@@ -10,7 +10,7 @@ const user = {
 
 const UserProfileCard = () => {
   return (
-    <div className="max-w-lg grid-cols-2  p-3 bg-componentBgGrey flex gap-4 items-center border-1 border-borderMain rounded-md ">
+    <div className=" w-full grid-cols-2  p-3 bg-componentBgGrey flex gap-4 items-center border-1 border-borderMain rounded-md ">
       <div className="w-14 h-14 rounded-full relative">
         <Image
           src={square_image}

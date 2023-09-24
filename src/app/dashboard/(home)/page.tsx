@@ -10,6 +10,7 @@ import React from 'react';
 
 import { posts } from '@/app/module';
 import HomeFeed from '@/components/dashboard/HomeFeed';
+import CardTempSide from '@/components/dashboard/CardTempSide';
 
 const DashboardPage = () => {
   const router = useRouter();
@@ -17,14 +18,15 @@ const DashboardPage = () => {
     router.push('./changeCurrentPassword');
   };
 
-  const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12';
+  const ICONS_COMMON_CLASS: string =
+    'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
   const LINKS_ICONS = [
     <PenAdd
       size="32"
       variant="Bulk"
       key={0}
-      className={clsx('text-[#23c562] bg-[#d3f4df]', ICONS_COMMON_CLASS)}
+      className={clsx('text-[#23c562] bg-[#d3f4df] ', ICONS_COMMON_CLASS)}
     />,
     <BoxAdd
       size="32"
@@ -50,29 +52,19 @@ const DashboardPage = () => {
   return (
     <div className="p-4 grid grid-cols-home-layout ">
       {/* story section to be made */}
-      <div className="mx-auto grid gap-4">
-        {/* map all the home feedds */}
+      <div className="mx-auto flex flex-col gap-4 w-full items-end px-6">
         {posts.map((post, index) => (
           <HomeFeed post={post} key={index} />
         ))}
       </div>
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2 max-w-lg px-6">
         <UserProfileCard />
         <h2 className="font-bold my-2">My Card</h2>
-        <CardTempHome
-          firstName="Sujan"
-          lastName="Khadka"
-          designation="Manager"
-          email="sujan@khadka.com"
-          logo="sadfj"
-          phone="adfs"
-          website="sdf"
-        />
+        <CardTempSide />
         <div className="flex gap-2 my-3">
           {LINKS_ICONS.map((item, index) => item)}
         </div>
-        <></>
-        <div className="flex gap-2 mt-6">
+        <div className="flex gap-2 mt-4">
           {OPTIONS.map((item, index) => (
             <span className="text-grayfont after:content-['\00B7'] after:font-extrabold after:text-3xl after:ml-2 last:after:content-[''] flex items-center">
               {item}

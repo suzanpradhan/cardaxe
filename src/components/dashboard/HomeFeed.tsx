@@ -54,7 +54,7 @@ const HomeFeed = ({ post }: HomeFeedType) => {
         phone={post.phone}
         website={post.website}
       />
-      <section className="flex gap-8">
+      <section className="flex gap-4">
         {reactions.map((item, index) => (
           <button
             key={index}
@@ -66,7 +66,7 @@ const HomeFeed = ({ post }: HomeFeedType) => {
         ))}
         <div className="grow flex justify-end">
           <Bookmark
-            variant="Bold"
+            variant="Bulk"
             size="30"
             className="text-grayfont hover:text-blueTheme active:ring-2 active:text-blueTheme active:bg-blueBg"
           />
