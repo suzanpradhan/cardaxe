@@ -3,6 +3,7 @@ import CardTemplate from './CardTemplate';
 import FormWrapper from '../FormWrapper';
 import MobileDesktopSwitch from './MobileDesktopSwitch';
 import ProfileDetails from './ProfileDetails';
+import ProfileDescription from './ProfileDescription';
 
 const PreviewSection = () => {
   return (
@@ -13,7 +14,8 @@ const PreviewSection = () => {
           <div className="object-contain my-4">
             <CardTemplate />
           </div>
-          <ProfileDetails />
+          <ProfileDescription />
+          <ProfileDetails isTeamComp={false} />
         </div>
       </FormWrapper>
     </div>

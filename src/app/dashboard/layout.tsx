@@ -38,11 +38,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <Sidebar />
           </div>
           {/* for web view */}
-          <div className="sm:w-full sm:sticky sm:top-0 hidden  sm:block  sm:h-screen">
+          <div className="sm:flex sm:flex-col sm:w-full sm:sticky sm:top-0 hidden sm:h-screen sm:border-r-1">
             <TitleText isSideBarComp />
             <Sidebar />
           </div>
-          <div className="scroll-smooth overflow-auto">{children}</div>
+          <div>{children}</div>
         </section>
       )}
     </div>

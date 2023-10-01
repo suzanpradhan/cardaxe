@@ -17,8 +17,9 @@ import ButtonRounded from '@/components/ButtonRounded';
 
 export default function Home() {
   return (
-    <main className="relative bg-">
-      <div className="w-full  h-screen min-h-fitall absolute top-0 left-0 -z-10">
+    <main className="relative">
+      <Header />
+      <div className="w-full h-screen min-h-fitall absolute top-0 left-0 -z-10">
         <Image
           src={homepage_background}
           alt="image"
@@ -28,15 +29,14 @@ export default function Home() {
         />
       </div>
       <div className="max-w-7xl mx-auto px-4">
-        <div className="  h-screen">
-          <Header />
+        <div className="mb-96">
           <HeadingWithText
             headingText="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             paragraphText="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit."
           />
           <ButtonRounded isHeader={false} label="Get Started" href="/login" />
         </div>
-        <div className="pt-40 flex justify-between">
+        <div className=" flex justify-between pt-10">
           <Features
             featurePic={square_image}
             headingText="Lorem ipsum dolor"

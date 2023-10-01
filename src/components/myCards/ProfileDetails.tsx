@@ -1,5 +1,4 @@
 import React from 'react';
-import ProfileDescription from './ProfileDescription';
 import ContactInfo from './ContactInfo';
 import facebook_image from '../../../public/facebook_image.png';
 import instagram_image from '../../../public/instagram_image.png';
@@ -10,8 +9,11 @@ import linkedin_image from '../../../public/linkedin_image.png';
 import customLink_image from '../../../public/customLink_image.png';
 import discord_image from '../../../public/discord_image.png';
 import openSea from '../../../public/openSea.png';
-
 import GappedTableList from './GappedTableList';
+
+type ProfileDetailsPropType = {
+  isTeamComp: boolean;
+};
 
 const HeadingTitles = ({ label }: { label: string }) => {
   return <h2 className="text-xl font-extrabold my-4">{label}</h2>;
@@ -62,11 +64,10 @@ const MORE_LIST = [
   },
 ];
 
-const ProfileDetails = () => {
+const ProfileDetails = ({ isTeamComp }: ProfileDetailsPropType) => {
   return (
     <div className="w-full">
-      <ProfileDescription />
-      <HeadingTitles label={'Contact Info'} />
+      {!isTeamComp && <HeadingTitles label={'Contact Info'} />}
       <ContactInfo />
       <HeadingTitles label={'Social Media'} />
       <GappedTableList list={SOCIAL_MEDIA_LIST} />

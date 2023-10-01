@@ -12,7 +12,7 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
       <h1
         className={clsx(
           'text-4xl font-extrabold ',
-          isSideBarComp && 'md:border-r-2 md:px-8 md:pt-6'
+          isSideBarComp && 'md:px-8 md:pt-6'
         )}
       >
         cardaxe.

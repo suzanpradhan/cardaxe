@@ -5,19 +5,21 @@ import { useState } from 'react';
 //   className?: string;
 // }
 
-const TAB_ELEMENTS = ['Profile', 'Analytics', 'Access Control', 'Setings'];
+type TabWrappersPropsType = {
+  tabElements: string[];
+};
 
-const Tabwrapper = () => {
+const Tabwrapper = ({ tabElements }: TabWrappersPropsType) => {
   const [activeTab, setActiveTab] = useState<number>(0);
   return (
-    <ul className="flex ">
-      {TAB_ELEMENTS.map((item, index) => (
+    <ul className="flex w-full border-b-2">
+      {tabElements.map((item, index) => (
         <li
           onClick={() => setActiveTab(index)}
           key={index}
           className={clsx(
-            'pb-1 border-b-2',
-            activeTab === index && 'border-b-4 border-blue-700'
+            'pb-1 ',
+            activeTab === index && 'border-b-4 border-blue-700 -my-[2.5px]'
           )}
         >
           <button

@@ -68,14 +68,14 @@ const CreateNewTeam = () => {
     console.log(data);
   };
   return (
-    <div className="max-w-4xl px-4">
-      <h2 className="font-bold">Create a new team</h2>
+    <div className="max-w-4xl px-4 h-full">
+      <h2 className="font-bold text-lg">Create a new team</h2>
       <form
-        className="flex flex-col gap-4 py-2"
+        className="flex flex-col gap-4 py-2 mb-9"
         onSubmit={handleSubmit(submitData)}
       >
-        {INPUT_FEILDS.map((item, index) => (
-          <div key={index} className="h-24">
+        {INPUT_FEILDS.slice(0, 3).map((item, index) => (
+          <div key={index} className="h-16">
             <InputComp
               inputCompType={item.inputCompType}
               inputType={item.inputType}
@@ -91,8 +91,18 @@ const CreateNewTeam = () => {
           )} */}
           </div>
         ))}
+        <div className="h-[10.8rem]">
+          <InputComp
+            inputCompType={INPUT_FEILDS[3].inputCompType}
+            inputType={INPUT_FEILDS[3].inputType}
+            placeholder={INPUT_FEILDS[3].placeholder}
+            register={register}
+            zSchemaName={INPUT_FEILDS[3].zSchemaName}
+            inputLabel={INPUT_FEILDS[3].inputLabel}
+          />
+        </div>
       </form>
-      <p></p>
+      <p>Add other details ˅</p>
     </div>
   );
 };

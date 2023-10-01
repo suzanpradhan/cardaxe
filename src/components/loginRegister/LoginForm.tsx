@@ -103,7 +103,7 @@ const LoginForm: React.FC = () => {
           >
             Forgot Password
           </Link>
-          <ButtonForm label="Login" />
+          <ButtonForm label="Login" bluebackground />
         </div>
       </form>
     </FormWrapper>

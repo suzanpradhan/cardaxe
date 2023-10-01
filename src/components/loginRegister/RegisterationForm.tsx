@@ -118,7 +118,7 @@ const RegisterationForm: React.FC = () => {
               )}
             </div>
           ))}
-          <ButtonForm label="Register" />
+          <ButtonForm label="Register" bluebackground />
         </form>
       </div>
     </FormWrapper>

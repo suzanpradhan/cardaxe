@@ -12,7 +12,7 @@ interface Props {
 function Providers({ children }: Props) {
   return (
     <Provider store={store}>
-      <SessionProvider>{children}</SessionProvider>;
+      <SessionProvider>{children}</SessionProvider>
     </Provider>
   );
 }

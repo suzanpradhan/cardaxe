@@ -31,10 +31,10 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
     >
       <button
         onClick={() => handleClick()}
-        className="flex gap-3 items-center w-full"
+        className="flex gap-3 items-center w-full "
       >
         {item.icon}
-        <span className="hidden sm:block ">{item.label}</span>
+        <span className="hidden sm:block">{item.label}</span>
       </button>
     </li>
   );

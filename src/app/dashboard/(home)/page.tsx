@@ -57,23 +57,23 @@ const DashboardPage = () => {
           <HomeFeed post={post} key={index} />
         ))}
       </div>
-      <div className="flex flex-col gap-2 max-w-lg px-6">
+      <div className="flex flex-col gap-2 max-w-md px-6">
         <UserProfileCard />
         <h2 className="font-bold my-2">My Card</h2>
         <CardTempSide />
-        <div className="flex gap-2 my-3">
-          {LINKS_ICONS.map((item, index) => item)}
-        </div>
+        <div className="flex gap-2 my-3">{LINKS_ICONS.map((item) => item)}</div>
         <div className="flex gap-2 mt-4">
           {OPTIONS.map((item, index) => (
-            <span className="text-grayfont after:content-['\00B7'] after:font-extrabold after:text-3xl after:ml-2 last:after:content-[''] flex items-center">
+            <span
+              key={index}
+              className="text-grayfont after:content-['\00B7'] after:font-extrabold after:text-3xl after:ml-2 last:after:content-[''] flex items-center"
+            >
               {item}
             </span>
           ))}
         </div>
         <p className="text-grayfont">Copyright © 2023 CARDAXE</p>
       </div>
-      {/* <CardTemplate /> */}
       {/* <button onClick={() => handleClick()}>Change password</button>
       <button onClick={() => signOut()}>signout</button> */}
     </div>
