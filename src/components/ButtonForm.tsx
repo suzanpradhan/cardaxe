@@ -5,15 +5,19 @@ type ButtonFormProps = {
   label: string;
   bluebackground?: boolean;
   disableInput?: boolean;
+  handleClick?: () => void;
 };
 
 const ButtonForm = ({
   label,
   disableInput,
   bluebackground,
+  handleClick,
 }: ButtonFormProps) => {
   return (
     <button
+      onClick={handleClick}
+      role="link"
       type="submit"
       className={clsx(
         'w-full rounded-md p-2 disabled:bg-componentBgGrey active:shadow-xl',

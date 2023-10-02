@@ -58,6 +58,10 @@ module.exports = {
       gridTemplateColumns: {
         'dashboard-layout': '20% 80%',
         'home-layout': '55% 45%',
+        'table-grid': '35% 10% 20% 15% 20%',
+      },
+      maxHeight: {
+        120: '36rem',
       },
     },
   },

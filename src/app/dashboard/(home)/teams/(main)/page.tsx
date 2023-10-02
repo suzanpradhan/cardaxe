@@ -1,97 +1,80 @@
 'use client';
 
-import Tabwrapper from '@/components/TabWrapper';
-import CardTempSide from '@/components/dashboard/CardTempSide';
-import ProfileDetails from '@/components/myCards/ProfileDetails';
-import TeamCard from '@/components/teams/TeamCard';
-import { BoxAdd, Edit, Eye, MouseSquare, Scanning, Share } from 'iconsax-react';
+import ButtonForm from '@/components/ButtonForm';
+import { SearchNormal1 } from 'iconsax-react';
 import React from 'react';
+import logo from '../../../../../../public/logo.png';
+import image1 from '../../../../../../public/staticImages/1.jpg';
+import image2 from '../../../../../../public/staticImages/2.jpg';
+import image3 from '../../../../../../public/staticImages/3.jpg';
+import image4 from '../../../../../../public/staticImages/4.jpg';
+import image5 from '../../../../../../public/staticImages/5.jpg';
+import MyTeamsCard from '@/components/teams/MyTeamsCard';
+import { useRouter } from 'next/navigation';
 
-const BUTTON_LIST = [
+const MY_CARDS_ITEMS = [
   {
-    icon: <Edit size="28" variant="Bulk" />,
-    description: 'Edit Card',
+    themeColor: 'black',
+    organizationName: 'Compeling',
+    logo: logo,
+    images: [image1, image2, image3, image4, image5],
   },
   {
-    icon: <BoxAdd size="28" variant="Bulk" />,
-    description: 'Add Infos',
+    themeColor: 'red',
+    organizationName: 'WebsiteUrl',
+    logo: logo,
+    images: [image1, image2, image3, image4, image5],
   },
   {
-    icon: <Scanning size="28" variant="Bulk" />,
-    description: 'Show QR',
-  },
-  {
-    icon: <Share size="28" variant="Bulk" />,
-    description: 'Share',
+    themeColor: 'green',
+    organizationName: 'Roft.ru',
+    logo: logo,
+    images: [image1, image2, image3, image4, image5],
   },
 ];
 
-const REACTION_LIST = [
-  {
-    icon: <Eye size="32" variant="Bulk" className="text-grayfont" />,
-    reactions: '242',
-  },
-  {
-    icon: <Share size="31" variant="Bulk" className="text-grayfont" />,
-    reactions: '24',
-  },
-  {
-    icon: <MouseSquare size="31" variant="Bulk" className="text-grayfont" />,
-    reactions: '45k',
-  },
-];
+const Page = () => {
+  const router = useRouter();
+  const handleClick = () => router.push('/dashboard/teams/createNewTeam');
+  const handleCardClick = () => router.push('/dashboard/teams/myTeams');
 
-const TAB_ELEMENTS = ['Team', 'Members', 'Analytics', 'Security', 'Settings'];
-
-const page = () => {
   return (
-    <div className="grid gap-4 justify-center pt-4">
-      <h2 className="font-bold">Roft.ru</h2>
-      <Tabwrapper tabElements={TAB_ELEMENTS} />
-
-      <div className="flex gap-6 justify-center">
-        <div className="basis-1/2 shrink max-w-lg border-1 rounded-xl border-componentBgGrey">
-          <TeamCard />
-          <div className="px-6 pb-6">
-            <ProfileDetails isTeamComp />
-          </div>
+    <div className="max-w-5xl mx-auto grid gap-4 p-4">
+      <h2 className="font-bold">My Teams</h2>
+      <div className="flex gap-2">
+        <label
+          htmlFor="input"
+          className="flex  items-center  focus-within:border-blueTheme focus-within:text-blueTheme text-grayfont border-1 border-borderMain rounded-md grow"
+        >
+          <SearchNormal1 size="36" className="px-2 " variant="Bulk" />
+          <input
+            className="grow h-full rounded-md focus:outline-0"
+            id="input"
+            placeholder="Search"
+          />
+        </label>
+        <div className="shadow-md shadow-blueTheme rounded-lg">
+          <ButtonForm
+            label="Create Team"
+            bluebackground
+            handleClick={handleClick}
+          />
         </div>
-        <div className="grid gap-4 shrink h-min basis-120 p-6 rounded-xl border-1 border-componentBgGrey">
-          <div className="shadow-lg rounded-md">
-            <CardTempSide />
-          </div>
-          <div>
-            <p className="flex justify-between">
-              <strong>My Roft.ru Card</strong>
-              <span className="text-green-600 text-sm">Active</span>
-            </p>
-            <div className="flex gap-4">
-              {REACTION_LIST.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex gap-2 items-center text-grayfont"
-                >
-                  {item.icon}
-                  <span>{item.reactions}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex gap-2 justify-between">
-            {BUTTON_LIST.map((item, index) => (
-              <button
-                key={index}
-                className="rounded-md gap-1 px-2 py-1 flex border-1 items-center border-componentBgGrey text-grayfont"
-              >
-                {item.icon}
-                <span className="text-sm">{item.description}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+      </div>
+      <div className="flex justify-between gap-4">
+        {MY_CARDS_ITEMS.map((item, index) => (
+          <MyTeamsCard
+            handleCardClick={handleCardClick}
+            themeColor={item.themeColor}
+            key={index}
+            images={item.images}
+            logo={item.logo}
+            organizationName={item.organizationName}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

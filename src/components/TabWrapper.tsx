@@ -7,15 +7,29 @@ import { useState } from 'react';
 
 type TabWrappersPropsType = {
   tabElements: string[];
+  triggerComp?: string;
+  changeRoute?: (index: number) => void;
+  changeTab?: (index: number) => void;
 };
 
-const Tabwrapper = ({ tabElements }: TabWrappersPropsType) => {
+const Tabwrapper = ({
+  tabElements,
+  changeRoute,
+  changeTab,
+  triggerComp,
+}: TabWrappersPropsType) => {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const handleClick = (index: number) => (
+    setActiveTab(index),
+    triggerComp == 'dialog'
+      ? changeTab && changeTab(index)
+      : changeRoute && changeRoute(index)
+  );
   return (
     <ul className="flex w-full border-b-2">
       {tabElements.map((item, index) => (
         <li
-          onClick={() => setActiveTab(index)}
+          onClick={() => handleClick(index)}
           key={index}
           className={clsx(
             'pb-1 ',

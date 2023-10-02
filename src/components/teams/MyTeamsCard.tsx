@@ -7,6 +7,7 @@ type MyTeamsCardPropsType = {
   logo: StaticImageData;
   images: StaticImageData[];
   themeColor: string;
+  handleCardClick: () => void;
 };
 
 const MyTeamsCard = ({
@@ -14,9 +15,14 @@ const MyTeamsCard = ({
   logo,
   images,
   themeColor,
+  handleCardClick,
 }: MyTeamsCardPropsType) => {
   return (
-    <div className="  grow max-w-3xl relative border-1 border-borderMain rounded-lg">
+    <div
+      role="button"
+      onClick={handleCardClick}
+      className="  grow max-w-3xl relative border-1 border-borderMain rounded-lg"
+    >
       <div
         className="absolute top-0 h-10 w-full rounded-t-lg"
         style={{ backgroundColor: themeColor }}

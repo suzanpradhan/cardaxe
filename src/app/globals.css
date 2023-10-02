@@ -163,3 +163,32 @@ select {
 .css-1jqq78o-placeholder {
   color: #7e858f !important;
 }
+
+/* Hide the scrollbar by default */
+::-webkit-scrollbar {
+  width: 1px; /* Set the width of the scrollbar */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Define the track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+  background: transparent; /* Set the track background color */
+}
+
+/* Define the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  position: absolute;
+  background: #555; /* Set the thumb color */
+  border-radius: 100%; /* Add rounded corners to the thumb */
+}
+
+/* Show the scrollbar when hovering over it */
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb; /* Change the thumb color on hover */
+}
+
+/* Hide the scrollbar when not being hovered */
+::-webkit-scrollbar-thumb:active {
+  background: #2563eb; /* Change the thumb color on active state (when clicked) */
+}
