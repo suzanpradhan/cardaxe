@@ -22,11 +22,11 @@ const CardTempHome = ({
 }: CardTempHomeTypes) => {
   return (
     <CardHomeLayout>
-      <h2 className="text-xl font-extrabold ">
+      <h2 className="sm:text-xl text-xl-mobile font-extrabold ">
         {firstName} {lastName}
       </h2>
       <p className="font-semibold text-green-500">{designation}</p>
-      <p className="grow mt-32">
+      <p className="grow flex items-end">
         {phone} <br /> {website} <br /> {email}
       </p>
     </CardHomeLayout>

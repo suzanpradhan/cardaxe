@@ -26,12 +26,11 @@ const HomeFeed = ({ post }: HomeFeedType) => {
   ];
 
   return (
-    <div className="flex flex-col gap-4 w-max border-b-1 border-componentBgGrey pb-4">
+    <div className="px-2 sm:px-0 w-full flex flex-col gap-4 border-borderMain border-b-8 sm:border-b-1  pb-4 mx-auto">
       <section className="flex items-center gap-2">
-        <div className="relative h-8 w-8 rounded-full">
+        <div className="relative h-8 w-8 rounded-full z-auto">
           <Image
             className="rounded-full"
-            //   square image should be replaced with the profile picture of individual user in database
             src={square_image}
             alt="image"
             fill

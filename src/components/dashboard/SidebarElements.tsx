@@ -26,7 +26,8 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
     <li
       className={clsx(
         'p-3 rounded-lg  hover:text-blueTheme min-w-fit',
-        toggle ? 'bg-blueBg text-blueTheme' : 'text-grayfont'
+        toggle ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
+        item.label == 'Notification' && 'hidden sm:block'
       )}
     >
       <button

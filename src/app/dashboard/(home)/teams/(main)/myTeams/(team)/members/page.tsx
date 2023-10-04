@@ -9,6 +9,7 @@ import image2 from '../../../../../../../../../public/staticImages/2.jpg';
 import image3 from '../../../../../../../../../public/staticImages/3.jpg';
 import image4 from '../../../../../../../../../public/staticImages/4.jpg';
 import image5 from '../../../../../../../../../public/staticImages/5.jpg';
+import SearchInput from '@/components/SearchInput';
 
 const Page = () => {
   const columnHeadings = [
@@ -70,17 +71,9 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-2">
-        <label
-          htmlFor="input"
-          className="flex  items-center  focus-within:bg-blueBg focus-within:text-blueTheme text-grayfont rounded-md grow bg-inputBgGrey"
-        >
-          <SearchNormal1 size="36" className="px-2 " variant="Bulk" />
-          <input
-            className="grow h-full rounded-md focus:outline-0 bg-transparent"
-            id="input"
-            placeholder="Search"
-          />
-        </label>
+        <div className="grow">
+          <SearchInput greyBackground />
+        </div>
         <div className="shadow-lg shadow-blueTheme rounded-lg">
           <ButtonForm label="Create Team" bluebackground />
         </div>

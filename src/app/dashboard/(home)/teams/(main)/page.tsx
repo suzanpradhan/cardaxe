@@ -11,6 +11,7 @@ import image4 from '../../../../../../public/staticImages/4.jpg';
 import image5 from '../../../../../../public/staticImages/5.jpg';
 import MyTeamsCard from '@/components/teams/MyTeamsCard';
 import { useRouter } from 'next/navigation';
+import SearchInput from '@/components/SearchInput';
 
 const MY_CARDS_ITEMS = [
   {
@@ -42,17 +43,9 @@ const Page = () => {
     <div className="max-w-5xl mx-auto grid gap-4 p-4">
       <h2 className="font-bold">My Teams</h2>
       <div className="flex gap-2">
-        <label
-          htmlFor="input"
-          className="flex  items-center  focus-within:border-blueTheme focus-within:text-blueTheme text-grayfont border-1 border-borderMain rounded-md grow"
-        >
-          <SearchNormal1 size="36" className="px-2 " variant="Bulk" />
-          <input
-            className="grow h-full rounded-md focus:outline-0"
-            id="input"
-            placeholder="Search"
-          />
-        </label>
+        <div className="grow">
+          <SearchInput greyBackground={false} />
+        </div>
         <div className="shadow-md shadow-blueTheme rounded-lg">
           <ButtonForm
             label="Create Team"

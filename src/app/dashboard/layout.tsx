@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '@/components/dashboard/Sidebar';
 import TitleText from '@/components/TitleText';
 import { toast } from 'react-toastify';
+import SearchInput from '@/components/SearchInput';
 
 const Status = {
   authenticated: 'authenticated',
@@ -29,20 +30,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div>
       {status === Status.loading && <section>Loading...</section>}
       {status === Status.authenticated && (
-        <section className="grid items-start relative sm:grid-flow-cols md:grid-cols-dashboard-layout">
-          {/* for movile view */}
-          <div className="h-20 md:hidden">
+        <section className="sm:text-base text-base-mobile flex flex-col gap-2 sm:flex-row">
+          <div className="z-10 sm:h-screen sm:top-0 sm:shrink sm:sticky lg:basis-[360px]  border-borderMain sm:border-r-1 bg-white border-b-8 pb-2 sm:border-b-0">
             <TitleText isSideBarComp />
-          </div>
-          <div className="z-10 md:hidden">
+            <div className="px-2 sm:hidden">
+              <p className="sm:hidden font-bold text-3xl-mobile sm:text-3xl mb-2 ">
+                Explore
+              </p>
+              <SearchInput greyBackground={false} requireFilter />
+            </div>
             <Sidebar />
           </div>
-          {/* for web view */}
-          <div className="sm:flex sm:flex-col sm:w-full sm:sticky sm:top-0 hidden sm:h-screen sm:border-r-1">
-            <TitleText isSideBarComp />
-            <Sidebar />
-          </div>
-          <div>{children}</div>
+          <div className="sm:grow max-w-6xl sm:mx-auto">{children}</div>
         </section>
       )}
     </div>

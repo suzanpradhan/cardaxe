@@ -50,19 +50,19 @@ const DashboardPage = () => {
   const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
 
   return (
-    <div className="p-4 grid grid-cols-home-layout ">
+    <div className="sm:p-4 lg:flex">
       {/* story section to be made */}
-      <div className="mx-auto flex flex-col gap-4 w-full items-end px-6">
+      <div className="w-full sm:mx-auto flex flex-col gap-4 sm:px-6 max-w-xl shrink">
         {posts.map((post, index) => (
           <HomeFeed post={post} key={index} />
         ))}
       </div>
-      <div className="flex flex-col gap-2 max-w-md px-6">
+      <div className="flex-col gap-2 px-6 hidden lg:flex h-fit grow">
         <UserProfileCard />
         <h2 className="font-bold my-2">My Card</h2>
         <CardTempSide />
         <div className="flex gap-2 my-3">{LINKS_ICONS.map((item) => item)}</div>
-        <div className="flex gap-2 mt-4">
+        <div className="flex flex-wrap gap-2 mt-4">
           {OPTIONS.map((item, index) => (
             <span
               key={index}

@@ -114,7 +114,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 ];
 const Sidebar = () => {
   return (
-    <ul className=" flex gap-2 justify-between fixed bg-white rounded-t-xl h-20 w-full sm:rounded-none sm:justify-normal sm:flex-col sm:static sm:p-2 sm:pt-5 sm:pr-2 sm:h-full">
+    <ul className="bg-white fixed bottom-0 sm:static flex gap-2 justify-between rounded-t-xl w-full sm:rounded-none sm:justify-normal sm:flex-col sm:p-2 sm:pt-5 sm:pr-2 sm:h-full">
       {SIDEBAR_NAV_ELEMENTS.map((item) => (
         <SidebarElements item={item} key={item.id} />
       ))}
