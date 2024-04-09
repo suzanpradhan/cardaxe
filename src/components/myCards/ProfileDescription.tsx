@@ -1,4 +1,4 @@
-import { RootState } from '@/app/GlobalRedux/store';
+import { RootState } from '@/core/redux/store';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';

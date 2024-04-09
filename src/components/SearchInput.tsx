@@ -21,9 +21,9 @@ const SearchInput = ({
           : 'focus-within:border-blueTheme focus-within:text-blueTheme'
       )}
     >
-      <SearchNormal1 size="36" className="px-2 " variant="Bulk" />
+      <SearchNormal1 size="36" className="px-2 shrink-0" variant="Bulk" />
       <input
-        className="grow h-full rounded-md focus:outline-0 bg-transparent"
+        className="grow shrink h-full rounded-md focus:outline-0 bg-transparent"
         id="input"
         placeholder="Search"
       />

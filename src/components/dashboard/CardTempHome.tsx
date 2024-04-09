@@ -26,7 +26,7 @@ const CardTempHome = ({
         {firstName} {lastName}
       </h2>
       <p className="font-semibold text-green-500">{designation}</p>
-      <p className="grow flex items-end">
+      <p className="grow flex items-end ">
         {phone} <br /> {website} <br /> {email}
       </p>
     </CardHomeLayout>

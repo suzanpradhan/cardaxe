@@ -1,23 +1,15 @@
 'use client';
-import CardTempHome from '@/components/dashboard/CardTempHome';
 import UserProfileCard from '@/components/dashboard/UserProfileCard';
-import CardTemplate from '@/components/myCards/CardTemplate';
 import clsx from 'clsx';
 import { BoxAdd, PenAdd, ScanBarcode, Share } from 'iconsax-react';
-import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { posts } from '@/app/module';
 import HomeFeed from '@/components/dashboard/HomeFeed';
 import CardTempSide from '@/components/dashboard/CardTempSide';
+import SearchInput from '@/components/SearchInput';
 
 const DashboardPage = () => {
-  const router = useRouter();
-  const handleClick = () => {
-    router.push('./changeCurrentPassword');
-  };
-
   const ICONS_COMMON_CLASS: string =
     'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
@@ -52,6 +44,11 @@ const DashboardPage = () => {
   return (
     <div className="sm:p-4 lg:flex">
       {/* story section to be made */}
+      <div className="px-2 sm:hidden border-b-8 border-borderMain mb-2 pb-2">
+        <p className="font-bold text-3xl-mobile sm:text-3xl mb-2 ">Explore</p>
+        <SearchInput greyBackground={false} requireFilter />
+      </div>
+
       <div className="w-full sm:mx-auto flex flex-col gap-4 sm:px-6 max-w-xl shrink">
         {posts.map((post, index) => (
           <HomeFeed post={post} key={index} />

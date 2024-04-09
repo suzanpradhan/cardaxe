@@ -4,6 +4,7 @@ import square_image from '../../../public/square_image.jpg';
 import { Bookmark, Flash, Heart, MoreSquare, Share } from 'iconsax-react';
 import CardTemplateHome from './CardTempHome';
 import { PostType } from '@/app/module';
+import { useRouter } from 'next/navigation';
 
 type HomeFeedType = {
   post: PostType;
@@ -25,6 +26,8 @@ const HomeFeed = ({ post }: HomeFeedType) => {
     },
   ];
 
+  const router = useRouter();
+
   return (
     <div className="px-2 sm:px-0 w-full flex flex-col gap-4 border-borderMain border-b-8 sm:border-b-1  pb-4 mx-auto">
       <section className="flex items-center gap-2">
@@ -44,15 +47,17 @@ const HomeFeed = ({ post }: HomeFeedType) => {
           className="text-grayfont hover:text-blueTheme bg-componentBgGrey rounded-lg hover:bg-blueBg"
         />
       </section>
-      <CardTemplateHome
-        firstName={post.firstName}
-        lastName={post.lastName}
-        designation={post.designation}
-        email={post.email}
-        logo={post.logo}
-        phone={post.phone}
-        website={post.website}
-      />
+      <button onClick={() => router.push('/dashboard/details')}>
+        <CardTemplateHome
+          firstName={post.firstName}
+          lastName={post.lastName}
+          designation={post.designation}
+          email={post.email}
+          logo={post.logo}
+          phone={post.phone}
+          website={post.website}
+        />
+      </button>
       <section className="flex gap-4">
         {reactions.map((item, index) => (
           <button

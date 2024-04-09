@@ -17,7 +17,6 @@ export type SidebarNavElementsProps = {
   icon: React.JSX.Element;
 };
 
-const ICONS_SIZE = '30';
 const ICONS_VARIANT = 'Bold';
 const ICONS_CLASSNAME = 'inline';
 
@@ -28,7 +27,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
     link: '',
     icon: (
       <Home
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -40,7 +39,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
     link: 'mycards',
     icon: (
       <Cards
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -53,7 +52,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 
     icon: (
       <Messages3
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -66,7 +65,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 
     icon: (
       <Profile2User
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -79,7 +78,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 
     icon: (
       <NotificationBing
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -92,7 +91,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 
     icon: (
       <Activity
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -105,7 +104,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 
     icon: (
       <ProfileCircle
-        size={ICONS_SIZE}
+        // size={ICONS_SIZE}
         variant={ICONS_VARIANT}
         className={ICONS_CLASSNAME}
       />
@@ -114,7 +113,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 ];
 const Sidebar = () => {
   return (
-    <ul className="bg-white fixed bottom-0 sm:static flex gap-2 justify-between rounded-t-xl w-full sm:rounded-none sm:justify-normal sm:flex-col sm:p-2 sm:pt-5 sm:pr-2 sm:h-full">
+    <ul className="bg-white fixed bottom-0 sm:static flex sm:gap-2 text-base-mobile sm:text-base justify-between rounded-t-xl w-full sm:rounded-none sm:justify-normal sm:flex-col sm:p-2 sm:pt-5 sm:pr-2 sm:h-full">
       {SIDEBAR_NAV_ELEMENTS.map((item) => (
         <SidebarElements item={item} key={item.id} />
       ))}

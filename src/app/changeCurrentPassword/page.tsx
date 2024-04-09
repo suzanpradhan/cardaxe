@@ -9,7 +9,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
-import { apiPaths } from '../api/apiConstants';
+import { apiPaths } from '../../core/api/apiConstants';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 

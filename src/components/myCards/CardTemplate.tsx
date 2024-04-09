@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { RootState } from '@/app/GlobalRedux/store';
+import { RootState } from '@/core/redux/store';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import CardLayout from './CardLayout';

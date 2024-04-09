@@ -1,8 +1,8 @@
 import React from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
-import { InputFieldProps } from '@/types/appTypes';
-import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
+import { InputFieldProps } from '@/core/types/appTypes';
+import { CardState } from '@/modules/card/cardReducer';
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {

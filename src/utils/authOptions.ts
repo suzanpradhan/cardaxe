@@ -2,7 +2,8 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
-import { apiPaths } from '../app/api/apiConstants';
+import { apiPaths } from '@/core/api/apiConstants';
+
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
@@ -27,18 +28,18 @@ export const authOptions: NextAuthOptions = {
             headers: { 'Content-Type': 'application/json' },
           });
           const data = await res.json();
-          if (data.errors) {
-            console.log(data.errors);
-            // throw data;
-            return null;
+          if (!data.status) {
+            throw data;
           }
-          if (!data?.errors && data) {
+            if (data?.status && data) {
+            console.log("data:" + data.data);
+
             return {
-              id: data.id,
-              email: data.email,
-              token: data.tokens.access,
+              token: data.optional.token,
+              ...data.data,
             };
           }
+         
           return null;
         } catch (err) {
           console.log(err);
@@ -57,25 +58,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log('testing', user);
-      // if (trigger == 'update') {
-      //   const response = await fetch(
-      //     `${apiPaths.baseUrl}${apiPaths.profileUrl}`,
-      //     {
-      //       method: 'GET',
-      //       headers: {
-      //         authorization: `Bearer ${token.token}`,
-      //         accept: 'application/json',
-      //       },
-      //     }
-      //   );
-      //   if (response.ok) {
-      //     const responseData = await response.json();
-      //     token.name = responseData.data.user.name;
-      //     token.profile_image = responseData.data.user.profile_image;
-      //     return Promise.resolve(token);
-      //   }
-      // }
+      console.log('callback', user);
 
       if (user) {
         token.id = user.id;

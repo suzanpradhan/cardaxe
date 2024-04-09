@@ -39,6 +39,7 @@ module.exports = {
       },
       boxShadow: {
         '3xl': '0px 10px 20px 10px rgba(0, 0, 0, .2)',
+        upper: 'rgba(0, 0, 0, 0.45) 0px 25px 20px -20px',
       },
       colors: {
         redError: '#dd373a',

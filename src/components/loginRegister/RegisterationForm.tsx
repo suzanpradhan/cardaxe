@@ -9,7 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputComp from '../InputComp';
 import FormWrapper from '../FormWrapper';
 import ButtonForm from '../ButtonForm';
-import { apiPaths } from '@/app/api/apiConstants';
+import { apiPaths } from '@/core/api/apiConstants';
+// import { apiPaths } from '@/app/api/apiConstants';
 
 type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
 

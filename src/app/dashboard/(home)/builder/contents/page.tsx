@@ -1,6 +1,6 @@
 'use client';
-import { RootState } from '@/app/GlobalRedux/store';
-import { useUpdateContentsMutation } from '@/app/api/redux/api';
+import { RootState } from '@/core/redux/store';
+import { useUpdateContentsMutation } from '@/core/api/apiQuery';
 import ButtonForm from '@/components/ButtonForm';
 import MyCardsContentForm1 from '@/components/myCards/MyCardsContentForm1';
 import MyCardsContentForm2 from '@/components/myCards/MyCardsContentForm2';

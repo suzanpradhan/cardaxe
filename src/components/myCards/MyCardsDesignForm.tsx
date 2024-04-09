@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/app/GlobalRedux/store';
+import { RootState } from '@/core/redux/store';
 
 // const ACCEPTED_IMAGE_TYPES = [
 //   'image/jpeg',

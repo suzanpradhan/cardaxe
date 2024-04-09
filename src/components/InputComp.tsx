@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { InputFieldProps } from '@/types/appTypes';
+import { InputFieldProps } from '@/core/types/appTypes';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/GlobalRedux/store';
+import { RootState } from '@/core/redux/store';
 import {
   CardState,
   InfosFormStateType,
   updateContentForm,
   updateDesignForm,
   updateInfosForm,
-} from '@/app/GlobalRedux/Features/cardSlice';
+} from '@/modules/card/cardReducer';
 import { Eye, EyeSlash } from 'iconsax-react';
 import produce from 'immer';
 import CreatableSelect from 'react-select/creatable';

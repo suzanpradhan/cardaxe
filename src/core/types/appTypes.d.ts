@@ -1,4 +1,4 @@
-import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
+import { CardState } from '@/modules/card/cardReducer';
 
 export type InputFieldProps = {
   zSchemaName: string;
