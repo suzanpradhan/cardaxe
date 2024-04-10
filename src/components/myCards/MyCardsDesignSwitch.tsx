@@ -5,7 +5,7 @@ import { z } from 'zod';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/app/GlobalRedux/store';
+import { RootState } from '@/core/redux/store';
 
 const SwitchFormSchema = z.object({
   showSocialIcons: z.boolean(),

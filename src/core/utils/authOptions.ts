@@ -2,7 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
-import { apiPaths } from '../app/api/apiConstants';
+import { apiPaths } from '../api/apiConstants';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetCardsQuery } from '@/app/api/redux/api';
+import { useGetCardsQuery } from '@/core/redux/api';
 import Parser from 'react-html-parser';
 
 import React from 'react';

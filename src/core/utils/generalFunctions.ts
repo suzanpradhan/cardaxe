@@ -1,5 +1,5 @@
 import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
-import { CardContentType, SnakeCardContentType } from '@/types/appTypes';
+import { CardContentType, SnakeCardContentType } from '@/core/types/appTypes';
 
 export const fistLetterToLowerCase = (inputString: string) => {
   if (inputString.length === 0) {

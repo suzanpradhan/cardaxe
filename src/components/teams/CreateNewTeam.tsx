@@ -3,7 +3,7 @@ import InputComp from '../InputComp';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { InputFieldProps } from '@/types/appTypes';
+import { InputFieldProps } from '@/core/types/appTypes';
 
 const ACCEPTED_IMAGE_TYPES = [
   'image/jpeg',

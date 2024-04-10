@@ -1,14 +1,14 @@
-import React from 'react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import Link from 'next/link';
+import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
+import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 import { toast } from 'react-toastify';
-import InputComp from '../InputComp';
-import FormWrapper from '../FormWrapper';
+import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
+import FormWrapper from '../FormWrapper';
+import InputComp from '../InputComp';
 
 type zSchemaName = 'email' | 'password';
 
@@ -17,16 +17,6 @@ type LoginFeildProps = {
   type: string;
   zSchemaName: zSchemaName;
 };
-
-const LoginSchema = z.object({
-  email: z.string().email().trim(),
-  password: z
-    .string()
-    .min(8, { message: 'Must be more than 8 characters' })
-    .max(24, { message: 'Must be less than 24 characters' }),
-});
-
-type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 const LOGIN_FEILDS: LoginFeildProps[] = [
   {
@@ -42,18 +32,9 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 ];
 
 const LoginForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginSchemaType>({
-    resolver: zodResolver(LoginSchema),
-  });
-
   const router = useRouter();
-
-  const submitData = async (data: LoginSchemaType) => {
-    console.log(data);
+  const onSubmit = async (data: LoginSchemaType) => {
+    console.log('here');
     const res = await signIn('credentials', {
       email: data.email,
       password: data.password,
@@ -69,6 +50,16 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validateOnChange: true,
+    validate: toFormikValidate(loginSchema),
+    onSubmit,
+  });
+
   return (
     <FormWrapper
       titleText={true}
@@ -78,20 +69,25 @@ const LoginForm: React.FC = () => {
     >
       <form
         className="flex flex-col gap-4 py-2"
-        onSubmit={handleSubmit(submitData)}
+        // onSubmit={handleSubmit(submitData)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          formik.handleSubmit(e);
+        }}
       >
         <div className="flex flex-col ">
           {LOGIN_FEILDS.map((item, index) => (
             <div key={index} className="h-16">
               <InputComp
+                inputValue={formik.values[item.zSchemaName]}
+                getFieldProps={formik.getFieldProps}
                 inputType={item.type}
                 placeholder={item.placeholder}
-                register={register}
                 zSchemaName={item.zSchemaName}
               />
-              {errors[item.zSchemaName] && (
+              {formik.errors[item.zSchemaName] && (
                 <p className="text-xs text-redError">
-                  {errors[item.zSchemaName]?.message}
+                  {formik.errors[item.zSchemaName]}
                 </p>
               )}
             </div>
@@ -99,7 +95,7 @@ const LoginForm: React.FC = () => {
           <Link
             href="/confirmEmail"
             type="button"
-            className="text-grayfont text-right -mt-2 mb-2 hover:underline hover:text-blueTheme"
+            className="text-grayfont text-right mb-2 hover:underline hover:text-blueTheme"
           >
             Forgot Password
           </Link>
