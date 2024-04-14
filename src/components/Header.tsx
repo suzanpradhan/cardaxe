@@ -1,42 +1,66 @@
-import { useScrollDirection } from '@/hooks/useScrollDirection';
-import Button from './ButtonRounded';
-import TitleText from './TitleText';
-import clsx from 'clsx';
+'use client';
 
-interface HEADER_HEADING_PROPS {
-  headingName: string;
-  headingHref: string;
-}
+import useDetectOutsideClick from '@/hooks/useDetectOutsideClick';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
+import clsx from 'clsx';
+import { useEffect, useRef, useState } from 'react';
+import { CgDetailsMore } from 'react-icons/cg';
+import MobileNavBar from './MobileNavBar';
+import NavBar from './NavBar';
+import TitleText from './TitleText';
 
 const Header = () => {
-  const HEADER_HEADINGS: HEADER_HEADING_PROPS[] = [
-    { headingName: 'About', headingHref: '/' },
-    { headingName: 'Pricing', headingHref: '/pricing' },
-    { headingName: 'Services', headingHref: '/' },
-    { headingName: 'Login', headingHref: '/login' },
-    { headingName: 'Register', headingHref: '/register' },
-  ];
-
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [isMobileNavOpen, toggleMobileNav] = useState<boolean>(false);
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const scrollDirection = useScrollDirection();
+  console.log('scrollDirection', scrollDirection);
+  const handleOutsideClick = (e: Event) => {
+    toggleMobileNav(false);
+    console.log(isMobileNavOpen);
+  };
+
+  useDetectOutsideClick(mobileNavRef, handleOutsideClick);
+
+  useEffect(() => {
+    console.log('scroll position', scrollPosition);
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      toggleMobileNav(false);
+      setScrollPosition(scrollTop);
+    };
+
+    // Attach the scroll event listener to the window
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
-    <div
+    <header
       className={clsx(
-        'mx-auto max-w-7xl flex justify-between pb-8 pt-4 sticky z-10 px-2',
-        scrollDirection === 'down' ? '-top-24' : 'top-0'
+        'lg:px-auto px-10 flex justify-center w-full  pb-4 pt-4 z-10   transition-all duration-500 backdrop-blur-2xl ',
+        scrollDirection === 'down' ? '0' : '-24',
+        scrollPosition <= 600 ? 'bg-transparent ' : 'bg-white/80 ',
+        scrollPosition <= 60 ? 'absolute' : 'sticky'
       )}
     >
-      <TitleText />
-      <nav className="flex">
-        {HEADER_HEADINGS.map((heading, index) => (
-          <Button
-            key={index}
-            label={heading.headingName}
-            isHeader
-            href={heading.headingHref}
-          />
-        ))}
-      </nav>
-    </div>
+      <div className="w-full overflow-x-hidden flex max-w-7xl justify-between items-center ">
+        <TitleText />
+        <button onClick={() => toggleMobileNav(true)}>
+          <CgDetailsMore className=" h-12 w-12 p-0 m-0 lg:hidden block" />
+        </button>
+        <MobileNavBar
+          isMobileNavOpen={isMobileNavOpen}
+          mobileNavRef={mobileNavRef}
+        />
+      </div>
+      <div className="hidden lg:block">
+        <NavBar />
+      </div>
+    </header>
   );
 };
 

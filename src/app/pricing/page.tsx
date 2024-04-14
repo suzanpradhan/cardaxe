@@ -1,18 +1,14 @@
 'use client';
 
-import Header from '@/components/Header';
-import React from 'react';
-import Image from 'next/image';
-import homepage_background from '../../../public/homepage_background.png';
-import InputComp from '@/components/InputComp';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import ButtonForm from '@/components/ButtonForm';
-import { TickCircle } from 'iconsax-react';
 import Footer from '@/components/Footer';
-import FaqCollection from '@/components/landingPage/FaqCollection';
+import Header from '@/components/Header';
 import ContentHeading from '@/components/landingPage/ContentHeading';
+import FaqCollection from '@/components/landingPage/FaqCollection';
+import { TickCircle } from 'iconsax-react';
+import Image from 'next/image';
+import { z } from 'zod';
+import homepage_background from '../../../public/homepage_background.png';
 
 const SwitchSchema = z.object({
   payMonthly: z.boolean().default(true),
@@ -36,9 +32,9 @@ const paymentDetails = [
 ];
 
 const Page = () => {
-  const { register, handleSubmit } = useForm<SwitchSchemaType>({
-    resolver: zodResolver(SwitchSchema),
-  });
+  // const { register, handleSubmit } = useForm<SwitchSchemaType>({
+  //   resolver: zodResolver(SwitchSchema),
+  // });
   return (
     <div>
       <Header />

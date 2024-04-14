@@ -3,7 +3,7 @@ export const clientOpinion = [
     name: 'Avishek Dahal',
     position: 'CEO',
     opinion:
-      'Welcome to the machine my son. This world is a machine full of robots. So be aware and live my son.',
+      'Welcome to the machine my son. This world is a machine full of robots. So be aware and live my son. ',
   },
   {
     name: 'Shashwat Adhikari',

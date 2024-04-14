@@ -6,6 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  overflow-x: hidden !important;
+  width: 100vw !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,14 +62,15 @@ select {
   font: inherit;
 }
 
-.swiper-button-prev {
+/* .swiper-button-prev {
   left: unset !important;
   right: 80px !important;
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  top: 35px !important;
+  z-index: 50 !important;
+  top: -20px !important;
   background-color: #f7f7f7;
   width: 50px !important;
   height: 50px !important;
@@ -82,8 +85,8 @@ select {
 .swiper-button-next:focus {
   background-color: #202020 !important;
   color: #f7f7f7 !important;
-}
-
+} */
+/* 
 .swiper-wrapper {
   margin-top: 100px !important;
   height: 220px !important;
@@ -92,12 +95,12 @@ select {
 
 .swiper-zoom-container {
   height: 190px !important;
-}
+} */
 
-.swiper-button-prev:after,
+/* .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 20px !important;
-}
+} */
 
 .circularGradientBg {
   background: radial-gradient(
@@ -117,7 +120,7 @@ select {
 
 /* .swiper-slide {
 } */
-
+/* 
 .swiper-slide-active {
   width: 40% !important;
   top: -50px;
@@ -126,34 +129,33 @@ select {
 .swiper-slide-next,
 .swiper-slide-next + div {
   width: 27% !important;
-}
+} */
 
-.swiper-slide-active > .swiper-zoom-container {
+/* .swiper-slide-active > .swiper-zoom-container {
   height: 240px !important;
   background-color: ghostwhite;
-  /* background-color: #ddecff; */
   border-radius: 10px;
   box-shadow:
     0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+} */
 
-.swiper-slide-active > .swiper-zoom-container > div {
+/* .swiper-slide-active > .swiper-zoom-container > div {
   font-size: 1.25rem;
-}
+} */
 
-.swiper-slide-active .imageClass {
+/* .swiper-slide-active .imageClass {
   scale: 1.5;
-}
+} */
 
-.swiper-slide-active .clientDescriptionClass {
+/* .swiper-slide-active .clientDescriptionClass {
   margin-left: 15px;
-}
+} */
 
-.swiper-slide-active .clientImageDescriptionClass {
+/* .swiper-slide-active .clientImageDescriptionClass {
   margin-top: 10px;
   margin-left: 10px;
-}
+} */
 
 .css-13cymwt-control {
   background-color: transparent !important;

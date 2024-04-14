@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { NotificationBing } from 'iconsax-react';
 import Link from 'next/link';
-import React from 'react';
 
 type TitleTextProps = {
   isSideBarComp?: boolean;
@@ -12,7 +11,7 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
     <Link
       href={'/'}
       className={clsx(
-        'w-full flex justify-between items-center border-b-1 border-b-borderMain sm:border-b-0',
+        'w-full flex justify-between items-center ',
         isSideBarComp && 'sm:px-3 sm:pt-6 pt-2 px-2 mb-2 sm:mb-0'
       )}
     >
