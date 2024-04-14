@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="">
-      <body className={clsx(inter.className, 'relative overflow-x-clip')}>
+      <body className={clsx(inter.className, 'overflow-x-clip')}>
         <Header />
         <Providers>
           <main>{children}</main>

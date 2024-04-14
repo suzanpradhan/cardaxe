@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react';
 
-export function useScrollDirection() {
-  const [scrollDirection, setScrollDirection] = useState<'down' | 'up'>('up');
+type ScrollDirection = 'up' | 'down';
+
+interface ScrollInfo {
+  direction: ScrollDirection;
+  position: number;
+}
+
+export function useScroll(): ScrollInfo {
+  const [scrollInfo, setScrollInfo] = useState<ScrollInfo>({ direction: 'up', position: 0 });
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const updateScrollDirection = () => {
+    const handleScroll = () => {
       const scrollY = window.scrollY;
-      const direction = scrollY > lastScrollY ? 'down' : 'up';
-      if (
-        direction !== scrollDirection &&
-        (scrollY - lastScrollY > 10 || scrollY - lastScrollY < -10)
-      ) {
-        setScrollDirection(direction);
-      }
-      lastScrollY = scrollY > 0 ? scrollY : 0;
+      const direction: ScrollDirection = scrollY > scrollInfo.position ? 'down' : 'up';
+      setScrollInfo({ direction, position: scrollY });
     };
-    window.addEventListener('scroll', updateScrollDirection); // add event listener
-    return () => {
-      window.removeEventListener('scroll', updateScrollDirection); // clean up
-    };
-  }, [scrollDirection]);
 
-  return scrollDirection;
+    // Attach the scroll event listener to the window
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollInfo.position]);
+
+  return scrollInfo;
 }
