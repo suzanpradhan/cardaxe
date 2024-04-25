@@ -114,6 +114,7 @@ export const cardSlice = createSlice({
       state.infosForm = { ...action.payload };
     },
   },
+  // extraReducers: (builder) => {},
 });
 
 export const { updateContentForm, updateDesignForm, updateInfosForm } =

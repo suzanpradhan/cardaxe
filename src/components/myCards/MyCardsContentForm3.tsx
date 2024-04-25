@@ -1,9 +1,20 @@
-import React from 'react';
 import FormWrapper from '../FormWrapper';
 
-import InputComp from '../InputComp';
 import { InputFieldProps } from '@/core/types/appTypes';
-import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
+import { ContentFormSchemaType } from '@/module/cards/cardsType';
+import { FieldConfig, FieldInputProps } from 'formik';
+import { ChangeEvent } from 'react';
+import InputComp from '../InputComp';
+
+interface MyCardsContentForm3Props {
+  getFieldProps: (
+    nameOrOptions: string | FieldConfig<any>
+  ) => FieldInputProps<any>;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  values: ContentFormSchemaType;
+}
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -24,10 +35,10 @@ const INPUT_FEILDS: InputFieldProps[] = [
 ];
 
 const MyCardsContentForm3 = ({
-  register,
-}: {
-  register: Record<string, any>;
-}) => {
+  getFieldProps,
+  handleChange,
+  values,
+}: MyCardsContentForm3Props) => {
   return (
     <FormWrapper>
       <div className="flex flex-col gap-3">
@@ -35,10 +46,12 @@ const MyCardsContentForm3 = ({
           <InputComp
             inputType="text"
             zSchemaName={item.zSchemaName}
-            register={register}
             inputLabel={item.inputLabel}
             key={index}
+            getFieldProps={getFieldProps}
             inputCompType={item.inputCompType}
+            handleChange={handleChange}
+            inputValue={values[item.zSchemaName]}
           />
         ))}
       </div>

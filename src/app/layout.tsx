@@ -1,4 +1,3 @@
-import Header from '@/components/Header';
 import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -22,9 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={clsx(inter.className, 'overflow-x-clip')}>
-        <Header />
         <Providers>
-          <main>{children}</main>
+          <>{children}</>
         </Providers>
         <Notification />
       </body>

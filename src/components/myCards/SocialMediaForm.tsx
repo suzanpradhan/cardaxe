@@ -1,9 +1,6 @@
-import React from 'react';
-import InputComp from '../InputComp';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Image, { StaticImageData } from 'next/image';
+import { z } from 'zod';
+import InputComp from '../InputComp';
 
 type SocialMediaFormProps = {
   socialLinkName: string;
@@ -36,9 +33,9 @@ const SocialMediaForm = ({
   socialLinkLogo,
   placeholder,
 }: SocialMediaFormProps) => {
-  const { register } = useForm<SocialsFormSchemaType>({
-    resolver: zodResolver(SocialsFormSchema),
-  });
+  // const { register } = useForm<SocialsFormSchemaType>({
+  //   resolver: zodResolver(SocialsFormSchema),
+  // });
 
   return (
     <form className="flex max-w-7xl flex-wrap p-2 gap-1">
@@ -59,7 +56,6 @@ const SocialMediaForm = ({
             key={index}
             inputType={item.type}
             placeholder={index === 0 ? placeholder : 'Display Text'}
-            register={register}
             zSchemaName={item.zSchemaName}
           />
         ))}

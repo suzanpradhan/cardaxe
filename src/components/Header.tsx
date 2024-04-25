@@ -3,7 +3,7 @@
 import useDetectOutsideClick from '@/hooks/useDetectOutsideClick';
 import { useScroll } from '@/hooks/useScrollDirection';
 import clsx from 'clsx';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CgDetailsMore } from 'react-icons/cg';
 import MobileNavBar from './MobileNavBar';
 import NavBar from './NavBar';
@@ -20,10 +20,17 @@ const Header = () => {
   };
   useDetectOutsideClick(mobileNavRef, handleOutsideClick);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      toggleMobileNav(false);
+    };
+    handleScroll();
+  }, [scrollPosition]);
+
   return (
     <header
       className={clsx(
-        ' z-10  transition-all duration-500 backdrop-blur-2xl',
+        ' z-10  transition-all duration-500 backdrop-blur-xl',
         scrollDirection === 'down' ? '-top-24' : 'top-0',
         scrollPosition <= 60 ? 'absolute w-full' : 'sticky'
       )}

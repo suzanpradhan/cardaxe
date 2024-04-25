@@ -1,11 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import { RootState } from '@/core/redux/store';
+import { useSelector } from 'react-redux';
 import { z } from 'zod';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/core/redux/store';
 
 const SwitchFormSchema = z.object({
   showSocialIcons: z.boolean(),
@@ -32,10 +29,10 @@ const INPUT_FIELDS = [
 const MyCardsDesignSwitch = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const defaultValues = cardState.designForm;
-  const { register } = useForm<SwitchFormSchemaType>({
-    defaultValues,
-    resolver: zodResolver(SwitchFormSchema),
-  });
+  // const { register } = useForm<SwitchFormSchemaType>({
+  //   defaultValues,
+  //   resolver: zodResolver(SwitchFormSchema),
+  // });
   return (
     <FormWrapper>
       <div className="flex flex-col gap-4">
@@ -46,7 +43,6 @@ const MyCardsDesignSwitch = () => {
             inputCompType="switch"
             inputLabel={item.inputLabel}
             inputType="checkbox"
-            register={register}
           />
         ))}
       </div>

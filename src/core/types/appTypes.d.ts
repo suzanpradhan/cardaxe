@@ -1,13 +1,16 @@
 import { FieldConfig, FieldInputProps } from 'formik';
+import { ChangeEvent } from 'react';
 
 export type InputFieldProps = {
-  getFieldProps: (
+  getFieldProps?: (
     nameOrOptions: string | FieldConfig<any>
   ) => FieldInputProps<any>;
   setFormikFieldValue?: (field: string, value: any) => void;
   zSchemaName: string;
   inputType?: string;
-  inputValue: string;
+  inputValue?: string;
+  // eslint-disable-next-line no-unused-vars
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void
   inputCompType?:
   | 'select'
   | 'textArea'

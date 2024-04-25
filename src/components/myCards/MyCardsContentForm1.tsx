@@ -1,8 +1,19 @@
-import React from 'react';
+import { InputFieldProps } from '@/core/types/appTypes';
+import { ContentFormSchemaType } from '@/module/cards/cardsType';
+import { FieldConfig, FieldInputProps } from 'formik';
+import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
-import { InputFieldProps } from '@/core/types/appTypes';
-import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
+
+interface MyCardsContentForm1Props {
+  getFieldProps: (
+    nameOrOptions: string | FieldConfig<any>
+  ) => FieldInputProps<any>;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  values: ContentFormSchemaType;
+}
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -38,10 +49,10 @@ const INPUT_FEILDS: InputFieldProps[] = [
 ];
 
 const MyCardsContentForm1 = ({
-  register,
-}: {
-  register: Record<string, any>;
-}) => {
+  getFieldProps,
+  handleChange,
+  values,
+}: MyCardsContentForm1Props) => {
   const selectOptions = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -56,9 +67,11 @@ const MyCardsContentForm1 = ({
             inputCompType={item.inputCompType}
             inputType="text"
             zSchemaName={item.zSchemaName}
-            register={register}
             inputLabel={item.inputLabel}
             key={index}
+            getFieldProps={getFieldProps}
+            handleChange={handleChange}
+            inputValue={values[item.zSchemaName]}
           />
         ))}
         <InputComp
@@ -66,6 +79,8 @@ const MyCardsContentForm1 = ({
           inputCompType="select"
           options={selectOptions}
           inputLabel="Tags"
+          handleChange={handleChange}
+          getFieldProps={getFieldProps}
         />
       </div>
     </FormWrapper>

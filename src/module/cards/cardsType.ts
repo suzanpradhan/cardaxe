@@ -4,6 +4,7 @@ export type CardTemplatesType = {
   id: number;
   name: string;
   html_code: string;
+  cover_image: string;
   version: string;
   card_template_category: {
     id: number;
