@@ -8,7 +8,8 @@ export type InputFieldProps = {
   setFormikFieldValue?: (field: string, value: any) => void;
   zSchemaName: string;
   inputType?: string;
-  inputValue?: string;
+  inputValue?: string | number | boolean;
+  error?: string
   // eslint-disable-next-line no-unused-vars
   handleChange?: (e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void
   inputCompType?:

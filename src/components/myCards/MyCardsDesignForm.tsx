@@ -1,9 +1,19 @@
-import { RootState } from '@/core/redux/store';
-import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
-import { z } from 'zod';
+import { DesignFromSchemaType } from '@/module/cards/cardsType';
+import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
+import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
+
+interface MyCardsDesignFormProps {
+  getFieldProps: (
+    nameOrOptions: string | FieldConfig<any>
+  ) => FieldInputProps<any>;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  values: DesignFromSchemaType;
+  errors: FormikErrors<DesignFromSchemaType>;
+}
 
 // const ACCEPTED_IMAGE_TYPES = [
 //   'image/jpeg',
@@ -13,80 +23,60 @@ import InputComp from '../InputComp';
 // ];
 // const MAX_FILE_SIZE = 5242880; // 5MB in bytes
 
-const MyCardDesignFormSchema = z.object({
-  backgroundColor: z.string(),
-  backgroundImage: z.string(),
-  logoUrl: z.string(),
-  prefix: z.string(),
-});
-type MyCardDesignFormSchemaType = z.infer<typeof MyCardDesignFormSchema>;
-
-const MyCardsDesignForm = () => {
-  const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues: MyCardDesignFormSchemaType = {
-    backgroundColor: cardState.designForm.backgroundColor,
-    backgroundImage: cardState.designForm.backgroundImage as string,
-    logoUrl: cardState.designForm.logoUrl as string,
-    prefix: cardState.contentForm.prefix,
-  };
-
-  const onSubmit = (data: MyCardDesignFormSchemaType) => {
-    console.log(data);
-  };
-
-  const formik = useFormik<MyCardDesignFormSchemaType>({
-    enableReinitialize: true,
-    initialValues: { ...defaultValues },
-    validateOnChange: true,
-
-    onSubmit,
-  });
-
+const MyCardsDesignForm = ({
+  errors,
+  getFieldProps,
+  handleChange,
+  values,
+}: MyCardsDesignFormProps) => {
   return (
     <FormWrapper>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(e.target);
-          formik.handleSubmit(e);
-        }}
-        className="flex flex-col gap-4"
-      >
-        <div className="flex gap-2 items-end">
+      <div className="flex gap-2 items-end">
+        <InputComp
+          inputCompType="normal"
+          inputType="string"
+          zSchemaName="backgroundColor"
+          inputLabel="Background Color"
+          className="inline"
+          getFieldProps={getFieldProps}
+          inputValue={values['backgroundColor']}
+          handleChange={handleChange}
+          error={errors['backgroundColor']}
+        />
+        <div className="h-[42px] basis-4/5  rounded-md bg-inputBgGrey border-borderMain border-1">
           <InputComp
-            inputCompType="normal"
-            inputType="string"
             zSchemaName="backgroundColor"
-            inputLabel="Background Color"
-            className="inline"
-            getFieldProps={formik.getFieldProps}
+            inputCompType="color"
+            inputType="color"
+            getFieldProps={getFieldProps}
+            inputValue={values['backgroundColor']}
+            handleChange={handleChange}
+            error={errors['backgroundColor']}
           />
-          <div className="h-[42px] basis-4/5  rounded-md bg-inputBgGrey border-borderMain border-1">
-            <InputComp
-              zSchemaName="backgroundColor"
-              inputCompType="color"
-              inputType="color"
-              getFieldProps={formik.getFieldProps}
-            />
-          </div>
         </div>
-        <InputComp
-          inputCompType="file"
-          inputType="file"
-          zSchemaName="backgroundImage"
-          inputLabel="Background Image"
-          placeholder="Choose Image"
-          getFieldProps={formik.getFieldProps}
-        />
-        <InputComp
-          inputCompType="file"
-          inputType="file"
-          zSchemaName="logoUrl"
-          inputLabel="Logo"
-          placeholder="Choose Image"
-          getFieldProps={formik.getFieldProps}
-        />
-      </form>
+      </div>
+      <InputComp
+        inputCompType="file"
+        inputType="file"
+        zSchemaName="backgroundImage"
+        inputLabel="Background Image"
+        placeholder="Choose Image"
+        getFieldProps={getFieldProps}
+        // inputValue={values['backgroundImage']}
+        error={errors['backgroundImage']}
+        handleChange={handleChange}
+      />
+      <InputComp
+        inputCompType="file"
+        inputType="file"
+        zSchemaName="logoUrl"
+        inputLabel="Logo"
+        placeholder="Choose Image"
+        getFieldProps={getFieldProps}
+        // inputValue={formik.values['logoUrl']}
+        handleChange={handleChange}
+        error={errors['logoUrl']}
+      />
     </FormWrapper>
   );
 };

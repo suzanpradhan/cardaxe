@@ -23,6 +23,7 @@ const InputComp = ({
   getFieldProps,
   setFormikFieldValue,
   inputValue,
+  error,
   inputCompType,
   inputType,
   placeholder,
@@ -70,8 +71,11 @@ const InputComp = ({
                 name={zSchemaName}
                 onChange={(e) => handleChange?.(e)}
                 // onChange={(e) => handleTextChange(e)}
-                value={inputValue}
-                className="focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey border-borderMain border-1 rounded-md w-full -mb-2"
+                value={inputValue as string}
+                className={clsx(
+                  'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
+                  error ? 'border-redError' : 'border-borderMain'
+                )}
               />
             </div>
           </div>
@@ -85,7 +89,10 @@ const InputComp = ({
               inputLabel={inputLabel ?? ''}
             />
             <CreatableSelect
-              className="mt-2 w-full bg-inputBgGrey placeholder:text-placeholder border-borderMain border-1 rounded-md "
+              className={clsx(
+                'mt-2 w-full bg-inputBgGrey placeholder:text-placeholder  border-1 rounded-md ',
+                error ? 'border-redError' : 'border-borderMain'
+              )}
               isMulti
               onChange={() => {}}
               options={options}
@@ -125,16 +132,18 @@ const InputComp = ({
               <label
                 htmlFor={zSchemaName}
                 className={clsx(
-                  'truncate focus:outline-1 focus:outline-blueTheme mt-2 block w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder'
+                  'truncate focus:outline-1 focus:outline-blueTheme mt-2 block w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder',
+                  error ? 'border-redError' : 'border-borderMain'
                 )}
               >
-                {cardState.designForm[
+                {inputValue ?? placeholder}
+                {/* {cardState.designForm[
                   zSchemaName as keyof CardState['designForm']
                 ]
                   ? cardState.designForm[
                       zSchemaName as keyof CardState['designForm']
                     ]
-                  : placeholder}
+                  : placeholder} */}
               </label>
               <input
                 {...getFieldProps?.(zSchemaName)}
@@ -144,6 +153,7 @@ const InputComp = ({
                 placeholder={placeholder}
                 className="hidden"
                 disabled={disableInput}
+                value={''}
               />
             </div>
           </div>
@@ -165,10 +175,11 @@ const InputComp = ({
               type={inputType}
               placeholder={placeholder}
               className={clsx(
-                'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600'
+                'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+                error ? 'border-redError' : 'border-borderMain'
               )}
               // {...getFieldProps?.(zSchemaName)}
-              value={inputValue}
+              value={inputValue as string}
               disabled={disableInput}
             />
           </div>
@@ -198,7 +209,8 @@ const InputComp = ({
             {...getFieldProps?.(zSchemaName)}
             onChange={(e) => handleChange?.(e)}
             className={clsx(
-              'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600'
+              'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+              error ? 'border-redError' : 'border-borderMain'
             )}
             // {...register(zSchemaName)}
             // disabled={disableInput}
@@ -217,7 +229,8 @@ const InputComp = ({
           placeholder={placeholder}
           {...getFieldProps?.(zSchemaName)}
           className={clsx(
-            'focus:outline-1 focus:outline-blueThememt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-borderMain border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600'
+            'focus:outline-1 focus:outline-blueThememt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+            error ? 'border-redError' : 'border-borderMain'
           )}
           // {...register(zSchemaName)}
           disabled={disableInput}

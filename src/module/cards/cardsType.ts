@@ -1,3 +1,4 @@
+import { nonempty } from "@/core/utils/formUtils";
 import { z } from "zod";
 
 export type CardTemplatesType = {
@@ -15,37 +16,33 @@ export type CardTemplatesType = {
 
 
 export const ContentFormSchema = z.object({
-  id: z.number(),
-  prefix: z.string(),
-  firstName: z.string(),
-  middleName: z.string(),
-  lastName: z.string(),
-  suffix: z.string(),
-  bio: z.string(),
-  phone: z.string(),
-  website: z.string(),
-  email: z.string(),
+  id: z.number().optional(),
+  prefix: z.string().pipe(nonempty),
+  firstName: z.string().pipe(nonempty),
+  middleName: z.string().optional(),
+  lastName: z.string().pipe(nonempty),
+  suffix: z.string().pipe(nonempty),
+  bio: z.string().pipe(nonempty),
+  phone: z.string().pipe(nonempty),
+  website: z.string().optional(),
+  email: z.string().email(),
   // isDefault: z.boolean(),
-  designation: z.string(),
-  department: z.string(),
-  company: z.string(),
+  designation: z.string().pipe(nonempty),
+  department: z.string().pipe(nonempty),
+  company: z.string().pipe(nonempty),
 });
 
+export const DesignFormSchema = z.object({
+  id: z.number().optional(),
+  backgroundColor: z.string().pipe(nonempty),
+  backgroundImage: z.string().optional(),
+  logoUrl: z.string().pipe(nonempty),
+  showLogo: z.boolean().optional(),
+  showSocialIcons: z.boolean().optional(),
+  darkMode: z.boolean().optional(),
+})
+
 export type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
+export type DesignFromSchemaType = z.infer<typeof DesignFormSchema>;
 
 
-export type SnakeCardContentType = {
-  id?: number;
-  prefix: string;
-  first_name: string;
-  middle_name?: string;
-  last_name: string;
-  designation?: string;
-  department?: string;
-  company?: string;
-  suffix: string;
-  bio: string;
-  website?: string;
-  phone: string;
-  email: string;
-};

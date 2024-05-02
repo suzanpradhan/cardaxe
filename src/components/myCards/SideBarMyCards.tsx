@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { BoxAdd, Colorfilter, DocumentText1, Grid7 } from 'iconsax-react';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -37,14 +38,6 @@ const SideBarMyCards = () => {
   const pathName = usePathname();
 
   const [toggleTab, setToggleTab] = useState<number>(0);
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    index: number,
-    item: SideBarElementProps
-  ) => {
-    router.push(`/dashboard/builder/${item.link}`);
-    setToggleTab(index);
-  };
 
   useEffect(() => {
     if (pathName.endsWith('/builder')) {
@@ -53,7 +46,7 @@ const SideBarMyCards = () => {
       setToggleTab(1);
     } else if (pathName.endsWith('/builder/designs')) {
       setToggleTab(2);
-    } else if (pathName.endsWith('//builder/infos')) {
+    } else if (pathName.endsWith('/builder/infos')) {
       setToggleTab(3);
     }
   }, [pathName]);
@@ -61,9 +54,10 @@ const SideBarMyCards = () => {
   return (
     <div className="basis-1/12 flex flex-col gap-4 h-full text-slate-600">
       {MY_APP_SIDE_BAR_ELEMENTS.map((item, index) => (
-        <button
+        <Link
+          href={`/dashboard/builder/${item.link}`}
           key={index}
-          onClick={(e) => handleClick(e, index, item)}
+          // onClick={(e) => handleClick(e)}
           className={clsx(
             'flex flex-col items-center h-24 justify-center rounded-md hover:text-blueTheme',
             toggleTab !== index ? 'text-grayfont' : 'text-blueTheme bg-blueBg'
@@ -71,7 +65,7 @@ const SideBarMyCards = () => {
         >
           {item.icon}
           <p>{item.name}</p>
-        </button>
+        </Link>
       ))}
     </div>
   );

@@ -1,6 +1,6 @@
 import { InputFieldProps } from '@/core/types/appTypes';
 import { ContentFormSchemaType } from '@/module/cards/cardsType';
-import { FieldConfig, FieldInputProps } from 'formik';
+import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
@@ -13,6 +13,7 @@ interface MyCardsContentForm1Props {
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
   values: ContentFormSchemaType;
+  errors: FormikErrors<ContentFormSchemaType>;
 }
 
 const INPUT_FEILDS: InputFieldProps[] = [
@@ -52,12 +53,14 @@ const MyCardsContentForm1 = ({
   getFieldProps,
   handleChange,
   values,
+  errors,
 }: MyCardsContentForm1Props) => {
   const selectOptions = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ];
+  values.email;
 
   return (
     <FormWrapper>
@@ -71,17 +74,10 @@ const MyCardsContentForm1 = ({
             key={index}
             getFieldProps={getFieldProps}
             handleChange={handleChange}
-            inputValue={values[item.zSchemaName]}
+            inputValue={values[item.zSchemaName as keyof ContentFormSchemaType]}
+            error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
           />
         ))}
-        <InputComp
-          zSchemaName="none"
-          inputCompType="select"
-          options={selectOptions}
-          inputLabel="Tags"
-          handleChange={handleChange}
-          getFieldProps={getFieldProps}
-        />
       </div>
     </FormWrapper>
   );

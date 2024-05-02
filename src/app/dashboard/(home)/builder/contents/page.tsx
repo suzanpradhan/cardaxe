@@ -10,11 +10,17 @@ import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
+import { toFormikValidate } from 'zod-formik-adapter';
+
 // import { useForm } from 'react-hook-form';
-import { ContentFormSchemaType } from '@/module/cards/cardsType';
+import {
+  ContentFormSchema,
+  ContentFormSchemaType,
+} from '@/module/cards/cardsType';
 import { useFormik } from 'formik';
 import { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const ContentsPage = () => {
   const dispatch = useAppDispatch();
@@ -30,32 +36,34 @@ const ContentsPage = () => {
     const submitresponse = dispatch(
       cardsApi.endpoints.updateContents.initiate(values)
     );
-    console.log(submitresponse);
+    submitresponse
+      .then((res) => toast.success('Submitted Successfulluy'))
+      .catch((err) => {
+        toast.error('Something went wrong');
+        throw err;
+      });
   };
   const formik = useFormik<ContentFormSchemaType>({
     enableReinitialize: true,
     initialValues: { id: 1, ...defaultValues },
-    validateOnChange: false,
+    validateOnChange: true,
     onSubmit,
+    validate: toFormikValidate(ContentFormSchema),
+    validateOnBlur: true,
+    validateOnMount: true,
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
-    console.log('chabe');
-    const { name, value, type } = e.target;
-    // const stateValue =
-    //   type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
+    const { name, value } = e.target;
 
     const updatedFormState: CardState['contentForm'] = {
       ...cardState.contentForm,
       [name]: value,
     };
     dispatch(updateContentForm(updatedFormState));
-    console.log(cardState.contentForm);
   };
-
-  console.log(formik.values);
 
   return (
     <form
@@ -70,16 +78,19 @@ const ContentsPage = () => {
         getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={formik.values}
+        errors={formik.errors}
       />
       <MyCardsContentForm2
         getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={formik.values}
+        errors={formik.errors}
       />
       <MyCardsContentForm3
         getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={formik.values}
+        errors={formik.errors}
       />
       <ButtonForm label="submit" />
     </form>

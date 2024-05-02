@@ -1,15 +1,19 @@
-import { RootState } from '@/core/redux/store';
-import { useSelector } from 'react-redux';
-import { z } from 'zod';
+import { DesignFromSchemaType } from '@/module/cards/cardsType';
+import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
+import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 
-const SwitchFormSchema = z.object({
-  showSocialIcons: z.boolean(),
-  showLogo: z.boolean(),
-  darkMode: z.boolean(),
-});
-type SwitchFormSchemaType = z.infer<typeof SwitchFormSchema>;
+interface MyCardsDesignSwitchProps {
+  getFieldProps: (
+    nameOrOptions: string | FieldConfig<any>
+  ) => FieldInputProps<any>;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  values: DesignFromSchemaType;
+  errors: FormikErrors<DesignFromSchemaType>;
+}
 
 const INPUT_FIELDS = [
   {
@@ -26,13 +30,12 @@ const INPUT_FIELDS = [
   },
 ];
 
-const MyCardsDesignSwitch = () => {
-  const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues = cardState.designForm;
-  // const { register } = useForm<SwitchFormSchemaType>({
-  //   defaultValues,
-  //   resolver: zodResolver(SwitchFormSchema),
-  // });
+const MyCardsDesignSwitch = ({
+  errors,
+  getFieldProps,
+  handleChange,
+  values,
+}: MyCardsDesignSwitchProps) => {
   return (
     <FormWrapper>
       <div className="flex flex-col gap-4">
@@ -43,6 +46,9 @@ const MyCardsDesignSwitch = () => {
             inputCompType="switch"
             inputLabel={item.inputLabel}
             inputType="checkbox"
+            error={errors[item.zSchemaName as keyof DesignFromSchemaType]}
+            getFieldProps={getFieldProps}
+            inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
           />
         ))}
       </div>

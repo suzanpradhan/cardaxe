@@ -1,5 +1,6 @@
 'use client';
 
+import { ContentFormSchemaType, DesignFromSchemaType } from '@/module/cards/cardsType';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type InfosFormStateType = {
@@ -7,33 +8,12 @@ export type InfosFormStateType = {
   displayText: string;
 };
 
+export type ErrorType = { errors: Record<string, string> }
+
 export type CardState = {
-  contentForm: {
-    prefix: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    suffix: string;
-    bio: string;
+  contentForm: ContentFormSchemaType;
 
-    designation: string;
-    department: string;
-    company: string;
-
-    phone: string;
-    website: string;
-    email: string;
-  };
-
-  designForm: {
-    backgroundColor: string;
-    backgroundImage: string | null;
-    logoUrl: string | null;
-
-    showSocialIcons: boolean;
-    showLogo: boolean;
-    darkMode: boolean;
-  };
+  designForm: DesignFromSchemaType;
 
   infosForm: {
     instagram: InfosFormStateType;
@@ -61,11 +41,12 @@ const initialState: CardState = {
     website: 'info@somecomp.com',
     phone: '9987456321',
     email: 'some@email.com',
+
   },
   designForm: {
     backgroundColor: '#f23f37',
-    backgroundImage: null,
-    logoUrl: null,
+    backgroundImage: undefined,
+    logoUrl: '',
     showSocialIcons: false,
     showLogo: false,
     darkMode: false,

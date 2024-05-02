@@ -1,9 +1,11 @@
 'use client';
 
+import CardLayouts from '@/components/CardLayouts';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardTemplatesType } from '@/module/cards/cardsType';
+import parse from 'html-react-parser';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
@@ -25,12 +27,22 @@ const LayoutPage = () => {
   console.log(cardsList);
   // const { isLoading, isError, isSuccess, data, error } = useGetCardsQuery('');
 
+  const htmlCode = '<div>first name <div>';
+
   return (
     <div>
       {cardsList?.map((card, index) => (
+        // <div key={index}>
+        //   <div dangerouslySetInnerHTML={{ __html: card.html_code }}></div>
+        //   {/* {JSON.stringify(card)} */}
+        // </div>
         <div key={index}>
-          <div dangerouslySetInnerHTML={{ __html: card.html_code }}></div>
-          {/* {JSON.stringify(card)} */}
+          {parse(card.html_code)}
+          <>{card.html_code}</>
+          <CardLayouts
+            htmlSource={card.html_code}
+            variableValues={{ first_name: 'avishek' }}
+          />
         </div>
       ))}
       {/* {isSuccess && data && Parser(data[0].html_code)}
