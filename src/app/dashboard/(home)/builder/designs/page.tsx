@@ -1,14 +1,11 @@
 'use client';
 
-import {
-  CardState,
-  updateDesignForm,
-} from '@/app/GlobalRedux/Features/cardSlice';
+import { updateDesignForm } from '@/app/GlobalRedux/Features/cardSlice';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
-import { DesignFromSchemaType } from '@/module/cards/cardsType';
+import { CardState, DesignFromSchemaType } from '@/module/cards/cardsType';
 import { useFormik } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
@@ -16,8 +13,8 @@ import { useSelector } from 'react-redux';
 const Designpage = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
-  const defaultValues: DesignFromSchemaType = {
-    ...cardState.designForm,
+  const defaultValues: CardState['card']['cardDesign'] = {
+    ...cardState.card.cardDesign,
   };
 
   const handleChange = (
@@ -29,8 +26,8 @@ const Designpage = () => {
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
 
     console.log(stateValue);
-    const updatedFormState: CardState['designForm'] = {
-      ...cardState.designForm,
+    const updatedFormState: CardState['card']['cardDesign'] = {
+      ...cardState.card.cardDesign,
       [name]: stateValue,
     };
     dispatch(updateDesignForm(updatedFormState));

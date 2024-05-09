@@ -1,16 +1,45 @@
 'use client';
+import { useAppDispatch } from '@/core/redux/clientStore';
+import cardsApi from '@/module/cards/cardsApi';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
 const MyCardsPage = () => {
   const router = useRouter();
-  const handleClick = () => {
-    router.push(`/dashboard/builder/`);
+  const { data } = useSession();
+  const dispatch = useAppDispatch();
+  console.log(data);
+  const handleClick = async () => {
+    if (data?.user) {
+      try {
+        const response = await Promise.resolve(
+          dispatch(cardsApi.endpoints.createCard.initiate(data?.user.id))
+        );
+        if (Object.prototype.hasOwnProperty.call(response, 'data')) {
+          console.log((response as any).data.id);
+          router.push(
+            `/dashboard/builder/?cardId=${(response as any).data.id}`
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    // const submitresponse = dispatch(
+    //   cardsApi.endpoints.createCard.initiate('1')
+    // );
+    // submitresponse
+    //   .then((res) => toast.success('Submitted Successfulluy'))
+    //   .catch((err) => {
+    //     toast.error('Something went wrong');
+    //     throw err;
+    //   });
+    // router.push(`/dashboard/builder/`);
   };
   return (
-    <div>
-      my cards
-      <button onClick={() => handleClick()}>edit</button>
+    <div className="flex gap-2">
+      <button onClick={() => handleClick()}>create card</button>
     </div>
   );
 };

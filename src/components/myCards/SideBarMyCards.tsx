@@ -10,6 +10,10 @@ type SideBarElementProps = {
   link: string;
 };
 
+interface SideBarMyCardsProps {
+  cardId: string | null;
+}
+
 const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   {
     icon: <DocumentText1 size="40" variant="Bulk" />,
@@ -33,20 +37,25 @@ const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   },
 ];
 
-const SideBarMyCards = () => {
+const SideBarMyCards = ({ cardId }: SideBarMyCardsProps) => {
   const router = useRouter();
   const pathName = usePathname();
+  console.log(pathName);
 
   const [toggleTab, setToggleTab] = useState<number>(0);
 
   useEffect(() => {
-    if (pathName.endsWith('/builder')) {
+    if (pathName.endsWith(`/builder`)) {
+      console.log(pathName);
       setToggleTab(0);
-    } else if (pathName.endsWith('/builder/contents')) {
+    } else if (pathName.endsWith(`/builder/contents`)) {
+      console.log(pathName);
       setToggleTab(1);
-    } else if (pathName.endsWith('/builder/designs')) {
+    } else if (pathName.endsWith(`/builder/designs`)) {
+      console.log(pathName);
       setToggleTab(2);
-    } else if (pathName.endsWith('/builder/infos')) {
+    } else if (pathName.endsWith(`/builder/infos`)) {
+      console.log(pathName);
       setToggleTab(3);
     }
   }, [pathName]);
@@ -55,7 +64,9 @@ const SideBarMyCards = () => {
     <div className="basis-1/12 flex flex-col gap-4 h-full text-slate-600">
       {MY_APP_SIDE_BAR_ELEMENTS.map((item, index) => (
         <Link
-          href={`/dashboard/builder/${item.link}`}
+          href={`/dashboard/builder/${item.link}${
+            cardId && `/?cardId=${cardId}`
+          }`}
           key={index}
           // onClick={(e) => handleClick(e)}
           className={clsx(

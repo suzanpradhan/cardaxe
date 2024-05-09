@@ -1,8 +1,10 @@
 'use client';
 import {
+  CardState,
   updateContentForm,
   updateErrors,
 } from '@/app/GlobalRedux/Features/cardSlice';
+import ButtonForm from '@/components/ButtonForm';
 import MyCardsContentForm1 from '@/components/myCards/MyCardsContentForm1';
 import MyCardsContentForm2 from '@/components/myCards/MyCardsContentForm2';
 import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
@@ -12,7 +14,6 @@ import cardsApi from '@/module/cards/cardsApi';
 
 // import { useForm } from 'react-hook-form';
 import {
-  CardState,
   ContentFormSchema,
   ContentFormSchemaType,
 } from '@/module/cards/cardsType';
@@ -25,7 +26,7 @@ import { ZodError } from 'zod';
 const ContentsPage = () => {
   const dispatch = useAppDispatch();
   const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues = cardState.card.cardFields;
+  const defaultValues = cardState.contentForm;
   // const { register, handleSubmit } = useForm<ContentFormSchemaType>({
   //   defaultValues,
   //   resolver: zodResolver(ContentFormSchema),
@@ -49,38 +50,41 @@ const ContentsPage = () => {
     } catch (error) {
       if (error instanceof ZodError) {
         console.log(error);
+
         return error.formErrors.fieldErrors;
       }
     }
   };
   const formik = useFormik<ContentFormSchemaType>({
-    enableReinitialize: true,
+    // enableReinitialize: true,
     initialValues: { id: 1, ...defaultValues },
-    validateOnChange: true,
+    // validateOnChange: true,
     onSubmit,
     validate: validateForm,
     // validate: toFormikValidate(ContentFormSchema),
-    validateOnBlur: true,
-    validateOnMount: true,
+    // validateOnBlur: true,
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    console.log(formik.errors[name as keyof CardState['contentForm']]);
 
-    const updatedFormState: CardState['card']['cardFields'] = {
-      ...cardState.card.cardFields,
+    const updatedFormState: CardState['contentForm'] = {
+      ...cardState.contentForm,
       [name]: value,
     };
-
-    dispatch(updateContentForm(updatedFormState));
-    if (
-      formik.errors[name as keyof CardState['card']['cardFields']] == undefined
-    ) {
-      dispatch(updateErrors(false));
+    console.log(
+      'input error',
+      formik.errors[name as keyof CardState['contentForm']]
+    );
+    if (formik.errors['name' as keyof CardState['contentForm']] === null) {
+      dispatch(updateContentForm(updatedFormState));
+      console.log('@no error');
     } else {
-      dispatch(updateErrors(true));
+      dispatch(updateErrors({ ...cardState.errors, contentForm: true }));
+      console.log(cardState.errors.contentForm);
     }
   };
 
@@ -111,6 +115,7 @@ const ContentsPage = () => {
         values={formik.values}
         errors={formik.errors}
       />
+      <ButtonForm label="submit" />
     </form>
   );
 };

@@ -1,17 +1,15 @@
-import React from 'react';
-import Image from 'next/image';
 import { RootState } from '@/core/redux/store';
+import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import clsx from 'clsx';
 import CardLayout from './CardLayout';
 
 const CardTemplate = () => {
   const cardState = useSelector((state: RootState) => state.card);
   return (
     <CardLayout>
-      {cardState.designForm.backgroundImage ? (
+      {cardState.card.cardDesign.backgroundImage ? (
         <Image
-          src={cardState.designForm.backgroundImage as string}
+          src={cardState.card.cardDesign.backgroundImage as string}
           alt="Background Image"
           fill
           objectFit="cover"
@@ -21,23 +19,23 @@ const CardTemplate = () => {
       ) : (
         <div
           className="h-full w-full absolute -z-10 rounded-lg"
-          style={{ backgroundColor: cardState.designForm.backgroundColor }}
+          style={{ backgroundColor: cardState.card.cardDesign.backgroundColor }}
         ></div>
       )}
       <h1 className="col-span-1 text-xl inline font-bold">
-        {cardState.contentForm.firstName +
+        {cardState.card.cardFields.firstName +
           ' ' +
-          cardState.contentForm.middleName +
+          cardState.card.cardFields.middleName +
           ' ' +
-          cardState.contentForm.lastName}
+          cardState.card.cardFields.lastName}
       </h1>
       <div
         id="logo"
         className="col-span-1 col-start-2 h-20 w-20  relative justify-self-end bg-transparent"
       >
-        {cardState.designForm.logoUrl && (
+        {cardState.card.cardDesign.logoUrl && (
           <Image
-            src={cardState.designForm.logoUrl as string}
+            src={cardState.card.cardDesign.logoUrl as string}
             alt="logo"
             fill
             objectFit="contain"
@@ -48,10 +46,10 @@ const CardTemplate = () => {
       </div>
 
       <div className="col-span-2">
-        <p>{cardState.contentForm.email}</p>
+        <p>{cardState.card.cardFields.email}</p>
       </div>
       <h2 className="col-span-2 self-end font-bold"></h2>
-      <p>{cardState.designForm.backgroundColor}</p>
+      <p>{cardState.card.cardDesign.backgroundColor}</p>
     </CardLayout>
   );
 };

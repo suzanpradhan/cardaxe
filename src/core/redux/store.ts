@@ -2,13 +2,13 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import cardSlice from '../../app/GlobalRedux/Features/cardSlice';
-import { baseApi } from '../api/apiQuery';
 import { rtkQueryErrorLogger } from '../api/apiMiddleWare';
+import { baseApi } from '../api/apiQuery';
 
 
 export const store = configureStore({
   reducer: {
-    baseApi:baseApi.reducer,
+    baseApi: baseApi.reducer,
     // [cardApi.reducerPath]: cardApi.reducer,
     card: cardSlice,
 

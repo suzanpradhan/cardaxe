@@ -1,6 +1,6 @@
-import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
 import { RootState } from '@/core/redux/store';
 import { InputFieldProps } from '@/core/types/appTypes';
+import { CardState } from '@/module/cards/cardsType';
 import clsx from 'clsx';
 import { Eye, EyeSlash } from 'iconsax-react';
 import React, { useState } from 'react';
@@ -49,7 +49,6 @@ const InputComp = ({
       | React.ChangeEvent<HTMLTextAreaElement>
       | React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log('inoutchange');
     handleChange?.(e);
   };
 
@@ -178,7 +177,6 @@ const InputComp = ({
                 'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
-              // {...getFieldProps?.(zSchemaName)}
               value={inputValue as string}
               disabled={disableInput}
             />
@@ -194,6 +192,7 @@ const InputComp = ({
             className="h-full w-full focus:outline-1 focus:outline-blueTheme"
             {...getFieldProps?.(zSchemaName)}
             onChange={(e) => handleChange?.(e)}
+
             // {...register(zSchemaName, {
             //   onChange: onHandleChange,
             // })}
@@ -202,19 +201,21 @@ const InputComp = ({
       }
       default: {
         return (
-          <input
-            id={zSchemaName}
-            type={inputType}
-            placeholder={placeholder}
-            {...getFieldProps?.(zSchemaName)}
-            onChange={(e) => handleChange?.(e)}
-            className={clsx(
-              'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
-              error ? 'border-redError' : 'border-borderMain'
-            )}
-            // {...register(zSchemaName)}
-            // disabled={disableInput}
-          />
+          <div className="">
+            <input
+              id={zSchemaName}
+              type={inputType}
+              placeholder={placeholder}
+              {...getFieldProps?.(zSchemaName)}
+              // onChange={(e) => handleChange?.(e)}
+              className={clsx(
+                'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+                error ? 'border-redError' : 'border-borderMain'
+              )}
+              // name={zSchemaName}
+              value={inputValue as string}
+            />
+          </div>
         );
       }
     }

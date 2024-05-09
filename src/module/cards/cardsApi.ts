@@ -1,7 +1,8 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
-import { CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType } from "./cardsType";
+import { toast } from "react-toastify";
+import { CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,6 +16,95 @@ const cardsApi = baseApi.injectEndpoints({
         console.log('response:' + response)
         return response.results as any;
       },
+    }),
+    createCard: builder.mutation<any, string>({
+      query: (user) => {
+        // var formData = new FormData();
+        const payload = {
+          'card_fields': {},
+          'card_design': {},
+          "is_published": false,
+          'user': user,
+          "card_template": 1
+        }
+        // formData.append('card_fields', JSON.stringify({}))
+        // formData.append('card_design', JSON.stringify({}))
+        // formData.append('is_published', 'true')
+        // formData.append('user', user)
+        // formData.append('card_template', '1')
+
+        // formData.append('card_fields[first_name]', payload.cardFields.prefix)
+        // formData.append('card_fields[last_name]', payload.cardFields.prefix)
+        // formData.append('card_fields[suffix]', payload.cardFields.prefix)
+        // formData.append('card_fields[bio]', payload.cardFields.prefix)
+        // formData.append('card_fields[phone]', payload.cardFields.prefix)
+        // formData.append('card_fields[email]', payload.cardFields.prefix)
+        // formData.append('card_fields[middle_name]', payload.cardFields.prefix)
+        // formData.append('card_fields[designation]', payload.cardFields.prefix)
+        // formData.append('card_fields[department]', payload.cardFields.prefix)
+        // formData.append('card_fields[company]', payload.cardFields.prefix)
+        // formData.append('card_fields[website]', payload.cardFields.prefix)
+        // formData.append('card_design[logo_url]', payload.cardFields.prefix)
+        // formData.append('card_design[show_logo]', payload.cardFields.prefix)
+        // formData.append('card_design[show_social_icons]', payload.cardFields.prefix)
+        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
+        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
+        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
+        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
+        return {
+          url: `${apiPaths.cardsUrl}`,
+          method: 'POST',
+
+          body: payload,
+        }
+      },
+      async onQueryStarted(payload, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          toast.success('Card successfully created.');
+        } catch (err) {
+          console.log(err);
+          toast.error('Failed createing card!!');
+        }
+      },
+    }),
+    upDateCard: builder.mutation<any, UpdateCardParams & UpdateCardState['card']>({
+      query: ({ userId, cardId, ...payload }) => {
+        const formData = new FormData();
+
+        if (payload.cardFields.prefix) formData.append('card_fields[prefix]', payload.cardFields.prefix)
+        if (payload.cardFields.firstName) formData.append('card_fields[first_name]', payload.cardFields.firstName)
+        if (payload.cardFields.lastName) formData.append('card_fields[last_name]', payload.cardFields.lastName)
+        if (payload.cardFields.suffix) formData.append('card_fields[suffix]', payload.cardFields.suffix)
+        if (payload.cardFields.bio) formData.append('card_fields[bio]', payload.cardFields.bio)
+        if (payload.cardFields.phone) formData.append('card_fields[phone]', payload.cardFields.phone)
+        if (payload.cardFields.email) formData.append('card_fields[email]', payload.cardFields.email)
+        if (payload.cardFields.middleName) formData.append('card_fields[middle_name]', payload.cardFields.middleName)
+        if (payload.cardFields.designation) formData.append('card_fields[designation]', payload.cardFields.designation)
+        if (payload.cardFields.department) formData.append('card_fields[department]', payload.cardFields.department)
+        if (payload.cardFields.company) formData.append('card_fields[company]', payload.cardFields.company)
+        if (payload.cardFields.website) formData.append('card_fields[website]', payload.cardFields.website)
+        if (payload.cardDesign.backgroundColor) formData.append('card_design[background_color]', payload.cardDesign.backgroundColor)
+        if (payload.cardDesign.logoUrl) formData.append('card_design[logo_url]', payload.cardDesign.logoUrl)
+        if (payload.cardDesign.showLogo) formData.append('card_design[show_logo]', payload.cardDesign.showLogo.toString())
+        if (payload.cardDesign.showSocialIcons) formData.append('card_design[show_social_icons]', payload.cardDesign.showSocialIcons.toString())
+        if (payload.cardDesign.darkMode) formData.append('card_design[dark_mode]', payload.cardDesign.darkMode.toString())
+        if (payload.isPublished) formData.append('is_published', payload.isPublished.toString())
+        if (payload.user) formData.append('user', userId.toString())
+        if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate.toString())
+        return {
+          url: `${apiPaths.cardsUrl}${cardId}/`,
+          method: 'PATCH',
+          body: formData,
+        }
+      },
+      transformResponse: (response: { data: any }) =>
+        response.data,
+      transformErrorResponse: (
+        response: { status: string | number }
+        // meta,
+        // arg
+      ) => response.status,
     }),
     updateContents: builder.mutation<any, ContentFormSchemaType>({
       query: ({ id, ...payload }) => {
@@ -80,7 +170,8 @@ const cardsApi = baseApi.injectEndpoints({
         // arg
       ) => response.status,
     }),
-  })
+  }),
+  overrideExisting: true,
 })
 
 export default cardsApi;

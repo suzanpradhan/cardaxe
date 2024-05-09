@@ -1,9 +1,7 @@
 import { RootState } from '@/core/redux/store';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import Image from 'next/image';
-import ButtonRounded from '../ButtonRounded';
 import { Flash, Heart, MoreCircle, Share } from 'iconsax-react';
+import { useSelector } from 'react-redux';
+import ButtonRounded from '../ButtonRounded';
 
 const buttonLabel = (
   <div className="flex flex-nowrap">
@@ -40,24 +38,25 @@ const ProfileDescription = () => {
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
         <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full">
-          {cardState.designForm.logoUrl && (
+          {/* {cardState.card.cardDesign.logoUrl && (
             <Image
-              src={cardState.designForm.logoUrl}
+              src={cardState.card.cardDesign.logoUrl}
               alt="Profile pic"
               fill
               sizes="(max-width: 768px) 100vw, 300px"
               objectFit="contain"
             />
-          )}
+          )} */}
         </div>
         <div className="grid">
           <h1 className="font-extrabold text-2xl">
-            {cardState.contentForm.firstName} {cardState.contentForm.middleName}{' '}
-            {cardState.contentForm.lastName}
+            {cardState.card.cardFields.firstName}{' '}
+            {cardState.card.cardFields.middleName}{' '}
+            {cardState.card.cardFields.lastName}
           </h1>
           <p>
-            Istanbul, Turkey | {cardState.contentForm.designation} -{' '}
-            {cardState.contentForm.company}
+            Istanbul, Turkey | {cardState.card.cardFields.designation} -{' '}
+            {cardState.card.cardFields.company}
           </p>
           <div className="flex gap-2">
             <ButtonRounded
@@ -69,7 +68,7 @@ const ProfileDescription = () => {
           </div>
         </div>
       </div>
-      <p>{cardState.contentForm.bio}</p>
+      <p>{cardState.card.cardFields.bio}</p>
     </div>
   );
 };

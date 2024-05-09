@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const LoginLayout = ({
@@ -10,7 +10,7 @@ const LoginLayout = ({
   children: React.ReactNode;
 }) => {
   const router = useRouter();
-  const { status } = useSession();
+  const { status, data } = useSession();
 
   useEffect(() => {
     if (status === 'authenticated') {

@@ -2,8 +2,8 @@ import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
 import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
@@ -33,24 +33,37 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const navigator = useRouter();
+  const searchParams = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const callback = searchParams.get('callback');
   const onSubmit = async (data: LoginSchemaType) => {
-    console.log('here');
-    const res = await signIn('credentials', {
+    await signIn('credentials', {
       email: data.email,
       password: data.password,
       callbackUrl: '/dashboard',
       redirect: false,
+    }).then((response) => {
+      console.log('login response', response);
+      if (!response?.error) {
+        toast.success('Sucessfully logged in.');
+        if (callback) {
+          console.log(response);
+          window.location.href = callback;
+          if (callback.includes('#')) window.location.reload();
+        } else {
+          navigator.refresh();
+        }
+      } else {
+        toast.error(response?.error);
+        setError(response?.error!);
+      }
     });
-    if (!res?.error) {
-      toast.success('Succefully logged in');
-    } else if (res?.error) {
-      toast.error('Username or password error');
-      console.log(res.error);
-      router.push('/login');
-    }
+    setIsLoading(false);
   };
-
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       email: '',
       password: '',

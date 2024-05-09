@@ -27,8 +27,6 @@ const LayoutPage = () => {
   console.log(cardsList);
   // const { isLoading, isError, isSuccess, data, error } = useGetCardsQuery('');
 
-  const htmlCode = '<div>first name <div>';
-
   return (
     <div>
       {cardsList?.map((card, index) => (

@@ -1,7 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
+import GoogleProvider from 'next-auth/providers/google';
 import { apiPaths } from '../api/apiConstants';
 
 export const authOptions: NextAuthOptions = {
@@ -20,30 +20,46 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        try {
-          const res = await fetch(`${apiPaths.baseUrl}${apiPaths.login}`, {
-            method: 'POST',
-            body: JSON.stringify(credentials),
-            headers: { 'Content-Type': 'application/json' },
-          });
-          const data = await res.json();
-          if (data.errors) {
-            console.log(data.errors);
-            // throw data;
-            return null;
+        const res = await fetch(`${apiPaths.baseUrl}${apiPaths.loginUrl}`, {
+          method: 'POST',
+          body: JSON.stringify(credentials),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const user = await res.json()
+        if (res.ok && user) {
+          return {
+            id: user.id,
+            email: user.email,
+            token: user.tokens.access,
+            image: user.image,
+            name: user.name
           }
-          if (!data?.errors && data) {
-            return {
-              id: data.id,
-              email: data.email,
-              token: data.tokens.access,
-            };
-          }
-          return null;
-        } catch (err) {
-          console.log(err);
-          return null;
         }
+        return null
+        // try {
+        //   const res = await fetch(`${apiPaths.baseUrl}${apiPaths.loginUrl}`, {
+        //     method: 'POST',
+        //     body: JSON.stringify(credentials),
+        //     headers: { 'Content-Type': 'application/json' },
+        //   });
+        //   const data = await res.json();
+        //   console.log("data", data)
+        //   if (data.errors) {
+        //     console.log("logged not", data.errors[0])
+        //     return data.errors[0];
+        //   }
+        //   if (!data?.errors && data) {
+        //     console.log("logged ijnt", data)
+        //     return {
+        //       token: data.optional.token,
+        //       ...data.data,
+        //     };
+        //   }
+        //   return null;
+        // } catch (err) {
+        //   return null;
+        // }
       },
     }),
     GoogleProvider({
@@ -56,42 +72,44 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      console.log('testing', user);
-      // if (trigger == 'update') {
-      //   const response = await fetch(
-      //     `${apiPaths.baseUrl}${apiPaths.profileUrl}`,
-      //     {
-      //       method: 'GET',
-      //       headers: {
-      //         authorization: `Bearer ${token.token}`,
-      //         accept: 'application/json',
-      //       },
-      //     }
-      //   );
-      //   if (response.ok) {
-      //     const responseData = await response.json();
-      //     token.name = responseData.data.user.name;
-      //     token.profile_image = responseData.data.user.profile_image;
-      //     return Promise.resolve(token);
-      //   }
-      // }
+    async jwt({ token, user, trigger }) {
+      console.log("jwt", token, user, trigger)
+      if (trigger == 'update') {
+        const response = await fetch(
+          `${apiPaths.baseUrl}${apiPaths.profileUrl}`,
+          {
+            method: 'GET',
+            headers: {
+              authorization: `Bearer ${token.token}`,
+              accept: 'application/json',
+            },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          token.name = responseData.data.user.name;
+          token.profile_image = responseData.data.user.profile_image;
+          return Promise.resolve(token);
+        }
+      }
 
       if (user) {
+        console.log("user", user)
         token.id = user.id;
+        token.name = user.name;
         token.token = user.token;
+        token.profile_image = user.image;
         token.email = user.email;
-        console.log(token);
       }
-      console.log(token);
-
       return Promise.resolve(token);
     },
 
     async session({ session, token }) {
       session.user = token;
+      console.log("session", session)
       return Promise.resolve(session);
     },
+
   },
   pages: {
     signIn: '/login',
