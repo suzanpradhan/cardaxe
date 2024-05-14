@@ -1,10 +1,10 @@
 'use client';
 
-import { updateDesignForm } from '@/app/GlobalRedux/Features/cardSlice';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import { updateDesignForm } from '@/module/cards/cardSlice';
 import { CardState, DesignFromSchemaType } from '@/module/cards/cardsType';
 import { useFormik } from 'formik';
 import React, { ChangeEvent } from 'react';

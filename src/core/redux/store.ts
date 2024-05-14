@@ -1,7 +1,7 @@
 'use client';
 
 import { configureStore } from '@reduxjs/toolkit';
-import cardSlice from '../../app/GlobalRedux/Features/cardSlice';
+import cardSlice from '../../module/cards/cardSlice';
 import { rtkQueryErrorLogger } from '../api/apiMiddleWare';
 import { baseApi } from '../api/apiQuery';
 

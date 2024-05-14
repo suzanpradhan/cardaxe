@@ -39,6 +39,7 @@ export type CardState = {
 
 export type UpdateCardState<T> = {
   card: {
+    id?: string;
     cardFields: ContentFormUpdateSchemaType,
     cardDesign: DesignFormUpdateSchemaType,
     isPublished?: boolean,

@@ -1,13 +1,11 @@
 'use client';
-import {
-  updateContentForm,
-  updateErrors,
-} from '@/app/GlobalRedux/Features/cardSlice';
+
 import MyCardsContentForm1 from '@/components/myCards/MyCardsContentForm1';
 import MyCardsContentForm2 from '@/components/myCards/MyCardsContentForm2';
 import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import { updateContentForm, updateErrors } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 
 // import { useForm } from 'react-hook-form';

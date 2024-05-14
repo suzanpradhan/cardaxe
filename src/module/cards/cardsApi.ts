@@ -6,8 +6,9 @@ import { toast } from "react-toastify";
 import { CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
+
   endpoints: (builder) => ({
-    getCards: builder.query<PaginatedResponseType<CardTemplatesType[]>, void>({
+    getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType[]>, void>({
       query: () => `${apiPaths.getCardTemplatesUrl}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName + '-' + 'get-cards-endpoint';
@@ -22,14 +23,7 @@ const cardsApi = baseApi.injectEndpoints({
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return endpointName + '-' + queryArgs;
       },
-      async onQueryStarted(payload, { queryFulfilled },) {
-        try {
-          await queryFulfilled;
-          console.log('query process.', payload);
-        } catch (err) {
-          console.log(err);
-        }
-      },
+
       providesTags: (result, error, id) => [{ type: 'Card', id: id }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
@@ -38,7 +32,7 @@ const cardsApi = baseApi.injectEndpoints({
       },
     }),
 
-    createCard: builder.mutation<any, string>({
+    createCard: builder.mutation<UpdateCardState<CardTemplatesType>, string>({
       query: (user) => {
         // var formData = new FormData();
         const payload = {
@@ -48,30 +42,6 @@ const cardsApi = baseApi.injectEndpoints({
           'user': user,
           "card_template": 1
         }
-        // formData.append('card_fields', JSON.stringify({}))
-        // formData.append('card_design', JSON.stringify({}))
-        // formData.append('is_published', 'true')
-        // formData.append('user', user)
-        // formData.append('card_template', '1')
-
-        // formData.append('card_fields[first_name]', payload.cardFields.prefix)
-        // formData.append('card_fields[last_name]', payload.cardFields.prefix)
-        // formData.append('card_fields[suffix]', payload.cardFields.prefix)
-        // formData.append('card_fields[bio]', payload.cardFields.prefix)
-        // formData.append('card_fields[phone]', payload.cardFields.prefix)
-        // formData.append('card_fields[email]', payload.cardFields.prefix)
-        // formData.append('card_fields[middle_name]', payload.cardFields.prefix)
-        // formData.append('card_fields[designation]', payload.cardFields.prefix)
-        // formData.append('card_fields[department]', payload.cardFields.prefix)
-        // formData.append('card_fields[company]', payload.cardFields.prefix)
-        // formData.append('card_fields[website]', payload.cardFields.prefix)
-        // formData.append('card_design[logo_url]', payload.cardFields.prefix)
-        // formData.append('card_design[show_logo]', payload.cardFields.prefix)
-        // formData.append('card_design[show_social_icons]', payload.cardFields.prefix)
-        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
-        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
-        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
-        // formData.append('card_design[dark_mode]', payload.cardFields.prefix)
         return {
           url: `${apiPaths.cardsUrl}`,
           method: 'POST',
@@ -127,6 +97,7 @@ const cardsApi = baseApi.injectEndpoints({
           formData: true,
         }
       },
+
       invalidatesTags: (result, error, arg) => [{ type: 'Card', id: arg.cardId }],
       transformResponse: (response: { data: any }) =>
         response.data,

@@ -15,15 +15,16 @@ const LayoutPage = () => {
   const session = useSession();
 
   useEffect(() => {
-    dispatch(cardsApi.endpoints.getCards.initiate());
+    dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
   }, [dispatch]);
 
   const cardsList = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries['getCards-get-cards-endpoint']
+      state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
         ?.data as CardTemplatesType[]
   );
-  // const { isLoading, isError, isSuccess, data, error } = useGetCardsQuery('');
+
+  console.log(cardsList);
 
   return (
     <div>
@@ -33,11 +34,9 @@ const LayoutPage = () => {
         //   {/* {JSON.stringify(card)} */}
         // </div>
         <div key={index}>
-          {/* {parse(card.htmlCode)}
-          <>{card.htmlCode}</> */}
           <CardLayouts
             htmlSource={card.htmlCode}
-            variableValues={{ first_name: 'avishek' }}
+            variableValues={card.defaultCardFields}
           />
         </div>
       ))}

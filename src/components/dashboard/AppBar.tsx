@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import { updateContentForm } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardTemplatesType, UpdateCardState } from '@/module/cards/cardsType';
 import { updatedDiff } from 'deep-object-diff';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -20,15 +21,6 @@ const AppBar = ({ cardId }: AppBarProps) => {
   const cardState = useSelector((state: RootState) => state.card);
   const pathName = usePathname();
   const session = useSession();
-  const [toggleTab, setToggleTab] = useState<number>(0);
-
-  useEffect(() => {
-    if (cardId) {
-      dispatch(cardsApi.endpoints.getCard.initiate(cardId));
-    }
-  }, [dispatch]);
-
-  // const cardId = searchParams.get('cardId');
 
   const card = useAppSelector(
     (state: RootState) =>
@@ -36,27 +28,47 @@ const AppBar = ({ cardId }: AppBarProps) => {
         ?.data as UpdateCardState<CardTemplatesType>['card']
   );
 
-  console.log('card:', card);
-
   useEffect(() => {
-    if (pathName.endsWith('/builder')) {
-      setToggleTab(0);
-    } else if (pathName.endsWith('/builder/contents')) {
-      setToggleTab(1);
-    } else if (pathName.endsWith('/builder/designs')) {
-      setToggleTab(2);
-    } else if (pathName.endsWith('/builder/infos')) {
-      setToggleTab(3);
+    if (cardId) {
+      dispatch(cardsApi.endpoints.getCard.initiate(cardId));
     }
-  }, [pathName]);
+    if (card?.cardTemplate?.defaultCardFields) {
+      console.log('card', card.cardTemplate?.defaultCardFields);
+      dispatch(updateContentForm({ ...card.cardTemplate?.defaultCardFields }));
+    }
+  }, []);
+
+  // dispatch(
+  //   updateContentForm({
+  //     prefix: 'god',
+  //     firstName: 'Avishek',
+  //     middleName: 'Ram',
+  //     lastName: 'Sandler',
+  //     suffix: 'xxx',
+  //     bio: 'Cool headded calm nice guy',
+  //     designation: 'COO',
+  //     department: 'Some Depart',
+  //     company: 'Some Company',
+  //     website: 'info@somecomp.com',
+  //     phone: '9987456321',
+  //     email: 'some@email.com',
+  //   })
+  // );
+
+  // useEffect(() => {
+  //   if (pathName.endsWith('/builder')) {
+  //     setToggleTab(0);
+  //   } else if (pathName.endsWith('/builder/contents')) {
+  //     setToggleTab(1);
+  //   } else if (pathName.endsWith('/builder/designs')) {
+  //     setToggleTab(2);
+  //   } else if (pathName.endsWith('/builder/infos')) {
+  //     setToggleTab(3);
+  //   }
+  // }, [pathName]);
 
   const handlePublish = () => {
     var submitresponse = undefined;
-
-    // console.log(
-    //   'updated diff',
-    //   updatedDiff(card.cardFields, oridinalCardState)
-    // );
 
     const updatedCardFields = card.cardTemplate?.defaultCardFields
       ? updatedDiff(
