@@ -26,7 +26,6 @@ export async function setHeaders(headers: Headers) {
 
   if (session) {
     const token = session?.user?.token;
-    console.log("setheaders", session.user)
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
       // headers.set('X-CSRFToken', `${csrfToken}`)
@@ -48,7 +47,6 @@ export async function setFormDataHeaders(headers: Headers) {
   }
 
   headers.set('Content-Type', 'multipart/form-data');
-  console.log(headers);
   // headers.set('Access-Control-Allow-Origin', '*');
   return headers;
 }

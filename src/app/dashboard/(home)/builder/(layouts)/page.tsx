@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardTemplatesType } from '@/module/cards/cardsType';
-import parse from 'html-react-parser';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
@@ -24,7 +23,6 @@ const LayoutPage = () => {
       state.baseApi.queries['getCards-get-cards-endpoint']
         ?.data as CardTemplatesType[]
   );
-  console.log(cardsList);
   // const { isLoading, isError, isSuccess, data, error } = useGetCardsQuery('');
 
   return (
@@ -35,10 +33,10 @@ const LayoutPage = () => {
         //   {/* {JSON.stringify(card)} */}
         // </div>
         <div key={index}>
-          {parse(card.html_code)}
-          <>{card.html_code}</>
+          {/* {parse(card.htmlCode)}
+          <>{card.htmlCode}</> */}
           <CardLayouts
-            htmlSource={card.html_code}
+            htmlSource={card.htmlCode}
             variableValues={{ first_name: 'avishek' }}
           />
         </div>

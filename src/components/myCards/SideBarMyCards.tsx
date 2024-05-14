@@ -40,22 +40,17 @@ const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
 const SideBarMyCards = ({ cardId }: SideBarMyCardsProps) => {
   const router = useRouter();
   const pathName = usePathname();
-  console.log(pathName);
 
   const [toggleTab, setToggleTab] = useState<number>(0);
 
   useEffect(() => {
     if (pathName.endsWith(`/builder`)) {
-      console.log(pathName);
       setToggleTab(0);
     } else if (pathName.endsWith(`/builder/contents`)) {
-      console.log(pathName);
       setToggleTab(1);
     } else if (pathName.endsWith(`/builder/designs`)) {
-      console.log(pathName);
       setToggleTab(2);
     } else if (pathName.endsWith(`/builder/infos`)) {
-      console.log(pathName);
       setToggleTab(3);
     }
   }, [pathName]);

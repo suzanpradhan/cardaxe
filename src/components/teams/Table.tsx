@@ -1,7 +1,6 @@
-import { StaticImageData } from 'next/image';
-import React, { useState } from 'react';
-import Image from 'next/image';
 import { Activity, Eye, More, Scanning } from 'iconsax-react';
+import Image, { StaticImageData } from 'next/image';
+import { useState } from 'react';
 import Dialog from '../Dialog';
 import ManageMemberDialog from './ManageMemberDialog';
 
@@ -27,9 +26,7 @@ const ACTIONS_BUTTONS = [
 
 const Table = ({ columnHeadings, data }: TabelPropsType) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const openDialog = () => (
-    setIsDialogOpen(true), console.log('>>>here', isDialogOpen)
-  );
+  const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
   return (
@@ -80,7 +77,7 @@ const Table = ({ columnHeadings, data }: TabelPropsType) => {
       </div>
 
       <Dialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}>
-        <ManageMemberDialog closeDialog={closeDialog} />
+        <ManageMemberDialog />
       </Dialog>
     </div>
   );

@@ -13,10 +13,8 @@ const Header = () => {
   const [isMobileNavOpen, toggleMobileNav] = useState<boolean>(false);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const { direction: scrollDirection, position: scrollPosition } = useScroll();
-  console.log('scrollDirection', scrollDirection);
   const handleOutsideClick = (e: Event) => {
     toggleMobileNav(false);
-    console.log(isMobileNavOpen);
   };
   useDetectOutsideClick(mobileNavRef, handleOutsideClick);
 

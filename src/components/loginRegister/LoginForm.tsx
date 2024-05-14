@@ -49,7 +49,6 @@ const LoginForm: React.FC = () => {
       if (!response?.error) {
         toast.success('Sucessfully logged in.');
         if (callback) {
-          console.log(response);
           window.location.href = callback;
           if (callback.includes('#')) window.location.reload();
         } else {

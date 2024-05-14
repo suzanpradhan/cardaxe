@@ -1,6 +1,8 @@
-import { useAppDispatch } from '@/core/redux/clientStore';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
+import { CardTemplatesType, UpdateCardState } from '@/module/cards/cardsType';
+import { updatedDiff } from 'deep-object-diff';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,11 +21,22 @@ const AppBar = ({ cardId }: AppBarProps) => {
   const pathName = usePathname();
   const session = useSession();
   const [toggleTab, setToggleTab] = useState<number>(0);
-  // const [cardId, setCardId] = useState<string | undefined>();
 
-  // if (searchParams.get('cardId')) {
-  //   setCardId(searchParams.get('cardId') ?? undefined);
-  // }
+  useEffect(() => {
+    if (cardId) {
+      dispatch(cardsApi.endpoints.getCard.initiate(cardId));
+    }
+  }, [dispatch]);
+
+  // const cardId = searchParams.get('cardId');
+
+  const card = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries[`getCard-${cardId}`]
+        ?.data as UpdateCardState<CardTemplatesType>['card']
+  );
+
+  console.log('card:', card);
 
   useEffect(() => {
     if (pathName.endsWith('/builder')) {
@@ -40,14 +53,36 @@ const AppBar = ({ cardId }: AppBarProps) => {
   const handlePublish = () => {
     var submitresponse = undefined;
 
-    console.log(cardState.errors);
+    // console.log(
+    //   'updated diff',
+    //   updatedDiff(card.cardFields, oridinalCardState)
+    // );
 
-    if (!cardState.errors && cardId && session.data?.user?.id) {
-      console.log(cardState.errors, cardId, session);
+    const updatedCardFields = card.cardTemplate?.defaultCardFields
+      ? updatedDiff(
+          card.cardTemplate?.defaultCardFields,
+          cardState.card.cardFields
+        )
+      : undefined;
+
+    const updatedCardDesign = updatedDiff(
+      card.cardDesign,
+      cardState.card.cardDesign
+    );
+
+    console.log('updatedCardFields', updatedCardFields);
+    console.log('updatedCardDesigns', updatedCardDesign);
+
+    if (
+      !cardState.errors &&
+      cardId &&
+      session.data?.user?.id &&
+      updatedCardFields
+    ) {
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
-          cardFields: cardState.card.cardFields,
-          cardDesign: cardState.card.cardDesign,
+          cardFields: updatedCardFields,
+          cardDesign: updatedCardDesign,
           cardId: cardId.toString(),
           userId: session.data?.user?.id,
         })
@@ -59,7 +94,6 @@ const AppBar = ({ cardId }: AppBarProps) => {
             toast.error(`Error:${errorMessage}`);
             throw errorMessage;
           }
-          // const response = (res as any).data;
           toast.success('Successfully updated');
         })
         .catch((err) => {
@@ -68,12 +102,6 @@ const AppBar = ({ cardId }: AppBarProps) => {
           throw err;
         });
     }
-    // submitResponse = submitResponse
-    //   ?.then((res) => toast.success('Submitted Successfully'))
-    //   .catch((err) => {
-    //     toast.error('Something went wrong');
-    //     throw err;
-    //   });
   };
   return (
     <div className="flex w-full gap-3 h-[3.25rem] ">

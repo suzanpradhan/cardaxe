@@ -25,7 +25,6 @@ const Designpage = () => {
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
 
-    console.log(stateValue);
     const updatedFormState: CardState['card']['cardDesign'] = {
       ...cardState.card.cardDesign,
       [name]: stateValue,
@@ -33,9 +32,7 @@ const Designpage = () => {
     dispatch(updateDesignForm(updatedFormState));
   };
 
-  const onSubmit = (data: DesignFromSchemaType) => {
-    console.log(data);
-  };
+  const onSubmit = (data: DesignFromSchemaType) => {};
 
   const formik = useFormik<DesignFromSchemaType>({
     enableReinitialize: true,
@@ -49,7 +46,6 @@ const Designpage = () => {
       className="flex gap-4 flex-col "
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(e.target);
         formik.handleSubmit(e);
       }}
     >

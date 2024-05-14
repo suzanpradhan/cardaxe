@@ -4,14 +4,14 @@ import { z } from "zod";
 export type CardTemplatesType = {
   id: number;
   name: string;
-  html_code: string;
-  cover_image: string;
+  htmlCode: string;
+  coverImage: string;
   version: string;
-  card_template_category: {
+  cardTemplateCategory: {
     id: number;
     name: string;
   };
-  default_card_fields: ContentFormSchemaType
+  defaultCardFields: ContentFormSchemaType
 };
 
 export type UpdateCardParams = {
@@ -37,15 +37,16 @@ export type CardState = {
   errors?: boolean;
 };
 
-export type UpdateCardState = {
+export type UpdateCardState<T> = {
   card: {
     cardFields: ContentFormUpdateSchemaType,
     cardDesign: DesignFormUpdateSchemaType,
     isPublished?: boolean,
     user?: string
-    cardTemplate?: string
+    cardTemplate?: T
   }
 }
+
 
 export const ContentFormSchema = z.object({
   id: z.number().optional(),
@@ -70,8 +71,8 @@ export const ContentFormUpdateSchema = ContentFormSchema.extend({
   lastName: z.string().pipe(nonempty).optional(),
   suffix: z.string().pipe(nonempty).optional(),
   bio: z.string().pipe(nonempty).optional(),
-  phone: z.string().length(10),
-  email: z.string().email(),
+  phone: z.string().length(10).optional(),
+  email: z.string().email().optional(),
   // isDefault: z.boolean(),
   designation: z.string().pipe(nonempty).optional(),
   department: z.string().pipe(nonempty).optional(),

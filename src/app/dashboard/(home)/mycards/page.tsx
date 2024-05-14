@@ -8,7 +8,6 @@ const MyCardsPage = () => {
   const router = useRouter();
   const { data } = useSession();
   const dispatch = useAppDispatch();
-  console.log(data);
   const handleClick = async () => {
     if (data?.user) {
       try {
@@ -16,7 +15,6 @@ const MyCardsPage = () => {
           dispatch(cardsApi.endpoints.createCard.initiate(data?.user.id))
         );
         if (Object.prototype.hasOwnProperty.call(response, 'data')) {
-          console.log((response as any).data.id);
           router.push(
             `/dashboard/builder/?cardId=${(response as any).data.id}`
           );

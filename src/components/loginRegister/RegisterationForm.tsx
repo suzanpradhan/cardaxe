@@ -49,8 +49,6 @@ const RegisterationForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = async (data: RegistrationSchemaType) => {
-    console.log('register form data', data);
-
     try {
       const responseData = await dispatch(
         registerApi.endpoints.signUp.initiate({
@@ -62,7 +60,6 @@ const RegisterationForm: React.FC = () => {
       if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
         console.log('regsister response', responseData);
       } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
-        console.log('regsister response', responseData);
         router.push('/login');
       }
     } catch (error) {

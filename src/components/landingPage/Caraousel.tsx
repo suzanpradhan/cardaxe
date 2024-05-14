@@ -75,12 +75,6 @@ const Caraousel = () => {
           //   toggleIsBeginning(true);
           //   toggleIsEnd(true);
           // }
-          console.log(
-            swiperRef.current?.swiper.isBeginning,
-            isBeginning,
-            swiperRef.current?.swiper.isEnd,
-            isEnd
-          );
         }}
       >
         {clientOpinion.map((opinion, index) => (

@@ -1,6 +1,7 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
+import { snakeToCamel } from "@/core/utils/generalFunctions";
 import { toast } from "react-toastify";
 import { CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
 
@@ -12,11 +13,31 @@ const cardsApi = baseApi.injectEndpoints({
         return endpointName + '-' + 'get-cards-endpoint';
       },
       transformResponse: (response: any) => {
-        // console.log(response.data.contents);
-        console.log('response:' + response)
-        return response.results as any;
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse.results as any;
       },
     }),
+    getCard: builder.query<UpdateCardState<CardTemplatesType>['card'], string>({
+      query: (cardId) => `${apiPaths.getCardUrl}${cardId}/`,
+      serializeQueryArgs: ({ queryArgs, endpointName }) => {
+        return endpointName + '-' + queryArgs;
+      },
+      async onQueryStarted(payload, { queryFulfilled },) {
+        try {
+          await queryFulfilled;
+          console.log('query process.', payload);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      providesTags: (result, error, id) => [{ type: 'Card', id: id }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        console.log(camelCaseResponse)
+        return camelCaseResponse;
+      },
+    }),
+
     createCard: builder.mutation<any, string>({
       query: (user) => {
         // var formData = new FormData();
@@ -54,10 +75,10 @@ const cardsApi = baseApi.injectEndpoints({
         return {
           url: `${apiPaths.cardsUrl}`,
           method: 'POST',
-
           body: payload,
         }
       },
+
       async onQueryStarted(payload, { queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -68,36 +89,45 @@ const cardsApi = baseApi.injectEndpoints({
         }
       },
     }),
-    upDateCard: builder.mutation<any, UpdateCardParams & UpdateCardState['card']>({
+    upDateCard: builder.mutation<any, UpdateCardParams & UpdateCardState<string>['card']>({
       query: ({ userId, cardId, ...payload }) => {
         const formData = new FormData();
-
-        if (payload.cardFields.prefix) formData.append('card_fields[prefix]', payload.cardFields.prefix)
-        if (payload.cardFields.firstName) formData.append('card_fields[first_name]', payload.cardFields.firstName)
-        if (payload.cardFields.lastName) formData.append('card_fields[last_name]', payload.cardFields.lastName)
-        if (payload.cardFields.suffix) formData.append('card_fields[suffix]', payload.cardFields.suffix)
-        if (payload.cardFields.bio) formData.append('card_fields[bio]', payload.cardFields.bio)
-        if (payload.cardFields.phone) formData.append('card_fields[phone]', payload.cardFields.phone)
-        if (payload.cardFields.email) formData.append('card_fields[email]', payload.cardFields.email)
-        if (payload.cardFields.middleName) formData.append('card_fields[middle_name]', payload.cardFields.middleName)
-        if (payload.cardFields.designation) formData.append('card_fields[designation]', payload.cardFields.designation)
-        if (payload.cardFields.department) formData.append('card_fields[department]', payload.cardFields.department)
-        if (payload.cardFields.company) formData.append('card_fields[company]', payload.cardFields.company)
-        if (payload.cardFields.website) formData.append('card_fields[website]', payload.cardFields.website)
-        if (payload.cardDesign.backgroundColor) formData.append('card_design[background_color]', payload.cardDesign.backgroundColor)
-        if (payload.cardDesign.logoUrl) formData.append('card_design[logo_url]', payload.cardDesign.logoUrl)
-        if (payload.cardDesign.showLogo) formData.append('card_design[show_logo]', payload.cardDesign.showLogo.toString())
-        if (payload.cardDesign.showSocialIcons) formData.append('card_design[show_social_icons]', payload.cardDesign.showSocialIcons.toString())
-        if (payload.cardDesign.darkMode) formData.append('card_design[dark_mode]', payload.cardDesign.darkMode.toString())
+        if (payload.cardFields.prefix) formData.append('card_fields.prefix', payload.cardFields.prefix)
+        if (payload.cardFields.firstName) formData.append('card_fields.first_name', payload.cardFields.firstName)
+        if (payload.cardFields.lastName) formData.append('card_fields.last_name', payload.cardFields.lastName)
+        if (payload.cardFields.suffix) formData.append('card_fields.suffix', payload.cardFields.suffix)
+        if (payload.cardFields.bio) formData.append('card_fields.bio', payload.cardFields.bio)
+        if (payload.cardFields.phone) formData.append('card_fields.phone', payload.cardFields.phone)
+        if (payload.cardFields.email) formData.append('card_fields.email', payload.cardFields.email)
+        if (payload.cardFields.middleName) formData.append('card_fields.middle_name', payload.cardFields.middleName)
+        if (payload.cardFields.designation) formData.append('card_fields.designation', payload.cardFields.designation)
+        if (payload.cardFields.department) formData.append('card_fields.department', payload.cardFields.department)
+        if (payload.cardFields.company) formData.append('card_fields.company', payload.cardFields.company)
+        if (payload.cardFields.website) formData.append('card_fields.website', payload.cardFields.website)
+        if (payload.cardDesign.backgroundColor) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
+        if (payload.cardDesign.logoUrl) formData.append('card_design.logo_url', payload.cardDesign.logoUrl)
+        if (payload.cardDesign.showLogo) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
+        if (payload.cardDesign.showSocialIcons) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
+        if (payload.cardDesign.darkMode) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
         if (payload.isPublished) formData.append('is_published', payload.isPublished.toString())
         if (payload.user) formData.append('user', userId.toString())
         if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate.toString())
+        var object: Record<string, any> = {};
+        formData.forEach(function (value, key) {
+          object[key] = value;
+        });
+        var json = JSON.stringify(object);
+        console.log("sjon formdata", formData.values())
+
         return {
           url: `${apiPaths.cardsUrl}${cardId}/`,
           method: 'PATCH',
+          // headers: { 'Content-Type': 'multipart/form-data', "type": "formData" },
           body: formData,
+          formData: true,
         }
       },
+      invalidatesTags: (result, error, arg) => [{ type: 'Card', id: arg.cardId }],
       transformResponse: (response: { data: any }) =>
         response.data,
       transformErrorResponse: (

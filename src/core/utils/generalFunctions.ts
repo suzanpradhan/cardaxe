@@ -1,5 +1,5 @@
-import { CardState } from '@/app/GlobalRedux/Features/cardSlice';
 // import { CardContentType, SnakeCardContentType } from '@/core/types/appTypes';
+
 
 export const fistLetterToLowerCase = (inputString: string) => {
   if (inputString.length === 0) {
@@ -9,20 +9,20 @@ export const fistLetterToLowerCase = (inputString: string) => {
   return inputString.charAt(0).toLowerCase() + inputString.slice(1);
 };
 
-export const findObjectContainingElement = (
-  elementToFind: string,
-  initialState: CardState
-) => {
-  for (const objectName in initialState) {
-    if (Object.prototype.hasOwnProperty.call(initialState, objectName)) {
-      const object = initialState[objectName as keyof typeof initialState];
-      if (Object.values(object).includes(elementToFind)) {
-        return objectName;
-      }
-    }
-  }
-  return null; // Return null if the element was not found in any object.
-};
+// export const findObjectContainingElement = (
+//   elementToFind: string,
+//   initialState: CardState
+// ) => {
+//   for (const objectName in initialState) {
+//     if (Object.prototype.hasOwnProperty.call(initialState, objectName)) {
+//       const object = initialState[objectName as keyof typeof initialState];
+//       if (Object.values(object).includes(elementToFind)) {
+//         return objectName;
+//       }
+//     }
+//   }
+//   return null; // Return null if the element was not found in any object.
+// };
 
 export const camelToSnake = <T>(obj: T): Record<string, any> => {
   const snakeObj: Record<string, any> = {};
@@ -38,6 +38,26 @@ export const camelToSnake = <T>(obj: T): Record<string, any> => {
   }
 
   return snakeObj;
+};
+
+export const snakeToCamel = <T>(obj: T): any => {
+  if (Array.isArray(obj)) {
+    return obj.map(snakeToCamel);
+  } else if (typeof obj === 'object' && obj !== null) {
+    const camelObj: Record<string, any> = {};
+
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        let camelKey = key.replace(/_[a-z]/g, (match) => match.slice(1).toUpperCase());
+        camelKey = camelKey[0].toLowerCase() + camelKey.slice(1);
+        camelObj[camelKey] = snakeToCamel(obj[key]);
+      }
+    }
+
+    return camelObj;
+  } else {
+    return obj;
+  }
 };
 
 // export const camelToSnake = <T>(obj: T): T => {

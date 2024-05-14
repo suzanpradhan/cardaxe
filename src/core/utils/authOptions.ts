@@ -27,6 +27,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         const user = await res.json()
+
         if (res.ok && user) {
           return {
             id: user.id,
@@ -73,7 +74,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, trigger }) {
-      console.log("jwt", token, user, trigger)
       if (trigger == 'update') {
         const response = await fetch(
           `${apiPaths.baseUrl}${apiPaths.profileUrl}`,
@@ -85,16 +85,17 @@ export const authOptions: NextAuthOptions = {
             },
           }
         );
+        console.log('callback log', token, user, trigger, response)
         if (response.ok) {
           const responseData = await response.json();
           token.name = responseData.data.user.name;
           token.profile_image = responseData.data.user.profile_image;
+          token.token = responseData.data.user.token.token
           return Promise.resolve(token);
         }
       }
 
       if (user) {
-        console.log("user", user)
         token.id = user.id;
         token.name = user.name;
         token.token = user.token;
@@ -106,7 +107,6 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       session.user = token;
-      console.log("session", session)
       return Promise.resolve(session);
     },
 

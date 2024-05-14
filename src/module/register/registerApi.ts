@@ -7,7 +7,6 @@ export const registerApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         signUp: builder.mutation<any, RegistrationSchemaType>({
             query: ({ ...payload }) => {
-                console.log("payload", payload)
                 var formData = new FormData();
                 formData.append("email", payload.email);
                 formData.append("password", payload.password);

@@ -8,6 +8,7 @@ export const apiPaths = {
   resetPasswordUrl: 'user/reset-password/',
   sendForgotPasswordEmailUrl: 'user/send-forgot-password-email/',
   getCardTemplatesUrl: 'templates/',
+  getCardUrl: 'cards/',
   updateContentUrl: 'card/update-content/',
   cardsUrl: 'cards/'
 };

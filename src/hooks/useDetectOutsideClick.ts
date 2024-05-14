@@ -4,7 +4,6 @@ const useDetectOutsideClick = (ref: MutableRefObject<HTMLDivElement | null>, cal
     const handleClickOutside = (e: MouseEvent) => {
         if (ref.current != null && !ref.current.contains(e.target as Node)) {
             callback(e);
-            console.log('clicked outside');
         }
     };
 

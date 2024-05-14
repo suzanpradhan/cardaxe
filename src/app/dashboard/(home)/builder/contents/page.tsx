@@ -32,7 +32,6 @@ const ContentsPage = () => {
   // });
 
   const onSubmit = (values: ContentFormSchemaType) => {
-    console.log(values);
     const submitresponse = dispatch(
       cardsApi.endpoints.updateContents.initiate(values)
     );
@@ -48,7 +47,6 @@ const ContentsPage = () => {
       ContentFormSchema.parse(values);
     } catch (error) {
       if (error instanceof ZodError) {
-        console.log(error);
         return error.formErrors.fieldErrors;
       }
     }
@@ -88,7 +86,6 @@ const ContentsPage = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(e.target);
         formik.handleSubmit(e);
       }}
       className="flex flex-col gap-4"

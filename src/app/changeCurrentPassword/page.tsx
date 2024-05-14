@@ -1,17 +1,8 @@
 'use client';
 
-import ButtonForm from '@/components/ButtonForm';
-import InputComp from '@/components/InputComp';
-import FormWrapper from '@/components/FormWrapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { z } from 'zod';
-import { apiPaths } from '../api/apiConstants';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 
 type Z_SCHEMA_NAME = 'current_password' | 'new_password' | 'new_repassword';
 
@@ -63,51 +54,42 @@ const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
 ];
 
 const ChangeCurrentPassword = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordSchemaType>({
-    resolver: zodResolver(ForgotPasswordSchema),
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<ForgotPasswordSchemaType>({
+  //   resolver: zodResolver(ForgotPasswordSchema),
+  // });
 
   const { data: session } = useSession();
   const router = useRouter();
 
   const submit = async (data: ForgotPasswordSchemaType) => {
-    console.log(session?.user?.token);
-    axios({
-      method: 'post',
-      url: `${apiPaths.baseUrl}${apiPaths.changeCurrentPassword}`,
-      data: data,
-      headers: {
-        // 'Content-Type': 'multipart/form-data',
-        Authorization: `JWT ${session?.user?.token}`,
-      },
-    })
-      .then(function () {
-        toast.success('Your password has been reset');
-        router.push('/dashboard');
-      })
-
-      .catch(function (error) {
-        console.log(error);
-        error.response.data.errors.detail &&
-          toast.error(error.response.data.errors.detail);
-        error?.response?.data?.errors?.errors[0] &&
-          toast.error(error?.response?.data?.errors?.errors[0]);
-      });
+    // axios({
+    //   method: 'post',
+    //   url: `${apiPaths.baseUrl}${apiPaths.changeCurrentPassword}`,
+    //   data: data,
+    //   headers: {
+    //     // 'Content-Type': 'multipart/form-data',
+    //     Authorization: `JWT ${session?.user?.token}`,
+    //   },
+    // })
+    //   .then(function () {
+    //     toast.success('Your password has been reset');
+    //     router.push('/dashboard');
+    //   })
+    //   .catch(function (error) {
+    //     error.response.data.errors.detail &&
+    //       toast.error(error.response.data.errors.detail);
+    //     error?.response?.data?.errors?.errors[0] &&
+    //       toast.error(error?.response?.data?.errors?.errors[0]);
+    //   });
   };
 
   return (
     <div className="flex flex-col w-110 mx-auto my-48">
-      <FormWrapper
-        titleText={true}
-        description={
-          'Confirm your email, enter new password and confirm it to change.'
-        }
-      >
-        <form
+      {/* <form
           className="flex flex-col gap-4 pt-2 my-6"
           onSubmit={handleSubmit(submit)}
         >
@@ -127,8 +109,7 @@ const ChangeCurrentPassword = () => {
             </div>
           ))}
           <ButtonForm label="Reset Password" />
-        </form>
-      </FormWrapper>
+        </form> */}
     </div>
   );
 };
