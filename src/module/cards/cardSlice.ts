@@ -5,21 +5,21 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 
 
-const initialState: CardState = {
+const initialState: CardState<string> = {
   card: {
     cardFields: {
-      prefix: 'god',
-      firstName: 'Avishek',
-      middleName: 'Ram',
-      lastName: 'Sandler',
-      suffix: 'xxx',
-      bio: 'Cool headded calm nice guy',
-      designation: 'COO',
-      department: 'Some Depart',
-      company: 'Some Company',
-      website: 'info@somecomp.com',
-      phone: '9987456321',
-      email: 'some@email.com',
+      prefix: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      suffix: '',
+      bio: '',
+      designation: '',
+      department: '',
+      company: '',
+      website: '',
+      phone: '',
+      email: '',
     },
     cardDesign: {
       backgroundColor: '#f23f37',
@@ -40,20 +40,20 @@ export const cardSlice = createSlice({
   reducers: {
     updateContentForm: (
       state,
-      action: PayloadAction<CardState['card']['cardFields']>
+      action: PayloadAction<CardState<string>['card']['cardFields']>
     ) => {
       state.card.cardFields = { ...action.payload };
     },
     updateDesignForm: (
       state,
-      action: PayloadAction<CardState['card']['cardDesign']>
+      action: PayloadAction<CardState<string>['card']['cardDesign']>
     ) => {
       state.card.cardDesign = { ...action.payload };
     },
     // updateInfosForm: (state, action: PayloadAction<CardState['infosForm']>) => {
     //   state.infosForm = { ...action.payload };
     // },
-    updateErrors: (state, action: PayloadAction<CardState['errors']>) => {
+    updateErrors: (state, action: PayloadAction<CardState<string>['errors']>) => {
       state.errors = action.payload;
     },
   },
@@ -61,6 +61,8 @@ export const cardSlice = createSlice({
   //   builder.addMatcher()
   // },
 });
+
+cardSlice.actions.updateContentForm.type
 
 export const {
   updateContentForm,

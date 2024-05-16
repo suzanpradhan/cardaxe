@@ -26,13 +26,13 @@ export type InfosFormStateType = {
 
 export type ErrorType = { errors: Record<string, string> };
 
-export type CardState = {
+export type CardState<T> = {
   card: {
     cardFields: ContentFormSchemaType,
     cardDesign: DesignFromSchemaType,
     isPublished?: boolean,
     user?: string
-    cardTemplate: string
+    cardTemplate: T
   }
   errors?: boolean;
 };

@@ -1,10 +1,7 @@
-import { RootState } from '@/core/redux/store';
 import { InputFieldProps } from '@/core/types/appTypes';
-import { CardState } from '@/module/cards/cardsType';
 import clsx from 'clsx';
 import { Eye, EyeSlash } from 'iconsax-react';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import CreatableSelect from 'react-select/creatable';
 
 const InputLable = ({
@@ -36,20 +33,10 @@ const InputComp = ({
   options,
 }: InputFieldProps) => {
   const [showPassword, toggleShowPassword] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const cardState: CardState = useSelector((state: RootState) => state.card);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     toggleShowPassword(!showPassword);
-  };
-
-  const handleInputChange = (
-    e:
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLInputElement>
-  ) => {
-    handleChange?.(e);
   };
 
   function returnInput() {
@@ -64,12 +51,22 @@ const InputComp = ({
               {inputLabel}
             </label>
             <div className="h-full">
-              <textarea
-                id={zSchemaName}
-                {...getFieldProps?.(zSchemaName)}
+              {/* <textarea
                 name={zSchemaName}
                 onChange={(e) => handleChange?.(e)}
-                // onChange={(e) => handleTextChange(e)}
+                {...getFieldProps?.(zSchemaName)}
+                id={zSchemaName}
+                value={inputValue as string}
+                className={clsx(
+                  'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
+                  error ? 'border-redError' : 'border-borderMain'
+                )}
+              /> */}
+              <textarea
+                name={zSchemaName}
+                onChange={(e) => handleChange?.(e)}
+                {...getFieldProps?.(zSchemaName)}
+                id={zSchemaName}
                 value={inputValue as string}
                 className={clsx(
                   'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
@@ -136,13 +133,6 @@ const InputComp = ({
                 )}
               >
                 {inputValue ?? placeholder}
-                {/* {cardState.designForm[
-                  zSchemaName as keyof CardState['designForm']
-                ]
-                  ? cardState.designForm[
-                      zSchemaName as keyof CardState['designForm']
-                    ]
-                  : placeholder} */}
               </label>
               <input
                 {...getFieldProps?.(zSchemaName)}
@@ -168,10 +158,11 @@ const InputComp = ({
               />
             )}
             <input
-              name={zSchemaName}
-              onChange={(e) => handleInputChange(e)}
+              onChange={(e) => handleChange?.(e)}
               id={zSchemaName}
               type={inputType}
+              name={zSchemaName}
+              // {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}
               className={clsx(
                 'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',

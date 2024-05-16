@@ -23,7 +23,6 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
     ...camelToSnake(variableValues),
     logo_url: 'https://source.unsplash.com/1000x700/?architecture',
   };
-  console.log('htmlSource', htmlSource, variableValues);
   Object.entries(snakeCaseVariablesValues).forEach(([variable, value]) => {
     Handlebars.registerHelper(variable, () => value);
   });
@@ -56,7 +55,6 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
     {}
   ) as HandlebarsTemplateFunction;
   const processedHtml = template();
-  console.log('snakeCaseVariablesValues', processedHtml);
 
   return <div>{parse(processedHtml)}</div>;
 };

@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 const Designpage = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
-  const defaultValues: CardState['card']['cardDesign'] = {
+  const defaultValues: CardState<string>['card']['cardDesign'] = {
     ...cardState.card.cardDesign,
   };
 
@@ -25,7 +25,7 @@ const Designpage = () => {
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
 
-    const updatedFormState: CardState['card']['cardDesign'] = {
+    const updatedFormState: CardState<string>['card']['cardDesign'] = {
       ...cardState.card.cardDesign,
       [name]: stateValue,
     };

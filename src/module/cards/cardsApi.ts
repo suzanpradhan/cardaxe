@@ -82,13 +82,6 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.isPublished) formData.append('is_published', payload.isPublished.toString())
         if (payload.user) formData.append('user', userId.toString())
         if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate.toString())
-        var object: Record<string, any> = {};
-        formData.forEach(function (value, key) {
-          object[key] = value;
-        });
-        var json = JSON.stringify(object);
-        console.log("sjon formdata", formData.values())
-
         return {
           url: `${apiPaths.cardsUrl}${cardId}/`,
           method: 'PATCH',

@@ -1,8 +1,17 @@
 'use client';
 
+import ButtonForm from '@/components/ButtonForm';
+import InputComp from '@/components/InputComp';
+import { useAppDispatch } from '@/core/redux/clientStore';
+import { registerApi } from '@/module/register/registerApi';
+import {
+  ForgotPasswordSchema,
+  ForgotPasswordSchemaType,
+} from '@/module/register/registerType';
+import { useFormik } from 'formik';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { z } from 'zod';
+import { ZodError } from 'zod';
 
 type Z_SCHEMA_NAME = 'current_password' | 'new_password' | 'new_repassword';
 
@@ -11,29 +20,6 @@ type INPUT_FEILDS_PROPS = {
   type: string;
   zSchemaName: Z_SCHEMA_NAME;
 };
-
-const ForgotPasswordSchema = z
-  .object({
-    current_password: z
-      .string()
-      .min(8, { message: 'Must be more than 8 characters' })
-      .max(24, { message: 'Must be less than 24 characters' }),
-    new_password: z
-      .string()
-      .min(8, { message: 'Must be more than 8 characters' })
-      .max(24, { message: 'Must be less than 24 characters' }),
-    new_repassword: z
-      .string()
-      .min(8, { message: 'Must be more than 8 characters' })
-      .max(24, { message: 'Must be less than 24 characters' })
-      .optional(),
-  })
-  .refine((data) => data.new_password === data.new_repassword, {
-    message: 'Passwords do not match',
-    path: ['newRepassword'],
-  });
-
-type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
 
 const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
   {
@@ -54,62 +40,79 @@ const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
 ];
 
 const ChangeCurrentPassword = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<ForgotPasswordSchemaType>({
-  //   resolver: zodResolver(ForgotPasswordSchema),
-  // });
+  const dispatch = useAppDispatch();
+  const validateForm = (values: ForgotPasswordSchemaType) => {
+    try {
+      ForgotPasswordSchema.parse(values);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return error.formErrors.fieldErrors;
+      }
+    }
+  };
+  const onSubmit = async (data: ForgotPasswordSchemaType) => {
+    try {
+      const responseData = await dispatch(
+        registerApi.endpoints.changeCurrentPassword.initiate({
+          current_password: data.current_password,
+          new_password: data.new_password,
+          new_repassword: data.new_repassword,
+        })
+      );
+      if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
+        console.log('change passowrd response', responseData);
+      } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
+        router.push('/login');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const formik = useFormik<ForgotPasswordSchemaType>({
+    enableReinitialize: true,
+    initialValues: {
+      current_password: '',
+      new_password: '',
+      new_repassword: '',
+    },
+    validateOnChange: true,
+    onSubmit,
+    validate: validateForm,
+    // validate: toFormikValidate(ContentFormSchema),
+    validateOnBlur: true,
+  });
 
   const { data: session } = useSession();
   const router = useRouter();
 
-  const submit = async (data: ForgotPasswordSchemaType) => {
-    // axios({
-    //   method: 'post',
-    //   url: `${apiPaths.baseUrl}${apiPaths.changeCurrentPassword}`,
-    //   data: data,
-    //   headers: {
-    //     // 'Content-Type': 'multipart/form-data',
-    //     Authorization: `JWT ${session?.user?.token}`,
-    //   },
-    // })
-    //   .then(function () {
-    //     toast.success('Your password has been reset');
-    //     router.push('/dashboard');
-    //   })
-    //   .catch(function (error) {
-    //     error.response.data.errors.detail &&
-    //       toast.error(error.response.data.errors.detail);
-    //     error?.response?.data?.errors?.errors[0] &&
-    //       toast.error(error?.response?.data?.errors?.errors[0]);
-    //   });
-  };
-
   return (
     <div className="flex flex-col w-110 mx-auto my-48">
-      {/* <form
-          className="flex flex-col gap-4 pt-2 my-6"
-          onSubmit={handleSubmit(submit)}
-        >
-          {INPUT_FEILDS.map((item, index) => (
-            <div className="h-12" key={index}>
-              <InputComp
-                inputType={item.type}
-                placeholder={item.placeholder}
-                register={register}
-                zSchemaName={item.zSchemaName}
-              />
-              {errors[item.zSchemaName] && (
-                <p className="text-xs text-redError">
-                  {errors[item.zSchemaName]?.message}
-                </p>
-              )}
-            </div>
-          ))}
-          <ButtonForm label="Reset Password" />
-        </form> */}
+      <form
+        className="flex flex-col gap-4 pt-2 my-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          formik.handleSubmit(e);
+        }}
+      >
+        {INPUT_FEILDS.map((item, index) => (
+          <div key={index} className="h-12">
+            <InputComp
+              inputType={item.type}
+              inputValue={formik.values[item.zSchemaName]}
+              placeholder={item.placeholder}
+              getFieldProps={formik.getFieldProps}
+              zSchemaName={item.zSchemaName}
+            />
+            {formik.errors[item.zSchemaName] && (
+              <p className="text-xs text-redError">
+                {formik.errors[item.zSchemaName]}
+              </p>
+            )}
+          </div>
+        ))}
+        <ButtonForm label="Register" bluebackground />
+      </form>
     </div>
   );
 };

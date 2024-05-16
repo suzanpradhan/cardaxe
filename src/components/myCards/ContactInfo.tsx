@@ -1,5 +1,4 @@
-import { Call, Sms, Location, Send2 } from 'iconsax-react';
-import React from 'react';
+import { Call, Location, Send2, Sms } from 'iconsax-react';
 
 const ICON_SIZE = '32';
 // const ICON_CLASSNAME = 'text-grey-200';
@@ -36,7 +35,7 @@ const ContactInfo = () => {
             <p className="text-grayfont">{item.contactType}</p>
             <h2 className="text-lg font-bold">{item.contactID}</h2>
           </div>
-          <div className="text-grayfont rounded-full bg-componentBgGrey h-12 w-12 flex justify-center items-center">
+          <div className="hover:shadow-md hover:scale-110 text-grayfont rounded-full bg-componentBgGrey h-12 w-12 flex justify-center items-center">
             {item.icon}
           </div>
         </div>
