@@ -1,21 +1,25 @@
-import React from 'react';
-import CardTemplate from './CardTemplate';
+import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
 import FormWrapper from '../FormWrapper';
+import CardTemplate from './CardTemplate';
 import MobileDesktopSwitch from './MobileDesktopSwitch';
-import ProfileDetails from './ProfileDetails';
 import ProfileDescription from './ProfileDescription';
+import ProfileDetails from './ProfileDetails';
 
-const PreviewSection = () => {
+const PreviewSection = ({
+  card,
+}: {
+  card: CardState<CardTemplatesType | string>['card'];
+}) => {
   return (
     <div className="basis-1/2">
       <FormWrapper>
         <div className="grid justify-center">
           <MobileDesktopSwitch />
           <div className="object-contain my-4">
-            <CardTemplate />
+            <CardTemplate card={card} />
           </div>
-          <ProfileDescription />
-          <ProfileDetails isTeamComp={false} />
+          <ProfileDescription card={card} />
+          <ProfileDetails card={card} isTeamComp={false} />
         </div>
       </FormWrapper>
     </div>

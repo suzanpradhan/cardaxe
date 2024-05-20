@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import rift_logo from '../../../public/facebook_image.png';
 

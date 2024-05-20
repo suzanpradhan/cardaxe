@@ -45,6 +45,7 @@ const AppBar = ({ cardId, card }: AppBarProps) => {
           cardFields: updatedCardFields,
           cardDesign: updatedCardDesign,
           cardId: cardId.toString(),
+          isDefault: cardState.card.isDefault,
           userId: session.data?.user?.id,
         })
       );

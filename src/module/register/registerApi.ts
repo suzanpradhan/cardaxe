@@ -25,7 +25,7 @@ export const registerApi = baseApi.injectEndpoints({
                     toast.success('Registration Successful');
                 } catch (err) {
                     console.log(err);
-                    toast.error('Failed to Registration');
+                    toast.error((err as any).error.data.errors.errors[0]);
                 }
             },
             transformResponse: (response) => {

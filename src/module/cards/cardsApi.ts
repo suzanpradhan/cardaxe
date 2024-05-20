@@ -27,7 +27,6 @@ const cardsApi = baseApi.injectEndpoints({
       providesTags: (result, error, id) => [{ type: 'Card', id: id }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
-        console.log(camelCaseResponse)
         return camelCaseResponse;
       },
     }),
@@ -39,6 +38,7 @@ const cardsApi = baseApi.injectEndpoints({
           'card_fields': {},
           'card_design': {},
           "is_published": false,
+          'is_default': false,
           'user': user,
           "card_template": 1
         }
@@ -76,11 +76,12 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardFields.website) formData.append('card_fields.website', payload.cardFields.website)
         if (payload.cardDesign.backgroundColor) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
         if (payload.cardDesign.logoUrl) formData.append('card_design.logo_url', payload.cardDesign.logoUrl)
-        if (payload.cardDesign.showLogo) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
-        if (payload.cardDesign.showSocialIcons) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
-        if (payload.cardDesign.darkMode) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
-        if (payload.isPublished) formData.append('is_published', payload.isPublished.toString())
+        if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
+        if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
+        if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
+        if (payload.isPublished != undefined) formData.append('is_published', payload.isPublished.toString())
         if (payload.user) formData.append('user', userId.toString())
+        if (payload.isDefault != undefined) formData.append('is_default', payload.isDefault as unknown as string)
         if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate.toString())
         return {
           url: `${apiPaths.cardsUrl}${cardId}/`,
@@ -90,7 +91,6 @@ const cardsApi = baseApi.injectEndpoints({
           formData: true,
         }
       },
-
       invalidatesTags: (result, error, arg) => [{ type: 'Card', id: arg.cardId }],
       transformResponse: (response: { data: any }) =>
         response.data,
@@ -163,6 +163,17 @@ const cardsApi = baseApi.injectEndpoints({
         // meta,
         // arg
       ) => response.status,
+    }),
+    getDefaultCard: builder.query<UpdateCardState<CardTemplatesType>['card'], string>({
+      query: (userName) => `${apiPaths.getDefaultCardUrl}${userName}/`,
+      serializeQueryArgs: ({ queryArgs, endpointName }) => {
+        return endpointName + '-' + queryArgs;
+      },
+      providesTags: (result, error, id) => [{ type: 'Card', id: id }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
+      },
     }),
   }),
   overrideExisting: true,

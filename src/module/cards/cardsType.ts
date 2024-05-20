@@ -31,6 +31,7 @@ export type CardState<T> = {
     cardFields: ContentFormSchemaType,
     cardDesign: DesignFromSchemaType,
     isPublished?: boolean,
+    isDefault?: boolean,
     user?: string
     cardTemplate: T
   }
@@ -43,6 +44,7 @@ export type UpdateCardState<T> = {
     cardFields: ContentFormUpdateSchemaType,
     cardDesign: DesignFormUpdateSchemaType,
     isPublished?: boolean,
+    isDefault?: boolean,
     user?: string
     cardTemplate?: T
   }

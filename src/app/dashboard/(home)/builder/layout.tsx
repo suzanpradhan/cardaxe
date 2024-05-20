@@ -9,11 +9,14 @@ import cardsApi from '@/module/cards/cardsApi';
 import { CardTemplatesType, UpdateCardState } from '@/module/cards/cardsType';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const searchParams = useSearchParams();
   const cardId = searchParams.get('cardId');
   const dispatch = useAppDispatch();
+  const cardState = useSelector((state: RootState) => state.card);
+
   const card = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries[`getCard-${cardId}`]
@@ -35,7 +38,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="flex gap-6">
         <SideBarMyCards cardId={cardId} />
         <div className="basis-2/5 min-w-[100px]">{children}</div>
-        <PreviewSection />
+        <PreviewSection card={cardState.card} />
       </div>
     </div>
   );

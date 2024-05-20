@@ -50,6 +50,11 @@ export const cardSlice = createSlice({
     ) => {
       state.card.cardDesign = { ...action.payload };
     },
+    updatePublishCard: (
+      state, action: PayloadAction<boolean>
+    ) => {
+      state.card = { ...state.card, isDefault: action.payload }
+    },
     // updateInfosForm: (state, action: PayloadAction<CardState['infosForm']>) => {
     //   state.infosForm = { ...action.payload };
     // },
@@ -67,6 +72,7 @@ cardSlice.actions.updateContentForm.type
 export const {
   updateContentForm,
   updateDesignForm,
+  updatePublishCard,
   // updateInfosForm,
   updateErrors,
 } = cardSlice.actions;

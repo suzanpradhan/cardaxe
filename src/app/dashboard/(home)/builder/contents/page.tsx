@@ -20,7 +20,6 @@ import { useFormik } from 'formik';
 import { useSearchParams } from 'next/navigation';
 import { ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { ZodError } from 'zod';
 
 const ContentsPage = () => {
@@ -48,17 +47,8 @@ const ContentsPage = () => {
   //   resolver: zodResolver(ContentFormSchema),
   // });
 
-  const onSubmit = (values: ContentFormSchemaType) => {
-    const submitresponse = dispatch(
-      cardsApi.endpoints.updateContents.initiate(values)
-    );
-    submitresponse
-      .then((res) => toast.success('Submitted Successfulluy'))
-      .catch((err) => {
-        toast.error('Something went wrong');
-        throw err;
-      });
-  };
+  const onSubmit = () => {};
+
   const validateForm = (values: ContentFormSchemaType) => {
     try {
       ContentFormSchema.parse(values);
@@ -84,7 +74,6 @@ const ContentsPage = () => {
     const { name, value } = e.target;
 
     formik.setFieldValue(name, value);
-    console.log(formik.values[name as keyof ContentFormSchemaType]);
 
     const updatedFormState: CardState<string>['card']['cardFields'] = {
       ...cardState.card.cardFields,
@@ -100,16 +89,7 @@ const ContentsPage = () => {
     } else {
       dispatch(updateErrors(true));
     }
-
-    console.log(
-      'change event',
-      formik.values[name as keyof ContentFormSchemaType],
-      name,
-      value
-    );
   };
-
-  // const debouncedHandleChange = useDebounce(handleChange, 0);
 
   return (
     <form

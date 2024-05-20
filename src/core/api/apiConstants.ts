@@ -9,6 +9,7 @@ export const apiPaths = {
   sendForgotPasswordEmailUrl: 'user/send-forgot-password-email/',
   getCardTemplatesUrl: 'templates/',
   getCardUrl: 'cards/',
+  getDefaultCardUrl: 'default/card/',
   updateContentUrl: 'card/update-content/',
   cardsUrl: 'cards/'
 };

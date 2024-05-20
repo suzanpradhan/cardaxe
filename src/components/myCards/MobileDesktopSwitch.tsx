@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { Mobile, Monitor } from 'iconsax-react';
 import React, { useState } from 'react';

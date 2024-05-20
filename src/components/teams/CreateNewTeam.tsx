@@ -1,9 +1,7 @@
-import React from 'react';
 import InputComp from '../InputComp';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+
 import { InputFieldProps } from '@/core/types/appTypes';
+import { z } from 'zod';
 
 const ACCEPTED_IMAGE_TYPES = [
   'image/jpeg',
@@ -61,9 +59,9 @@ const INPUT_FEILDS: InputFieldProps[] = [
 ];
 
 const CreateNewTeam = () => {
-  const { register, handleSubmit } = useForm<NewTeamSchemaType>({
-    resolver: zodResolver(NewTeamSchema),
-  });
+  // const { register, handleSubmit } = useForm<NewTeamSchemaType>({
+  //   resolver: zodResolver(NewTeamSchema),
+  // });
   const submitData = (data: NewTeamSchemaType) => {
     console.log(data);
   };
@@ -72,7 +70,7 @@ const CreateNewTeam = () => {
       <h2 className="font-bold text-lg">Create a new team</h2>
       <form
         className="flex flex-col gap-4 py-2 mb-9"
-        onSubmit={handleSubmit(submitData)}
+        // onSubmit={handleSubmit(submitData)}
       >
         {INPUT_FEILDS.slice(0, 3).map((item, index) => (
           <div key={index} className="h-16">
@@ -80,7 +78,7 @@ const CreateNewTeam = () => {
               inputCompType={item.inputCompType}
               inputType={item.inputType}
               placeholder={item.placeholder}
-              register={register}
+              // register={register}
               zSchemaName={item.zSchemaName}
               inputLabel={item.inputLabel}
             />
@@ -96,7 +94,7 @@ const CreateNewTeam = () => {
             inputCompType={INPUT_FEILDS[3].inputCompType}
             inputType={INPUT_FEILDS[3].inputType}
             placeholder={INPUT_FEILDS[3].placeholder}
-            register={register}
+            // register={register}
             zSchemaName={INPUT_FEILDS[3].zSchemaName}
             inputLabel={INPUT_FEILDS[3].inputLabel}
           />

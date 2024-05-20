@@ -85,7 +85,6 @@ export const authOptions: NextAuthOptions = {
             },
           }
         );
-        console.log('callback log', token, user, trigger, response)
         if (response.ok) {
           const responseData = await response.json();
           token.name = responseData.data.user.name;

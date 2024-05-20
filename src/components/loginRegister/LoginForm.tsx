@@ -45,7 +45,6 @@ const LoginForm: React.FC = () => {
       callbackUrl: '/dashboard',
       redirect: false,
     }).then((response) => {
-      console.log('login response', response);
       if (!response?.error) {
         toast.success('Sucessfully logged in.');
         if (callback) {

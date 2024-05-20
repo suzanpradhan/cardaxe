@@ -46,6 +46,7 @@ const MyCardsDesignSwitch = ({
             inputCompType="switch"
             inputLabel={item.inputLabel}
             inputType="checkbox"
+            handleChange={handleChange}
             error={errors[item.zSchemaName as keyof DesignFromSchemaType]}
             getFieldProps={getFieldProps}
             inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
