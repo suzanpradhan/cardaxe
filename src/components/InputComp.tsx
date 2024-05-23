@@ -52,17 +52,6 @@ const InputComp = ({
               {inputLabel}
             </label>
             <div className="h-full">
-              {/* <textarea
-                name={zSchemaName}
-                onChange={(e) => handleChange?.(e)}
-                {...getFieldProps?.(zSchemaName)}
-                id={zSchemaName}
-                value={inputValue as string}
-                className={clsx(
-                  'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
-                  error ? 'border-redError' : 'border-borderMain'
-                )}
-              /> */}
               <textarea
                 name={zSchemaName}
                 onChange={(e) => handleChange?.(e)}
@@ -176,6 +165,7 @@ const InputComp = ({
               onChange={(e) => handleChange?.(e)}
               id={zSchemaName}
               type={inputType}
+              defaultValue={inputValue as string}
               name={zSchemaName}
               // {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}
@@ -183,7 +173,7 @@ const InputComp = ({
                 'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
-              value={inputValue as string}
+              // value={inputValue as string}
               disabled={disableInput}
             />
           </div>

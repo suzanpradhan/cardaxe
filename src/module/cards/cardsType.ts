@@ -28,6 +28,7 @@ export type ErrorType = { errors: Record<string, string> };
 
 export type CardState<T> = {
   card: {
+    id?: number;
     cardFields: ContentFormSchemaType,
     cardDesign: DesignFromSchemaType,
     isPublished?: boolean,

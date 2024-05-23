@@ -52,7 +52,9 @@ const MyCardsContentForm2 = ({
             inputLabel={item.inputLabel}
             key={index}
             handleChange={handleChange}
-            inputValue={values[item.zSchemaName as keyof ContentFormSchemaType]}
+            inputValue={
+              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+            }
             error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
           />
         ))}

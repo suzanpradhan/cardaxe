@@ -53,7 +53,9 @@ const MyCardsContentForm3 = ({
             getFieldProps={getFieldProps}
             inputCompType={item.inputCompType}
             handleChange={handleChange}
-            inputValue={values[item.zSchemaName as keyof ContentFormSchemaType]}
+            inputValue={
+              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+            }
             error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
           />
         ))}

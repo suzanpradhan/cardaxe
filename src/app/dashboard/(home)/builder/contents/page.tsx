@@ -18,7 +18,7 @@ import {
 } from '@/module/cards/cardsType';
 import { useFormik } from 'formik';
 import { useSearchParams } from 'next/navigation';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { ZodError } from 'zod';
 
@@ -41,7 +41,7 @@ const ContentsPage = () => {
     }
   }, [dispatch]);
 
-  const defaultValues = card?.cardTemplate.defaultCardFields;
+  const defaultValues = card?.cardFields;
   // const { register, handleSubmit } = useForm<ContentFormSchemaType>({
   //   defaultValues,
   //   resolver: zodResolver(ContentFormSchema),
@@ -58,6 +58,7 @@ const ContentsPage = () => {
       }
     }
   };
+
   const formik = useFormik<ContentFormSchemaType>({
     enableReinitialize: true,
     initialValues: { id: 1, ...defaultValues },
@@ -66,30 +67,35 @@ const ContentsPage = () => {
     validate: validateForm,
     // validate: toFormikValidate(ContentFormSchema),
     validateOnBlur: true,
+    validateOnMount: true,
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-
-    formik.setFieldValue(name, value);
+    formik.handleChange(name)(value);
 
     const updatedFormState: CardState<string>['card']['cardFields'] = {
       ...cardState.card.cardFields,
       [name]: value,
     };
-    timeout<ContentFormSchemaType>(updateContentForm, updatedFormState);
 
-    if (
-      formik.errors[name as keyof CardState<string>['card']['cardFields']] ==
-      undefined
-    ) {
-      dispatch(updateErrors(false));
-    } else {
-      dispatch(updateErrors(true));
-    }
+    timeout<ContentFormSchemaType>(updateContentForm, updatedFormState);
   };
+
+  const shouldDispatchErrors = useMemo(() => {
+    return () =>
+      formik.isValid
+        ? dispatch(updateErrors(false))
+        : dispatch(updateErrors(true));
+  }, [formik.isValid, dispatch]);
+
+  useEffect(() => {
+    shouldDispatchErrors();
+
+    return () => {};
+  }, [shouldDispatchErrors]);
 
   return (
     <form

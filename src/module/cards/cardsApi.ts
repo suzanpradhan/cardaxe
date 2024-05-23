@@ -8,8 +8,15 @@ import { CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateC
 const cardsApi = baseApi.injectEndpoints({
 
   endpoints: (builder) => ({
-    getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType[]>, void>({
+    getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType>, void>({
       query: () => `${apiPaths.getCardTemplatesUrl}`,
+      // providesTags: (result) =>
+      //   result
+      //     ? [
+      //       ...result.results.map((layout) => ({ type: 'CardLayout', id: layout.id } as const)),
+      //       { type: 'CardLayout', id: 'LIST' },
+      //     ]
+      //     : [{ type: 'CardLayout', id: 'LIST' }],
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName + '-' + 'get-cards-endpoint';
       },
@@ -30,7 +37,24 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
-
+    getMyCards: builder.query<PaginatedResponseType<UpdateCardState<CardTemplatesType>['card']>, void>({
+      query: () => `${apiPaths.getCardUrl}`,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      // providesTags: (response) =>
+      //   response
+      //     ? [
+      //       ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
+      //       { type: 'CardsList', id: 'LIST' },
+      //     ]
+      //     : [{ type: 'CardsList', id: 'LIST' }],
+      transformResponse: (response: any) => {
+        console.log(response)
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse.results;
+      },
+    }),
     createCard: builder.mutation<UpdateCardState<CardTemplatesType>, string>({
       query: (user) => {
         // var formData = new FormData();
@@ -48,7 +72,6 @@ const cardsApi = baseApi.injectEndpoints({
           body: payload,
         }
       },
-
       async onQueryStarted(payload, { queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -57,6 +80,11 @@ const cardsApi = baseApi.injectEndpoints({
           console.log(err);
           toast.error('Failed createing card!!');
         }
+      },
+      invalidatesTags: ['CardsList'],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
       },
     }),
     upDateCard: builder.mutation<any, UpdateCardParams & UpdateCardState<string>['card']>({

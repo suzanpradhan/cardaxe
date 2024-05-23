@@ -72,9 +72,11 @@ const MyCardsContentForm1 = ({
             zSchemaName={item.zSchemaName}
             inputLabel={item.inputLabel}
             key={index}
-            getFieldProps={getFieldProps}
+            // getFieldProps={getFieldProps}
             handleChange={handleChange}
-            inputValue={values[item.zSchemaName as keyof ContentFormSchemaType]}
+            inputValue={
+              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+            }
             error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
           />
         ))}
