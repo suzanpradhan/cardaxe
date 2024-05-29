@@ -12,6 +12,7 @@ type SideBarElementProps = {
 
 interface SideBarMyCardsProps {
   cardId: string | null;
+  cardAction: string | null;
 }
 
 const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
@@ -37,7 +38,7 @@ const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   },
 ];
 
-const SideBarMyCards = ({ cardId }: SideBarMyCardsProps) => {
+const SideBarMyCards = ({ cardId, cardAction }: SideBarMyCardsProps) => {
   const router = useRouter();
   const pathName = usePathname();
 
@@ -56,11 +57,11 @@ const SideBarMyCards = ({ cardId }: SideBarMyCardsProps) => {
   }, [pathName]);
 
   return (
-    <div className="basis-1/12 flex flex-col gap-4 h-full text-slate-600">
+    <div className="flex flex-col gap-4 h-full text-slate-600">
       {MY_APP_SIDE_BAR_ELEMENTS.map((item, index) => (
         <Link
           href={`/dashboard/builder/${item.link}${
-            cardId && `/?cardId=${cardId}`
+            cardId && `/?cardId=${cardId}&action=${cardAction}`
           }`}
           key={index}
           // onClick={(e) => handleClick(e)}

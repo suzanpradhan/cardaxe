@@ -1,28 +1,33 @@
 import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
+import CardLayouts from '../CardLayouts';
 import FormWrapper from '../FormWrapper';
-import CardTemplate from './CardTemplate';
-import MobileDesktopSwitch from './MobileDesktopSwitch';
 import ProfileDescription from './ProfileDescription';
 import ProfileDetails from './ProfileDetails';
 
 const PreviewSection = ({
   card,
+  layout,
 }: {
   card: CardState<CardTemplatesType | string>['card'];
+  layout: CardTemplatesType | undefined;
 }) => {
   return (
-    <div className="basis-1/2">
-      <FormWrapper>
-        <div className="grid justify-center">
-          <MobileDesktopSwitch />
-          <div className="object-contain my-4">
-            <CardTemplate card={card} />
-          </div>
-          <ProfileDescription card={card} />
-          <ProfileDetails card={card} isTeamComp={false} />
+    <FormWrapper className="bg-white w-fit mx-auto">
+      <div className="grid justify-center ">
+        {/* <MobileDesktopSwitch /> */}
+        <div className="object-contain my-4">
+          {layout?.htmlCode && (
+            <CardLayouts
+              htmlSource={layout.htmlCode}
+              variableValues={{ ...card.cardFields, ...card.cardDesign }}
+            />
+          )}
+          {/* <CardTemplate card={card} /> */}
         </div>
-      </FormWrapper>
-    </div>
+        <ProfileDescription card={card} />
+        <ProfileDetails card={card} isTeamComp={false} />
+      </div>
+    </FormWrapper>
   );
 };
 

@@ -6,8 +6,7 @@ import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardTemplatesType } from '@/module/cards/cardsType';
 import { useEffect } from 'react';
-
-// import { useGetCardsQuery } from '@/core/redux/api';
+import { useSelector } from 'react-redux';
 
 const LayoutPage = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +20,7 @@ const LayoutPage = () => {
       state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
         ?.data as CardTemplatesType[]
   );
+  const cardState = useSelector((state: RootState) => state.card);
 
   return (
     <div>
@@ -28,7 +28,10 @@ const LayoutPage = () => {
         <div key={index}>
           <CardLayouts
             htmlSource={card.htmlCode}
-            variableValues={card.defaultCardFields}
+            variableValues={{
+              ...card.defaultCardFields,
+              ...cardState.card.cardDesign,
+            }}
           />
         </div>
       ))}

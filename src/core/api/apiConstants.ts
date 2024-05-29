@@ -12,4 +12,6 @@ export const apiPaths = {
   getDefaultCardUrl: 'default/card/',
   updateContentUrl: 'card/update-content/',
   cardsUrl: 'cards/'
+
+
 };

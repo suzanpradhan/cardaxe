@@ -35,7 +35,7 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
   ) as HandlebarsTemplateFunction;
   const processedHtml = template();
 
-  return <div>{parse(processedHtml)}</div>;
+  return <>{parse(processedHtml)}</>;
 };
 
 export default CardLayouts;

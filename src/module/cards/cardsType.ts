@@ -59,14 +59,14 @@ export const ContentFormSchema = z.object({
   middleName: z.string().optional(),
   lastName: z.string().pipe(nonempty),
   suffix: z.string().pipe(nonempty),
-  bio: z.string().pipe(nonempty),
+  bio: z.string().optional(),
   phone: z.string().length(10),
   website: z.string().optional(),
   email: z.string().email(),
   // isDefault: z.boolean(),
-  designation: z.string().pipe(nonempty),
-  department: z.string().pipe(nonempty),
-  company: z.string().pipe(nonempty),
+  designation: z.string().optional(),
+  department: z.string().optional(),
+  company: z.string().optional(),
 });
 
 export const ContentFormUpdateSchema = ContentFormSchema.extend({

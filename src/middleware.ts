@@ -7,6 +7,8 @@ export async function middleware(req: any) {
 
     const { pathname } = req.nextUrl;
 
+    console.log("middle ware running")
+
     // const isSiteAuth = req.cookies.get('authenticated');
 
     // if (req?.nextUrl?.pathname === '/signup') {
@@ -36,5 +38,5 @@ export async function middleware(req: any) {
 }
 
 export const config = {
-    matcher: ['/dashboard',],
+    matcher: ['/dashboard/:path*',],
 };

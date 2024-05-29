@@ -14,6 +14,7 @@ interface MyCardsContentForm2Props {
   ) => void;
   values: ContentFormSchemaType;
   errors: FormikErrors<ContentFormSchemaType>;
+  fieldPlaceHolder: ContentFormSchemaType;
 }
 
 const INPUT_FEILDS: InputFieldProps[] = [
@@ -39,6 +40,7 @@ const MyCardsContentForm2 = ({
   handleChange,
   values,
   errors,
+  fieldPlaceHolder,
 }: MyCardsContentForm2Props) => {
   return (
     <FormWrapper>
@@ -51,6 +53,17 @@ const MyCardsContentForm2 = ({
             zSchemaName={item.zSchemaName}
             inputLabel={item.inputLabel}
             key={index}
+            placeholder={
+              fieldPlaceHolder?.[
+                item.zSchemaName as keyof ContentFormSchemaType
+              ]
+                ? ` ${
+                    fieldPlaceHolder[
+                      item.zSchemaName as keyof ContentFormSchemaType
+                    ]
+                  }`
+                : ''
+            }
             handleChange={handleChange}
             inputValue={
               values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''

@@ -10,13 +10,13 @@ const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType>, void>({
       query: () => `${apiPaths.getCardTemplatesUrl}`,
-      // providesTags: (result) =>
-      //   result
-      //     ? [
-      //       ...result.results.map((layout) => ({ type: 'CardLayout', id: layout.id } as const)),
-      //       { type: 'CardLayout', id: 'LIST' },
-      //     ]
-      //     : [{ type: 'CardLayout', id: 'LIST' }],
+      providesTags: (response) =>
+        response?.results
+          ? [
+            ...response.results.map((layout) => ({ type: 'CardLayout', id: layout.id } as const)),
+            { type: 'CardLayout', id: 'LIST' },
+          ]
+          : [{ type: 'CardLayout', id: 'LIST' }],
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName + '-' + 'get-cards-endpoint';
       },
@@ -42,13 +42,13 @@ const cardsApi = baseApi.injectEndpoints({
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
-      // providesTags: (response) =>
-      //   response
-      //     ? [
-      //       ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
-      //       { type: 'CardsList', id: 'LIST' },
-      //     ]
-      //     : [{ type: 'CardsList', id: 'LIST' }],
+      providesTags: (response) =>
+        response?.results
+          ? [
+            ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
+            { type: 'CardsList', id: 'LIST' },
+          ]
+          : [{ type: 'CardsList', id: 'LIST' }],
       transformResponse: (response: any) => {
         console.log(response)
         const camelCaseResponse = snakeToCamel(response)
@@ -81,7 +81,7 @@ const cardsApi = baseApi.injectEndpoints({
           toast.error('Failed createing card!!');
         }
       },
-      invalidatesTags: ['CardsList'],
+      invalidatesTags: [{ type: 'CardsList', id: 'LIST' }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;
@@ -137,11 +137,11 @@ const cardsApi = baseApi.injectEndpoints({
           formData.append('middle_name', payload.middleName);
         }
         formData.append('last_name', payload.lastName);
-        formData.append('designation', payload.designation);
-        formData.append('department', payload.department);
-        formData.append('company', payload.company);
+        if (payload.designation) formData.append('designation', payload.designation);
+        if (payload.department) formData.append('department', payload.department);
+        if (payload.company) formData.append('company', payload.company);
         formData.append('suffix', payload.suffix);
-        formData.append('bio', payload.bio);
+        if (payload.bio) formData.append('bio', payload.bio);
         if (payload.website) {
           formData.append('website', payload.website)
         }

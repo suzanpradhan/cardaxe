@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 const page = async (props: any) => {
   const userId = props.params.userId;
 
+  console.log(`${apiPaths.baseUrl}${apiPaths.getDefaultCardUrl}${userId}/`);
   try {
     const res = await fetch(
       `${apiPaths.baseUrl}${apiPaths.getDefaultCardUrl}${userId}/`,
@@ -19,7 +20,11 @@ const page = async (props: any) => {
     const defaultCard = snakeToCamel(response);
 
     if (defaultCard) {
-      return <PreviewSection card={defaultCard} />;
+      return (
+        <div className="bg-componentBgGrey -z-20">
+          <PreviewSection card={defaultCard} />
+        </div>
+      );
     } else {
       return <></>;
     }

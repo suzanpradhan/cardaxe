@@ -16,18 +16,21 @@ import {
   ContentFormSchema,
   ContentFormSchemaType,
 } from '@/module/cards/cardsType';
-import { useFormik } from 'formik';
-import { useSearchParams } from 'next/navigation';
-import { ChangeEvent, useEffect, useMemo } from 'react';
+import { FormikProps, useFormik } from 'formik';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { ZodError } from 'zod';
 
 const ContentsPage = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const cardState = useSelector((state: RootState) => state.card);
   const cardId = searchParams.get('cardId');
+  const cardAction = searchParams.get('action');
   const timeout = useTimeoutDispatch(500);
+  const formValuesRef = useRef<FormikProps<ContentFormSchemaType>>(null);
 
   const card = useAppSelector(
     (state: RootState) =>
@@ -42,10 +45,7 @@ const ContentsPage = () => {
   }, [dispatch]);
 
   const defaultValues = card?.cardFields;
-  // const { register, handleSubmit } = useForm<ContentFormSchemaType>({
-  //   defaultValues,
-  //   resolver: zodResolver(ContentFormSchema),
-  // });
+  const fieldPlaceHolder = card?.cardTemplate.defaultCardFields;
 
   const onSubmit = () => {};
 
@@ -65,7 +65,6 @@ const ContentsPage = () => {
     validateOnChange: true,
     onSubmit,
     validate: validateForm,
-    // validate: toFormikValidate(ContentFormSchema),
     validateOnBlur: true,
     validateOnMount: true,
   });
@@ -110,12 +109,14 @@ const ContentsPage = () => {
         handleChange={handleChange}
         values={formik.values}
         errors={formik.errors}
+        fieldPlaceHolder={fieldPlaceHolder}
       />
       <MyCardsContentForm2
         getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={formik.values}
         errors={formik.errors}
+        fieldPlaceHolder={fieldPlaceHolder}
       />
       <MyCardsContentForm3
         getFieldProps={formik.getFieldProps}

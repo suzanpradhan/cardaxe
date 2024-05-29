@@ -3,7 +3,6 @@ import CardLayouts from '@/components/CardLayouts';
 import AppBar from '@/components/dashboard/AppBar';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
-import { updateContentForm } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
 import { useSession } from 'next-auth/react';
@@ -26,40 +25,58 @@ const MyCardsPage = () => {
         ?.data as CardState<CardTemplatesType>['card'][]
   );
 
+  // const hanldeCreateCard = () => {
+  //   if (data?.user) {
+  //     dispatch(cardsApi.endpoints.createCard.initiate(data?.user.id))
+  //       .then((createCardResponse) => {
+  //         Object.prototype.hasOwnProperty.call(createCardResponse, 'data') &&
+  //           (createCardResponse as any).data.id &&
+  //           dispatch(
+  //             cardsApi.endpoints.getCard.initiate(
+  //               (createCardResponse as any).data.id
+  //             )
+  //           )
+  //             .then((getCardresponse) => {
+  //               console.log('getCardresponse', getCardresponse);
+  //               Object.prototype.hasOwnProperty.call(
+  //                 createCardResponse,
+  //                 'data'
+  //               ) &&
+  //                 (getCardresponse as any).data.cardTemplate
+  //                   .defaultCardFields &&
+  //                 (dispatch(
+  //                   updateContentForm(
+  //                     (getCardresponse as any).data.cardTemplate
+  //                       .defaultCardFields
+  //                   )
+  //                 ),
+  //                 router.push(
+  //                   `/dashboard/builder/?cardId=${
+  //                     (getCardresponse as any).data.id
+  //                   }&action=create`
+  //                 ));
+  //             })
+  //             .catch((error) => {
+  //               console.log(error);
+  //             });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
+
   const hanldeCreateCard = () => {
     if (data?.user) {
       dispatch(cardsApi.endpoints.createCard.initiate(data?.user.id))
         .then((createCardResponse) => {
           Object.prototype.hasOwnProperty.call(createCardResponse, 'data') &&
             (createCardResponse as any).data.id &&
-            dispatch(
-              cardsApi.endpoints.getCard.initiate(
+            router.push(
+              `/dashboard/builder/?cardId=${
                 (createCardResponse as any).data.id
-              )
-            )
-              .then((getCardresponse) => {
-                console.log('getCardresponse', getCardresponse);
-                Object.prototype.hasOwnProperty.call(
-                  createCardResponse,
-                  'data'
-                ) &&
-                  (getCardresponse as any).data.cardTemplate
-                    .defaultCardFields &&
-                  (dispatch(
-                    updateContentForm(
-                      (getCardresponse as any).data.cardTemplate
-                        .defaultCardFields
-                    )
-                  ),
-                  router.push(
-                    `/dashboard/builder/?cardId=${
-                      (getCardresponse as any).data.id
-                    }`
-                  ));
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+              }&action=create`
+            );
         })
         .catch((error) => {
           console.log(error);
@@ -69,20 +86,7 @@ const MyCardsPage = () => {
 
   const handleEditCard = (cardId: number) => {
     console.log('cardid', cardId);
-    dispatch(cardsApi.endpoints.getCard.initiate(cardId.toString()))
-      .then((getCardresponse) => {
-        console.log('getCardresponse', getCardresponse);
-        (getCardresponse as any).data.cardFields &&
-          (dispatch(
-            updateContentForm((getCardresponse as any).data.cardFields)
-          ),
-          router.push(
-            `/dashboard/builder/?cardId=${(getCardresponse as any).data.id}`
-          ));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
   };
 
   // const handleClick = async () => {

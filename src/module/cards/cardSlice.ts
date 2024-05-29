@@ -30,7 +30,7 @@ const initialState: CardState<string> = {
       darkMode: false,
 
     },
-    cardTemplate: "0"
+    cardTemplate: "1"
   },
 };
 
@@ -55,6 +55,11 @@ export const cardSlice = createSlice({
     ) => {
       state.card = { ...state.card, isDefault: action.payload }
     },
+    updateCardTemplate: (
+      state, action: PayloadAction<string>
+    ) => {
+      state.card = { ...state.card, cardTemplate: action.payload }
+    },
     // updateInfosForm: (state, action: PayloadAction<CardState['infosForm']>) => {
     //   state.infosForm = { ...action.payload };
     // },
@@ -73,6 +78,7 @@ export const {
   updateContentForm,
   updateDesignForm,
   updatePublishCard,
+  updateCardTemplate,
   // updateInfosForm,
   updateErrors,
 } = cardSlice.actions;

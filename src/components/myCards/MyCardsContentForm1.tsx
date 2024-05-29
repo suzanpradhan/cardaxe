@@ -14,6 +14,7 @@ interface MyCardsContentForm1Props {
   ) => void;
   values: ContentFormSchemaType;
   errors: FormikErrors<ContentFormSchemaType>;
+  fieldPlaceHolder: ContentFormSchemaType;
 }
 
 const INPUT_FEILDS: InputFieldProps[] = [
@@ -54,13 +55,14 @@ const MyCardsContentForm1 = ({
   handleChange,
   values,
   errors,
+  fieldPlaceHolder,
 }: MyCardsContentForm1Props) => {
   const selectOptions = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ];
-  values.email;
+  console.log(values.firstName);
 
   return (
     <FormWrapper>
@@ -69,6 +71,17 @@ const MyCardsContentForm1 = ({
           <InputComp
             inputCompType={item.inputCompType}
             inputType="text"
+            placeholder={
+              fieldPlaceHolder?.[
+                item.zSchemaName as keyof ContentFormSchemaType
+              ]
+                ? `Your ${
+                    fieldPlaceHolder[
+                      item.zSchemaName as keyof ContentFormSchemaType
+                    ]
+                  } Required`
+                : ''
+            }
             zSchemaName={item.zSchemaName}
             inputLabel={item.inputLabel}
             key={index}
