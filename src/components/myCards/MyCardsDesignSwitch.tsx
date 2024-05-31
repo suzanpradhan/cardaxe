@@ -1,13 +1,13 @@
 import { DesignFromSchemaType } from '@/module/cards/cardsType';
-import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
+import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 
 interface MyCardsDesignSwitchProps {
-  getFieldProps: (
-    nameOrOptions: string | FieldConfig<any>
-  ) => FieldInputProps<any>;
+  // getFieldProps: (
+  //   nameOrOptions: string | FieldConfig<any>
+  // ) => FieldInputProps<any>;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
@@ -32,7 +32,7 @@ const INPUT_FIELDS = [
 
 const MyCardsDesignSwitch = ({
   errors,
-  getFieldProps,
+  // getFieldProps,
   handleChange,
   values,
 }: MyCardsDesignSwitchProps) => {
@@ -48,7 +48,7 @@ const MyCardsDesignSwitch = ({
             inputType="checkbox"
             handleChange={handleChange}
             error={errors[item.zSchemaName as keyof DesignFromSchemaType]}
-            getFieldProps={getFieldProps}
+            // getFieldProps={getFieldProps}
             inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
           />
         ))}

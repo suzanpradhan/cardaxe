@@ -8,9 +8,10 @@ import {
   updateCardTemplate,
   updateContentForm,
   updateDesignForm,
+  validateForms,
 } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
-import { CardTemplatesType, UpdateCardState } from '@/module/cards/cardsType';
+import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import { updatedDiff } from 'deep-object-diff';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -31,7 +32,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const card = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries[`getCard-${cardId}`]
-        ?.data as UpdateCardState<CardTemplatesType>['card']
+        ?.data as CardResponseType<CardTemplatesType>
   );
 
   const cardsTemplateList = useAppSelector(
@@ -53,7 +54,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(
             updateContentForm((card as any).cardTemplate.defaultCardFields)
           );
-          console.log(cardState.card);
           break;
         case 'update':
           dispatch(updateContentForm((card as any).cardFields));
@@ -67,30 +67,40 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   }, [card]);
 
   const handlePublish = () => {
+    dispatch(validateForms('cardDesign'));
+    dispatch(validateForms('cardFields'));
+
     var submitresponse = undefined;
 
-    const updatedCardFields = card.cardFields
-      ? updatedDiff(card.cardFields, cardState.card.cardFields)
-      : undefined;
+    const updatedCardFields = {
+      ...(card.cardFields
+        ? updatedDiff(card.cardFields, cardState.cardFields.values)
+        : undefined),
+    };
 
     const updatedCardDesign = updatedDiff(
       card.cardDesign,
-      cardState.card.cardDesign
+      cardState.cardDesign.values
     );
 
+    console.log(Object.keys(cardState.cardFields.errors).length === 0);
+
     if (
-      !cardState.errors &&
+      Object.keys(cardState.cardDesign.errors).length === 0 &&
+      Object.keys(cardState.cardFields.errors).length === 0 &&
       cardId &&
       session.data?.user?.id &&
       updatedCardFields
     ) {
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
-          cardFields: { ...updatedCardFields, id: card.cardFields.id },
-          cardDesign: { ...updatedCardDesign, id: card.cardDesign.id },
-          cardId: cardId.toString(),
-          isDefault: cardState.card.isDefault,
+          cardId: cardId,
           userId: session.data?.user?.id,
+          cardDesign: updatedCardDesign,
+          cardFields: updatedCardFields,
+          cardTemplate: '1',
+          isDefault: cardState.isDefault ?? false,
+          isPublished: cardState.isPublished ?? false,
         })
       );
       submitresponse
@@ -113,7 +123,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const currentLayout = cardsTemplateList?.find(
-    (layout) => layout.id === parseInt(cardState.card.cardTemplate)
+    (layout) => layout.id === parseInt(cardState.cardTemplate)
   );
 
   return (
@@ -134,7 +144,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         <SideBarMyCards cardId={cardId} cardAction={cardAction} />
         <div className="basis-2/5 min-w-[100px]">{children}</div>
         <div className="shrink">
-          <PreviewSection card={cardState.card} layout={currentLayout} />
+          <PreviewSection card={cardState} layout={currentLayout} />
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
 import { DesignFromSchemaType } from '@/module/cards/cardsType';
-import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
+import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 
 interface MyCardsDesignFormProps {
-  getFieldProps: (
-    nameOrOptions: string | FieldConfig<any>
-  ) => FieldInputProps<any>;
+  // getFieldProps: (
+  //   nameOrOptions: string | FieldConfig<any>
+  // ) => FieldInputProps<any>;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
@@ -25,7 +25,7 @@ interface MyCardsDesignFormProps {
 
 const MyCardsDesignForm = ({
   errors,
-  getFieldProps,
+  // getFieldProps,
   handleChange,
   values,
 }: MyCardsDesignFormProps) => {
@@ -38,7 +38,7 @@ const MyCardsDesignForm = ({
           zSchemaName="backgroundColor"
           inputLabel="Background Color"
           className="inline"
-          getFieldProps={getFieldProps}
+          // getFieldProps={getFieldProps}
           inputValue={values['backgroundColor']}
           handleChange={handleChange}
           error={errors['backgroundColor']}
@@ -48,7 +48,7 @@ const MyCardsDesignForm = ({
             zSchemaName="backgroundColor"
             inputCompType="color"
             inputType="color"
-            getFieldProps={getFieldProps}
+            // getFieldProps={getFieldProps}
             inputValue={values['backgroundColor']}
             handleChange={handleChange}
             error={errors['backgroundColor']}
@@ -61,7 +61,7 @@ const MyCardsDesignForm = ({
         zSchemaName="backgroundImage"
         inputLabel="Background Image"
         placeholder="Choose Image"
-        getFieldProps={getFieldProps}
+        // getFieldProps={getFieldProps}
         // inputValue={values['backgroundImage']}
         error={errors['backgroundImage']}
         handleChange={handleChange}
@@ -72,7 +72,7 @@ const MyCardsDesignForm = ({
         zSchemaName="logoUrl"
         inputLabel="Logo"
         placeholder="Choose Image"
-        getFieldProps={getFieldProps}
+        // getFieldProps={getFieldProps}
         // inputValue={formik.values['logoUrl']}
         handleChange={handleChange}
         error={errors['logoUrl']}

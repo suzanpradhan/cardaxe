@@ -6,18 +6,17 @@ import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
-import { updateDesignForm, updatePublishCard } from '@/module/cards/cardSlice';
-import { CardState, DesignFromSchemaType } from '@/module/cards/cardsType';
-import { useFormik } from 'formik';
+import { updatePublishCard } from '@/module/cards/cardSlice';
+import { DesignFromSchemaType } from '@/module/cards/cardsType';
 import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 const Designpage = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
-  const defaultValues: CardState<string>['card']['cardDesign'] = {
-    ...cardState.card.cardDesign,
-  };
+  // const defaultValues: CardState<string>['card']['cardDesign'] = {
+  //   ...cardState.card.cardDesign,
+  // };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -26,11 +25,11 @@ const Designpage = () => {
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
 
-    const updatedFormState: CardState<string>['card']['cardDesign'] = {
-      ...cardState.card.cardDesign,
-      [name]: stateValue,
-    };
-    dispatch(updateDesignForm(updatedFormState));
+    // const updatedFormState: CardState<string>['card']['cardDesign'] = {
+    //   ...cardState.card.cardDesign,
+    //   [name]: stateValue,
+    // };
+    // dispatch(updateDesignForm(updatedFormState));
   };
 
   const handleDefaultChange = (
@@ -42,32 +41,32 @@ const Designpage = () => {
 
   const onSubmit = (data: DesignFromSchemaType) => {};
 
-  const formik = useFormik<DesignFromSchemaType>({
-    enableReinitialize: true,
-    initialValues: { ...defaultValues },
-    validateOnChange: true,
-    onSubmit,
-  });
+  // const formik = useFormik<DesignFromSchemaType>({
+  //   enableReinitialize: true,
+  //   initialValues: { ...defaultValues },
+  //   validateOnChange: true,
+  //   onSubmit,
+  // });
 
   return (
     <form
-      className="flex gap-4 flex-col "
+      className="flex gap-4 flex-col"
       onSubmit={(e) => {
         e.preventDefault();
-        formik.handleSubmit(e);
+        // formik.handleSubmit(e);
       }}
     >
       <MyCardsDesignForm
-        errors={formik.errors}
-        getFieldProps={formik.getFieldProps}
+        errors={cardState.cardDesign.errors}
+        // getFieldProps={cardState.cardDesign.getFieldProps}
         handleChange={handleChange}
-        values={formik.values}
+        values={cardState.cardDesign.values}
       />
       <MyCardsDesignSwitch
-        errors={formik.errors}
-        getFieldProps={formik.getFieldProps}
+        errors={cardState.cardDesign.errors}
+        // getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
-        values={formik.values}
+        values={cardState.cardDesign.values}
       />
       <FormWrapper>
         <div className="flex flex-col gap-4">
@@ -76,7 +75,7 @@ const Designpage = () => {
             inputCompType="switch"
             inputLabel="Make default"
             inputType="checkbox"
-            inputValue={cardState.card.isDefault}
+            // inputValue={cardState.card.isDefault}
             handleChange={(e) => handleDefaultChange(e)}
             // inputValue={cardState.card.isDefault}
             // error={errors[item.zSchemaName as keyof DesignFromSchemaType]}

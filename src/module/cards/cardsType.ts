@@ -26,31 +26,34 @@ export type InfosFormStateType = {
 
 export type ErrorType = { errors: Record<string, string> };
 
-export type CardState<T> = {
-  card: {
-    id?: number;
-    cardFields: ContentFormSchemaType,
-    cardDesign: DesignFromSchemaType,
-    isPublished?: boolean,
-    isDefault?: boolean,
-    user?: string
-    cardTemplate: T
-  }
-  errors?: boolean;
-};
-
-export type UpdateCardState<T> = {
-  card: {
-    id?: string;
-    cardFields: ContentFormUpdateSchemaType,
-    cardDesign: DesignFormUpdateSchemaType,
-    isPublished?: boolean,
-    isDefault?: boolean,
-    user?: string
-    cardTemplate?: T
-  }
+export type CardResponseType<T> = {
+  id?: number;
+  cardTemplate: T;
+  cardFields: ContentFormUpdateSchemaType,
+  cardDesign: DesignFormUpdateSchemaType,
+  isPublished: boolean,
+  isDefault: boolean,
 }
 
+export type CardState<T> = {
+  id?: number;
+  cardFields: { values: ContentFormSchemaType, errors: Record<string, Array<string>> },
+  cardDesign: { values: DesignFromSchemaType, errors: Record<string, Array<string>> },
+  isPublished?: boolean,
+  isDefault?: boolean,
+  user?: string
+  cardTemplate: T
+}
+
+export type UpdateCardState<T> = {
+  id?: number;
+  cardFields: { values: ContentFormUpdateSchemaType, errors: Record<string, string> },
+  cardDesign: { values: DesignFormUpdateSchemaType, errors: Record<string, string> },
+  isPublished?: boolean,
+  isDefault?: boolean,
+  user?: string
+  cardTemplate: T
+}
 
 export const ContentFormSchema = z.object({
   id: z.number().optional(),
@@ -87,7 +90,7 @@ export const DesignFormSchema = z.object({
   id: z.number().optional(),
   backgroundColor: z.string().pipe(nonempty),
   backgroundImage: z.string().optional(),
-  logoUrl: z.string().pipe(nonempty),
+  logoUrl: z.string().optional(),
   showLogo: z.boolean().optional(),
   showSocialIcons: z.boolean().optional(),
   darkMode: z.boolean().optional(),

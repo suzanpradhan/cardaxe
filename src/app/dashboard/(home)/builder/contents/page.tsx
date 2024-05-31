@@ -6,36 +6,31 @@ import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
-import { updateContentForm, updateErrors } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
+import { setErrors, updateContentForm } from '@/module/cards/cardSlice';
 
-// import { useForm } from 'react-hook-form';
 import {
+  CardResponseType,
   CardState,
   CardTemplatesType,
   ContentFormSchema,
   ContentFormSchemaType,
 } from '@/module/cards/cardsType';
-import { FormikProps, useFormik } from 'formik';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ZodError } from 'zod';
 
 const ContentsPage = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  const router = useRouter();
   const cardState = useSelector((state: RootState) => state.card);
   const cardId = searchParams.get('cardId');
-  const cardAction = searchParams.get('action');
   const timeout = useTimeoutDispatch(500);
-  const formValuesRef = useRef<FormikProps<ContentFormSchemaType>>(null);
 
   const card = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries[`getCard-${cardId}`]
-        ?.data as CardState<CardTemplatesType>['card']
+        ?.data as CardResponseType<CardTemplatesType>
   );
 
   useEffect(() => {
@@ -44,85 +39,74 @@ const ContentsPage = () => {
     }
   }, [dispatch]);
 
-  const defaultValues = card?.cardFields;
   const fieldPlaceHolder = card?.cardTemplate.defaultCardFields;
-
-  const onSubmit = () => {};
-
-  const validateForm = (values: ContentFormSchemaType) => {
-    try {
-      ContentFormSchema.parse(values);
-    } catch (error) {
-      if (error instanceof ZodError) {
-        return error.formErrors.fieldErrors;
-      }
-    }
-  };
-
-  const formik = useFormik<ContentFormSchemaType>({
-    enableReinitialize: true,
-    initialValues: { id: 1, ...defaultValues },
-    validateOnChange: true,
-    onSubmit,
-    validate: validateForm,
-    validateOnBlur: true,
-    validateOnMount: true,
-  });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    formik.handleChange(name)(value);
 
-    const updatedFormState: CardState<string>['card']['cardFields'] = {
-      ...cardState.card.cardFields,
+    const updatedFormState: CardState<string>['cardFields']['values'] = {
+      ...cardState.cardFields.values,
       [name]: value,
     };
-
     timeout<ContentFormSchemaType>(updateContentForm, updatedFormState);
+    const result =
+      ContentFormSchema.shape[name as keyof ContentFormSchemaType].safeParse(
+        value
+      );
+
+    if (!result.success) {
+      const error = result.error.format();
+      console.log(error);
+      dispatch(
+        setErrors({
+          formName: 'cardFields',
+          error: { ...cardState.cardFields.errors, [name]: error._errors },
+        })
+      );
+    } else {
+      const newError = Object.fromEntries(
+        Object.entries(cardState.cardFields.errors).filter(
+          ([key]) => key !== name
+        )
+      );
+      dispatch(
+        setErrors({
+          formName: 'cardFields',
+          error: newError,
+        })
+      );
+    }
   };
-
-  const shouldDispatchErrors = useMemo(() => {
-    return () =>
-      formik.isValid
-        ? dispatch(updateErrors(false))
-        : dispatch(updateErrors(true));
-  }, [formik.isValid, dispatch]);
-
-  useEffect(() => {
-    shouldDispatchErrors();
-
-    return () => {};
-  }, [shouldDispatchErrors]);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        formik.handleSubmit(e);
+        // formik.handleSubmit(e);
       }}
       className="flex flex-col gap-4"
     >
       <MyCardsContentForm1
-        getFieldProps={formik.getFieldProps}
-        handleChange={handleChange}
-        values={formik.values}
-        errors={formik.errors}
+        // getFieldProps={formik.getFieldProps}
+        handleChange={(e) => handleChange(e)}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
         fieldPlaceHolder={fieldPlaceHolder}
       />
       <MyCardsContentForm2
-        getFieldProps={formik.getFieldProps}
+        // getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
-        values={formik.values}
-        errors={formik.errors}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
         fieldPlaceHolder={fieldPlaceHolder}
       />
       <MyCardsContentForm3
-        getFieldProps={formik.getFieldProps}
+        // getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
-        values={formik.values}
-        errors={formik.errors}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
       />
     </form>
   );

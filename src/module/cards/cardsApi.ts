@@ -3,7 +3,7 @@ import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
 import { toast } from "react-toastify";
-import { CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
+import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
 
@@ -25,7 +25,7 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse.results as any;
       },
     }),
-    getCard: builder.query<UpdateCardState<CardTemplatesType>['card'], string>({
+    getCard: builder.query<CardResponseType<CardTemplatesType>, string>({
       query: (cardId) => `${apiPaths.getCardUrl}${cardId}/`,
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return endpointName + '-' + queryArgs;
@@ -37,7 +37,7 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
-    getMyCards: builder.query<PaginatedResponseType<UpdateCardState<CardTemplatesType>['card']>, void>({
+    getMyCards: builder.query<PaginatedResponseType<CardResponseType<CardTemplatesType>>, void>({
       query: () => `${apiPaths.getCardUrl}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
@@ -87,7 +87,7 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
-    upDateCard: builder.mutation<any, UpdateCardParams & UpdateCardState<string>['card']>({
+    upDateCard: builder.mutation<any, UpdateCardParams & CardResponseType<string>>({
       query: ({ userId, cardId, ...payload }) => {
         const formData = new FormData();
         if (payload.cardFields.prefix) formData.append('card_fields.prefix', payload.cardFields.prefix)
@@ -108,9 +108,9 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
         if (payload.isPublished != undefined) formData.append('is_published', payload.isPublished.toString())
-        if (payload.user) formData.append('user', userId.toString())
+        if (userId) formData.append('user', userId.toString())
         if (payload.isDefault != undefined) formData.append('is_default', payload.isDefault as unknown as string)
-        if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate.toString())
+        if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate)
         return {
           url: `${apiPaths.cardsUrl}${cardId}/`,
           method: 'PATCH',
@@ -167,7 +167,7 @@ const cardsApi = baseApi.injectEndpoints({
         formData.append('background_color', payload.backgroundColor);
         if (payload.backgroundImage)
           formData.append('background_image', payload.backgroundImage);
-        formData.append('logo_url', payload.logoUrl);
+        if (payload.logoUrl) formData.append('logo_url', payload.logoUrl);
         if (payload.showLogo)
           formData.append('show_logo', payload.showLogo.toString());
 
@@ -192,7 +192,7 @@ const cardsApi = baseApi.injectEndpoints({
         // arg
       ) => response.status,
     }),
-    getDefaultCard: builder.query<UpdateCardState<CardTemplatesType>['card'], string>({
+    getDefaultCard: builder.query<UpdateCardState<CardTemplatesType>, string>({
       query: (userName) => `${apiPaths.getDefaultCardUrl}${userName}/`,
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return endpointName + '-' + queryArgs;

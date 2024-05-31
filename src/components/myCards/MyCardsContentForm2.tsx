@@ -1,14 +1,14 @@
 import { InputFieldProps } from '@/core/types/appTypes';
 import { ContentFormSchemaType } from '@/module/cards/cardsType';
-import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
+import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
 
 interface MyCardsContentForm2Props {
-  getFieldProps: (
-    nameOrOptions: string | FieldConfig<any>
-  ) => FieldInputProps<any>;
+  // getFieldProps: (
+  //   nameOrOptions: string | FieldConfig<any>
+  // ) => FieldInputProps<any>;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
@@ -36,7 +36,6 @@ const INPUT_FEILDS: InputFieldProps[] = [
 ];
 
 const MyCardsContentForm2 = ({
-  getFieldProps,
   handleChange,
   values,
   errors,
@@ -48,7 +47,7 @@ const MyCardsContentForm2 = ({
         {INPUT_FEILDS.map((item: InputFieldProps, index: number) => (
           <InputComp
             inputType="text"
-            getFieldProps={getFieldProps}
+            // getFieldProps={getFieldProps}
             inputCompType={item.inputCompType}
             zSchemaName={item.zSchemaName}
             inputLabel={item.inputLabel}

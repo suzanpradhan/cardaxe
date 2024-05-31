@@ -8,7 +8,7 @@ const PreviewSection = ({
   card,
   layout,
 }: {
-  card: CardState<CardTemplatesType | string>['card'];
+  card: CardState<CardTemplatesType | string>;
   layout: CardTemplatesType | undefined;
 }) => {
   return (
@@ -19,7 +19,10 @@ const PreviewSection = ({
           {layout?.htmlCode && (
             <CardLayouts
               htmlSource={layout.htmlCode}
-              variableValues={{ ...card.cardFields, ...card.cardDesign }}
+              variableValues={{
+                ...card.cardFields.values,
+                ...card.cardDesign.values,
+              }}
             />
           )}
           {/* <CardTemplate card={card} /> */}

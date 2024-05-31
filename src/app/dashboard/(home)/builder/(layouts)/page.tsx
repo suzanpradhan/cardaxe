@@ -30,7 +30,7 @@ const LayoutPage = () => {
             htmlSource={card.htmlCode}
             variableValues={{
               ...card.defaultCardFields,
-              ...cardState.card.cardDesign,
+              ...cardState.cardDesign.values,
             }}
           />
         </div>
