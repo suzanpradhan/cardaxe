@@ -1,16 +1,14 @@
 'use client';
 
 import ButtonForm from '@/components/ButtonForm';
-import InputComp from '@/components/InputComp';
 import FormWrapper from '@/components/FormWrapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { z } from 'zod';
+import InputComp from '@/components/InputComp';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import axios from 'axios';
+// import { useForm } from 'react-hook-form';
 import { useParams, useRouter } from 'next/navigation';
-import { apiPaths } from '@/app/api/apiConstants';
+import { z } from 'zod';
+// import { apiPaths } from '@/app/api/apiConstants';
 
 type Z_SCHEMA_NAME = 'password' | 'password2';
 
@@ -53,32 +51,32 @@ const INPUT_FEILDS: INPUT_FEILDS_PROPS[] = [
 ];
 
 const ResetPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordSchemaType>({
-    resolver: zodResolver(ForgotPasswordSchema),
-  });
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<ForgotPasswordSchemaType>({
+  //   resolver: zodResolver(ForgotPasswordSchema),
+  // });
   const params = useParams();
   const router = useRouter();
 
-  const submit = async (data: ForgotPasswordSchemaType) => {
-    axios({
-      method: 'post',
-      url: `${apiPaths.baseUrl}${apiPaths.resetPassword}${params.uid}/${params.token}/`,
-      data: data,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then(function () {
-        toast.success('Your password has been reset');
-        router.push('/login');
-      })
-      .catch(function (error) {
-        console.error(error.message);
-        toast.error(error.message);
-      });
-  };
+  // const submit = async (data: ForgotPasswordSchemaType) => {
+  // axios({
+  //   method: 'post',
+  //   url: `${apiPaths.baseUrl}${apiPaths.resetPassword}${params.uid}/${params.token}/`,
+  //   data: data,
+  //   headers: { 'Content-Type': 'multipart/form-data' },
+  // })
+  //     .then(function () {
+  //       toast.success('Your password has been reset');
+  //       router.push('/login');
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error.message);
+  //       toast.error(error.message);
+  //     });
+  // };
 
   return (
     <div className="flex flex-col w-110 mx-auto my-48">
@@ -88,21 +86,21 @@ const ResetPage = () => {
       >
         <form
           className="flex flex-col gap-4 pt-2  "
-          onSubmit={handleSubmit(submit)}
+          // onSubmit={handleSubmit(submit)}
         >
           {INPUT_FEILDS.map((item, index) => (
             <div className="h-12" key={index}>
               <InputComp
                 inputType={item.type}
                 placeholder={item.placeholder}
-                register={register}
+                // register={register}
                 zSchemaName={item.zSchemaName}
               />
-              {errors[item.zSchemaName] && (
+              {/* {errors[item.zSchemaName] && (
                 <p className="text-xs text-redError">
                   {errors[item.zSchemaName]?.message}
                 </p>
-              )}
+              )} */}
             </div>
           ))}
           <ButtonForm label="Reset Password" />

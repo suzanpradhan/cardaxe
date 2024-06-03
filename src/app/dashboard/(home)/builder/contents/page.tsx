@@ -45,7 +45,6 @@ const ContentsPage = () => {
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-
     const updatedFormState: CardState<string>['cardFields']['values'] = {
       ...cardState.cardFields.values,
       [name]: value,

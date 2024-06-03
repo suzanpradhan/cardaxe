@@ -1,7 +1,6 @@
 import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
 import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -103,13 +102,13 @@ const LoginForm: React.FC = () => {
               )}
             </div>
           ))}
-          <Link
+          {/* <Link
             href="/confirmEmail"
             type="button"
             className="text-grayfont text-right mb-2 hover:underline hover:text-blueTheme"
           >
             Forgot Password
-          </Link>
+          </Link> */}
           <ButtonForm label="Login" bluebackground />
         </div>
       </form>

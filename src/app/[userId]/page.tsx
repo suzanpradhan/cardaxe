@@ -1,4 +1,3 @@
-import PreviewSection from '@/components/myCards/PreviewSection';
 import { apiPaths } from '@/core/api/apiConstants';
 import { snakeToCamel } from '@/core/utils/generalFunctions';
 import { notFound } from 'next/navigation';
@@ -6,7 +5,6 @@ import { notFound } from 'next/navigation';
 const page = async (props: any) => {
   const userId = props.params.userId;
 
-  console.log(`${apiPaths.baseUrl}${apiPaths.getDefaultCardUrl}${userId}/`);
   try {
     const res = await fetch(
       `${apiPaths.baseUrl}${apiPaths.getDefaultCardUrl}${userId}/`,
@@ -22,7 +20,7 @@ const page = async (props: any) => {
     if (defaultCard) {
       return (
         <div className="bg-componentBgGrey -z-20">
-          <PreviewSection card={defaultCard} />
+          {/* <PreviewSection card={defaultCard} layout={}/> */}
         </div>
       );
     } else {

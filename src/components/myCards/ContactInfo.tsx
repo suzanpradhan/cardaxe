@@ -28,13 +28,13 @@ const ContactInfo = ({
   cardFields,
   isTeamComp,
 }: {
-  cardFields: CardState<CardTemplatesType>['card']['cardFields'];
+  cardFields: CardState<CardTemplatesType>['cardFields'];
   isTeamComp: boolean;
 }) => {
   const cardFielddDetails = [
-    cardFields?.phone,
-    cardFields?.email,
-    cardFields?.website,
+    cardFields?.values.phone,
+    cardFields?.values.email,
+    cardFields?.values.website,
     undefined,
   ];
   const cardInfoWithDetails = CONTACT_INFO.map((item, index) => {

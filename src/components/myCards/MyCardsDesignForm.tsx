@@ -15,17 +15,8 @@ interface MyCardsDesignFormProps {
   errors: FormikErrors<DesignFromSchemaType>;
 }
 
-// const ACCEPTED_IMAGE_TYPES = [
-//   'image/jpeg',
-//   'image/jpg',
-//   'image/png',
-//   'image/gif',
-// ];
-// const MAX_FILE_SIZE = 5242880; // 5MB in bytes
-
 const MyCardsDesignForm = ({
   errors,
-  // getFieldProps,
   handleChange,
   values,
 }: MyCardsDesignFormProps) => {
@@ -38,17 +29,16 @@ const MyCardsDesignForm = ({
           zSchemaName="backgroundColor"
           inputLabel="Background Color"
           className="inline"
-          // getFieldProps={getFieldProps}
           inputValue={values['backgroundColor']}
           handleChange={handleChange}
           error={errors['backgroundColor']}
+          disableInput
         />
         <div className="h-[42px] basis-4/5  rounded-md bg-inputBgGrey border-borderMain border-1">
           <InputComp
             zSchemaName="backgroundColor"
             inputCompType="color"
             inputType="color"
-            // getFieldProps={getFieldProps}
             inputValue={values['backgroundColor']}
             handleChange={handleChange}
             error={errors['backgroundColor']}
@@ -61,8 +51,7 @@ const MyCardsDesignForm = ({
         zSchemaName="backgroundImage"
         inputLabel="Background Image"
         placeholder="Choose Image"
-        // getFieldProps={getFieldProps}
-        // inputValue={values['backgroundImage']}
+        inputValue={values['backgroundImage']}
         error={errors['backgroundImage']}
         handleChange={handleChange}
       />
@@ -73,7 +62,7 @@ const MyCardsDesignForm = ({
         inputLabel="Logo"
         placeholder="Choose Image"
         // getFieldProps={getFieldProps}
-        // inputValue={formik.values['logoUrl']}
+        inputValue={values['logoUrl']}
         handleChange={handleChange}
         error={errors['logoUrl']}
       />

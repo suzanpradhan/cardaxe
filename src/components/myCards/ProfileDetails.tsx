@@ -14,7 +14,7 @@ import GappedTableList from './GappedTableList';
 type ProfileDetailsPropType = {
   isTeamComp: boolean;
 
-  card: CardState<CardTemplatesType | string>['card'];
+  card: CardState<CardTemplatesType | string>;
 };
 
 const SOCIAL_MEDIA_LIST = [

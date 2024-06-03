@@ -7,7 +7,6 @@ export async function middleware(req: any) {
 
     const { pathname } = req.nextUrl;
 
-    console.log("middle ware running")
 
     // const isSiteAuth = req.cookies.get('authenticated');
 

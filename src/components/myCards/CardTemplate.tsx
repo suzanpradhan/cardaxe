@@ -4,16 +4,16 @@ import Image from 'next/image';
 const CardTemplate = ({
   card,
 }: {
-  card: CardState<CardTemplatesType | string>['card'];
+  card: CardState<CardTemplatesType | string>;
 }) => {
   return (
     <div
       className="w-full h-60 rounded-lg  mx-auto relative "
-      style={{ backgroundColor: card.cardDesign.backgroundColor }}
+      style={{ backgroundColor: card.cardDesign.values.backgroundColor }}
     >
-      {card.cardDesign.backgroundImage && (
+      {card.cardDesign.values.backgroundImage && (
         <Image
-          src={card.cardDesign.backgroundImage as string}
+          src={card.cardDesign.values.backgroundImage as string}
           alt="Background Image"
           fill
           objectFit="cover"
@@ -23,19 +23,19 @@ const CardTemplate = ({
       )}
       <div className="p-2">
         <h2 className="text-xl inline font-bold">
-          {card.cardFields.firstName +
+          {card.cardFields.values.firstName +
             ' ' +
-            card.cardFields.middleName +
+            card.cardFields.values.middleName +
             ' ' +
-            card.cardFields.lastName}
+            card.cardFields.values.lastName}
         </h2>
         <div
           id="logo"
           className="h-20 w-20  relative justify-self-end bg-transparent"
         >
-          {card.cardDesign.logoUrl && (
+          {card.cardDesign.values.logoUrl && (
             <Image
-              src={card.cardDesign.logoUrl as string}
+              src={card.cardDesign.values.logoUrl as string}
               alt="logo"
               fill
               objectFit="contain"
@@ -44,7 +44,7 @@ const CardTemplate = ({
             />
           )}
         </div>
-        <p>{card.cardFields.email}</p>
+        <p>{card.cardFields.values.email}</p>
       </div>
     </div>
   );

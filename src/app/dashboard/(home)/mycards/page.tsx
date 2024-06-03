@@ -1,6 +1,7 @@
 'use client';
 import CardLayouts from '@/components/CardLayouts';
 import AppBar from '@/components/dashboard/AppBar';
+import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
@@ -45,7 +46,6 @@ const MyCardsPage = () => {
   };
 
   const handleEditCard = (cardId: number) => {
-    console.log('cardid', cardId);
     router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
   };
 
@@ -60,18 +60,28 @@ const MyCardsPage = () => {
         </button>
       </AppBar>
       <div className="flex flex-col gap-5 my-10 w-96">
-        {cardsList?.map((card, index) => (
-          <div key={index}>
-            {card.id && (
-              <button onClick={() => handleEditCard(card.id!)}>
-                <CardLayouts
-                  htmlSource={card.cardTemplate?.htmlCode}
-                  variableValues={{ ...card.cardFields, ...card.cardDesign }}
-                />
-              </button>
-            )}
-          </div>
-        ))}
+        {cardsList?.map((card, index) => {
+          const imageUrl = `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`;
+          return (
+            <div key={index} className="w-full">
+              {card.id && (
+                <button
+                  onClick={() => handleEditCard(card.id!)}
+                  className="w-full"
+                >
+                  <CardLayouts
+                    htmlSource={card.cardTemplate?.htmlCode}
+                    variableValues={{
+                      ...card.cardFields,
+                      ...card.cardDesign,
+                      imageUrl: imageUrl,
+                    }}
+                  />
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

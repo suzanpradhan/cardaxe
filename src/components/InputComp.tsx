@@ -116,7 +116,7 @@ const InputComp = ({
               id={zSchemaName}
               aria-checked="true"
               value={inputValue as unknown as string}
-              // {...getFieldProps?.(zSchemaName)}
+              {...getFieldProps?.(zSchemaName)}
             />
           </div>
         );
@@ -128,11 +128,11 @@ const InputComp = ({
               zSchemaName={zSchemaName}
               inputLabel={inputLabel ?? ''}
             />
-            <div className="h-42">
+            <div className="">
               <label
                 htmlFor={zSchemaName}
                 className={clsx(
-                  'truncate focus:outline-1 focus:outline-blueTheme mt-2 block w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder',
+                  'truncate focus:outline-1 !h-11 focus:outline-blueTheme mt-2 block w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder',
                   error ? 'border-redError' : 'border-borderMain'
                 )}
               >
@@ -146,6 +146,7 @@ const InputComp = ({
                 placeholder={placeholder}
                 className="hidden"
                 disabled={disableInput}
+                name={zSchemaName}
                 value={''}
               />
             </div>
@@ -167,7 +168,7 @@ const InputComp = ({
               type={inputType}
               defaultValue={inputValue as string}
               name={zSchemaName}
-              // {...getFieldProps?.(zSchemaName)}
+              {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}
               className={clsx(
                 'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
@@ -188,6 +189,7 @@ const InputComp = ({
             className="h-full w-full focus:outline-1 focus:outline-blueTheme"
             {...getFieldProps?.(zSchemaName)}
             onChange={(e) => handleChange?.(e)}
+            name={zSchemaName}
 
             // {...register(zSchemaName, {
             //   onChange: onHandleChange,

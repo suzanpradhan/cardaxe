@@ -33,7 +33,7 @@ const PROFILE_DETAILS_BUTTONS = [
 const ProfileDescription = ({
   card,
 }: {
-  card: CardState<CardTemplatesType | string>['card'];
+  card: CardState<CardTemplatesType | string>;
 }) => {
   return (
     <div className="grid gap-4">
@@ -51,12 +51,13 @@ const ProfileDescription = ({
         </div>
         <div className="grid">
           <h1 className="font-extrabold text-2xl">
-            {card.cardFields.firstName} {card.cardFields.middleName}{' '}
-            {card.cardFields.lastName}
+            {card.cardFields.values.middleName}{' '}
+            {card.cardFields.values.middleName}{' '}
+            {card.cardFields.values.lastName}
           </h1>
           <p>
-            Istanbul, Turkey | {card.cardFields.designation} -{' '}
-            {card.cardFields.company}
+            Istanbul, Turkey | {card.cardFields.values.designation} -{' '}
+            {card.cardFields.values.company}
           </p>
           <div className="flex gap-2">
             <ButtonRounded
@@ -68,7 +69,7 @@ const ProfileDescription = ({
           </div>
         </div>
       </div>
-      <p>{card.cardFields.bio}</p>
+      <p>{card.cardFields.values.bio}</p>
     </div>
   );
 };

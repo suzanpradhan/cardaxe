@@ -1,91 +1,124 @@
 'use client';
 
-import FormWrapper from '@/components/FormWrapper';
-import InputComp from '@/components/InputComp';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
-import { updatePublishCard } from '@/module/cards/cardSlice';
-import { DesignFromSchemaType } from '@/module/cards/cardsType';
+import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
+import {
+  setErrors,
+  updateDesignForm,
+  updatePublishCard,
+} from '@/module/cards/cardSlice';
+import {
+  CardState,
+  DesignFormSchema,
+  DesignFromSchemaType,
+} from '@/module/cards/cardsType';
 import React, { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 const Designpage = () => {
   const cardState = useSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
-  // const defaultValues: CardState<string>['card']['cardDesign'] = {
-  //   ...cardState.card.cardDesign,
-  // };
+  const timeout = useTimeoutDispatch(500);
 
-  const handleChange = (
+  const handleChange = async (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
+
+    const filesToCache = files?.[0];
+
+    if (filesToCache) {
+      caches.open('filesCache').then(function (cache) {
+        cache.put(name, new Response(filesToCache));
+      });
+      // const cache = await caches.open('filesCache');
+      // // const keys = await cache.keys();
+      // // if (!keys || keys.length <= 0) return;
+      // const response = await cache.match(name);
+      // if (!response) return;
+      // const blob = await response.blob();
+      // console.log(window.URL.createObjectURL(blob as File));
+    }
+
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
+    const updatedFormState: CardState<string>['cardDesign']['values'] = {
+      ...cardState.cardDesign.values,
+      [name]: stateValue,
+    };
+    timeout<DesignFromSchemaType>(updateDesignForm, updatedFormState);
+    const result =
+      DesignFormSchema.shape[name as keyof DesignFromSchemaType].safeParse(
+        value
+      );
 
-    // const updatedFormState: CardState<string>['card']['cardDesign'] = {
-    //   ...cardState.card.cardDesign,
-    //   [name]: stateValue,
-    // };
-    // dispatch(updateDesignForm(updatedFormState));
+    if (!result.success) {
+      const error = result.error.format();
+      console.log(error);
+      dispatch(
+        setErrors({
+          formName: 'cardDesign',
+          error: { ...cardState.cardFields.errors, [name]: error._errors },
+        })
+      );
+    } else {
+      const newError = Object.fromEntries(
+        Object.entries(cardState.cardFields.errors).filter(
+          ([key]) => key !== name
+        )
+      );
+      dispatch(
+        setErrors({
+          formName: 'cardFields',
+          error: newError,
+        })
+      );
+    }
   };
 
-  const handleDefaultChange = (
+  const handleIsDefaultChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     dispatch(updatePublishCard(value as unknown as boolean));
   };
 
-  const onSubmit = (data: DesignFromSchemaType) => {};
-
-  // const formik = useFormik<DesignFromSchemaType>({
-  //   enableReinitialize: true,
-  //   initialValues: { ...defaultValues },
-  //   validateOnChange: true,
-  //   onSubmit,
-  // });
-
   return (
     <form
       className="flex gap-4 flex-col"
       onSubmit={(e) => {
         e.preventDefault();
-        // formik.handleSubmit(e);
       }}
     >
       <MyCardsDesignForm
         errors={cardState.cardDesign.errors}
-        // getFieldProps={cardState.cardDesign.getFieldProps}
         handleChange={handleChange}
         values={cardState.cardDesign.values}
       />
       <MyCardsDesignSwitch
         errors={cardState.cardDesign.errors}
-        // getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={cardState.cardDesign.values}
       />
-      <FormWrapper>
+      {/* <FormWrapper>
         <div className="flex flex-col gap-4">
           <InputComp
             zSchemaName="is_default"
             inputCompType="switch"
             inputLabel="Make default"
             inputType="checkbox"
-            // inputValue={cardState.card.isDefault}
-            handleChange={(e) => handleDefaultChange(e)}
-            // inputValue={cardState.card.isDefault}
-            // error={errors[item.zSchemaName as keyof DesignFromSchemaType]}
+            handleChange={(e) => handleIsDefaultChange(e)}
+            inputValue={cardState.isDefault}
+            // error={cardState.card.errors}
             // getFieldProps={getFieldProps}
             // inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
           />
         </div>
-      </FormWrapper>
+      </FormWrapper> */}
     </form>
   );
 };
-
 export default Designpage;

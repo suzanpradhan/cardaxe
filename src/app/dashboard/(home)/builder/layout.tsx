@@ -2,6 +2,7 @@
 import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
+import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import {
@@ -54,10 +55,19 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(
             updateContentForm((card as any).cardTemplate.defaultCardFields)
           );
+          dispatch(validateForms('cardDesign'));
+          dispatch(validateForms('cardFields'));
           break;
         case 'update':
           dispatch(updateContentForm((card as any).cardFields));
-          dispatch(updateDesignForm((card as any).cardDesign));
+          dispatch(
+            updateDesignForm({
+              ...(card as any).cardDesign,
+              backgroundImage: `${apiPaths.serverUrl}${
+                (card as any).cardDesign.backgroundImage
+              }`,
+            })
+          );
           dispatch(updateCardTemplate((card as any).cardTemplate.id));
           break;
       }
@@ -83,7 +93,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState.cardDesign.values
     );
 
-    console.log(Object.keys(cardState.cardFields.errors).length === 0);
+    console.log(cardState.cardDesign.errors, cardState.cardFields.errors);
+
+    console.log('id', card.cardFields.id);
+
+    console.log(updatedCardDesign);
 
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
@@ -96,8 +110,8 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,
           userId: session.data?.user?.id,
-          cardDesign: updatedCardDesign,
-          cardFields: updatedCardFields,
+          cardDesign: { ...updatedCardDesign, id: card.cardDesign.id },
+          cardFields: { ...updatedCardFields, id: card.cardFields.id },
           cardTemplate: '1',
           isDefault: cardState.isDefault ?? false,
           isPublished: cardState.isPublished ?? false,

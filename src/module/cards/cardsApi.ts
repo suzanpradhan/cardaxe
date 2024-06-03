@@ -89,7 +89,19 @@ const cardsApi = baseApi.injectEndpoints({
     }),
     upDateCard: builder.mutation<any, UpdateCardParams & CardResponseType<string>>({
       query: ({ userId, cardId, ...payload }) => {
+        let bgImage;
+        const fecthCachedImage = async (name: string) => {
+          const cache = await caches.open('filesCache');
+          // const keys = await cache.keys();
+          // if (!keys || keys.length <= 0) return;
+          const response = await cache.match(name);
+          if (!response) return;
+          const blob = await response.blob();
+          return blob;
+        }
         const formData = new FormData();
+        // let bgImageBlob = payload.cardDesign.backgroundImage ? fetch(URL(payload.cardDesign.backgroundImage)).then(r => r.blob()) : undefined;
+        if (payload.cardFields.id) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.prefix) formData.append('card_fields.prefix', payload.cardFields.prefix)
         if (payload.cardFields.firstName) formData.append('card_fields.first_name', payload.cardFields.firstName)
         if (payload.cardFields.lastName) formData.append('card_fields.last_name', payload.cardFields.lastName)
@@ -102,8 +114,11 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardFields.department) formData.append('card_fields.department', payload.cardFields.department)
         if (payload.cardFields.company) formData.append('card_fields.company', payload.cardFields.company)
         if (payload.cardFields.website) formData.append('card_fields.website', payload.cardFields.website)
+        if (payload.cardDesign.id) formData.append('card_design.id', payload.cardDesign.id.toString())
         if (payload.cardDesign.backgroundColor) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
         if (payload.cardDesign.logoUrl) formData.append('card_design.logo_url', payload.cardDesign.logoUrl)
+        fecthCachedImage('backgroundImage').then((response) => { console.log(response); if (response) formData.append('card_design.background_image', new File([response], 'filename.png')) });
+        if (bgImage) formData.append('card_design.background_image', bgImage)
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
@@ -165,8 +180,8 @@ const cardsApi = baseApi.injectEndpoints({
       query: ({ id, ...payload }) => {
         var formData = new FormData();
         formData.append('background_color', payload.backgroundColor);
-        if (payload.backgroundImage)
-          formData.append('background_image', payload.backgroundImage);
+        if (payload.backgroundImage?.[0])
+          formData.append('background_image', payload.backgroundImage[0]);
         if (payload.logoUrl) formData.append('logo_url', payload.logoUrl);
         if (payload.showLogo)
           formData.append('show_logo', payload.showLogo.toString());

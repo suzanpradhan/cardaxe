@@ -77,10 +77,6 @@ export const cardSlice = createSlice({
     ) => {
       state = { ...state, cardTemplate: action.payload }
     },
-
-    // updateInfosForm: (state, action: PayloadAction<CardState['infosForm']>) => {
-    //   state.infosForm = { ...action.payload };
-    // },
     setErrors: (state, action: PayloadAction<ErrorActionType>) => {
       const { error, formName } = action.payload;
       state[formName].errors = { ...error }
@@ -102,7 +98,6 @@ export const cardSlice = createSlice({
 
 
       const parseResult = formSchema.safeParse(formValues);
-      console.log("formvalues", parseResult)
 
       if (!parseResult.success) {
         const errorObject = parseResult.error.format();

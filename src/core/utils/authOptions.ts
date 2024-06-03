@@ -38,29 +38,6 @@ export const authOptions: NextAuthOptions = {
           }
         }
         return null
-        // try {
-        //   const res = await fetch(`${apiPaths.baseUrl}${apiPaths.loginUrl}`, {
-        //     method: 'POST',
-        //     body: JSON.stringify(credentials),
-        //     headers: { 'Content-Type': 'application/json' },
-        //   });
-        //   const data = await res.json();
-        //   console.log("data", data)
-        //   if (data.errors) {
-        //     console.log("logged not", data.errors[0])
-        //     return data.errors[0];
-        //   }
-        //   if (!data?.errors && data) {
-        //     console.log("logged ijnt", data)
-        //     return {
-        //       token: data.optional.token,
-        //       ...data.data,
-        //     };
-        //   }
-        //   return null;
-        // } catch (err) {
-        //   return null;
-        // }
       },
     }),
     GoogleProvider({

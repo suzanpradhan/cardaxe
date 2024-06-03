@@ -24,17 +24,25 @@ const LayoutPage = () => {
 
   return (
     <div>
-      {cardsList?.map((card, index) => (
-        <div key={index}>
-          <CardLayouts
-            htmlSource={card.htmlCode}
-            variableValues={{
-              ...card.defaultCardFields,
-              ...cardState.cardDesign.values,
-            }}
-          />
-        </div>
-      ))}
+      {cardsList?.map((card, index) => {
+        const imageUrl = `${cardState.cardDesign.values.backgroundImage}`;
+        console.log(imageUrl);
+        return (
+          <div key={index}>
+            {card.id && (
+              <CardLayouts
+                htmlSource={card.htmlCode}
+                variableValues={{
+                  ...card.defaultCardFields,
+                  ...cardState.cardDesign.values,
+                  imageUrl: imageUrl,
+                }}
+              />
+            )}
+          </div>
+        );
+      })}
+
       {/* {isSuccess && data && Parser(data[0].html_code)}
       {isLoading && 'Loading...'}
       {isError && error && 'Error...'} */}
