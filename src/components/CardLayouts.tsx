@@ -20,7 +20,6 @@ interface CardLayoutProps {
 }
 
 const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
-  console.log(variableValues);
   const snakeCaseVariablesValues = {
     ...camelToSnake(variableValues),
     // logo_url:
@@ -29,8 +28,6 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
     //     : 'https://source.unsplash.com/1000x700/?logo',
   };
   Object.entries(snakeCaseVariablesValues).forEach(([variable, value]) => {
-    console.log(value);
-
     Handlebars.registerHelper(variable, () => value);
   });
 
@@ -40,7 +37,6 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
   ) as HandlebarsTemplateFunction;
 
   const processedHtml = template();
-  console.log(processedHtml);
 
   return <div className="w-full">{parse(processedHtml)}</div>;
 };

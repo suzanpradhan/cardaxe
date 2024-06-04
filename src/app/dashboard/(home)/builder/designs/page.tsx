@@ -28,6 +28,8 @@ const Designpage = () => {
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
 
+    console.log(name, value);
+
     const filesToCache = files?.[0];
 
     if (filesToCache) {
