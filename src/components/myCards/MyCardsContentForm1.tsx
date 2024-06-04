@@ -1,8 +1,21 @@
-import React from 'react';
+import { InputFieldProps } from '@/core/types/appTypes';
+import { ContentFormSchemaType } from '@/module/cards/cardsType';
+import { FormikErrors } from 'formik';
+import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
-import { InputFieldProps } from '@/types/appTypes';
-import { RegisterType } from '@/app/dashboard/(home)/builder/contents/page';
+
+interface MyCardsContentForm1Props {
+  // getFieldProps: (
+  //   nameOrOptions: string | FieldConfig<any>
+  // ) => FieldInputProps<any>;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  values: ContentFormSchemaType;
+  errors: FormikErrors<ContentFormSchemaType>;
+  fieldPlaceHolder: ContentFormSchemaType;
+}
 
 const INPUT_FEILDS: InputFieldProps[] = [
   {
@@ -37,7 +50,19 @@ const INPUT_FEILDS: InputFieldProps[] = [
   },
 ];
 
-const MyCardsContentForm1 = ({ register }: { register: RegisterType }) => {
+const MyCardsContentForm1 = ({
+  // getFieldProps,
+  handleChange,
+  values,
+  errors,
+  fieldPlaceHolder,
+}: MyCardsContentForm1Props) => {
+  const selectOptions = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
   return (
     <FormWrapper>
       <div className="flex flex-col gap-3">
@@ -45,10 +70,26 @@ const MyCardsContentForm1 = ({ register }: { register: RegisterType }) => {
           <InputComp
             inputCompType={item.inputCompType}
             inputType="text"
+            placeholder={
+              fieldPlaceHolder?.[
+                item.zSchemaName as keyof ContentFormSchemaType
+              ]
+                ? `Your ${
+                    fieldPlaceHolder[
+                      item.zSchemaName as keyof ContentFormSchemaType
+                    ]
+                  } Required`
+                : ''
+            }
             zSchemaName={item.zSchemaName}
-            register={register}
             inputLabel={item.inputLabel}
             key={index}
+            // getFieldProps={getFieldProps}
+            handleChange={handleChange}
+            inputValue={
+              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+            }
+            error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
           />
         ))}
       </div>

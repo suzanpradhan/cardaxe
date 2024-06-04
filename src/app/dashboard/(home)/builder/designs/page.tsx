@@ -2,15 +2,123 @@
 
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
-import React from 'react';
+import { useAppDispatch } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
+import {
+  setErrors,
+  updateDesignForm,
+  updatePublishCard,
+} from '@/module/cards/cardSlice';
+import {
+  CardState,
+  DesignFormSchema,
+  DesignFromSchemaType,
+} from '@/module/cards/cardsType';
+import React, { ChangeEvent } from 'react';
+import { useSelector } from 'react-redux';
 
 const Designpage = () => {
+  const cardState = useSelector((state: RootState) => state.card);
+  const dispatch = useAppDispatch();
+  const timeout = useTimeoutDispatch(500);
+
+  const handleChange = async (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value, type, files } = e.target as HTMLInputElement;
+
+    const filesToCache = files?.[0];
+
+    if (filesToCache) {
+      caches.open('filesCache').then(function (cache) {
+        cache.put(name, new Response(filesToCache));
+      });
+      // const cache = await caches.open('filesCache');
+      // // const keys = await cache.keys();
+      // // if (!keys || keys.length <= 0) return;
+      // const response = await cache.match(name);
+      // if (!response) return;
+      // const blob = await response.blob();
+      // console.log(window.URL.createObjectURL(blob as File));
+    }
+
+    const stateValue =
+      type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
+    const updatedFormState: CardState<string>['cardDesign']['values'] = {
+      ...cardState.cardDesign.values,
+      [name]: stateValue,
+    };
+    timeout<DesignFromSchemaType>(updateDesignForm, updatedFormState);
+    const result =
+      DesignFormSchema.shape[name as keyof DesignFromSchemaType].safeParse(
+        value
+      );
+
+    if (!result.success) {
+      const error = result.error.format();
+      console.log(error);
+      dispatch(
+        setErrors({
+          formName: 'cardDesign',
+          error: { ...cardState.cardFields.errors, [name]: error._errors },
+        })
+      );
+    } else {
+      const newError = Object.fromEntries(
+        Object.entries(cardState.cardFields.errors).filter(
+          ([key]) => key !== name
+        )
+      );
+      dispatch(
+        setErrors({
+          formName: 'cardFields',
+          error: newError,
+        })
+      );
+    }
+  };
+
+  const handleIsDefaultChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    dispatch(updatePublishCard(value as unknown as boolean));
+  };
+
   return (
-    <div className="flex gap-4 flex-col">
-      <MyCardsDesignForm />
-      <MyCardsDesignSwitch />
-    </div>
+    <form
+      className="flex gap-4 flex-col"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
+      <MyCardsDesignForm
+        errors={cardState.cardDesign.errors}
+        handleChange={handleChange}
+        values={cardState.cardDesign.values}
+      />
+      <MyCardsDesignSwitch
+        errors={cardState.cardDesign.errors}
+        handleChange={handleChange}
+        values={cardState.cardDesign.values}
+      />
+      {/* <FormWrapper>
+        <div className="flex flex-col gap-4">
+          <InputComp
+            zSchemaName="is_default"
+            inputCompType="switch"
+            inputLabel="Make default"
+            inputType="checkbox"
+            handleChange={(e) => handleIsDefaultChange(e)}
+            inputValue={cardState.isDefault}
+            // error={cardState.card.errors}
+            // getFieldProps={getFieldProps}
+            // inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
+          />
+        </div>
+      </FormWrapper> */}
+    </form>
   );
 };
-
 export default Designpage;

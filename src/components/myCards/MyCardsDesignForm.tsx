@@ -1,91 +1,71 @@
-import React from 'react';
+import { DesignFromSchemaType } from '@/module/cards/cardsType';
+import { FormikErrors } from 'formik';
+import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../InputComp';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/GlobalRedux/store';
 
-// const ACCEPTED_IMAGE_TYPES = [
-//   'image/jpeg',
-//   'image/jpg',
-//   'image/png',
-//   'image/gif',
-// ];
-// const MAX_FILE_SIZE = 5242880; // 5MB in bytes
+interface MyCardsDesignFormProps {
+  // getFieldProps: (
+  //   nameOrOptions: string | FieldConfig<any>
+  // ) => FieldInputProps<any>;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  values: DesignFromSchemaType;
+  errors: FormikErrors<DesignFromSchemaType>;
+}
 
-const MyCardDesignFormSchema = z.object({
-  backgroundColor: z.string(),
-  backgroundImage: z.string(),
-  logoUrl: z.string(),
-  prefix: z.string(),
-});
-type MyCardDesignFormSchemaType = z.infer<typeof MyCardDesignFormSchema>;
-
-const MyCardsDesignForm = () => {
-  const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues: MyCardDesignFormSchemaType = {
-    backgroundColor: cardState.designForm.backgroundColor,
-    backgroundImage: cardState.designForm.backgroundImage as string,
-    logoUrl: cardState.designForm.logoUrl as string,
-    prefix: cardState.contentForm.prefix,
-  };
-
-  const { register, handleSubmit } = useForm<MyCardDesignFormSchemaType>({
-    defaultValues,
-    resolver: zodResolver(MyCardDesignFormSchema),
-  });
-  const submit = (data: MyCardDesignFormSchemaType) => {
-    console.log(data);
-  };
-
+const MyCardsDesignForm = ({
+  errors,
+  handleChange,
+  values,
+}: MyCardsDesignFormProps) => {
   return (
     <FormWrapper>
-      <form onSubmit={handleSubmit(submit)}>
-        <div className="flex gap-2 items-end">
-          <InputComp
-            inputCompType="normal"
-            inputType="string"
-            zSchemaName="backgroundColor"
-            register={register}
-            inputLabel="Background Color"
-            className="inline"
-          />
-          <div className="h-[42px] basis-4/5  rounded-md bg-inputBgGrey border-borderMain border-1">
-            <InputComp
-              zSchemaName="backgroundColor"
-              inputCompType="color"
-              inputType="color"
-              register={register}
-            />
-          </div>
-        </div>
+      <div className="flex gap-2 items-end">
         <InputComp
-          inputCompType="file"
-          inputType="file"
-          zSchemaName="backgroundImage"
-          register={register}
-          inputLabel="Background Image"
-          placeholder="Choose Image"
-        />
-        {/* <InputComp
           inputCompType="normal"
-          inputType="text"
-          zSchemaName="prefix"
-          register={register}
-          inputLabel="Prefix"
-          placeholder="asdfds"
-        /> */}
-        <InputComp
-          inputCompType="file"
-          inputType="file"
-          zSchemaName="logoUrl"
-          register={register}
-          inputLabel="Logo"
-          placeholder="Choose Image"
+          inputType="string"
+          zSchemaName="backgroundColor"
+          inputLabel="Background Color"
+          className="inline"
+          inputValue={values['backgroundColor']}
+          handleChange={handleChange}
+          error={errors['backgroundColor']}
+          disableInput
         />
-      </form>
+        <div className="h-[42px] basis-4/5  rounded-md bg-inputBgGrey border-borderMain border-1">
+          <InputComp
+            zSchemaName="backgroundColor"
+            inputCompType="color"
+            inputType="color"
+            inputValue={values['backgroundColor']}
+            handleChange={handleChange}
+            error={errors['backgroundColor']}
+          />
+        </div>
+      </div>
+      <InputComp
+        inputCompType="file"
+        inputType="file"
+        zSchemaName="backgroundImage"
+        inputLabel="Background Image"
+        placeholder="Choose Image"
+        inputValue={values['backgroundImage']}
+        error={errors['backgroundImage']}
+        handleChange={handleChange}
+      />
+      <InputComp
+        inputCompType="file"
+        inputType="file"
+        zSchemaName="logoUrl"
+        inputLabel="Logo"
+        placeholder="Choose Image"
+        // getFieldProps={getFieldProps}
+        inputValue={values['logoUrl']}
+        handleChange={handleChange}
+        error={errors['logoUrl']}
+      />
     </FormWrapper>
   );
 };

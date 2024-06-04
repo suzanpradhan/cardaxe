@@ -25,16 +25,17 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
   return (
     <li
       className={clsx(
-        'p-3 rounded-lg  hover:text-blue-700 min-w-fit',
-        toggle ? 'bg-blue-200 text-blue-700' : 'text-slate-700'
+        'p-3 rounded-lg  hover:text-blueTheme min-w-fit',
+        toggle ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
+        item.label == 'Notification' && 'hidden sm:block'
       )}
     >
       <button
         onClick={() => handleClick()}
-        className="flex gap-3 items-center w-full"
+        className="flex gap-3 items-center w-full "
       >
         {item.icon}
-        <span className="hidden lg:block">{item.label}</span>
+        <span className="hidden sm:block">{item.label}</span>
       </button>
     </li>
   );

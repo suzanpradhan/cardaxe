@@ -1,15 +1,17 @@
-import React from 'react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { useAppDispatch } from '@/core/redux/clientStore';
+import { registerApi } from '@/module/register/registerApi';
+import {
+  RegistrationSchemaType,
+  registerationSchema,
+} from '@/module/register/registerType';
+import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import InputComp from '../InputComp';
-import FormWrapper from '../FormWrapper';
+import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
-import { apiPaths } from '@/app/api/apiConstants';
+import FormWrapper from '../FormWrapper';
+import InputComp from '../InputComp';
 
 type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
 
@@ -18,27 +20,6 @@ type REGISTRATION_FEILDS_PROPS = {
   type: string;
   zSchemaName: Z_SCHEMA_NAME;
 };
-
-const RegisterationSchema = z
-  .object({
-    fullname: z.string().min(2, { message: 'Must be at least 2 characters' }),
-    email: z.string().email().trim(),
-    password: z
-      .string()
-      .min(8, { message: 'Must be more than 8 characters' })
-      .max(24, { message: 'Must be less than 24 characters' }),
-    confirmPassword: z
-      .string()
-      .min(8, { message: 'Must be more than 8 characters' })
-      .max(24, { message: 'Must be less than 24 characters' })
-      .optional(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  });
-
-type RegistrationSchemaType = z.infer<typeof RegisterationSchema>;
 
 const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
   {
@@ -65,60 +46,78 @@ const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
 
 const RegisterationForm: React.FC = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const submitData = async (data: RegistrationSchemaType) => {
-    delete data.confirmPassword;
-    console.log(data);
-
-    axios({
-      method: 'post',
-      url: `${apiPaths.baseUrl}${apiPaths.register}`,
-      data: data,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then(function (response) {
-        console.log(response);
-        const message = response.data.msg;
+  const onSubmit = async (data: RegistrationSchemaType) => {
+    try {
+      const responseData = await dispatch(
+        registerApi.endpoints.signUp.initiate({
+          fullname: data.fullname,
+          email: data.email,
+          password: data.password,
+        })
+      );
+      if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
+        console.log('regsister response', responseData);
+      } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
         router.push('/login');
-        toast.success(message);
-      })
-      .catch(function (AxiosError) {
-        console.log(AxiosError);
-        const message = AxiosError;
-        toast.error(message);
-      });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegistrationSchemaType>({
-    resolver: zodResolver(RegisterationSchema),
+  const formik = useFormik({
+    initialValues: {
+      fullname: '',
+      confirmPassword: '',
+      email: '',
+      password: '',
+    },
+    validateOnChange: true,
+    validate: toFormikValidate(registerationSchema),
+    onSubmit,
   });
+
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<RegistrationSchemaType>({
+  //   resolver: zodResolver(RegisterationSchema),
+  // });
   return (
     <FormWrapper titleText={true}>
       <div className="flex flex-col ">
         <form
           className="flex flex-col gap-4 py-2"
-          onSubmit={handleSubmit(submitData)}
+          onSubmit={(e) => {
+            e.preventDefault();
+            formik.handleSubmit(e);
+          }}
         >
           {REGISTRATION_FEILDS.map((item, index) => (
             <div key={index} className="h-12">
               <InputComp
                 inputType={item.type}
+                inputValue={formik.values[item.zSchemaName]}
                 placeholder={item.placeholder}
-                register={register}
+                getFieldProps={formik.getFieldProps}
                 zSchemaName={item.zSchemaName}
               />
-              {errors[item.zSchemaName] && (
-                <p className="text-xs text-red-600">
-                  {errors[item.zSchemaName]?.message}
+              {formik.errors[item.zSchemaName] && (
+                <p className="text-xs text-redError">
+                  {formik.errors[item.zSchemaName]}
                 </p>
               )}
+              {/* {errors[item.zSchemaName] && (
+                <p className="text-xs text-redError">
+                  {errors[item.zSchemaName]?.message}
+                </p>
+              )} */}
             </div>
           ))}
-          <ButtonForm label="Register" />
+          <ButtonForm label="Register" bluebackground />
         </form>
       </div>
     </FormWrapper>

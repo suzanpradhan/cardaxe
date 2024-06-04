@@ -1,9 +1,6 @@
-import { RootState } from '@/app/GlobalRedux/store';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import Image from 'next/image';
-import ButtonRounded from '../ButtonRounded';
+import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
 import { Flash, Heart, MoreCircle, Share } from 'iconsax-react';
+import ButtonRounded from '../ButtonRounded';
 
 const buttonLabel = (
   <div className="flex flex-nowrap">
@@ -17,47 +14,50 @@ const PROFILE_DETAILS_BUTTONS = [
     key={1}
     size="50"
     variant="Bulk"
-    className="active:ring-blue-600 active:ring-2 hover:shadow-md rounded-full text-blue-600"
+    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
   />,
   <Share
     key={2}
     size="50"
-    className="active:ring-blue-600 active:ring-2 hover:shadow-md rounded-full text-blue-600"
+    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
     variant="Bold"
   />,
   <MoreCircle
     key={3}
     size="50"
-    className="active:ring-blue-600 active:ring-2 hover:shadow-md rounded-full text-blue-600"
+    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
     variant="Bulk"
   />,
 ];
 
-const ProfileDescription = () => {
-  const cardState = useSelector((state: RootState) => state.card);
-
+const ProfileDescription = ({
+  card,
+}: {
+  card: CardState<CardTemplatesType | string>;
+}) => {
   return (
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
-        <div className="bg-blue-600 h-[120px] w-[120px] relative rounded-full">
-          {cardState.designForm.logoUrl && (
+        <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full">
+          {/* {card.cardDesign.logoUrl && (
             <Image
-              src={cardState.designForm.logoUrl}
+              src={card.cardDesign.logoUrl}
               alt="Profile pic"
               fill
               sizes="(max-width: 768px) 100vw, 300px"
               objectFit="contain"
             />
-          )}
+          )} */}
         </div>
         <div className="grid">
           <h1 className="font-extrabold text-2xl">
-            {cardState.contentForm.firstName} {cardState.contentForm.middleName}{' '}
-            {cardState.contentForm.lastName}
+            {card.cardFields.values.middleName}{' '}
+            {card.cardFields.values.middleName}{' '}
+            {card.cardFields.values.lastName}
           </h1>
           <p>
-            Istanbul, Turkey | {cardState.contentForm.designation} -{' '}
-            {cardState.contentForm.company}
+            Istanbul, Turkey | {card.cardFields.values.designation} -{' '}
+            {card.cardFields.values.company}
           </p>
           <div className="flex gap-2">
             <ButtonRounded
@@ -69,7 +69,7 @@ const ProfileDescription = () => {
           </div>
         </div>
       </div>
-      <p>{cardState.contentForm.bio}</p>
+      <p>{card.cardFields.values.bio}</p>
     </div>
   );
 };

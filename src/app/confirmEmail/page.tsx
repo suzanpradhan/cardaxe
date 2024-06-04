@@ -1,50 +1,78 @@
 'use client';
 
 import ButtonForm from '@/components/ButtonForm';
-import InputComp from '@/components/InputComp';
 import FormWrapper from '@/components/FormWrapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { z } from 'zod';
-import { apiPaths } from '../api/apiConstants';
-
-const ForgotPasswordSchema = z.object({
-  email: z.string().email().trim(),
-});
-
-type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
+import InputComp from '@/components/InputComp';
+import { useAppDispatch } from '@/core/redux/clientStore';
+import { registerApi } from '@/module/register/registerApi';
+import {
+  ConfirmEmailSchema,
+  ConfirmEmailSchemaType,
+} from '@/module/register/registerType';
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import { ZodError } from 'zod';
 
 const ConfirmEmail = () => {
   const [disableInput, setDisableInput] = useState<boolean>(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordSchemaType>({
-    resolver: zodResolver(ForgotPasswordSchema),
-  });
+  const dispatch = useAppDispatch();
 
-  const submit = async (data: ForgotPasswordSchemaType) => {
-    axios({
-      method: 'post',
-      url: `${apiPaths.baseUrl}${apiPaths.sendForgotPasswordEmail}`,
-      data: data,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then((response) => {
-        console.log(response);
-        toast.info(response.data.msg);
-        setDisableInput(true);
-      })
-      .catch((AxiosError) => {
-        const message = AxiosError.response.data.errors.errors[0];
-        console.log(message);
-        toast.error(message);
-      });
+  const validateForm = (values: ConfirmEmailSchemaType) => {
+    try {
+      ConfirmEmailSchema.parse(values);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return error.formErrors.fieldErrors;
+      }
+    }
   };
+
+  const onSubmit = async (data: ConfirmEmailSchemaType) => {
+    try {
+      const responseData = await dispatch(
+        registerApi.endpoints.confirmEmail.initiate({
+          email: data.email,
+        })
+      );
+      if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
+        console.log('regsister response', responseData);
+      } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
+        console.log(responseData);
+        setDisableInput(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const formik = useFormik<ConfirmEmailSchemaType>({
+    enableReinitialize: true,
+    initialValues: {
+      email: '',
+    },
+    validateOnChange: true,
+    onSubmit,
+    validate: validateForm,
+    validateOnBlur: true,
+  });
+  // const submit = async (data: ConfirmEmailSchemaType) => {
+  //   axios({
+  //     method: 'post',
+  //     url: `${apiPaths.baseUrl}${apiPaths.sendForgotPasswordEmail}`,
+  //     data: data,
+  //     headers: { 'Content-Type': 'multipart/form-data' },
+  //   })
+  //     .then((response) => {
+  //       console.log(response);
+  //       toast.info(response.data.msg);
+  //       setDisableInput(true);
+  //     })
+  //     .catch((AxiosError) => {
+  //       const message = AxiosError.response.data.errors.errors[0];
+  //       console.log(message);
+  //       toast.error(message);
+  //     });
+  // };
   return (
     <div className="flex flex-col w-140 mx-auto my-48">
       <FormWrapper
@@ -52,21 +80,25 @@ const ConfirmEmail = () => {
         description={'Please enter the registered verified email id.'}
       >
         <form
-          className="flex flex-col gap-4 pt-2"
-          onSubmit={handleSubmit(submit)}
+          className="flex flex-col gap-4 pt-2 my-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            formik.handleSubmit(e);
+          }}
         >
           <div className="h-12">
             <InputComp
               inputType="email"
+              inputValue={formik.values.email}
               placeholder="Registered Email"
-              register={register}
-              zSchemaName="email"
-              disableInput={disableInput}
+              getFieldProps={formik.getFieldProps}
+              zSchemaName={'email'}
             />
-            {errors.email && (
-              <p className="text-xs text-red-600">{errors.email?.message}</p>
+            {formik.errors.email && (
+              <p className="text-xs text-redError">{formik.errors.email}</p>
             )}
           </div>
+
           <ButtonForm label="Send Email" disableInput={disableInput} />
         </form>
       </FormWrapper>

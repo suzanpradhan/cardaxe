@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import React from 'react';
 interface Props {
   headingTitle: string;
   contentName?: string;
@@ -10,8 +9,8 @@ const ContentHeading = ({ headingTitle, contentName, center }: Props) => {
   return (
     <h3
       className={clsx(
-        'text-4xl font-extrabold col-span-3 ',
-        contentName === 'video title' && 'w-140',
+        'lg:text-4xl text-2xl font-extrabold ',
+        contentName === 'video title' && 'max-w-2xl',
         center === true && 'text-center'
       )}
     >

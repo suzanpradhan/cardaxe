@@ -1,33 +1,54 @@
-import Button from './ButtonRounded';
+'use client';
+
+import useDetectOutsideClick from '@/hooks/useDetectOutsideClick';
+import { useScroll } from '@/hooks/useScrollDirection';
+import clsx from 'clsx';
+import { useEffect, useRef, useState } from 'react';
+import { CgDetailsMore } from 'react-icons/cg';
+import MobileNavBar from './MobileNavBar';
+import NavBar from './NavBar';
 import TitleText from './TitleText';
 
-interface HEADER_HEADING_PROPS {
-  headingName: string;
-  headingHref: string;
-}
-
 const Header = () => {
-  const HEADER_HEADINGS: HEADER_HEADING_PROPS[] = [
-    { headingName: 'About', headingHref: '/' },
-    { headingName: 'Pricing', headingHref: '/' },
-    { headingName: 'Services', headingHref: '/' },
-    { headingName: 'Login', headingHref: '/login' },
-    { headingName: 'Register', headingHref: '/register' },
-  ];
+  const [isMobileNavOpen, toggleMobileNav] = useState<boolean>(false);
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
+  const { direction: scrollDirection, position: scrollPosition } = useScroll();
+  const handleOutsideClick = (e: Event) => {
+    toggleMobileNav(false);
+  };
+  useDetectOutsideClick(mobileNavRef, handleOutsideClick);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      toggleMobileNav(false);
+    };
+    handleScroll();
+  }, [scrollPosition]);
+
   return (
-    <div className="flex justify-between py-8">
-      <TitleText />
-      <nav className="flex">
-        {HEADER_HEADINGS.map((heading, index) => (
-          <Button
-            key={index}
-            label={heading.headingName}
-            isHeader
-            href={heading.headingHref}
+    <header
+      className={clsx(
+        ' z-10  transition-all duration-500 backdrop-blur-xl',
+        scrollDirection === 'down' ? '-top-24' : 'top-0',
+        scrollPosition <= 60 ? 'absolute w-full' : 'sticky'
+      )}
+    >
+      <div className="max-w-7xl mx-auto flex justify-between  items-center">
+        <div className="w-full lg:w-fit px-8 lg:px-2 py-2 overflow-x-hidden flex max-w-7xl justify-between items-center ">
+          <TitleText />
+          <button onClick={() => toggleMobileNav(true)}>
+            <CgDetailsMore className=" h-12 w-12 p-0 m-0 lg:hidden block" />
+          </button>
+          <MobileNavBar
+            isMobileNavOpen={isMobileNavOpen}
+            mobileNavRef={mobileNavRef}
           />
-        ))}
-      </nav>
-    </div>
+        </div>
+        <div className="hidden lg:block">
+          <NavBar />
+        </div>
+      </div>
+    </header>
   );
 };
 

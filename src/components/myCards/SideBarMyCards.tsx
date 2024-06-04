@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { BoxAdd, Colorfilter, DocumentText1, Grid7 } from 'iconsax-react';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -8,6 +9,11 @@ type SideBarElementProps = {
   name: string;
   link: string;
 };
+
+interface SideBarMyCardsProps {
+  cardId: string | null;
+  cardAction: string | null;
+}
 
 const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   {
@@ -32,46 +38,41 @@ const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   },
 ];
 
-const SideBarMyCards = () => {
+const SideBarMyCards = ({ cardId, cardAction }: SideBarMyCardsProps) => {
   const router = useRouter();
   const pathName = usePathname();
 
   const [toggleTab, setToggleTab] = useState<number>(0);
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    index: number,
-    item: SideBarElementProps
-  ) => {
-    router.push(`/dashboard/builder/${item.link}`);
-    setToggleTab(index);
-  };
 
   useEffect(() => {
-    if (pathName.endsWith('/builder')) {
+    if (pathName.endsWith(`/builder`)) {
       setToggleTab(0);
-    } else if (pathName.endsWith('/builder/contents')) {
+    } else if (pathName.endsWith(`/builder/contents`)) {
       setToggleTab(1);
-    } else if (pathName.endsWith('/builder/designs')) {
+    } else if (pathName.endsWith(`/builder/designs`)) {
       setToggleTab(2);
-    } else if (pathName.endsWith('//builder/infos')) {
+    } else if (pathName.endsWith(`/builder/infos`)) {
       setToggleTab(3);
     }
   }, [pathName]);
 
   return (
-    <div className="basis-1/12 flex flex-col gap-4 h-full text-slate-600">
+    <div className="flex flex-col gap-4 h-full text-slate-600">
       {MY_APP_SIDE_BAR_ELEMENTS.map((item, index) => (
-        <button
+        <Link
+          href={`/dashboard/builder/${item.link}${
+            cardId && `/?cardId=${cardId}&action=${cardAction}`
+          }`}
           key={index}
-          onClick={(e) => handleClick(e, index, item)}
+          // onClick={(e) => handleClick(e)}
           className={clsx(
-            'flex flex-col items-center h-24 justify-center rounded-md hover:text-blue-600',
-            toggleTab !== index ? 'text-slate-600' : 'text-blue-700 bg-blue-200'
+            'flex flex-col items-center h-24 justify-center rounded-md hover:text-blueTheme',
+            toggleTab !== index ? 'text-grayfont' : 'text-blueTheme bg-blueBg'
           )}
         >
           {item.icon}
           <p>{item.name}</p>
-        </button>
+        </Link>
       ))}
     </div>
   );

@@ -1,14 +1,13 @@
-import React from 'react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import Link from 'next/link';
+import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
+import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import InputComp from '../InputComp';
-import FormWrapper from '../FormWrapper';
+import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
+import FormWrapper from '../FormWrapper';
+import InputComp from '../InputComp';
 
 type zSchemaName = 'email' | 'password';
 
@@ -17,16 +16,6 @@ type LoginFeildProps = {
   type: string;
   zSchemaName: zSchemaName;
 };
-
-const LoginSchema = z.object({
-  email: z.string().email().trim(),
-  password: z
-    .string()
-    .min(8, { message: 'Must be more than 8 characters' })
-    .max(24, { message: 'Must be less than 24 characters' }),
-});
-
-type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 const LOGIN_FEILDS: LoginFeildProps[] = [
   {
@@ -42,32 +31,44 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 ];
 
 const LoginForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginSchemaType>({
-    resolver: zodResolver(LoginSchema),
-  });
-
   const router = useRouter();
-
-  const submitData = async (data: LoginSchemaType) => {
-    console.log(data);
-    const res = await signIn('credentials', {
+  const navigator = useRouter();
+  const searchParams = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const callback = searchParams.get('callback');
+  const onSubmit = async (data: LoginSchemaType) => {
+    await signIn('credentials', {
       email: data.email,
       password: data.password,
       callbackUrl: '/dashboard',
       redirect: false,
+    }).then((response) => {
+      if (!response?.error) {
+        toast.success('Sucessfully logged in.');
+        if (callback) {
+          window.location.href = callback;
+          if (callback.includes('#')) window.location.reload();
+        } else {
+          navigator.refresh();
+        }
+      } else {
+        toast.error(response?.error);
+        setError(response?.error!);
+      }
     });
-    if (!res?.error) {
-      toast.success('Succefully logged in');
-    } else if (res?.error) {
-      toast.error('Username or password error');
-      console.log(res.error);
-      router.push('/login');
-    }
+    setIsLoading(false);
   };
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validateOnChange: true,
+    validate: toFormikValidate(loginSchema),
+    onSubmit,
+  });
 
   return (
     <FormWrapper
@@ -78,32 +79,37 @@ const LoginForm: React.FC = () => {
     >
       <form
         className="flex flex-col gap-4 py-2"
-        onSubmit={handleSubmit(submitData)}
+        // onSubmit={handleSubmit(submitData)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          formik.handleSubmit(e);
+        }}
       >
         <div className="flex flex-col ">
           {LOGIN_FEILDS.map((item, index) => (
             <div key={index} className="h-16">
               <InputComp
+                inputValue={formik.values[item.zSchemaName]}
+                getFieldProps={formik.getFieldProps}
                 inputType={item.type}
                 placeholder={item.placeholder}
-                register={register}
                 zSchemaName={item.zSchemaName}
               />
-              {errors[item.zSchemaName] && (
-                <p className="text-xs text-red-600">
-                  {errors[item.zSchemaName]?.message}
+              {formik.errors[item.zSchemaName] && (
+                <p className="text-xs text-redError">
+                  {formik.errors[item.zSchemaName]}
                 </p>
               )}
             </div>
           ))}
-          <Link
+          {/* <Link
             href="/confirmEmail"
             type="button"
-            className="text-gray-400 text-right -mt-2 mb-2 hover:underline hover:text-blue-600"
+            className="text-grayfont text-right mb-2 hover:underline hover:text-blueTheme"
           >
             Forgot Password
-          </Link>
-          <ButtonForm label="Login" />
+          </Link> */}
+          <ButtonForm label="Login" bluebackground />
         </div>
       </form>
     </FormWrapper>

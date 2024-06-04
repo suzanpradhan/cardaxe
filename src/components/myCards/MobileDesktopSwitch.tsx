@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { Mobile, Monitor } from 'iconsax-react';
 import React, { useState } from 'react';
@@ -40,7 +42,7 @@ const MobileDesktopSwitch = () => {
             ' rounded flex px-3 py-2',
             view === item.value
               ? 'text-white bg-black '
-              : 'text-slate-500 bg-componentBgGrey'
+              : 'text-grayfont bg-componentBgGrey'
           )}
         >
           {item.icon}

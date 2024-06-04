@@ -1,63 +1,51 @@
-import React from 'react';
+import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
 import Image from 'next/image';
-import { RootState } from '@/app/GlobalRedux/store';
-import { useSelector } from 'react-redux';
-import clsx from 'clsx';
 
-const CardTemplate = () => {
-  const cardState = useSelector((state: RootState) => state.card);
+const CardTemplate = ({
+  card,
+}: {
+  card: CardState<CardTemplatesType | string>;
+}) => {
   return (
     <div
-      className={clsx(
-        '  w-full h-60 rounded-lg p-6 grid grid-cols-2 mx-auto relative bg-transparent 2xl:h-72 2xl:w-130'
-      )}
+      className="w-full h-60 rounded-lg  mx-auto relative "
+      style={{ backgroundColor: card.cardDesign.values.backgroundColor }}
     >
-      {cardState.designForm.backgroundImage ? (
+      {card.cardDesign.values.backgroundImage && (
         <Image
-          src={cardState.designForm.backgroundImage as string}
+          src={card.cardDesign.values.backgroundImage as string}
           alt="Background Image"
           fill
           objectFit="cover"
           sizes="(max-width: 768px) 100vw, 300px"
           className="rounded-lg -z-10 ov"
         />
-      ) : (
-        <div
-          className="h-full w-full absolute -z-10 rounded-lg"
-          style={{ backgroundColor: cardState.designForm.backgroundColor }}
-        ></div>
       )}
-      <h1 className="col-span-1 text-xl inline font-bold">
-        {cardState.contentForm.firstName +
-          ' ' +
-          cardState.contentForm.middleName +
-          ' ' +
-          cardState.contentForm.lastName}
-      </h1>
-      <div
-        id="logo"
-        className="col-span-1 col-start-2 h-20 w-20  relative justify-self-end bg-transparent"
-      >
-        {cardState.designForm.logoUrl && (
-          <Image
-            src={cardState.designForm.logoUrl as string}
-            alt="logo"
-            fill
-            objectFit="contain"
-            sizes="(max-width: 768px) 100vw, 300px"
-            className="bg-transparent"
-          />
-        )}
+      <div className="p-2">
+        <h2 className="text-xl inline font-bold">
+          {card.cardFields.values.firstName +
+            ' ' +
+            card.cardFields.values.middleName +
+            ' ' +
+            card.cardFields.values.lastName}
+        </h2>
+        <div
+          id="logo"
+          className="h-20 w-20  relative justify-self-end bg-transparent"
+        >
+          {card.cardDesign.values.logoUrl && (
+            <Image
+              src={card.cardDesign.values.logoUrl as string}
+              alt="logo"
+              fill
+              objectFit="contain"
+              sizes="(max-width: 768px) 100vw, 300px"
+              className="bg-transparent"
+            />
+          )}
+        </div>
+        <p>{card.cardFields.values.email}</p>
       </div>
-
-      <div className="col-span-2">
-        <p>{cardState.infosForm.cardId}</p>
-        <p>{cardState.contentForm.email}</p>
-      </div>
-      <h2 className="col-span-2 self-end font-bold">
-        {cardState.infosForm.url}
-      </h2>
-      <p>{cardState.designForm.backgroundColor}</p>
     </div>
   );
 };

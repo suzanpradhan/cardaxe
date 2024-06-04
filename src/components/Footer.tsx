@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <div className="bg-zinc-900 text-sm pt-12  flex flex-col gap-8 divide-y-2">
       <div className="max-w-6xl px-8 mx-auto flex flex-col gap-4">
-        <div className="flex justify-between gap-8 border-b-white border-b-1 pb-4">
+        <div className="flex justify-between gap-8 border-b-componentBgGrey border-b-1 pb-4 flex-wrap">
           <div className="grow shrink flex flex-col gap-3">
             <h2 className="text-white font-extrabold text-2xl">cardaxe.</h2>
             <p className=" text-white">
@@ -25,7 +25,7 @@ const Footer = () => {
           <List listItems={LIST1} />
           <List listItems={LIST2} />
         </div>
-        <p className="text-white">
+        <p className="text-white mb-4">
           Copyright @2023 CardAxe LLC. All Rights Reserved
         </p>
       </div>

@@ -1,9 +1,10 @@
-import './globals.css';
+import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Notification from '../components/Notification';
-import Providers from './Providers/providers';
 import 'react-toastify/dist/ReactToastify.css';
+import Notification from '../components/Notification';
+import Providers from '../core/redux/providers';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,9 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+    <html lang="en" className="">
+      <body className={clsx(inter.className, 'overflow-x-clip')}>
+        <Providers>
+          <>{children}</>
+        </Providers>
         <Notification />
       </body>
     </html>

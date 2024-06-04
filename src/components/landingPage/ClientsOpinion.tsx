@@ -20,11 +20,11 @@ const ClientsOpinion = ({
     <div
       className={clsx(
         isSelected && 'scale-150',
-        ' text-black flex flex-col gap-2 cursor-pointer border-2 px-3 py-2 rounded-lg text-',
+        'bg-white text-black flex flex-col items-center gap-2 cursor-pointer border-2 px-3 py-2 rounded-lg',
         'swiper-slide'
       )}
     >
-      <p className="text-left">{clientView}</p>
+      <p className="text-left text-ellipsis max-h-52">{clientView}</p>
       <div className={clsx('flex gap-2 pt-3', 'clientImageDescriptionClass')}>
         <div className="w-12 h-12 rounded-full relative">
           <Image
@@ -38,7 +38,7 @@ const ClientsOpinion = ({
         </div>
         <div className={clsx('text-left', 'clientDescriptionClass')}>
           <h4 className="font-bold">{clientName}</h4>
-          <p>{clientPosition}</p>
+          <p className="">{clientPosition}</p>
         </div>
       </div>
     </div>

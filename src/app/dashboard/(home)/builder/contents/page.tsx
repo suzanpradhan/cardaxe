@@ -1,82 +1,112 @@
 'use client';
-import { RootState } from '@/app/GlobalRedux/store';
-import { useUpdateContentsMutation } from '@/app/api/redux/api';
-import ButtonForm from '@/components/ButtonForm';
+
 import MyCardsContentForm1 from '@/components/myCards/MyCardsContentForm1';
 import MyCardsContentForm2 from '@/components/myCards/MyCardsContentForm2';
 import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
-import { camelToSnake } from '@/utils/generalFunctions';
-import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
-import { UseFormRegister, useForm } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
+import cardsApi from '@/module/cards/cardsApi';
+import { setErrors, updateContentForm } from '@/module/cards/cardSlice';
+
+import {
+  CardResponseType,
+  CardState,
+  CardTemplatesType,
+  ContentFormSchema,
+  ContentFormSchemaType,
+} from '@/module/cards/cardsType';
+import { useSearchParams } from 'next/navigation';
+import { ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { z } from 'zod';
-
-export type RegisterType = UseFormRegister<{
-  prefix: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  suffix: string;
-  bio: string;
-  phone: string;
-  website: string;
-  email: string;
-  // isDefault: boolean;
-  designation: string;
-  department: string;
-  company: string;
-}>;
-
-const ContentFormSchema = z.object({
-  prefix: z.string(),
-  firstName: z.string(),
-  middleName: z.string(),
-  lastName: z.string(),
-  suffix: z.string(),
-  bio: z.string(),
-  phone: z.string(),
-  website: z.string(),
-  email: z.string(),
-  // isDefault: z.boolean(),
-  designation: z.string(),
-  department: z.string(),
-  company: z.string(),
-});
-
-type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
 
 const ContentsPage = () => {
+  const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
   const cardState = useSelector((state: RootState) => state.card);
-  const defaultValues = cardState.contentForm;
-  const [updateContent] = useUpdateContentsMutation();
-  const { register, handleSubmit } = useForm<ContentFormSchemaType>({
-    defaultValues,
-    resolver: zodResolver(ContentFormSchema),
-  });
+  const cardId = searchParams.get('cardId');
+  const timeout = useTimeoutDispatch(500);
 
-  const submitData = async () => {
-    const newdata = camelToSnake(cardState.contentForm);
-    console.log(newdata);
-    const id = 1;
-    await updateContent({ id, ...newdata }).then((res) => console.log(res));
+  const card = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries[`getCard-${cardId}`]
+        ?.data as CardResponseType<CardTemplatesType>
+  );
+
+  useEffect(() => {
+    if (cardId) {
+      dispatch(cardsApi.endpoints.getCard.initiate(cardId));
+    }
+  }, [dispatch]);
+
+  const fieldPlaceHolder = card?.cardTemplate.defaultCardFields;
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    const updatedFormState: CardState<string>['cardFields']['values'] = {
+      ...cardState.cardFields.values,
+      [name]: value,
+    };
+    timeout<ContentFormSchemaType>(updateContentForm, updatedFormState);
+    const result =
+      ContentFormSchema.shape[name as keyof ContentFormSchemaType].safeParse(
+        value
+      );
+
+    if (!result.success) {
+      const error = result.error.format();
+      console.log(error);
+      dispatch(
+        setErrors({
+          formName: 'cardFields',
+          error: { ...cardState.cardFields.errors, [name]: error._errors },
+        })
+      );
+    } else {
+      const newError = Object.fromEntries(
+        Object.entries(cardState.cardFields.errors).filter(
+          ([key]) => key !== name
+        )
+      );
+      dispatch(
+        setErrors({
+          formName: 'cardFields',
+          error: newError,
+        })
+      );
+    }
   };
 
-  // console.log(errors);
-
   return (
-    <form onSubmit={handleSubmit(submitData)} className="flex flex-col gap-4">
-      <MyCardsContentForm1 register={register} />
-      <MyCardsContentForm2 register={register} />
-      <MyCardsContentForm3 register={register} />
-      {/* <InputComp
-        zSchemaName="isDefault"
-        inputCompType="switch"
-        inputLabel="Is Default?"
-        inputType="checkbox"
-        register={register}
-      /> */}
-      <ButtonForm label="submit" />
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        // formik.handleSubmit(e);
+      }}
+      className="flex flex-col gap-4"
+    >
+      <MyCardsContentForm1
+        // getFieldProps={formik.getFieldProps}
+        handleChange={(e) => handleChange(e)}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
+        fieldPlaceHolder={fieldPlaceHolder}
+      />
+      <MyCardsContentForm2
+        // getFieldProps={formik.getFieldProps}
+        handleChange={handleChange}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
+        fieldPlaceHolder={fieldPlaceHolder}
+      />
+      <MyCardsContentForm3
+        // getFieldProps={formik.getFieldProps}
+        handleChange={handleChange}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
+      />
     </form>
   );
 };
