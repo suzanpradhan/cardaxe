@@ -38,7 +38,7 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
 
   const processedHtml = template();
 
-  return <div className="w-full">{parse(processedHtml)}</div>;
+  return <div className="max-w-xl mb-4 flex">{parse(processedHtml)}</div>;
 };
 
 export default CardLayouts;

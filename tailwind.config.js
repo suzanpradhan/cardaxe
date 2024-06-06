@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      aspectRatio: {
+        rectangle: '9/6',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
