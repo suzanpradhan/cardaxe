@@ -16,11 +16,11 @@ import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import { updatedDiff } from 'deep-object-diff';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
+  const [toggle, setToggle] = useState(true);
   const session = useSession();
   const searchParams = useSearchParams();
   const cardId = searchParams.get('cardId');
@@ -93,47 +93,43 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState.cardDesign.values
     );
 
-    console.log(cardState.cardDesign.errors, cardState.cardFields.errors);
+    console.log(cardState);
 
-    console.log('id', card.cardFields.id);
-
-    console.log(updatedCardDesign);
-
-    if (
-      Object.keys(cardState.cardDesign.errors).length === 0 &&
-      Object.keys(cardState.cardFields.errors).length === 0 &&
-      cardId &&
-      session.data?.user?.id &&
-      updatedCardFields
-    ) {
-      submitresponse = dispatch(
-        cardsApi.endpoints.upDateCard.initiate({
-          cardId: cardId,
-          userId: session.data?.user?.id,
-          cardDesign: { ...updatedCardDesign, id: card.cardDesign.id },
-          cardFields: { ...updatedCardFields, id: card.cardFields.id },
-          cardTemplate: '1',
-          isDefault: cardState.isDefault ?? false,
-          isPublished: cardState.isPublished ?? false,
-        })
-      );
-      submitresponse
-        ?.then((res) => {
-          const errorMessage = (res as any).error;
-          if (errorMessage) {
-            toast.error(`Error:${errorMessage}`);
-            throw errorMessage;
-          }
-          toast.success('Successfully updated');
-          cardAction === 'create' &&
-            router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
-        })
-        .catch((err) => {
-          toast.error('Something went wrong');
-          console.log(err);
-          throw err;
-        });
-    }
+    // if (
+    //   Object.keys(cardState.cardDesign.errors).length === 0 &&
+    //   Object.keys(cardState.cardFields.errors).length === 0 &&
+    //   cardId &&
+    //   session.data?.user?.id &&
+    //   updatedCardFields
+    // ) {
+    //   submitresponse = dispatch(
+    //     cardsApi.endpoints.upDateCard.initiate({
+    //       cardId: cardId,
+    //       userId: session.data?.user?.id,
+    //       cardDesign: { ...updatedCardDesign, id: card.cardDesign.id },
+    //       cardFields: { ...updatedCardFields, id: card.cardFields.id },
+    //       cardTemplate: '1',
+    //       isDefault: cardState.isDefault ?? false,
+    //       isPublished: cardState.isPublished ?? false,
+    //     })
+    //   );
+    //   submitresponse
+    //     ?.then((res) => {
+    //       const errorMessage = (res as any).error;
+    //       if (errorMessage) {
+    //         toast.error(`Error:${errorMessage}`);
+    //         throw errorMessage;
+    //       }
+    //       toast.success('Successfully updated');
+    //       cardAction === 'create' &&
+    //         router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+    //     })
+    //     .catch((err) => {
+    //       toast.error('Something went wrong');
+    //       console.log(err);
+    //       throw err;
+    //     });
+    // }
   };
 
   const currentLayout = cardsTemplateList?.find(
@@ -143,22 +139,50 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="p-6 flex flex-col gap-6">
       <AppBar appBarLabel="My Personal Card">
-        <button className="w-28 bg-input rounded-lg p-2 ring-1 ring-gray-300">
+        <button
+          onClick={() => {
+            setToggle(!toggle);
+          }}
+          className={`w-28 lg:hidden  grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2 ${
+            toggle ? 'bg-input' : 'bg-blueTheme text-white'
+          }`}
+        >
+          Preview
+        </button>
+        <button className="w-28 bg-input grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2">
           Save Draft
         </button>
-
         <button
           onClick={handlePublish}
-          className="w-28 bg-blueTheme text-white rounded-lg shadow-lg shadow-blueBg"
+          className="w-28 bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
         >
           Publish
         </button>
       </AppBar>
-      <div className="flex gap-6">
+      <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
         <SideBarMyCards cardId={cardId} cardAction={cardAction} />
         <div className="basis-2/5 min-w-[100px]">{children}</div>
-        <div className="shrink">
+        <div className="shrink grow">
           <PreviewSection card={cardState} layout={currentLayout} />
+        </div>
+      </div>
+      <div className="bloc lg:hidden  gap-12">
+        <SideBarMyCards cardId={cardId} cardAction={cardAction} />
+        <div className="mt-5 relative">
+          <div
+            className={`absolute max-lg:w-[calc(100%-0.35rem)] duration-500 ${
+              toggle ? '' : '-translate-x-[calc(102%)]'
+            }`}
+          >
+            {children}
+          </div>
+          <div
+            className={`absolute duration-500 max-lg:w-[calc(100%-0.35rem)] max-sm:pb-16 ${
+              toggle ? 'translate-x-[calc(102%)]' : ''
+            }`}
+          >
+            <PreviewSection card={cardState} layout={currentLayout} />
+          </div>
         </div>
       </div>
     </div>

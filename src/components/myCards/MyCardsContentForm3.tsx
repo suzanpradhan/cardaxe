@@ -17,7 +17,11 @@ interface MyCardsContentForm3Props {
   errors: FormikErrors<ContentFormSchemaType>;
 }
 
-const INPUT_FEILDS: InputFieldProps[] = [
+const INPUT_FEILDS: InputFieldProps<
+  | React.ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLTextAreaElement>
+  | boolean
+>[] = [
   {
     inputCompType: 'normal',
     inputLabel: 'Title',
@@ -51,7 +55,16 @@ const MyCardsContentForm3 = ({
             key={index}
             // getFieldProps={getFieldProps}
             inputCompType={item.inputCompType}
-            handleChange={handleChange}
+            handleChange={
+              handleChange as
+                | ((
+                    e:
+                      | boolean
+                      | ChangeEvent<HTMLInputElement>
+                      | ChangeEvent<HTMLTextAreaElement>
+                  ) => void)
+                | undefined
+            }
             inputValue={
               values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
             }

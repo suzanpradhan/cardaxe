@@ -17,22 +17,22 @@ interface SideBarMyCardsProps {
 
 const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   {
-    icon: <DocumentText1 size="40" variant="Bulk" />,
+    icon: <DocumentText1 variant="Bulk" size={'auto'} />,
     name: 'Layouts',
     link: '',
   },
   {
-    icon: <Grid7 size="40" variant="Bulk" />,
+    icon: <Grid7 variant="Bulk" size={'auto'} />,
     name: 'Contents',
     link: 'contents',
   },
   {
-    icon: <Colorfilter size="40" variant="Bulk" />,
+    icon: <Colorfilter variant="Bulk" size={'auto'} />,
     name: 'Designs',
     link: 'designs',
   },
   {
-    icon: <BoxAdd size="40" variant="Bulk" />,
+    icon: <BoxAdd variant="Bulk" size={'auto'} />,
     name: 'Infos',
     link: 'infos',
   },
@@ -57,7 +57,7 @@ const SideBarMyCards = ({ cardId, cardAction }: SideBarMyCardsProps) => {
   }, [pathName]);
 
   return (
-    <div className="flex flex-col gap-4 h-full text-slate-600">
+    <div className="flex flex-row lg:flex-col text-sm lg:text-base lg:justify-start justify-between lg:gap-4 h-full text-slate-600">
       {MY_APP_SIDE_BAR_ELEMENTS.map((item, index) => (
         <Link
           href={`/dashboard/builder/${item.link}${
@@ -66,12 +66,12 @@ const SideBarMyCards = ({ cardId, cardAction }: SideBarMyCardsProps) => {
           key={index}
           // onClick={(e) => handleClick(e)}
           className={clsx(
-            'flex flex-col items-center h-24 justify-center rounded-md hover:text-blueTheme',
-            toggleTab !== index ? 'text-grayfont' : 'text-blueTheme bg-blueBg'
+            'flex lg:flex-col items-center basis-20 sm:flex-row flex-col lg:basis-auto  px-1 lg:h-24 py-2 justify-center rounded-md hover:text-blueTheme ',
+            toggleTab !== index ? 'text-grayfont' : 'text-blueTheme bg-blueBg '
           )}
         >
-          {item.icon}
-          <p>{item.name}</p>
+          <span className="lg:w-10 lg:h-10 w-8 h-8">{item.icon}</span>
+          <p className="pl-2 lg:pl-0">{item.name}</p>
         </Link>
       ))}
     </div>

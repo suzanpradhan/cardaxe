@@ -17,7 +17,11 @@ interface MyCardsContentForm2Props {
   fieldPlaceHolder: ContentFormSchemaType;
 }
 
-const INPUT_FEILDS: InputFieldProps[] = [
+const INPUT_FEILDS: InputFieldProps<
+  | React.ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLTextAreaElement>
+  | boolean
+>[] = [
   {
     inputLabel: 'Phone',
     zSchemaName: 'phone',
@@ -44,32 +48,50 @@ const MyCardsContentForm2 = ({
   return (
     <FormWrapper>
       <div className="flex flex-col gap-3">
-        {INPUT_FEILDS.map((item: InputFieldProps, index: number) => (
-          <InputComp
-            inputType="text"
-            // getFieldProps={getFieldProps}
-            inputCompType={item.inputCompType}
-            zSchemaName={item.zSchemaName}
-            inputLabel={item.inputLabel}
-            key={index}
-            placeholder={
-              fieldPlaceHolder?.[
-                item.zSchemaName as keyof ContentFormSchemaType
-              ]
-                ? ` ${
-                    fieldPlaceHolder[
-                      item.zSchemaName as keyof ContentFormSchemaType
-                    ]
-                  }`
-                : ''
-            }
-            handleChange={handleChange}
-            inputValue={
-              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
-            }
-            error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
-          />
-        ))}
+        {INPUT_FEILDS.map(
+          (
+            item: InputFieldProps<
+              | React.ChangeEvent<HTMLInputElement>
+              | ChangeEvent<HTMLTextAreaElement>
+              | boolean
+            >,
+            index: number
+          ) => (
+            <InputComp
+              inputType="text"
+              // getFieldProps={getFieldProps}
+              inputCompType={item.inputCompType}
+              zSchemaName={item.zSchemaName}
+              inputLabel={item.inputLabel}
+              key={index}
+              placeholder={
+                fieldPlaceHolder?.[
+                  item.zSchemaName as keyof ContentFormSchemaType
+                ]
+                  ? ` ${
+                      fieldPlaceHolder[
+                        item.zSchemaName as keyof ContentFormSchemaType
+                      ]
+                    }`
+                  : ''
+              }
+              handleChange={
+                handleChange as
+                  | ((
+                      e:
+                        | boolean
+                        | ChangeEvent<HTMLInputElement>
+                        | ChangeEvent<HTMLTextAreaElement>
+                    ) => void)
+                  | undefined
+              }
+              inputValue={
+                values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+              }
+              error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+            />
+          )
+        )}
       </div>
     </FormWrapper>
   );

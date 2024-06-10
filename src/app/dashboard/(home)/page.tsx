@@ -1,18 +1,28 @@
 'use client';
-import CardTempHome from '@/components/dashboard/CardTempHome';
 import UserProfileCard from '@/components/dashboard/UserProfileCard';
-import CardTemplate from '@/components/myCards/CardTemplate';
 import clsx from 'clsx';
 import { BoxAdd, PenAdd, ScanBarcode, Share } from 'iconsax-react';
-import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
 import { posts } from '@/app/module';
+import HomeCardTemplate from '@/components/dashboard/HomeCardTemplate';
 import HomeFeed from '@/components/dashboard/HomeFeed';
-import CardTempSide from '@/components/dashboard/CardTempSide';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import userApi from '@/module/user/userApi';
+import { UserType } from '@/module/user/userType';
+import { useEffect } from 'react';
 
 const DashboardPage = () => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(
+    (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
+  );
+
+  useEffect(() => {
+    dispatch(userApi.endpoints.getUser.initiate());
+  }, [dispatch]);
+
   const router = useRouter();
   const handleClick = () => {
     router.push('./changeCurrentPassword');
@@ -58,9 +68,9 @@ const DashboardPage = () => {
         ))}
       </div>
       <div className="flex-col gap-2 px-6 hidden lg:flex h-fit grow">
-        <UserProfileCard />
+        <UserProfileCard fullName={user?.fullname} />
         <h2 className="font-bold my-2">My Card</h2>
-        <CardTempSide />
+        <HomeCardTemplate userId={user?.id} />
         <div className="flex gap-2 my-3">{LINKS_ICONS.map((item) => item)}</div>
         <div className="flex flex-wrap gap-2 mt-4">
           {OPTIONS.map((item, index) => (

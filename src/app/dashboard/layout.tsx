@@ -23,23 +23,24 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   //   }
   // }, [session, router, status]);
   return (
-    <div>
+    <div className="h-screen overflow-hidden max-lg:mr-2">
       {/* {status === Status.loading && <section>Loading...</section>}
       {status === Status.authenticated && ( */}
-      <section className="sm:text-base text-base-mobile flex flex-col gap-2 sm:flex-row">
-        <div className="z-10 sm:h-screen sm:top-0 sm:shrink sm:sticky lg:basis-72 border-borderMain sm:border-r-1 bg-white border-b-8 pb-2 sm:border-b-0">
+      <section className="sm:text-base h-full text-base-mobile flex flex-col gap-2 sm:flex-row">
+        <div className="z-10 sm:h-screen sm:top-0 sm:shrink sm:sticky lg:basis-72  border-borderMain sm:border-r-1 bg-white border-b-8 pb-2 sm:border-b-0">
           <TitleText isSideBarComp />
-          <div className="px-2 sm:hidden">
-            <p className="sm:hidden font-bold text-3xl-mobile sm:text-3xl mb-2 ">
+          <div className="px-6 sm:hidden">
+            <p className="sm:hidden font-bold text-xl sm:text-3xl mb-2 ">
               Explore
             </p>
             <SearchInput greyBackground={false} requireFilter />
           </div>
           <Sidebar />
         </div>
-        <div className="sm:grow max-w-6xl sm:mx-auto">{children}</div>
+        <div className="sm:grow h-full max-w-6xl sm:mx-auto overflow-y-scroll overflow-x-hidden">
+          {children}
+        </div>
       </section>
-      {/* )} */}
     </div>
   );
 };

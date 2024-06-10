@@ -60,7 +60,7 @@ const RegisterationForm: React.FC = () => {
       if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
         console.log('regsister response', responseData);
       } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
-        router.push('/login');
+        router.push('/');
       }
     } catch (error) {
       console.log(error);

@@ -1,5 +1,7 @@
 'use client';
 
+import FormWrapper from '@/components/FormWrapper';
+import InputComp from '@/components/InputComp';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import { useAppDispatch } from '@/core/redux/clientStore';
@@ -7,8 +9,8 @@ import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
 import {
   setErrors,
+  updateDefaultCard,
   updateDesignForm,
-  updatePublishCard,
 } from '@/module/cards/cardSlice';
 import {
   CardState,
@@ -27,6 +29,8 @@ const Designpage = () => {
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
+
+    console.log(name, value);
 
     const filesToCache = files?.[0];
 
@@ -79,11 +83,10 @@ const Designpage = () => {
     }
   };
 
-  const handleIsDefaultChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value, type } = e.target as HTMLInputElement;
-    dispatch(updatePublishCard(value as unknown as boolean));
+  const handleIsDefaultChange = (e: boolean) => {
+    dispatch(updateDefaultCard(e));
+    console.log(cardState);
+    console.log(e);
   };
 
   return (
@@ -103,21 +106,21 @@ const Designpage = () => {
         handleChange={handleChange}
         values={cardState.cardDesign.values}
       />
-      {/* <FormWrapper>
+      <FormWrapper>
         <div className="flex flex-col gap-4">
           <InputComp
             zSchemaName="is_default"
             inputCompType="switch"
             inputLabel="Make default"
             inputType="checkbox"
-            handleChange={(e) => handleIsDefaultChange(e)}
-            inputValue={cardState.isDefault}
+            handleChange={(e) => handleIsDefaultChange(e as boolean)}
+            inputValue={cardState.isDefault ?? false}
             // error={cardState.card.errors}
             // getFieldProps={getFieldProps}
             // inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
           />
         </div>
-      </FormWrapper> */}
+      </FormWrapper>
     </form>
   );
 };

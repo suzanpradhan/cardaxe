@@ -17,17 +17,17 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="top-0">
-        <div className="w-full h-screen relative min-h-fitall  top-0 left-0 ">
+      <main className="">
+        <div className="w-full h-[calc(100vh+2rem)] relative min-h-fitall  top-0 left-0 ">
           <Image
             src={homepage_background}
             alt="image"
             fill
-            sizes="(max-width: 768px) 100vw, 700px -top-20 absolute"
+            sizes="(max-width: 768px) 100vw, 700px "
             className="-z-50"
             objectFit="cover"
           />
-          <div className="h-full lg:mx-auto mx-10 max-w-7xl flex flex-col z-10 items-center md:items-start">
+          <div className="h-full lg:mx-auto mx-10 pt-20 max-w-7xl flex flex-col z-10 items-center md:items-start">
             <HeadingWithText
               headingText="Lorem ipsum dolor sit amet consectetur adipisicing elit."
               paragraphText="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit."

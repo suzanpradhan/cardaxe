@@ -1,7 +1,31 @@
+'use client';
+
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import cardsApi from '@/module/cards/cardsApi';
+import { CardTemplatesType } from '@/module/cards/cardsType';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import rift_logo from '../../../public/facebook_image.png';
 
-const CardTempSide = () => {
+interface HomeCardTemplateProps {
+  userId: number;
+}
+
+const HomeCardTemplate = ({ userId }: HomeCardTemplateProps) => {
+  const dispatch = useAppDispatch();
+  const defaultCard = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries[`getDefaultCard-${userId}`]
+        ?.data as CardTemplatesType
+  );
+
+  useEffect(() => {
+    if (userId)
+      dispatch(cardsApi.endpoints.getDefaultCard.initiate(userId.toString()));
+  }, [dispatch]);
+
+  console.log(defaultCard);
   return (
     <div className="w-full h-56 bg-[#01ff7b] rounded-lg p-4 ">
       <div className="relative w-20 h-20 z-10">
@@ -29,4 +53,4 @@ const CardTempSide = () => {
   );
 };
 
-export default CardTempSide;
+export default HomeCardTemplate;

@@ -1,4 +1,4 @@
-import CardTempSide from '../dashboard/CardTempSide';
+import CardTempSide from '../dashboard/HomeCardTemplate';
 
 type ManageMemberTabCompsPropsType = {
   activeTab: string;
@@ -7,7 +7,7 @@ type ManageMemberTabCompsPropsType = {
 const ProfileTabComp = () => {
   return (
     <div className="flex flex-col gap-2">
-      <CardTempSide />
+      <CardTempSide userId={1} />
       {/* <ProfileDescription />
       <ProfileDetails isTeamComp={false} /> */}
     </div>

@@ -54,7 +54,7 @@ const MyCardsPage = () => {
       <AppBar appBarLabel="My Cards">
         <button
           onClick={() => hanldeCreateCard()}
-          className="px-5 bg-blueTheme text-white rounded-lg shadow-lg shadow-blueBg"
+          className="basis-60 shrink bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
         >
           Create New card
         </button>

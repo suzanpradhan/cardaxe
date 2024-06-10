@@ -67,10 +67,10 @@ export const cardSlice = createSlice({
     ) => {
       state.cardDesign.values = { ...action.payload };
     },
-    updatePublishCard: (
+    updateDefaultCard: (
       state, action: PayloadAction<boolean>
     ) => {
-      state = { ...state, isDefault: action.payload }
+      state.isDefault = action.payload
     },
     updateCardTemplate: (
       state, action: PayloadAction<string>
@@ -121,7 +121,7 @@ export const cardSlice = createSlice({
 export const {
   updateContentForm,
   updateDesignForm,
-  updatePublishCard,
+  updateDefaultCard,
   updateCardTemplate,
   setErrors,
   validateForms,

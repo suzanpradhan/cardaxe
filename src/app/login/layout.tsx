@@ -19,10 +19,10 @@ const LoginLayout = ({
     }
   }, [status]);
 
-  // if (status === 'authenticated') {
-  //   router.push('./dashboard');
-  //   return;
-  // }
+  if (status === 'authenticated') {
+    router.push('./dashboard');
+    return;
+  }
 
   return (
     <section>

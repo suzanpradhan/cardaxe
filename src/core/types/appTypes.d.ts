@@ -1,7 +1,7 @@
 import { FieldConfig, FieldInputProps } from 'formik';
 import { ChangeEvent } from 'react';
 
-export type InputFieldProps = {
+export type InputFieldProps<T> = {
   getFieldProps?: (
     nameOrOptions: string | FieldConfig<any>
   ) => FieldInputProps<any>;
@@ -11,7 +11,7 @@ export type InputFieldProps = {
   inputValue?: string | number | boolean;
   error?: string
   // eslint-disable-next-line no-unused-vars
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | boolean) => void
   inputCompType?:
   | 'select'
   | 'textArea'

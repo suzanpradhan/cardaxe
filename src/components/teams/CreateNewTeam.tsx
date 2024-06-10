@@ -1,6 +1,7 @@
 import InputComp from '../InputComp';
 
 import { InputFieldProps } from '@/core/types/appTypes';
+import { ChangeEvent } from 'react';
 import { z } from 'zod';
 
 const ACCEPTED_IMAGE_TYPES = [
@@ -27,7 +28,11 @@ const NewTeamSchema = z.object({
 
 type NewTeamSchemaType = z.infer<typeof NewTeamSchema>;
 
-const INPUT_FEILDS: InputFieldProps[] = [
+const INPUT_FEILDS: InputFieldProps<
+  | React.ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLTextAreaElement>
+  | boolean
+>[] = [
   {
     inputCompType: 'normal',
     inputLabel: 'Team or Organization Name',

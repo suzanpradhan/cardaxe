@@ -30,7 +30,16 @@ const MyCardsDesignForm = ({
           inputLabel="Background Color"
           className="inline"
           inputValue={values['backgroundColor']}
-          handleChange={handleChange}
+          handleChange={
+            handleChange as
+              | ((
+                  e:
+                    | boolean
+                    | ChangeEvent<HTMLInputElement>
+                    | ChangeEvent<HTMLTextAreaElement>
+                ) => void)
+              | undefined
+          }
           error={errors['backgroundColor']}
           disableInput
         />
@@ -40,7 +49,16 @@ const MyCardsDesignForm = ({
             inputCompType="color"
             inputType="color"
             inputValue={values['backgroundColor']}
-            handleChange={handleChange}
+            handleChange={
+              handleChange as
+                | ((
+                    e:
+                      | boolean
+                      | ChangeEvent<HTMLInputElement>
+                      | ChangeEvent<HTMLTextAreaElement>
+                  ) => void)
+                | undefined
+            }
             error={errors['backgroundColor']}
           />
         </div>
@@ -53,7 +71,16 @@ const MyCardsDesignForm = ({
         placeholder="Choose Image"
         inputValue={values['backgroundImage']}
         error={errors['backgroundImage']}
-        handleChange={handleChange}
+        handleChange={
+          handleChange as
+            | ((
+                e:
+                  | boolean
+                  | ChangeEvent<HTMLInputElement>
+                  | ChangeEvent<HTMLTextAreaElement>
+              ) => void)
+            | undefined
+        }
       />
       <InputComp
         inputCompType="file"
@@ -63,7 +90,16 @@ const MyCardsDesignForm = ({
         placeholder="Choose Image"
         // getFieldProps={getFieldProps}
         inputValue={values['logoUrl']}
-        handleChange={handleChange}
+        handleChange={
+          handleChange as
+            | ((
+                e:
+                  | boolean
+                  | ChangeEvent<HTMLInputElement>
+                  | ChangeEvent<HTMLTextAreaElement>
+              ) => void)
+            | undefined
+        }
         error={errors['logoUrl']}
       />
     </FormWrapper>
