@@ -1,4 +1,4 @@
-import CardTempSide from '@/components/dashboard/CardTempSide';
+import CardTempSide from '@/components/dashboard/HomeCardTemplate';
 import TeamCard from '@/components/teams/TeamCard';
 import { BoxAdd, Edit, Eye, MouseSquare, Scanning, Share } from 'iconsax-react';
 
@@ -45,7 +45,7 @@ const page = () => {
       </div>
       <div className="grid gap-4 shrink h-min basis-120 p-6 rounded-xl border-1 border-componentBgGrey">
         <div className="shadow-lg rounded-md">
-          <CardTempSide />
+          <CardTempSide userId={1} />
         </div>
         <div>
           <p className="flex justify-between">

@@ -8,7 +8,7 @@ export const baseApi = createApi({
     baseUrl: `${apiPaths.baseUrl}`,
     prepareHeaders: async (headers) => await setHeaders(headers),
   }),
-  tagTypes: ['CardsList', 'Card', 'CardLayout', 'CardLayoutList'],
+  tagTypes: ['CardsList', 'Card', 'CardLayout', 'CardLayoutList', 'User'],
   endpoints: () => ({}),
 
 });

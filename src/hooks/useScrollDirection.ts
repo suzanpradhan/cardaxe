@@ -24,7 +24,7 @@ export function useScroll(): ScrollInfo {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrollInfo.position]);
+  }, [scrollInfo]);
 
   return scrollInfo;
 }

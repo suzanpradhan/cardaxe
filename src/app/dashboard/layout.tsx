@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   //   }
   // }, [session, router, status]);
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden max-lg:mr-2">
       {/* {status === Status.loading && <section>Loading...</section>}
       {status === Status.authenticated && ( */}
       <section className="sm:text-base h-full text-base-mobile flex flex-col gap-2 sm:flex-row">

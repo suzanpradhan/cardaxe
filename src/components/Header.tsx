@@ -25,12 +25,14 @@ const Header = () => {
     handleScroll();
   }, [scrollPosition]);
 
+  console.log(scrollPosition, scrollDirection);
+
   return (
     <header
       className={clsx(
-        ' z-10  transition-all duration-500 backdrop-blur-xl',
+        ' z-10  transition-all sticky duration-500 backdrop-blur-xl',
         scrollDirection === 'down' ? '-top-24' : 'top-0',
-        scrollPosition <= 60 ? 'absolute w-full' : 'sticky'
+        scrollPosition <= 40 ? '-mt-24' : ''
       )}
     >
       <div className="max-w-7xl mx-auto flex justify-between  items-center">

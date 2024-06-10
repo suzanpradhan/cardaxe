@@ -18,7 +18,6 @@ import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(true);
@@ -94,47 +93,43 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState.cardDesign.values
     );
 
-    console.log(cardState.cardDesign.errors, cardState.cardFields.errors);
+    console.log(cardState);
 
-    console.log('id', card.cardFields.id);
-
-    console.log(updatedCardDesign);
-
-    if (
-      Object.keys(cardState.cardDesign.errors).length === 0 &&
-      Object.keys(cardState.cardFields.errors).length === 0 &&
-      cardId &&
-      session.data?.user?.id &&
-      updatedCardFields
-    ) {
-      submitresponse = dispatch(
-        cardsApi.endpoints.upDateCard.initiate({
-          cardId: cardId,
-          userId: session.data?.user?.id,
-          cardDesign: { ...updatedCardDesign, id: card.cardDesign.id },
-          cardFields: { ...updatedCardFields, id: card.cardFields.id },
-          cardTemplate: '1',
-          isDefault: cardState.isDefault ?? false,
-          isPublished: cardState.isPublished ?? false,
-        })
-      );
-      submitresponse
-        ?.then((res) => {
-          const errorMessage = (res as any).error;
-          if (errorMessage) {
-            toast.error(`Error:${errorMessage}`);
-            throw errorMessage;
-          }
-          toast.success('Successfully updated');
-          cardAction === 'create' &&
-            router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
-        })
-        .catch((err) => {
-          toast.error('Something went wrong');
-          console.log(err);
-          throw err;
-        });
-    }
+    // if (
+    //   Object.keys(cardState.cardDesign.errors).length === 0 &&
+    //   Object.keys(cardState.cardFields.errors).length === 0 &&
+    //   cardId &&
+    //   session.data?.user?.id &&
+    //   updatedCardFields
+    // ) {
+    //   submitresponse = dispatch(
+    //     cardsApi.endpoints.upDateCard.initiate({
+    //       cardId: cardId,
+    //       userId: session.data?.user?.id,
+    //       cardDesign: { ...updatedCardDesign, id: card.cardDesign.id },
+    //       cardFields: { ...updatedCardFields, id: card.cardFields.id },
+    //       cardTemplate: '1',
+    //       isDefault: cardState.isDefault ?? false,
+    //       isPublished: cardState.isPublished ?? false,
+    //     })
+    //   );
+    //   submitresponse
+    //     ?.then((res) => {
+    //       const errorMessage = (res as any).error;
+    //       if (errorMessage) {
+    //         toast.error(`Error:${errorMessage}`);
+    //         throw errorMessage;
+    //       }
+    //       toast.success('Successfully updated');
+    //       cardAction === 'create' &&
+    //         router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+    //     })
+    //     .catch((err) => {
+    //       toast.error('Something went wrong');
+    //       console.log(err);
+    //       throw err;
+    //     });
+    // }
   };
 
   const currentLayout = cardsTemplateList?.find(
@@ -148,7 +143,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           onClick={() => {
             setToggle(!toggle);
           }}
-          className="w-28 lg:hidden bg-input grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2"
+          className={`w-28 lg:hidden  grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2 ${
+            toggle ? 'bg-input' : 'bg-blueTheme text-white'
+          }`}
         >
           Preview
         </button>
@@ -162,10 +159,10 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           Publish
         </button>
       </AppBar>
-      <div className="hidden lg:flex-row flex-col gap-6 lg:flex">
+      <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
         <SideBarMyCards cardId={cardId} cardAction={cardAction} />
         <div className="basis-2/5 min-w-[100px]">{children}</div>
-        <div className="shrink">
+        <div className="shrink grow">
           <PreviewSection card={cardState} layout={currentLayout} />
         </div>
       </div>
