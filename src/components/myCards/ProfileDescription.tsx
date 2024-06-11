@@ -3,6 +3,7 @@ import {
   DesignFormUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import { Flash, Heart, MoreCircle, Share } from 'iconsax-react';
+import Image from 'next/image';
 import ButtonRounded from '../ButtonRounded';
 import { VariableValueType } from '../CardLayouts';
 
@@ -35,22 +36,39 @@ const PROFILE_DETAILS_BUTTONS = [
 ];
 
 const ProfileDescription = ({
-  card,
+  variableValues,
 }: {
-  card: ContentFormUpdateSchemaType &
+  variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
     VariableValueType;
 }) => {
+  console.log(variableValues.logoUrl);
   return (
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
-        <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full"></div>
-        <div className="flex flex-col h-full justify-center gap-1">
+        <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full">
+          {variableValues.logoUrl &&
+          !variableValues.logoUrl?.endsWith('undefined') ? (
+            <Image
+              src={variableValues.logoUrl}
+              alt="image"
+              fill
+              sizes="(max-width: 768px) 100vw, 700px"
+              objectFit="cover "
+              className="-z-50"
+            />
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="flex flex-col h-ustify-center gap-1">
           <h1 className="sm:text-2xl text-lg font-extrabold ">
-            {card?.firstName} {card?.middleName} {card?.lastName}
+            {variableValues?.firstName} {variableValues?.middleName}{' '}
+            {variableValues?.lastName}
           </h1>
           <p>
-            Istanbul, Turkey | {card?.designation} - {card?.company}
+            Istanbul, Turkey | {variableValues?.designation} -{' '}
+            {variableValues?.company}
           </p>
           <div className="flex gap-2">
             <ButtonRounded
@@ -58,11 +76,10 @@ const ProfileDescription = ({
               isHeader={false}
               href="http://localhost:3000/dashboard/myCards/builder/contents"
             />
-            {/* {PROFILE_DETAILS_BUTTONS.map((item) => item)} */}
           </div>
         </div>
       </div>
-      <p>{card?.bio}</p>
+      <p>{variableValues?.bio}</p>
     </div>
   );
 };

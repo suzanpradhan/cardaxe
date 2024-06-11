@@ -74,7 +74,8 @@ const MyCardsPage = () => {
                     variableValues={{
                       ...card.cardFields,
                       ...card.cardDesign,
-                      imageUrl: imageUrl,
+                      logoUrl: `${apiPaths.serverUrl}${card.cardDesign.logo}`,
+                      backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
                     }}
                   />
                 </button>

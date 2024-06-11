@@ -7,7 +7,8 @@ import Handlebars from 'handlebars';
 import parse from 'html-react-parser';
 
 export interface VariableValueType {
-  imageUrl?: string;
+  logoUrl?: string;
+  backgroundUrl?: string;
 }
 
 type HandlebarsTemplateFunction = () => string;

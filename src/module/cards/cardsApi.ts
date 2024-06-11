@@ -87,9 +87,8 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
-    upDateCard: builder.mutation<any, UpdateCardParams & CardResponseType<string>>({
+    upDateCard: builder.mutation<any, UpdateCardParams<string>>({
       query: ({ userId, cardId, ...payload }) => {
-        let bgImage;
         const fecthCachedImage = async (name: string) => {
           const cache = await caches.open('filesCache');
           const response = await cache.match(name);
@@ -98,7 +97,6 @@ const cardsApi = baseApi.injectEndpoints({
           return blob;
         }
         const formData = new FormData();
-        // let bgImageBlob = payload.cardDesign.backgroundImage ? fetch(URL(payload.cardDesign.backgroundImage)).then(r => r.blob()) : undefined;
         if (payload.cardFields.id) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.prefix) formData.append('card_fields.prefix', payload.cardFields.prefix)
         if (payload.cardFields.firstName) formData.append('card_fields.first_name', payload.cardFields.firstName)
@@ -115,8 +113,8 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.id) formData.append('card_design.id', payload.cardDesign.id.toString())
         if (payload.cardDesign.backgroundColor) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
         if (payload.cardDesign.logo) formData.append('card_design.logo', payload.cardDesign.logo)
-        fecthCachedImage('backgroundImage').then((response) => { console.log(response); if (response) formData.append('card_design.background_image', new File([response], 'filename.png')) });
-        if (bgImage) formData.append('card_design.background_image', bgImage)
+        fecthCachedImage('backgroundImage').then((response) => { if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) } });
+        fecthCachedImage('logo').then((response) => { console.log(response); if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())

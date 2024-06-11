@@ -15,9 +15,15 @@ export type CardTemplatesType = {
   defaultCardDesign: DesignFromSchemaType
 };
 
-export type UpdateCardParams = {
+export type UpdateCardParams<T> = {
   userId: string;
   cardId: string;
+  cardTemplate: T;
+  cardFields: ContentFormUpdateSchemaType,
+  cardDesign: DesignFormUpdateSchemaType,
+  isPublished: boolean,
+  isDefault: boolean,
+
 }
 
 export type InfosFormStateType = {
@@ -81,7 +87,6 @@ export const ContentFormUpdateSchema = ContentFormSchema.extend({
   bio: z.string().pipe(nonempty).optional(),
   phone: z.string().length(10).optional(),
   email: z.string().email().optional(),
-  // isDefault: z.boolean(),
   designation: z.string().pipe(nonempty).optional(),
   department: z.string().pipe(nonempty).optional(),
   company: z.string().pipe(nonempty).optional(),
