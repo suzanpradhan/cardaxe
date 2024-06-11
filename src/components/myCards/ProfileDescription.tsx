@@ -1,6 +1,10 @@
-import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
+import {
+  ContentFormUpdateSchemaType,
+  DesignFormUpdateSchemaType,
+} from '@/module/cards/cardsType';
 import { Flash, Heart, MoreCircle, Share } from 'iconsax-react';
 import ButtonRounded from '../ButtonRounded';
+import { VariableValueType } from '../CardLayouts';
 
 const buttonLabel = (
   <div className="flex flex-nowrap">
@@ -33,7 +37,9 @@ const PROFILE_DETAILS_BUTTONS = [
 const ProfileDescription = ({
   card,
 }: {
-  card: CardState<CardTemplatesType | string>;
+  card: ContentFormUpdateSchemaType &
+    DesignFormUpdateSchemaType &
+    VariableValueType;
 }) => {
   return (
     <div className="grid gap-4">
@@ -41,13 +47,10 @@ const ProfileDescription = ({
         <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full"></div>
         <div className="flex flex-col h-full justify-center gap-1">
           <h1 className="sm:text-2xl text-lg font-extrabold ">
-            {card.cardFields.values.firstName}{' '}
-            {card.cardFields.values.middleName}{' '}
-            {card.cardFields.values.lastName}
+            {card?.firstName} {card?.middleName} {card?.lastName}
           </h1>
           <p>
-            Istanbul, Turkey | {card.cardFields.values.designation} -{' '}
-            {card.cardFields.values.company}
+            Istanbul, Turkey | {card?.designation} - {card?.company}
           </p>
           <div className="flex gap-2">
             <ButtonRounded
@@ -59,7 +62,7 @@ const ProfileDescription = ({
           </div>
         </div>
       </div>
-      <p>{card.cardFields.values.bio}</p>
+      <p>{card?.bio}</p>
     </div>
   );
 };

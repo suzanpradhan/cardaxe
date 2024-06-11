@@ -34,8 +34,8 @@ const LayoutPage = () => {
                 htmlSource={card.htmlCode}
                 variableValues={{
                   ...card.defaultCardFields,
-                  ...cardState.cardDesign.values,
-                  imageUrl: imageUrl,
+                  ...card.defaultCardDesign,
+                  imageUrl: card.defaultCardDesign.logo,
                 }}
               />
             )}

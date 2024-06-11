@@ -6,7 +6,7 @@ import {
 import Handlebars from 'handlebars';
 import parse from 'html-react-parser';
 
-interface VariableValueType {
+export interface VariableValueType {
   imageUrl?: string;
 }
 

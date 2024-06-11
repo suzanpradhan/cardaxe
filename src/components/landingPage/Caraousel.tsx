@@ -63,19 +63,7 @@ const Caraousel = () => {
         breakpoints={breakpoints}
         className="w-full m-8 mt-12"
         ref={swiperRef}
-        onSlideChange={() => {
-          // swiperRef.current &&
-          //   toggleIsBeginning(swiperRef.current?.swiper.isBeginning);
-          // swiperRef.current && toggleIsEnd(swiperRef.current?.swiper.isEnd);
-          // if (!swiperRef.current?.swiper.isBeginning) {
-          //   toggleIsBeginning(false);
-          // } else if (!swiperRef.current?.swiper.isEnd) {
-          //   toggleIsEnd(false);
-          // } else {
-          //   toggleIsBeginning(true);
-          //   toggleIsEnd(true);
-          // }
-        }}
+        onSlideChange={() => {}}
       >
         {clientOpinion.map((opinion, index) => (
           <SwiperSlide key={index} zoom={true}>

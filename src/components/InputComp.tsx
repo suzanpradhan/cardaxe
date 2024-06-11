@@ -62,7 +62,8 @@ const InputComp = ({
                 onChange={(e) => handleChange?.(e)}
                 {...getFieldProps?.(zSchemaName)}
                 id={zSchemaName}
-                value={inputValue as string}
+                placeholder={placeholder}
+                defaultValue={inputValue as string}
                 className={clsx(
                   'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
                   error ? 'border-redError' : 'border-borderMain'
@@ -195,6 +196,7 @@ const InputComp = ({
             id={zSchemaName}
             type={inputType}
             placeholder={placeholder}
+            defaultValue={inputValue as string}
             className="h-full w-full focus:outline-1 focus:outline-blueTheme"
             {...getFieldProps?.(zSchemaName)}
             onChange={(e) => handleChange?.(e)}

@@ -18,7 +18,7 @@ interface ValidateFieldActionType {
 }
 
 
-const initialState: CardState<string> = {
+export const initialState: CardState<string> = {
 
   cardFields: {
     values: {
@@ -39,9 +39,9 @@ const initialState: CardState<string> = {
   },
   cardDesign: {
     values: {
-      backgroundColor: '#f23f37',
+      backgroundColor: '',
       backgroundImage: undefined,
-      logoUrl: '',
+      logo: undefined,
       showSocialIcons: false,
       showLogo: false,
       darkMode: false,
