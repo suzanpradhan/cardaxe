@@ -83,26 +83,22 @@ const ContentsPage = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        // formik.handleSubmit(e);
       }}
       className="flex flex-col gap-4"
     >
       <MyCardsContentForm1
-        // getFieldProps={formik.getFieldProps}
         handleChange={(e) => handleChange(e)}
         values={cardState.cardFields.values}
         errors={cardState.cardFields.errors}
         fieldPlaceHolder={fieldPlaceHolder}
       />
       <MyCardsContentForm2
-        // getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={cardState.cardFields.values}
         errors={cardState.cardFields.errors}
         fieldPlaceHolder={fieldPlaceHolder}
       />
       <MyCardsContentForm3
-        // getFieldProps={formik.getFieldProps}
         handleChange={handleChange}
         values={cardState.cardFields.values}
         errors={cardState.cardFields.errors}

@@ -33,9 +33,9 @@ const CardTemplate = ({
           id="logo"
           className="h-20 w-20  relative justify-self-end bg-transparent"
         >
-          {card.cardDesign.values.logoUrl && (
+          {card.cardDesign.values.logo && (
             <Image
-              src={card.cardDesign.values.logoUrl as string}
+              src={card.cardDesign.values.logo as string}
               alt="logo"
               fill
               objectFit="contain"

@@ -59,7 +59,7 @@ const MyCardsPage = () => {
           Create New card
         </button>
       </AppBar>
-      <div className="flex flex-col gap-5 my-10 w-96">
+      <div className="flex flex-col gap-5 my-10 max-w-md">
         {cardsList?.map((card, index) => {
           const imageUrl = `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`;
           return (
@@ -74,7 +74,8 @@ const MyCardsPage = () => {
                     variableValues={{
                       ...card.cardFields,
                       ...card.cardDesign,
-                      imageUrl: imageUrl,
+                      logoUrl: `${apiPaths.serverUrl}${card.cardDesign.logo}`,
+                      backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
                     }}
                   />
                 </button>

@@ -1,44 +1,33 @@
-import { RootState } from '@/core/redux/store';
-import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
-import { useSelector } from 'react-redux';
-import CardLayouts from '../CardLayouts';
+import {
+  CardTemplatesType,
+  ContentFormUpdateSchemaType,
+  DesignFormUpdateSchemaType,
+} from '@/module/cards/cardsType';
+import CardLayouts, { VariableValueType } from '../CardLayouts';
 import FormWrapper from '../FormWrapper';
 import ProfileDescription from './ProfileDescription';
 import ProfileDetails from './ProfileDetails';
 
 const PreviewSection = ({
-  card,
   layout,
+  variableValues,
 }: {
-  card: CardState<CardTemplatesType | string>;
   layout: CardTemplatesType | undefined;
+  variableValues: ContentFormUpdateSchemaType &
+    DesignFormUpdateSchemaType &
+    VariableValueType;
 }) => {
-  const cardState = useSelector((state: RootState) => state.card);
-  console.log(cardState.cardDesign.values.backgroundImage);
   return (
     <FormWrapper className="bg-white mx-auto">
       <div className="flex flex-col">
-        {layout?.htmlCode &&
-          (cardState.cardDesign.values.backgroundImage?.length != 0 ? (
-            <CardLayouts
-              htmlSource={layout.htmlCode}
-              variableValues={{
-                ...card.cardFields.values,
-                ...card.cardDesign.values,
-                imageUrl: card.cardDesign.values.backgroundImage,
-              }}
-            />
-          ) : (
-            <CardLayouts
-              htmlSource={layout.htmlCode}
-              variableValues={{
-                ...card.cardFields.values,
-                ...card.cardDesign.values,
-              }}
-            />
-          ))}
-        <ProfileDescription card={card} />
-        <ProfileDetails card={card} isTeamComp={false} />
+        {layout?.htmlCode && (
+          <CardLayouts
+            htmlSource={layout.htmlCode}
+            variableValues={variableValues}
+          />
+        )}
+        <ProfileDescription variableValues={variableValues} />
+        <ProfileDetails cardValues={variableValues} isTeamComp={false} />
       </div>
     </FormWrapper>
   );

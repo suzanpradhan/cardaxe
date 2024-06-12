@@ -1,5 +1,9 @@
-import { CardState, CardTemplatesType } from '@/module/cards/cardsType';
+import {
+  ContentFormUpdateSchemaType,
+  DesignFormUpdateSchemaType,
+} from '@/module/cards/cardsType';
 import { Call, Location, Send2, Sms } from 'iconsax-react';
+import { VariableValueType } from '../CardLayouts';
 import HeadingTitles from '../HeadingTitles';
 
 const ICON_SIZE = '32';
@@ -25,16 +29,18 @@ const CONTACT_INFO = [
 ];
 
 const ContactInfo = ({
-  cardFields,
+  cardValues,
   isTeamComp,
 }: {
-  cardFields: CardState<CardTemplatesType>['cardFields'];
+  cardValues: ContentFormUpdateSchemaType &
+    DesignFormUpdateSchemaType &
+    VariableValueType;
   isTeamComp: boolean;
 }) => {
   const cardFielddDetails = [
-    cardFields?.values.phone,
-    cardFields?.values.email,
-    cardFields?.values.website,
+    cardValues.phone,
+    cardValues.email,
+    cardValues.website,
     undefined,
   ];
   const cardInfoWithDetails = CONTACT_INFO.map((item, index) => {

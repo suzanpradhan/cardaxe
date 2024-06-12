@@ -30,7 +30,7 @@ const Designpage = () => {
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
 
-    console.log(name, value);
+    console.log(name, value, files);
 
     const filesToCache = files?.[0];
 
@@ -76,7 +76,7 @@ const Designpage = () => {
       );
       dispatch(
         setErrors({
-          formName: 'cardFields',
+          formName: 'cardDesign',
           error: newError,
         })
       );

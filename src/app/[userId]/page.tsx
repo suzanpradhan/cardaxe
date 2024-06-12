@@ -1,3 +1,4 @@
+import PreviewSection from '@/components/myCards/PreviewSection';
 import { apiPaths } from '@/core/api/apiConstants';
 import { snakeToCamel } from '@/core/utils/generalFunctions';
 import { notFound } from 'next/navigation';
@@ -16,11 +17,21 @@ const page = async (props: any) => {
     );
     const response = await res.json();
     const defaultCard = snakeToCamel(response);
+    console.log(defaultCard);
+
+    const variableValues = {
+      ...defaultCard.cardFields,
+      ...defaultCard.cardDesign,
+      logoUrl: defaultCard.cardDesign.logoUrl,
+    };
 
     if (defaultCard) {
       return (
         <div className="bg-componentBgGrey -z-20">
-          {/* <PreviewSection card={defaultCard} layout={}/> */}
+          <PreviewSection
+            variableValues={variableValues}
+            layout={defaultCard.cardTemplate}
+          />
         </div>
       );
     } else {

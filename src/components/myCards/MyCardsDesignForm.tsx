@@ -85,11 +85,11 @@ const MyCardsDesignForm = ({
       <InputComp
         inputCompType="file"
         inputType="file"
-        zSchemaName="logoUrl"
+        zSchemaName="logo"
         inputLabel="Logo"
         placeholder="Choose Image"
         // getFieldProps={getFieldProps}
-        inputValue={values['logoUrl']}
+        inputValue={values['logo']}
         handleChange={
           handleChange as
             | ((
@@ -100,7 +100,7 @@ const MyCardsDesignForm = ({
               ) => void)
             | undefined
         }
-        error={errors['logoUrl']}
+        error={errors['logo']}
       />
     </FormWrapper>
   );

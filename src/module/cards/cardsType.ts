@@ -12,11 +12,18 @@ export type CardTemplatesType = {
     name: string;
   };
   defaultCardFields: ContentFormSchemaType
+  defaultCardDesign: DesignFromSchemaType
 };
 
-export type UpdateCardParams = {
+export type UpdateCardParams<T> = {
   userId: string;
   cardId: string;
+  cardTemplate: T;
+  cardFields: ContentFormUpdateSchemaType,
+  cardDesign: DesignFormUpdateSchemaType,
+  isPublished: boolean,
+  isDefault: boolean,
+
 }
 
 export type InfosFormStateType = {
@@ -29,10 +36,11 @@ export type ErrorType = { errors: Record<string, string> };
 export type CardResponseType<T> = {
   id?: number;
   cardTemplate: T;
-  cardFields: ContentFormUpdateSchemaType,
-  cardDesign: DesignFormUpdateSchemaType,
+  cardFields: ContentFormSchemaType,
+  cardDesign: DesignFromSchemaType,
   isPublished: boolean,
   isDefault: boolean,
+  user?: string
 }
 
 export type CardState<T> = {
@@ -57,16 +65,15 @@ export type UpdateCardState<T> = {
 
 export const ContentFormSchema = z.object({
   id: z.number().optional(),
-  prefix: z.string().pipe(nonempty),
+  prefix: z.string().optional(),
   firstName: z.string().pipe(nonempty),
   middleName: z.string().optional(),
   lastName: z.string().pipe(nonempty),
-  suffix: z.string().pipe(nonempty),
+  suffix: z.string().optional(),
   bio: z.string().optional(),
   phone: z.string().length(10),
   website: z.string().optional(),
   email: z.string().email(),
-  // isDefault: z.boolean(),
   designation: z.string().optional(),
   department: z.string().optional(),
   company: z.string().optional(),
@@ -80,7 +87,6 @@ export const ContentFormUpdateSchema = ContentFormSchema.extend({
   bio: z.string().pipe(nonempty).optional(),
   phone: z.string().length(10).optional(),
   email: z.string().email().optional(),
-  // isDefault: z.boolean(),
   designation: z.string().pipe(nonempty).optional(),
   department: z.string().pipe(nonempty).optional(),
   company: z.string().pipe(nonempty).optional(),
@@ -90,7 +96,7 @@ export const DesignFormSchema = z.object({
   id: z.number().optional(),
   backgroundColor: z.string().pipe(nonempty),
   backgroundImage: z.string().optional(),
-  logoUrl: z.string().optional(),
+  logo: z.string().optional(),
   showLogo: z.boolean().optional(),
   showSocialIcons: z.boolean().optional(),
   darkMode: z.boolean().optional(),
@@ -98,7 +104,7 @@ export const DesignFormSchema = z.object({
 
 export const DesignFormUpdateSchema = DesignFormSchema.extend({
   backgroundColor: z.string().pipe(nonempty).optional(),
-  logoUrl: z.string().pipe(nonempty).optional(),
+  logo: z.string().pipe(nonempty).optional(),
 })
 
 export type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
