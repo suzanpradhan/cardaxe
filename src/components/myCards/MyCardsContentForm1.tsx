@@ -64,7 +64,6 @@ const MyCardsContentForm1 = ({
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
   ];
-
   return (
     <FormWrapper>
       <div className="flex flex-col gap-3">

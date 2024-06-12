@@ -57,7 +57,6 @@ const ContentsPage = () => {
 
     if (!result.success) {
       const error = result.error.format();
-      console.log(error);
       dispatch(
         setErrors({
           formName: 'cardFields',
@@ -78,6 +77,8 @@ const ContentsPage = () => {
       );
     }
   };
+
+  console.log('cardState', cardState);
 
   return (
     <form

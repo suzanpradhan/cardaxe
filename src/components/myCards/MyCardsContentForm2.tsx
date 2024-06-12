@@ -37,6 +37,11 @@ const INPUT_FEILDS: InputFieldProps<
     zSchemaName: 'email',
     inputCompType: 'normal',
   },
+  {
+    inputLabel: 'Address',
+    zSchemaName: 'address',
+    inputCompType: 'normal',
+  },
 ];
 
 const MyCardsContentForm2 = ({

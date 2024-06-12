@@ -63,7 +63,7 @@ const InputComp = ({
                 {...getFieldProps?.(zSchemaName)}
                 id={zSchemaName}
                 placeholder={placeholder}
-                defaultValue={inputValue as string}
+                defaultValue={inputValue === null ? '' : (inputValue as string)}
                 className={clsx(
                   'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
                   error ? 'border-redError' : 'border-borderMain'
@@ -102,7 +102,8 @@ const InputComp = ({
               {inputLabel}
             </label>
             <Switch
-              // checked={inputValue === 'true' ? true : false}
+              // defaultChecked={inputValue as boolean}
+              checked={inputValue as boolean}
               onCheckedChange={(checked) => handleChange?.(checked)}
             />
             {/* <input
@@ -165,7 +166,7 @@ const InputComp = ({
       }
       case 'normal': {
         return (
-          <div className={className}>
+          <div className={`${className}`}>
             {inputLabel && (
               <InputLable
                 zSchemaName={zSchemaName}
@@ -176,7 +177,9 @@ const InputComp = ({
               onChange={(e) => handleChange?.(e)}
               id={zSchemaName}
               type={inputType}
-              defaultValue={inputValue as string}
+              defaultValue={
+                inputValue === 'null' ? undefined : (inputValue as string)
+              }
               name={zSchemaName}
               {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}

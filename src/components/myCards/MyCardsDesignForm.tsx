@@ -21,7 +21,7 @@ const MyCardsDesignForm = ({
   values,
 }: MyCardsDesignFormProps) => {
   return (
-    <FormWrapper>
+    <FormWrapper className="gap-2 flex-col flex">
       <div className="flex gap-2 items-end">
         <InputComp
           inputCompType="normal"
@@ -66,6 +66,7 @@ const MyCardsDesignForm = ({
       <InputComp
         inputCompType="file"
         inputType="file"
+        className="mb-3"
         zSchemaName="backgroundImage"
         inputLabel="Background Image"
         placeholder="Choose Image"

@@ -10,6 +10,7 @@ import {
   initialState,
   updateCardTemplate,
   updateContentForm,
+  updateDefaultCard,
   updateDesignForm,
   validateForms,
 } from '@/module/cards/cardSlice';
@@ -23,6 +24,7 @@ import {
   DesignFromSchemaType,
 } from '@/module/cards/cardsType';
 import { updatedDiff } from 'deep-object-diff';
+import { ring } from 'ldrs';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -31,13 +33,14 @@ import { toast } from 'react-toastify';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(true);
+  const [publishLoading, toggleLoading] = useState(false);
   const session = useSession();
   const searchParams = useSearchParams();
   const cardId = searchParams.get('cardId');
   const cardAction = searchParams.get('action');
   const dispatch = useAppDispatch();
   const router = useRouter();
-
+  ring.register();
   const cardState = useSelector((state: RootState) => state.card);
 
   const card = useAppSelector(
@@ -69,13 +72,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           break;
         case 'update':
           dispatch(updateContentForm((card as any).cardFields));
-          dispatch(
-            updateDesignForm({
-              ...(card as any).cardDesign,
-              backgroundImage: (card as any).cardDesign.backgroundImage,
-            })
-          );
+          dispatch(updateDesignForm((card as any).cardDesign));
           dispatch(updateCardTemplate((card as any).cardTemplate.id));
+          dispatch(updateDefaultCard((card as any).isDefault));
           dispatch(validateForms('cardDesign'));
           dispatch(validateForms('cardFields'));
           break;
@@ -83,14 +82,13 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     };
 
     if (cardAction) updateCardState(cardAction);
-  }, [card]);
+  }, [card, cardAction]);
 
   const handlePublish = () => {
+    toggleLoading(true);
     dispatch(validateForms('cardDesign'));
     dispatch(validateForms('cardFields'));
-
     var submitresponse = undefined;
-
     const updatedCardFields = {
       ...(card.cardFields
         ? (updatedDiff(
@@ -104,8 +102,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       card.cardDesign,
       cardState.cardDesign.values as DesignFromSchemaType
     );
-
-    console.log('updatedCardDesign', updatedCardDesign);
 
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
@@ -136,17 +132,30 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
             toast.error(`Error: Please enter all required value`);
+            toggleLoading(false);
+            console.log(
+              cardState.cardDesign.errors,
+              cardState.cardFields.errors,
+              cardId,
+              session.data?.user?.id,
+              updatedCardFields
+            );
             throw errorMessage;
           }
           toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+          toggleLoading(false);
         })
         .catch((err) => {
           toast.error('Something went wrong');
-          console.log(err);
+          toggleLoading(false);
           throw err;
         });
+    } else {
+      toggleLoading(false);
+      console.log(cardState.cardFields.errors);
+      toast.error(`Error: Please enter all required value`);
     }
   };
 
@@ -223,6 +232,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           ? card?.cardFields.department
           : card?.cardTemplate.defaultCardFields.department ?? ''
         : cardState.cardFields.values.department,
+    address:
+      cardState?.cardFields?.values.address?.length === 0
+        ? cardAction === 'update'
+          ? card?.cardFields.address
+          : card?.cardTemplate.defaultCardFields.address ?? ''
+        : cardState.cardFields.values.address,
     darkMode:
       cardAction === 'update'
         ? cardState?.cardDesign?.values.darkMode ??
@@ -246,11 +261,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         : cardState.cardFields.values.designation,
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
-      cardState.cardDesign.values.logo?.length === 0
+      cardState.cardDesign.values.logo === null ||
+      cardState.cardDesign.values.logo.length === 0
         ? cardAction === 'update'
           ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
           : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.logo}`
-        : cardState.cardDesign.values.logo.startsWith('blob')
+        : cardState.cardDesign.values.logo?.startsWith('blob')
         ? cardState.cardDesign.values.logo
         : `${apiPaths.serverUrl}${cardState.cardDesign.values.logo}`,
     backgroundUrl:
@@ -288,7 +304,17 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           onClick={handlePublish}
           className="w-28 bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
         >
-          Publish
+          {publishLoading ? (
+            <l-ring
+              size="35"
+              stroke="2"
+              bg-opacity="0"
+              speed="2"
+              color="white"
+            ></l-ring>
+          ) : (
+            'Publish'
+          )}
         </button>
       </AppBar>
       <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
@@ -302,13 +328,13 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       <div className="bloc lg:hidden  gap-12">
-        <SideBarMyCards cardId={cardId} cardAction={cardAction} />
         <div className="mt-5 relative">
           <div
-            className={`absolute max-lg:w-[calc(100%-0.35rem)] duration-500 ${
+            className={`absolute max-lg:w-[calc(100%-0.35rem)] flex flex-col gap-5 duration-500 ${
               toggle ? '' : '-translate-x-[calc(102%)]'
             }`}
           >
+            <SideBarMyCards cardId={cardId} cardAction={cardAction} />
             {children}
           </div>
           <div

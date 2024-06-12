@@ -3,7 +3,6 @@
 import FormWrapper from '@/components/FormWrapper';
 import InputComp from '@/components/InputComp';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
-import MyCardsDesignSwitch from '@/components/myCards/MyCardsDesignSwitch';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
@@ -30,21 +29,12 @@ const Designpage = () => {
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
 
-    console.log(name, value, files);
-
     const filesToCache = files?.[0];
 
     if (filesToCache) {
       caches.open('filesCache').then(function (cache) {
         cache.put(name, new Response(filesToCache));
       });
-      // const cache = await caches.open('filesCache');
-      // // const keys = await cache.keys();
-      // // if (!keys || keys.length <= 0) return;
-      // const response = await cache.match(name);
-      // if (!response) return;
-      // const blob = await response.blob();
-      // console.log(window.URL.createObjectURL(blob as File));
     }
 
     const stateValue =
@@ -85,8 +75,6 @@ const Designpage = () => {
 
   const handleIsDefaultChange = (e: boolean) => {
     dispatch(updateDefaultCard(e));
-    console.log(cardState);
-    console.log(e);
   };
 
   return (
@@ -101,11 +89,11 @@ const Designpage = () => {
         handleChange={handleChange}
         values={cardState.cardDesign.values}
       />
-      <MyCardsDesignSwitch
+      {/* <MyCardsDesignSwitch
         errors={cardState.cardDesign.errors}
         handleChange={handleChange}
         values={cardState.cardDesign.values}
-      />
+      /> */}
       <FormWrapper>
         <div className="flex flex-col gap-4">
           <InputComp
@@ -115,9 +103,6 @@ const Designpage = () => {
             inputType="checkbox"
             handleChange={(e) => handleIsDefaultChange(e as boolean)}
             inputValue={cardState.isDefault ?? false}
-            // error={cardState.card.errors}
-            // getFieldProps={getFieldProps}
-            // inputValue={values[item.zSchemaName as keyof DesignFromSchemaType]}
           />
         </div>
       </FormWrapper>

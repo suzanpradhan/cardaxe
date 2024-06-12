@@ -17,21 +17,22 @@ const page = async (props: any) => {
     );
     const response = await res.json();
     const defaultCard = snakeToCamel(response);
-    console.log(defaultCard);
 
     const variableValues = {
       ...defaultCard.cardFields,
       ...defaultCard.cardDesign,
-      logoUrl: defaultCard.cardDesign.logoUrl,
+      logoUrl: `${apiPaths.serverUrl}${defaultCard.cardDesign.logo}`,
     };
 
     if (defaultCard) {
       return (
-        <div className="bg-componentBgGrey -z-20">
-          <PreviewSection
-            variableValues={variableValues}
-            layout={defaultCard.cardTemplate}
-          />
+        <div className="bg-componentBgGrey -z-20 ">
+          <div className="max-w-xl mx-auto">
+            <PreviewSection
+              variableValues={variableValues}
+              layout={defaultCard.cardTemplate}
+            />
+          </div>
         </div>
       );
     } else {

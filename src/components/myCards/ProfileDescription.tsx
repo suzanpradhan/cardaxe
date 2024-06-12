@@ -42,7 +42,6 @@ const ProfileDescription = ({
     DesignFormUpdateSchemaType &
     VariableValueType;
 }) => {
-  console.log(variableValues.logoUrl);
   return (
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
@@ -67,8 +66,7 @@ const ProfileDescription = ({
             {variableValues?.lastName}
           </h1>
           <p>
-            Istanbul, Turkey | {variableValues?.designation} -{' '}
-            {variableValues?.company}
+            {variableValues?.designation} - {variableValues?.company}
           </p>
           <div className="flex gap-2">
             <ButtonRounded

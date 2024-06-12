@@ -65,12 +65,13 @@ export type UpdateCardState<T> = {
 
 export const ContentFormSchema = z.object({
   id: z.number().optional(),
+  address: z.string().optional(),
   prefix: z.string().optional(),
   firstName: z.string().pipe(nonempty),
   middleName: z.string().optional(),
   lastName: z.string().pipe(nonempty),
   suffix: z.string().optional(),
-  bio: z.string().optional(),
+  bio: z.string().optional().nullable(),
   phone: z.string().length(10),
   website: z.string().optional(),
   email: z.string().email(),
@@ -84,7 +85,7 @@ export const ContentFormUpdateSchema = ContentFormSchema.extend({
   firstName: z.string().optional(),
   lastName: z.string().pipe(nonempty).optional(),
   suffix: z.string().pipe(nonempty).optional(),
-  bio: z.string().pipe(nonempty).optional(),
+  bio: z.string().pipe(nonempty).optional().nullable(),
   phone: z.string().length(10).optional(),
   email: z.string().email().optional(),
   designation: z.string().pipe(nonempty).optional(),
