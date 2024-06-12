@@ -6,6 +6,7 @@ import SideBarMyCards from '@/components/myCards/SideBarMyCards';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import CircleLoader from '@/core/ui/loaders/CircleLoader';
 import {
   initialState,
   updateCardTemplate,
@@ -24,11 +25,9 @@ import {
   DesignFromSchemaType,
 } from '@/module/cards/cardsType';
 import { updatedDiff } from 'deep-object-diff';
-import { ring } from 'ldrs';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
@@ -40,8 +39,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const cardAction = searchParams.get('action');
   const dispatch = useAppDispatch();
   const router = useRouter();
-  ring.register();
-  const cardState = useSelector((state: RootState) => state.card);
+  const cardState = useAppSelector((state: RootState) => state.card);
 
   const card = useAppSelector(
     (state: RootState) =>
@@ -304,17 +302,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           onClick={handlePublish}
           className="w-28 bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
         >
-          {publishLoading ? (
-            <l-ring
-              size="35"
-              stroke="2"
-              bg-opacity="0"
-              speed="2"
-              color="white"
-            ></l-ring>
-          ) : (
-            'Publish'
-          )}
+          {publishLoading ? <CircleLoader /> : 'Publish'}
         </button>
       </AppBar>
       <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">

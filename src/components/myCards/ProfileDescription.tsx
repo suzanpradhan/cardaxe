@@ -3,7 +3,6 @@ import {
   DesignFormUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import { Flash, Heart, MoreCircle, Share } from 'iconsax-react';
-import Image from 'next/image';
 import ButtonRounded from '../ButtonRounded';
 import { VariableValueType } from '../CardLayouts';
 
@@ -46,7 +45,7 @@ const ProfileDescription = ({
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
         <div className="bg-blueTheme h-[120px] w-[120px] relative rounded-full">
-          {variableValues.logoUrl &&
+          {/* {variableValues.logoUrl &&
           !variableValues.logoUrl?.endsWith('undefined') ? (
             <Image
               src={variableValues.logoUrl}
@@ -58,7 +57,7 @@ const ProfileDescription = ({
             />
           ) : (
             <></>
-          )}
+          )} */}
         </div>
         <div className="flex flex-col h-ustify-center gap-1">
           <h1 className="sm:text-2xl text-lg font-extrabold ">
