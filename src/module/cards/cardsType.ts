@@ -1,6 +1,12 @@
 import { nonempty } from "@/core/utils/formUtils";
 import { z } from "zod";
 
+export interface SocialMediaInfo {
+  id: string,
+  categoryName: string,
+  name: string
+}
+
 export type CardTemplatesType = {
   id: number;
   name: string;
@@ -38,6 +44,7 @@ export type CardResponseType<T> = {
   cardTemplate: T;
   cardFields: ContentFormSchemaType,
   cardDesign: DesignFromSchemaType,
+  // cardInfos: 
   isPublished: boolean,
   isDefault: boolean,
   user?: string
@@ -47,6 +54,7 @@ export type CardState<T> = {
   id?: number;
   cardFields: { values: ContentFormSchemaType, errors: Record<string, Array<string>> },
   cardDesign: { values: DesignFromSchemaType, errors: Record<string, Array<string>> },
+  cardInfos: { values: InfosFormsSchemaType, errors: Record<string, Array<string>> }
   isPublished?: boolean,
   isDefault?: boolean,
   user?: string
@@ -80,6 +88,7 @@ export const ContentFormSchema = z.object({
   company: z.string().optional(),
 });
 
+
 export const ContentFormUpdateSchema = ContentFormSchema.extend({
   prefix: z.string().optional(),
   firstName: z.string().optional(),
@@ -108,7 +117,25 @@ export const DesignFormUpdateSchema = DesignFormSchema.extend({
   logo: z.string().pipe(nonempty).optional(),
 })
 
+export const InfosFormsSchema = z.array(z.object({
+  id: z.string().optional(),
+  url: z.string().pipe(nonempty),
+  displayText: z.string().pipe(nonempty),
+  cardInfo: z.string().pipe(nonempty),
+  card: z.string().optional()
+}))
+
+// export const InfosFormsSchema = z.record(
+//   z.string().url('The object property name should be a valid URI.'),
+//   z.string(),
+// ).refine(
+//   obj => Object.keys(obj).length <= 1,
+//   'The object can contain only one property.'
+// ).array()
+
 export type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
+export type InfosFormsSchemaType = z.infer<typeof InfosFormsSchema>;
+
 export type DesignFromSchemaType = z.infer<typeof DesignFormSchema>;
 export type ContentFormUpdateSchemaType = z.infer<typeof ContentFormUpdateSchema>;
 export type DesignFormUpdateSchemaType = z.infer<typeof DesignFormUpdateSchema>;

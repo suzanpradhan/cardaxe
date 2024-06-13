@@ -53,6 +53,8 @@ const MyCardsPage = () => {
     router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
   };
 
+  console.log('cardsList', cardsList);
+
   return (
     <div className="mt-5">
       <AppBar appBarLabel="My Cards">
@@ -75,7 +77,6 @@ const MyCardsPage = () => {
       </AppBar>
       <div className="flex flex-col gap-5 my-10 max-w-md">
         {cardsList?.map((card, index) => {
-          console.log(card.cardDesign.logo);
           return (
             <div key={index} className="w-full">
               {card.id && (

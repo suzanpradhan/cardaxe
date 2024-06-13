@@ -269,11 +269,14 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         : `${apiPaths.serverUrl}${cardState.cardDesign.values.logo}`,
     backgroundUrl:
       cardState.cardDesign.values.backgroundImage === undefined ||
-      cardState.cardDesign.values.logo?.length === 0
+      cardState.cardDesign.values.backgroundImage === null ||
+      cardState.cardDesign.values.backgroundImage?.length === 0
         ? cardAction === 'update'
-          ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
-          : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.logo}`
-        : cardState.cardDesign.values.logo,
+          ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
+          : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.backgroundImage}`
+        : cardState.cardDesign.values.backgroundImage?.startsWith('blob')
+        ? cardState.cardDesign.values.backgroundImage
+        : `${apiPaths.serverUrl}${cardState.cardDesign.values.backgroundImage}`,
     website:
       cardState?.cardFields?.values.website?.length === 0
         ? cardAction === 'update'

@@ -3,7 +3,7 @@ import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
 import { toast } from "react-toastify";
-import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
+import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, SocialMediaInfo, UpdateCardParams, UpdateCardState } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -209,6 +209,16 @@ const cardsApi = baseApi.injectEndpoints({
         return endpointName + '-' + queryArgs;
       },
       providesTags: (result, error, id) => [{ type: 'Card', id: id }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
+      },
+    }),
+    getSocialInfos: builder.query<Array<SocialMediaInfo>, void>({
+      query: () => apiPaths.getSocialInfosUrl,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;

@@ -46,6 +46,15 @@ export const initialState: CardState<string> = {
       darkMode: false,
     }, errors: {}
   },
+  cardInfos: {
+    values: [{
+      id: '',
+      cardInfo: '',
+      displayText: '',
+      url: '',
+      card: ''
+    }], errors: {}
+  },
   cardTemplate: "1"
 
 };
@@ -81,6 +90,8 @@ export const cardSlice = createSlice({
       console.log(error, formName)
       state[formName].errors = { ...error }
     },
+
+
     validateForms: (state, action: PayloadAction<ErrorActionType['formName']>) => {
       const formName = action.payload;
       let formSchema;
