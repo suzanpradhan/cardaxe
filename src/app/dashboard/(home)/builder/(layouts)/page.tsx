@@ -27,7 +27,6 @@ const LayoutPage = () => {
     <div>
       {cardsList?.map((card, index) => {
         const imageUrl = `${cardState.cardDesign.values.backgroundImage}`;
-        console.log(imageUrl);
         return (
           <div key={index}>
             {card.id && (

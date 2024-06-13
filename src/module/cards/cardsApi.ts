@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, UpdateCardParams, UpdateCardState } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
-
   endpoints: (builder) => ({
     getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType>, void>({
       query: () => `${apiPaths.getCardTemplatesUrl}`,
@@ -89,6 +88,7 @@ const cardsApi = baseApi.injectEndpoints({
     }),
     upDateCard: builder.mutation<any, UpdateCardParams<string>>({
       query: ({ userId, cardId, ...payload }) => {
+
         const fecthCachedImage = async (name: string) => {
           const cache = await caches.open('filesCache');
           const response = await cache.match(name);
@@ -97,31 +97,32 @@ const cardsApi = baseApi.injectEndpoints({
           return blob;
         }
         const formData = new FormData();
-        if (payload.cardFields.id) formData.append('card_fields.id', payload.cardFields.id.toString())
-        if (payload.cardFields.prefix) formData.append('card_fields.prefix', payload.cardFields.prefix)
-        if (payload.cardFields.firstName) formData.append('card_fields.first_name', payload.cardFields.firstName)
-        if (payload.cardFields.lastName) formData.append('card_fields.last_name', payload.cardFields.lastName)
-        if (payload.cardFields.suffix) formData.append('card_fields.suffix', payload.cardFields.suffix)
-        if (payload.cardFields.bio) formData.append('card_fields.bio', payload.cardFields.bio)
-        if (payload.cardFields.phone) formData.append('card_fields.phone', payload.cardFields.phone)
-        if (payload.cardFields.email) formData.append('card_fields.email', payload.cardFields.email)
-        if (payload.cardFields.middleName) formData.append('card_fields.middle_name', payload.cardFields.middleName)
-        if (payload.cardFields.designation) formData.append('card_fields.designation', payload.cardFields.designation)
-        if (payload.cardFields.department) formData.append('card_fields.department', payload.cardFields.department)
-        if (payload.cardFields.company) formData.append('card_fields.company', payload.cardFields.company)
-        if (payload.cardFields.website) formData.append('card_fields.website', payload.cardFields.website)
-        if (payload.cardDesign.id) formData.append('card_design.id', payload.cardDesign.id.toString())
-        if (payload.cardDesign.backgroundColor) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
-        if (payload.cardDesign.logo) formData.append('card_design.logo', payload.cardDesign.logo)
+        if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
+        if (payload.cardFields.prefix != undefined) formData.append('card_fields.prefix', payload.cardFields.prefix)
+        if (payload.cardFields.firstName != undefined) formData.append('card_fields.first_name', payload.cardFields.firstName)
+        if (payload.cardFields.lastName != undefined) formData.append('card_fields.last_name', payload.cardFields.lastName)
+        if (payload.cardFields.suffix != undefined) formData.append('card_fields.suffix', payload.cardFields.suffix)
+        if (payload.cardFields.bio != undefined) formData.append('card_fields.bio', payload.cardFields.bio)
+        if (payload.cardFields.phone != undefined) formData.append('card_fields.phone', payload.cardFields.phone)
+        if (payload.cardFields.email != undefined) formData.append('card_fields.email', payload.cardFields.email)
+        if (payload.cardFields.address != undefined) formData.append('card_fields.address', payload.cardFields.address)
+        if (payload.cardFields.middleName != undefined) formData.append('card_fields.middle_name', payload.cardFields.middleName)
+        if (payload.cardFields.designation != undefined) formData.append('card_fields.designation', payload.cardFields.designation)
+        if (payload.cardFields.department != undefined) formData.append('card_fields.department', payload.cardFields.department)
+        if (payload.cardFields.company != undefined) formData.append('card_fields.company', payload.cardFields.company)
+        if (payload.cardFields.website != undefined) formData.append('card_fields.website', payload.cardFields.website)
+        if (payload.cardDesign.id != undefined) formData.append('card_design.id', payload.cardDesign.id.toString())
+        if (payload.cardDesign.backgroundColor != undefined) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
+        if (payload.cardDesign.logo != undefined) formData.append('card_design.logo', payload.cardDesign.logo)
         fecthCachedImage('backgroundImage').then((response) => { if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) } });
         fecthCachedImage('logo').then((response) => { console.log(response); if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
         if (payload.isPublished != undefined) formData.append('is_published', payload.isPublished.toString())
-        if (userId) formData.append('user', userId.toString())
+        if (userId != undefined) formData.append('user', userId.toString())
         if (payload.isDefault != undefined) formData.append('is_default', payload.isDefault as unknown as string)
-        if (payload.cardTemplate) formData.append('card_template', payload.cardTemplate)
+        if (payload.cardTemplate != undefined) formData.append('card_template', payload.cardTemplate)
         return {
           url: `${apiPaths.cardsUrl}${cardId}/`,
           method: 'PATCH',

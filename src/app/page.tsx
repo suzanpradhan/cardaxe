@@ -27,12 +27,29 @@ export default function Home() {
             className="-z-50"
             objectFit="cover"
           />
-          <div className="h-full lg:mx-auto mx-10 pt-20 max-w-7xl flex flex-col z-10 items-center md:items-start">
-            <HeadingWithText
-              headingText="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-              paragraphText="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam, neque explicabo a officia esse quisquam laudantium incidunt beatae enim odit."
-            />
-            <ButtonRounded isHeader={false} label="Get Started" href="/login" />
+          <div className="max-w-7xl max-xl:px-8  h-full flex justify-between mx-auto items-center">
+            <div className="h-full  flex flex-col mt-20">
+              <HeadingWithText
+                headingText="Cardaxe: Connecting Simplified"
+                paragraphText="Say goodbye to outdated paper business cards and hello to Cardaxe, your key to efficient, effective, and eco-friendly professional connections"
+                centerOnSmallerScreen={false}
+              />
+              <ButtonRounded
+                isHeader={false}
+                label="Get Started"
+                href="/login"
+              />
+            </div>
+            <div className="basis-96 h-96 relative my-52 max-lg:hidden">
+              <Image
+                src={'/images/cardaxe_home_image.png'}
+                alt="image"
+                fill
+                sizes="(max-width: 768px) 100vw, 700px "
+                className="-z-50"
+                objectFit="cover"
+              />
+            </div>
           </div>
         </div>
         <div className=" mx-auto px-4 max-w-7xl">

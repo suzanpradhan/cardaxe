@@ -6,7 +6,7 @@ export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${apiPaths.baseUrl}`,
-    prepareHeaders: async (headers) => await setHeaders(headers),
+    prepareHeaders: async (headers: Headers) => await setHeaders(headers),
   }),
   tagTypes: ['CardsList', 'Card', 'CardLayout', 'CardLayoutList', 'User'],
   endpoints: () => ({}),

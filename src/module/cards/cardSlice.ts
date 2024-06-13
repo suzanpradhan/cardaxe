@@ -19,7 +19,6 @@ interface ValidateFieldActionType {
 
 
 export const initialState: CardState<string> = {
-
   cardFields: {
     values: {
       prefix: '',
@@ -79,6 +78,7 @@ export const cardSlice = createSlice({
     },
     setErrors: (state, action: PayloadAction<ErrorActionType>) => {
       const { error, formName } = action.payload;
+      console.log(error, formName)
       state[formName].errors = { ...error }
     },
     validateForms: (state, action: PayloadAction<ErrorActionType['formName']>) => {
@@ -95,14 +95,13 @@ export const cardSlice = createSlice({
       if (!formSchema) return;
 
       const formValues = state[formName].values;
-
-
       const parseResult = formSchema.safeParse(formValues);
 
       if (!parseResult.success) {
         const errorObject = parseResult.error.format();
+
         state[formName].errors = Object.keys(errorObject).reduce((acc: { [key: string]: Array<string> }, key: string) => {
-          acc[key] = errorObject[key as keyof ContentFormSchemaType & keyof DesignFromSchemaType]?._errors || [''];
+          if (key !== '_errors') { acc[key] = errorObject[key as keyof ContentFormSchemaType & keyof DesignFromSchemaType]?._errors || []; }
           return acc;
         }, {})
       } else {
@@ -111,9 +110,6 @@ export const cardSlice = createSlice({
 
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addMatcher()
-  // },
 });
 
 

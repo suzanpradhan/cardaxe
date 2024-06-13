@@ -25,7 +25,6 @@ const HomeCardTemplate = ({ userId }: HomeCardTemplateProps) => {
       dispatch(cardsApi.endpoints.getDefaultCard.initiate(userId.toString()));
   }, [dispatch]);
 
-  console.log(defaultCard);
   return (
     <div className="w-full h-56 bg-[#01ff7b] rounded-lg p-4 ">
       <div className="relative w-20 h-20 z-10">

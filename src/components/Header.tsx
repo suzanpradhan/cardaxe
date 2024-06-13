@@ -25,8 +25,6 @@ const Header = () => {
     handleScroll();
   }, [scrollPosition]);
 
-  console.log(scrollPosition, scrollDirection);
-
   return (
     <header
       className={clsx(

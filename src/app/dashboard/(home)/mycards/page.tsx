@@ -8,12 +8,11 @@ import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 const MyCardsPage = () => {
   const router = useRouter();
-  const cardState = useSelector((state: RootState) => state.card);
+  const [createLoading, toggleLoading] = useState(false);
   const { data } = useSession();
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -28,6 +27,8 @@ const MyCardsPage = () => {
   );
 
   const hanldeCreateCard = () => {
+    toggleLoading(true);
+
     if (data?.user) {
       dispatch(cardsApi.endpoints.createCard.initiate(data?.user.id))
         .then((createCardResponse) => {
@@ -38,9 +39,12 @@ const MyCardsPage = () => {
                 (createCardResponse as any).data.id
               }&action=create`
             );
+          toggleLoading(false);
         })
         .catch((error) => {
+          toggleLoading(false);
           console.log(error);
+          throw error;
         });
     }
   };
@@ -56,12 +60,22 @@ const MyCardsPage = () => {
           onClick={() => hanldeCreateCard()}
           className="basis-60 shrink bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
         >
-          Create New card
+          {createLoading ? (
+            <l-ring
+              size="35"
+              stroke="2"
+              bg-opacity="0"
+              speed="2"
+              color="white"
+            ></l-ring>
+          ) : (
+            'Create New card'
+          )}
         </button>
       </AppBar>
       <div className="flex flex-col gap-5 my-10 max-w-md">
         {cardsList?.map((card, index) => {
-          const imageUrl = `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`;
+          console.log(card.cardDesign.logo);
           return (
             <div key={index} className="w-full">
               {card.id && (
@@ -69,15 +83,18 @@ const MyCardsPage = () => {
                   onClick={() => handleEditCard(card.id!)}
                   className="w-full"
                 >
-                  <CardLayouts
-                    htmlSource={card.cardTemplate?.htmlCode}
-                    variableValues={{
-                      ...card.cardFields,
-                      ...card.cardDesign,
-                      logoUrl: `${apiPaths.serverUrl}${card.cardDesign.logo}`,
-                      backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
-                    }}
-                  />
+                  {card.cardDesign.logo != null &&
+                    card.cardDesign.logo != undefined && (
+                      <CardLayouts
+                        htmlSource={card.cardTemplate?.htmlCode}
+                        variableValues={{
+                          ...card.cardFields,
+                          ...card.cardDesign,
+                          logoUrl: `${apiPaths.serverUrl}${card.cardDesign.logo}`,
+                          backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
+                        }}
+                      />
+                    )}
                 </button>
               )}
             </div>
