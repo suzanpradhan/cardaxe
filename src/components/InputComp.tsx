@@ -40,11 +40,6 @@ const InputComp = ({
   const [valueInput, setvalue] = useState<boolean>(false);
   const [showPassword, toggleShowPassword] = useState<boolean>(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    toggleShowPassword(!showPassword);
-  };
-
   function returnInput() {
     switch (inputCompType) {
       case 'textArea': {
@@ -249,8 +244,11 @@ const InputComp = ({
           disabled={disableInput}
         />
         <button
-          className="absolute top-2 right-2"
-          onClick={(e) => handleClick(e)}
+          className="absolute top-2 right-2 active::outline-none"
+          onClick={(e) => {
+            e.preventDefault();
+            toggleShowPassword(!showPassword);
+          }}
         >
           {showPassword ? (
             <EyeSlash size="24" className="text-gray-500" />

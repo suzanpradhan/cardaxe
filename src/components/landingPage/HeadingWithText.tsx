@@ -11,7 +11,7 @@ const HeadingWithText = ({
 }: Props) => {
   return (
     <div
-      className={`max-w-xl mt-44 flex flex-col gap-4 mb-4 items-start text-left ${
+      className={`max-w-xl  flex flex-col gap-4 mb-4 items-start text-left ${
         centerOnSmallerScreen ? 'max-md:text-center' : ''
       }`}
     >
