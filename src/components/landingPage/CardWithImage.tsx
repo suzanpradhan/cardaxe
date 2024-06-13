@@ -8,6 +8,7 @@ export interface Props {
   headingText: string;
   paragraphText: string;
   image: StaticImageData;
+  children?: React.ReactNode;
 }
 
 const CardWithImage = ({

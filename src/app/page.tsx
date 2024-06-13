@@ -9,6 +9,7 @@ import FaqCollection from '@/components/landingPage/FaqCollection';
 import Features from '@/components/landingPage/Features';
 import HeadingWithText from '@/components/landingPage/HeadingWithText';
 import clsx from 'clsx';
+import { Edit, Edit2, ElementPlus, UserEdit } from 'iconsax-react';
 import Image from 'next/image';
 import homepage_background from '../../public/homepage_background.png';
 import square_image from '../../public/square_image.jpg';
@@ -27,8 +28,8 @@ export default function Home() {
             className="-z-50"
             objectFit="cover"
           />
-          <div className="max-w-7xl max-xl:px-8  h-full flex justify-between mx-auto items-center">
-            <div className="h-full  flex flex-col mt-20">
+          <div className="max-w-7xl max-xl:px-8  h-full flex justify-between mx-auto items-center max-md:flex-col">
+            <div className="  flex flex-col ">
               <HeadingWithText
                 headingText="Cardaxe: Connecting Simplified"
                 paragraphText="Say goodbye to outdated paper business cards and hello to Cardaxe, your key to efficient, effective, and eco-friendly professional connections"
@@ -40,7 +41,7 @@ export default function Home() {
                 href="/login"
               />
             </div>
-            <div className="basis-96 h-96 relative my-52 max-lg:hidden">
+            <div className="basis-110 h-110 max-md:basis-44 max-md:h-44 relative my-52 max-sm:hidden">
               <Image
                 src={'/images/cardaxe_home_image.png'}
                 alt="image"
@@ -95,23 +96,46 @@ export default function Home() {
           />
         </div>
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center py-10 mb-12 gap-y-12 gap-x-4">
-            <ContentHeading headingTitle="How do cardaxe's digital card work" />
+          <ContentHeading headingTitle="How do cardaxe's digital card work" />
+          <div className="flex flex-col lg:flex-row items-start py-10 mb-12 gap-y-12 gap-x-4 justify-between">
             <CardWithImageSmall
-              headingText="Tolling of iron bell"
-              paragraphText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit fuga expedita maxime autem"
+              headingText="Sign Up"
+              paragraphText="Register for a free acoount on our platform"
               image={square_image}
-            />
+            >
+              <div className="text-blueTheme">
+                <UserEdit size="32" />
+              </div>
+            </CardWithImageSmall>
+
             <CardWithImageSmall
-              headingText="Tolling of iron bell"
-              paragraphText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit fuga expedita maxime autem"
+              headingText="Choose a Template"
+              paragraphText="Select from our wide range of professionally designed templates."
               image={square_image}
-            />
+            >
+              {' '}
+              <div className="text-blueTheme">
+                <Edit size="32" />
+              </div>
+            </CardWithImageSmall>
             <CardWithImageSmall
-              headingText="Tolling of hippopotamus"
-              paragraphText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit fuga expedita maxime autem"
+              headingText="Customize"
+              paragraphText="Add your contact information, upload your photo, and personalize your card that reflect your brand."
               image={square_image}
-            />
+            >
+              <div className="text-blueTheme">
+                <Edit2 size="32" />
+              </div>
+            </CardWithImageSmall>
+            <CardWithImageSmall
+              headingText="Save & Share"
+              paragraphText="Save your card and start sharing it with your professional network instantly."
+              image={square_image}
+            >
+              <div className="text-blueTheme">
+                <ElementPlus size="32" />
+              </div>
+            </CardWithImageSmall>
           </div>
         </div>
         <div className="pt-12">
