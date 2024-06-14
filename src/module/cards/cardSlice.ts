@@ -46,15 +46,9 @@ export const initialState: CardState<string> = {
       darkMode: false,
     }, errors: {}
   },
-  cardInfos: {
-    values: [{
-      id: '',
-      cardInfo: '',
-      displayText: '',
-      url: '',
-      card: ''
-    }], errors: {}
-  },
+  cardInfos:
+    { values: {}, errors: {} }
+  ,
   cardTemplate: "1"
 
 };
@@ -74,6 +68,12 @@ export const cardSlice = createSlice({
       action: PayloadAction<CardState<string>['cardDesign']['values']>
     ) => {
       state.cardDesign.values = { ...action.payload };
+    },
+    updateInfosForm: (
+      state,
+      action: PayloadAction<CardState<string>['cardInfos']['values']>
+    ) => {
+      state.cardInfos.values = { ...action.payload };
     },
     updateDefaultCard: (
       state, action: PayloadAction<boolean>

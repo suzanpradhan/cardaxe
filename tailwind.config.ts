@@ -8,6 +8,19 @@ const config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'grid-cols-12',
+    'gap-y-2',
+    'gap-x-2',
+    'place-content-center',
+    "col-span-9",
+    "col-span-3",
+    'aspect-rectangle '
+
+
+
+
+  ],
   prefix: '',
   theme: {
     container: {
@@ -19,7 +32,7 @@ const config = {
     },
     extend: {
       aspectRatio: {
-        rectangle: '9/6',
+        rectangle: '9/4',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

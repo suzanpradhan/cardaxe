@@ -13,6 +13,7 @@ const page = async (props: any) => {
         headers: {
           'Access-Control-Allow-Origin': '*',
         },
+        cache: 'no-store',
       }
     );
     const response = await res.json();
