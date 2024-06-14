@@ -1,5 +1,4 @@
 import Image, { StaticImageData } from 'next/image';
-import { z } from 'zod';
 import InputComp from '../InputComp';
 
 type SocialMediaFormProps = {
@@ -8,13 +7,6 @@ type SocialMediaFormProps = {
   socialLinkLogo: StaticImageData;
   placeholder: string;
 };
-
-const SocialsFormSchema = z.object({
-  socialLink: z.string(),
-  displayText: z.string().min(4, { message: 'Must be more than 4 characters' }),
-});
-
-type SocialsFormSchemaType = z.infer<typeof SocialsFormSchema>;
 
 const INPUT_FEILDS = [
   {
@@ -34,7 +26,7 @@ const SocialMediaForm = ({
   placeholder,
 }: SocialMediaFormProps) => {
   return (
-    <form className="flex max-w-7xl flex-wrap p-2 gap-1">
+    <div className="flex max-w-7xl flex-wrap p-2 gap-1">
       <p className="shrink-0 basis-full">{socialLinkTitle}</p>
       <div className="w-12 shrink-0 p-2">
         <Image
@@ -50,13 +42,14 @@ const SocialMediaForm = ({
             inputCompType="normal"
             socialLinkName={socialLinkName}
             key={index}
+            // onChange={handleChange}
             inputType={item.type}
             placeholder={index === 0 ? placeholder : 'Display Text'}
             zSchemaName={item.zSchemaName}
           />
         ))}
       </div>
-    </form>
+    </div>
   );
 };
 

@@ -27,6 +27,7 @@ export type UpdateCardParams<T> = {
   cardTemplate: T;
   cardFields: ContentFormUpdateSchemaType,
   cardDesign: DesignFormUpdateSchemaType,
+  cardInfos: InfosFormsSchemaType,
   isPublished: boolean,
   isDefault: boolean,
 
@@ -73,15 +74,15 @@ export type UpdateCardState<T> = {
 
 export const ContentFormSchema = z.object({
   id: z.number().optional(),
-  address: z.string().optional(),
+  address: z.string().optional().nullable(),
   prefix: z.string().optional(),
   firstName: z.string().pipe(nonempty),
-  middleName: z.string().optional(),
+  middleName: z.string().optional().nullable(),
   lastName: z.string().pipe(nonempty),
   suffix: z.string().optional(),
   bio: z.string().optional().nullable(),
   phone: z.string().length(10),
-  website: z.string().optional(),
+  website: z.string().optional().nullable(),
   email: z.string().email(),
   designation: z.string().optional(),
   department: z.string().optional(),
@@ -90,53 +91,48 @@ export const ContentFormSchema = z.object({
 
 
 export const ContentFormUpdateSchema = ContentFormSchema.extend({
-  prefix: z.string().optional(),
-  firstName: z.string().optional(),
-  lastName: z.string().pipe(nonempty).optional(),
-  suffix: z.string().pipe(nonempty).optional(),
-  bio: z.string().pipe(nonempty).optional().nullable(),
-  phone: z.string().length(10).optional(),
-  email: z.string().email().optional(),
-  designation: z.string().pipe(nonempty).optional(),
-  department: z.string().pipe(nonempty).optional(),
-  company: z.string().pipe(nonempty).optional(),
+  id: z.number().optional().nullable(),
+  prefix: z.string().optional().nullable(),
+  firstName: z.string().optional().nullable(),
+  lastName: z.string().pipe(nonempty).optional().nullable(),
+  suffix: z.string().pipe(nonempty).optional().nullable(),
+  bio: z.string().pipe(nonempty).optional().nullable().nullable(),
+  phone: z.string().length(10).optional().nullable(),
+  email: z.string().email().optional().nullable(),
+  designation: z.string().pipe(nonempty).optional().nullable(),
+  department: z.string().pipe(nonempty).optional().nullable(),
+  company: z.string().pipe(nonempty).optional().nullable(),
 })
 
 export const DesignFormSchema = z.object({
-  id: z.number().optional(),
+  id: z.number().optional().nullable(),
   backgroundColor: z.string().pipe(nonempty),
   backgroundImage: z.string().optional(),
   logo: z.string().optional(),
-  showLogo: z.boolean().optional(),
-  showSocialIcons: z.boolean().optional(),
-  darkMode: z.boolean().optional(),
+  showLogo: z.boolean().optional().nullable(),
+  showSocialIcons: z.boolean().optional().nullable(),
+  darkMode: z.boolean().optional().nullable(),
 })
 
 export const DesignFormUpdateSchema = DesignFormSchema.extend({
-  backgroundColor: z.string().pipe(nonempty).optional(),
-  logo: z.string().pipe(nonempty).optional(),
+  backgroundColor: z.string().pipe(nonempty).optional().nullable(),
+  logo: z.string().pipe(nonempty).optional().nullable(),
 })
 
-export const InfosFormsSchema = z.array(z.object({
-  id: z.string().optional(),
+export const InfoSchema = z.object({
+  id: z.string().pipe(nonempty),
   url: z.string().pipe(nonempty),
   displayText: z.string().pipe(nonempty),
-  cardInfo: z.string().pipe(nonempty),
+  cardInfo: z.string().optional(),
   card: z.string().optional()
-}))
+})
 
-// export const InfosFormsSchema = z.record(
-//   z.string().url('The object property name should be a valid URI.'),
-//   z.string(),
-// ).refine(
-//   obj => Object.keys(obj).length <= 1,
-//   'The object can contain only one property.'
-// ).array()
+export const InfosFormsSchema = z.record(InfoSchema)
 
 export type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
 export type InfosFormsSchemaType = z.infer<typeof InfosFormsSchema>;
-
 export type DesignFromSchemaType = z.infer<typeof DesignFormSchema>;
+
 export type ContentFormUpdateSchemaType = z.infer<typeof ContentFormUpdateSchema>;
 export type DesignFormUpdateSchemaType = z.infer<typeof DesignFormUpdateSchema>;
 

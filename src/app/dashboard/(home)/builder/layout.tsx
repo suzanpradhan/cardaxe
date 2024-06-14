@@ -120,6 +120,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             ...updatedCardFields,
             id: card.cardFields.id,
           } as ContentFormSchemaType,
+          cardInfos: {},
           cardTemplate: '1',
           isDefault: cardState.isDefault ?? false,
           isPublished: cardState.isPublished ?? false,
