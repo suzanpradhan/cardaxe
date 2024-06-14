@@ -4,6 +4,7 @@ import AppBar from '@/components/dashboard/AppBar';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import CircleLoader from '@/core/ui/loaders/CircleLoader';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import { useSession } from 'next-auth/react';
@@ -62,17 +63,7 @@ const MyCardsPage = () => {
           onClick={() => hanldeCreateCard()}
           className="basis-60 shrink bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
         >
-          {createLoading ? (
-            <l-ring
-              size="35"
-              stroke="2"
-              bg-opacity="0"
-              speed="2"
-              color="white"
-            ></l-ring>
-          ) : (
-            'Create New card'
-          )}
+          {createLoading ? <CircleLoader /> : 'Create New card'}
         </button>
       </AppBar>
       <div className="flex flex-col gap-5 my-10 max-w-md">

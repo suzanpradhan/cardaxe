@@ -3,4 +3,5 @@ export interface UserType {
   fullname: string;
   id: number;
   username: string;
+  avatar: string;
 }
