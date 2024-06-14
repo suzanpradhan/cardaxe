@@ -1,9 +1,23 @@
 'use client';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import userApi from '@/module/user/userApi';
+import { UserType } from '@/module/user/userType';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const MyProfileCard = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(
+    (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
+  );
+
+  useEffect(() => {
+    dispatch(userApi.endpoints.getUser.initiate());
+  }, [dispatch]);
+
   return (
     <div className="bg-white px-5 py-5">
       <div className="grid grid-cols-12 mb-5">
@@ -61,7 +75,7 @@ const MyProfileCard = () => {
         </div>
       </div>
       <div className="flex flex-col items-start gap-1 w-full">
-        <h3 className="text-xl font-bold">Niwesh Shrestha</h3>
+        <h3 className="text-xl font-bold">{user?.fullname}</h3>
         <p className="font-normal text-sm text-grayfont">
           Kathmandu, Nepal | Creative Director - Kurma Tech
         </p>

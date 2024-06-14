@@ -14,6 +14,7 @@ const userApi = baseApi.injectEndpoints({
             providesTags: ['User'],
             transformResponse: (response: any) => {
                 const camelCaseResponse = snakeToCamel(response)
+                console.log(camelCaseResponse)
                 return camelCaseResponse;
             },
         }),

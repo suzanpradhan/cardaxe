@@ -2,7 +2,7 @@ import FeedbackOptions from './(components)/FeedbackOptions';
 import MyProfileCard from './(components)/MyProfileCard';
 import SettingOptions from './(components)/SettingOptions';
 
-const page = () => {
+const ProfilePage = () => {
   return (
     <section className="max-w-3xl mx-auto mb-20">
       <MyProfileCard />
@@ -14,4 +14,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ProfilePage;
