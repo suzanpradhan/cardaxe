@@ -22,6 +22,7 @@ const page = async (props: any) => {
       ...defaultCard.cardFields,
       ...defaultCard.cardDesign,
       logoUrl: `${apiPaths.serverUrl}${defaultCard.cardDesign.logo}`,
+      backgroundUrl: `${apiPaths.serverUrl}${defaultCard.cardDesign.backgroundImage}`,
     };
 
     if (defaultCard) {

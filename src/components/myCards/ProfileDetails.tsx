@@ -2,6 +2,7 @@ import {
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
 } from '@/module/cards/cardsType';
+import x_image from '../../../public/X_logo.png';
 import cashapp_image from '../../../public/cashapp_image.png';
 import customLink_image from '../../../public/customLink_image.png';
 import discord_image from '../../../public/discord_image.png';
@@ -10,7 +11,6 @@ import instagram_image from '../../../public/instagram_image.png';
 import linkedin_image from '../../../public/linkedin_image.png';
 import openSea from '../../../public/openSea.png';
 import paypal_image from '../../../public/paypal_image.png';
-import twitter_image from '../../../public/twitter_image.png';
 import { VariableValueType } from '../CardLayouts';
 import ContactInfo from './ContactInfo';
 import GappedTableList from './GappedTableList';
@@ -36,8 +36,8 @@ const SOCIAL_MEDIA_LIST = [
     name: 'LinkedIn',
   },
   {
-    icon: twitter_image,
-    name: 'Twiter',
+    icon: x_image,
+    name: 'X',
   },
 ];
 
@@ -71,10 +71,9 @@ const ProfileDetails = ({ isTeamComp, cardValues }: ProfileDetailsPropType) => {
   return (
     <div className="w-full">
       <ContactInfo cardValues={cardValues} isTeamComp={isTeamComp} />
-      {/* {card.} */}
       <GappedTableList list={SOCIAL_MEDIA_LIST} />
-      <GappedTableList list={PAYMENTS_LIST} />
-      <GappedTableList list={MORE_LIST} />
+      {/* <GappedTableList list={PAYMENTS_LIST} />
+      <GappedTableList list={MORE_LIST} /> */}
     </div>
   );
 };

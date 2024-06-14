@@ -69,6 +69,9 @@ export const authOptions: NextAuthOptions = {
           token.token = responseData.data.user.token.token
           return Promise.resolve(token);
         }
+        //  else (profile ko respnse error ako case ma) {
+
+        //  }
       }
 
       if (user) {

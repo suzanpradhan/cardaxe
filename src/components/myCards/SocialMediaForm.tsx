@@ -33,10 +33,6 @@ const SocialMediaForm = ({
   socialLinkLogo,
   placeholder,
 }: SocialMediaFormProps) => {
-  // const { register } = useForm<SocialsFormSchemaType>({
-  //   resolver: zodResolver(SocialsFormSchema),
-  // });
-
   return (
     <form className="flex max-w-7xl flex-wrap p-2 gap-1">
       <p className="shrink-0 basis-full">{socialLinkTitle}</p>

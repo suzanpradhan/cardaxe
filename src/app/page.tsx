@@ -95,9 +95,12 @@ export default function Home() {
             imageIsLeft={true}
           />
         </div>
-        <div className="max-w-7xl mx-auto px-4">
-          <ContentHeading headingTitle="How do cardaxe's digital card work" />
-          <div className="flex flex-col lg:flex-row items-start py-10 mb-12 gap-y-12 gap-x-4 justify-between">
+        <div className="max-w-7xl mx-auto px-4 ">
+          <ContentHeading
+            headingTitle="How do cardaxe's digital card work"
+            center={true}
+          />
+          <div className="flex flex-col items-center lg:flex-row lg:items-start py-10 mb-12 gap-y-12 gap-x-4 justify-between">
             <CardWithImageSmall
               headingText="Sign Up"
               paragraphText="Register for a free acoount on our platform"
@@ -107,7 +110,6 @@ export default function Home() {
                 <UserEdit size="32" />
               </div>
             </CardWithImageSmall>
-
             <CardWithImageSmall
               headingText="Choose a Template"
               paragraphText="Select from our wide range of professionally designed templates."
