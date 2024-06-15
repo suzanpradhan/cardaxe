@@ -1,5 +1,7 @@
+import { InfosFormsUpdateSchemaType } from '@/module/cards/cardsType';
 import { ArrowRight2 } from 'iconsax-react';
 import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
 import HeadingTitles from '../HeadingTitles';
 
 type Props = {
@@ -7,14 +9,17 @@ type Props = {
     name: string;
     icon: StaticImageData;
   }[];
+  socialValues?: InfosFormsUpdateSchemaType;
 };
-const GappedTableList = ({ list }: Props) => {
+const GappedTableList = ({ list, socialValues }: Props) => {
+  console.log('list', list);
   return (
     <>
       <HeadingTitles label={'Social Media'} />
       <div className="grid gap-3">
         {list.map((item, index) => (
-          <div
+          <Link
+            href={''}
             key={index}
             className="hover:shadow-md flex bg-componentBgGrey p-2 rounded-lg gap-3 items-center"
           >
@@ -34,7 +39,7 @@ const GappedTableList = ({ list }: Props) => {
               variant="Outline"
               className="text-grayfont"
             />
-          </div>
+          </Link>
         ))}
       </div>
     </>

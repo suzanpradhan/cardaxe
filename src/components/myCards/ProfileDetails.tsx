@@ -1,6 +1,7 @@
 import {
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
+  InfosFormsUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import x_image from '../../../public/X_logo.png';
 import cashapp_image from '../../../public/cashapp_image.png';
@@ -20,22 +21,27 @@ type ProfileDetailsPropType = {
   cardValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
     VariableValueType;
+  socialValues?: InfosFormsUpdateSchemaType;
 };
 
 const SOCIAL_MEDIA_LIST = [
   {
+    id: 1,
     icon: instagram_image,
     name: 'Instagram',
   },
   {
+    id: 2,
     icon: facebook_image,
     name: 'Facebook',
   },
   {
+    id: 3,
     icon: linkedin_image,
     name: 'LinkedIn',
   },
   {
+    id: 4,
     icon: x_image,
     name: 'X',
   },
@@ -52,7 +58,7 @@ const PAYMENTS_LIST = [
   },
 ];
 
-const MORE_LIST = [
+const OTHERS_LIST = [
   {
     icon: customLink_image,
     name: 'Custom Link',
@@ -67,11 +73,25 @@ const MORE_LIST = [
   },
 ];
 
-const ProfileDetails = ({ isTeamComp, cardValues }: ProfileDetailsPropType) => {
+const ProfileDetails = ({
+  isTeamComp,
+  cardValues,
+  socialValues,
+}: ProfileDetailsPropType) => {
+  console.log('socialValues', socialValues);
+  const socialMedialList =
+    socialValues &&
+    SOCIAL_MEDIA_LIST.filter((item) => {
+      if (socialValues?.[item.id]?.cardInfoId)
+        return item.id === parseInt(socialValues?.[item.id]?.cardInfoId!);
+    });
+  console.log(socialMedialList);
   return (
     <div className="w-full">
       <ContactInfo cardValues={cardValues} isTeamComp={isTeamComp} />
-      <GappedTableList list={SOCIAL_MEDIA_LIST} />
+      {socialMedialList && Object.entries(socialMedialList).length !== 0 && (
+        <GappedTableList list={socialMedialList} />
+      )}
       {/* <GappedTableList list={PAYMENTS_LIST} />
       <GappedTableList list={MORE_LIST} /> */}
     </div>
