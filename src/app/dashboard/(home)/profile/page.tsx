@@ -4,7 +4,7 @@ import SettingOptions from './(components)/SettingOptions';
 
 const ProfilePage = () => {
   return (
-    <section className="max-w-3xl mx-auto mb-20">
+    <section className="max-w-3xl mx-auto h-screen">
       <MyProfileCard />
       <div className="border-b border-slate-200 my-5 w-full"></div>
       <SettingOptions />

@@ -69,11 +69,9 @@ const SIDEBAR_NAV_ELEMENTS: ProfileAsideElementsProps[] = [
 
 const ProfileAside = () => {
   return (
-    <nav className="w-full h-screen">
-      <h3 className="text-xl font-semibold mt-9 mb-5 px-3 text-center sm:text-left">
-        Profile
-      </h3>
-      <ul className="flex flex-col items-center sm:items-stretch">
+    <nav className="w-full md:h-screen border-b pb-2 md:border-b-0 md:pb-0">
+      <h3 className="text-xl font-semibold mt-9 mb-5 md:px-3">Profile</h3>
+      <ul className="flex md:flex-col items-center md:items-stretch justify-evenly md:justify-start">
         {SIDEBAR_NAV_ELEMENTS.map((item) => (
           <ProfileAsideElements item={item} key={item.id} />
         ))}

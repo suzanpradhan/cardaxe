@@ -18,10 +18,10 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     <>{children}</>
   ) : (
     <div className="grid grid-cols-12">
-      <div className="col-span-3 md:col-span-4 lg:col-span-2 border-r px-2">
+      <div className="col-span-12 md:col-span-4 lg:col-span-2 md:border-r px-2">
         <ProfileAside />
       </div>
-      <div className="col-span-9 md:col-span-8 lg:col-span-10">{children}</div>
+      <div className="col-span-12 md:col-span-8 lg:col-span-10">{children}</div>
     </div>
   );
 };

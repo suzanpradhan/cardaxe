@@ -23,17 +23,17 @@ const ProfileAsideElements = ({
   return (
     <li
       className={clsx(
-        'p-3 rounded-lg  hover:text-blueTheme min-w-fit',
+        'p-3 rounded-lg  hover:text-blueTheme min-w-fit w-full',
         isActive ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
         item.label == 'Notification' && 'hidden sm:block'
       )}
     >
       <button
         onClick={() => handleClick()}
-        className="flex gap-3 items-center w-full"
+        className="flex gap-3 items-center justify-center md:justify-normal w-full"
       >
         {item.icon}
-        <span className="hidden sm:block">{item.label}</span>
+        <span className="hidden md:block">{item.label}</span>
       </button>
     </li>
   );
