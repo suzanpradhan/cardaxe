@@ -5,7 +5,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ZodSchema } from 'zod';
 
 interface ErrorActionType {
-  formName: 'cardFields' | 'cardDesign';
+  formName: 'cardFields' | 'cardDesign' | 'cardInfos';
   error: { [key: string]: Array<string> };
 }
 
@@ -87,7 +87,6 @@ export const cardSlice = createSlice({
     },
     setErrors: (state, action: PayloadAction<ErrorActionType>) => {
       const { error, formName } = action.payload;
-      console.log(error, formName)
       state[formName].errors = { ...error }
     },
 
@@ -133,7 +132,7 @@ export const {
   setErrors,
   validateForms,
   // validateField
-  // updateInfosForm,
+  updateInfosForm,
 } = cardSlice.actions;
 
 export default cardSlice.reducer;

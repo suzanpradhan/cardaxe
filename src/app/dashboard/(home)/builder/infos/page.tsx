@@ -1,16 +1,25 @@
 'use client';
 
 import FormWrapper from '@/components/FormWrapper';
-import SocialMediaForm from '@/components/myCards/SocialMediaForm';
+import SocialMediaForm, {
+  SocialMediaValueType,
+} from '@/components/myCards/SocialMediaForm';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
+import { updateInfosForm } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
-import { CardState, SocialMediaInfo } from '@/module/cards/cardsType';
+import {
+  CardState,
+  InfosFormsUpdateSchemaType,
+  SocialMediaInfo,
+} from '@/module/cards/cardsType';
 import { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
-import x_image from '../../../../../../public/X_logo.png';
-import facebook_image from '../../../../../../public/facebook_image.png';
-import instagram_image from '../../../../../../public/instagram_image.png';
+import xImage from '../../../../../../public/X_logo.png';
+import facebookImage from '../../../../../../public/facebook_image.png';
+import instagramImage from '../../../../../../public/instagram_image.png';
+import linkedInImage from '../../../../../../public/linkedin_image.png';
 
 export interface SocialMediaInfoType {
   socialLinkSchemaName: string;
@@ -21,42 +30,48 @@ export interface SocialMediaInfoType {
 const SOCIAL_MEDIA_FEILDS: Record<string, SocialMediaInfoType> = {
   Instagram: {
     socialLinkSchemaName: 'instagram',
-    socialLinkLogo: instagram_image,
+    socialLinkLogo: instagramImage,
     placeholder: '@',
   },
   Facebook: {
     socialLinkSchemaName: 'facebook',
-    socialLinkLogo: facebook_image,
+    socialLinkLogo: facebookImage,
     placeholder: 'facebook.com/',
+  },
+  LinkedIn: {
+    socialLinkSchemaName: 'linkedIn',
+    socialLinkLogo: linkedInImage,
+    placeholder: 'linkedIn.com/',
   },
   X: {
     socialLinkSchemaName: 'x',
-    socialLinkLogo: x_image,
+    socialLinkLogo: xImage,
     placeholder: '@',
   },
   Paypal: {
     socialLinkSchemaName: 'paypal',
-    socialLinkLogo: x_image,
+    socialLinkLogo: xImage,
     placeholder: '@',
   },
   'Cash App': {
     socialLinkSchemaName: 'cashApp',
-    socialLinkLogo: x_image,
+    socialLinkLogo: xImage,
     placeholder: '@',
   },
   'Custom Link': {
     socialLinkSchemaName: 'customLink',
-    socialLinkLogo: x_image,
+    socialLinkLogo: xImage,
     placeholder: '@',
   },
   Discord: {
     socialLinkSchemaName: 'discord',
-    socialLinkLogo: x_image,
+    socialLinkLogo: xImage,
     placeholder: '@',
   },
 };
 
 const CardInfosFormPage = () => {
+  const timeout = useTimeoutDispatch();
   const dispatch = useAppDispatch();
   const cardState = useAppSelector((state: RootState) => state.card);
 
@@ -77,50 +92,43 @@ const CardInfosFormPage = () => {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    categoryId: number
+    categoryId: string
   ) => {
     const { name, value } = e.target;
     const updateFormState: CardState<string>['cardInfos']['values'] = {
       ...cardState.cardInfos.values,
       [categoryId]: {
-        id: categoryId,
+        ...cardState.cardInfos.values[categoryId],
+        cardInfoId: categoryId,
+        [name]: value,
       },
     };
-    // timeout<InfosFormsSchemaType>(updateContentForm, updatedFormState);
+    timeout<InfosFormsUpdateSchemaType>(updateInfosForm, updateFormState);
     // const result =
-    //   ContentFormSchema.shape[name as keyof ContentFormSchemaType].safeParse(
-    //     value
-    //   );
-
-    // if (!result.success) {
-    //   const error = result.error.format();
-    //   dispatch(
-    //     setErrors({
-    //       formName: 'cardFields',
-    //       error: { ...cardState.cardFields.errors, [name]: error._errors },
-    //     })
-    //   );
-    // } else {
-    //   const newError = Object.fromEntries(
-    //     Object.entries(cardState.cardFields.errors).filter(
-    //       ([key]) => key !== name
-    //     )
-    //   );
-    //   dispatch(
-    //     setErrors({
-    //       formName: 'cardFields',
-    //       error: newError,
-    //     })
-    //   );
-    // }
+    //   InfoSchema.shape[name as keyof InfoSchemaType].safeParse(value);
+    // const result = InfosFormsUpdateSchema[categoryId as keyof InfosFormsUpdateSchemaType].;
   };
+
+  console.log('cardState', cardState);
 
   return (
     <FormWrapper>
-      {socialMediaInfo &&
-        socialMediaInfo.map((item, index) => (
+      {socialMediaInfo?.map((item, index) => {
+        const socialMediaErr0rs =
+          cardState.cardInfos.errors[item.id] != null
+            ? cardState.cardInfos.errors[item.id]
+            : undefined;
+        const socialMediaValue =
+          cardState.cardInfos.values[item.id] != null
+            ? cardState.cardInfos.values[item.id]
+            : undefined;
+        return (
           <SocialMediaForm
+            error={socialMediaErr0rs as SocialMediaValueType}
+            handleChange={handleChange}
+            socialMedialValue={socialMediaValue}
             key={index}
+            categoryId={item.id}
             socialLinkName={
               SOCIAL_MEDIA_FEILDS[item.name]?.socialLinkSchemaName
             }
@@ -128,30 +136,10 @@ const CardInfosFormPage = () => {
             socialLinkLogo={SOCIAL_MEDIA_FEILDS[item.name]?.socialLinkLogo}
             placeholder={SOCIAL_MEDIA_FEILDS[item.name]?.placeholder}
           />
-        ))}
+        );
+      })}
     </FormWrapper>
   );
 };
 
 export default CardInfosFormPage;
-function timeout<T>(
-  updateContentForm: any,
-  updatedFormState: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    email: string;
-    id?: number | undefined;
-    address?: string | null | undefined;
-    prefix?: string | undefined;
-    middleName?: string | null | undefined;
-    suffix?: string | undefined;
-    bio?: string | null | undefined;
-    website?: string | null | undefined;
-    designation?: string | undefined;
-    department?: string | undefined;
-    company?: string | undefined;
-  }
-) {
-  throw new Error('Function not implemented.');
-}

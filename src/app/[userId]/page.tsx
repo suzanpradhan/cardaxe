@@ -26,13 +26,22 @@ const page = async (props: any) => {
       backgroundUrl: `${apiPaths.serverUrl}${defaultCard.cardDesign.backgroundImage}`,
     };
 
+    const socialsValues = Object.fromEntries(
+      defaultCard.cardInfos.map((obj: any) => [
+        obj.cardInfo,
+        { ...obj, cardInfoId: obj.cardInfo },
+      ])
+    );
+    console.log('defaultCard', socialsValues);
+
     if (defaultCard) {
       return (
-        <div className="bg-componentBgGrey -z-20 ">
+        <div className="bg-componentBgGrey -z-20 h-screen flex items-center">
           <div className="max-w-xl mx-auto">
             <PreviewSection
               variableValues={variableValues}
               layout={defaultCard.cardTemplate}
+              socialValues={socialsValues}
             />
           </div>
         </div>

@@ -5,12 +5,6 @@ import TitleText from '@/components/TitleText';
 import Sidebar from '@/components/dashboard/Sidebar';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Status = {
-  authenticated: 'authenticated',
-  unauthenticated: 'unauthenticated',
-  loading: 'loading',
-};
-
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   // const router = useRouter();
   // const { data: session, status } = useSession();

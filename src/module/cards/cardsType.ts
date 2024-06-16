@@ -27,7 +27,7 @@ export type UpdateCardParams<T> = {
   cardTemplate: T;
   cardFields: ContentFormUpdateSchemaType,
   cardDesign: DesignFormUpdateSchemaType,
-  cardInfos: InfosFormsSchemaType,
+  cardInfos: InfosFormsUpdateSchemaType,
   isPublished: boolean,
   isDefault: boolean,
 
@@ -45,7 +45,7 @@ export type CardResponseType<T> = {
   cardTemplate: T;
   cardFields: ContentFormSchemaType,
   cardDesign: DesignFromSchemaType,
-  // cardInfos: 
+  cardInfos: Array<InfoSchemaType>,
   isPublished: boolean,
   isDefault: boolean,
   user?: string
@@ -55,7 +55,7 @@ export type CardState<T> = {
   id?: number;
   cardFields: { values: ContentFormSchemaType, errors: Record<string, Array<string>> },
   cardDesign: { values: DesignFromSchemaType, errors: Record<string, Array<string>> },
-  cardInfos: { values: InfosFormsSchemaType, errors: Record<string, Array<string>> }
+  cardInfos: { values: InfosFormsUpdateSchemaType, errors: Record<string, Record<string, string>> }
   isPublished?: boolean,
   isDefault?: boolean,
   user?: string
@@ -120,21 +120,26 @@ export const DesignFormUpdateSchema = DesignFormSchema.extend({
 })
 
 export const InfoSchema = z.object({
-  id: z.string().pipe(nonempty),
-  url: z.string().pipe(nonempty),
-  displayText: z.string().pipe(nonempty),
+  id: z.string().optional(),
+  url: z.string().optional(),
+  displayText: z.string().optional(),
+  cardInfoId: z.string().optional(),
   cardInfo: z.string().optional(),
-  card: z.string().optional()
+
 })
 
-export const InfosFormsSchema = z.record(InfoSchema)
+export const InfosFormsSchema = z.record(z.string(), InfoSchema)
+export const InfosFormsUpdateSchema = z.record(z.string(), InfoSchema.optional())
 
+export type InfoSchemaType = z.infer<typeof InfoSchema>
 export type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
 export type InfosFormsSchemaType = z.infer<typeof InfosFormsSchema>;
 export type DesignFromSchemaType = z.infer<typeof DesignFormSchema>;
 
 export type ContentFormUpdateSchemaType = z.infer<typeof ContentFormUpdateSchema>;
 export type DesignFormUpdateSchemaType = z.infer<typeof DesignFormUpdateSchema>;
+export type InfosFormsUpdateSchemaType = z.infer<typeof InfosFormsUpdateSchema>;
+
 
 
 

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 
 export function useTimeoutDispatch(
-    delay: number,
+    delay: number = 500,
 ): <StateType>(action: ActionCreatorWithPayload<StateType, string>, values: StateType) => void {
     const timeoutRef = useRef<number | null>(null);
     const dispatch = useDispatch();

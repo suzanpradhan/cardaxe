@@ -2,6 +2,7 @@ import {
   CardTemplatesType,
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
+  InfosFormsUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import CardLayouts, { VariableValueType } from '../CardLayouts';
 import FormWrapper from '../FormWrapper';
@@ -11,11 +12,13 @@ import ProfileDetails from './ProfileDetails';
 const PreviewSection = ({
   layout,
   variableValues,
+  socialValues,
 }: {
   layout: CardTemplatesType | undefined;
   variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
     VariableValueType;
+  socialValues: InfosFormsUpdateSchemaType;
 }) => {
   return (
     <FormWrapper className="bg-white mx-auto">
@@ -27,7 +30,11 @@ const PreviewSection = ({
           />
         )}
         <ProfileDescription variableValues={variableValues} />
-        <ProfileDetails cardValues={variableValues} isTeamComp={false} />
+        <ProfileDetails
+          cardValues={variableValues}
+          isTeamComp={false}
+          socialValues={socialValues}
+        />
       </div>
     </FormWrapper>
   );

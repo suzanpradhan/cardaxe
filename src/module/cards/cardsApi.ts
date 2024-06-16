@@ -87,8 +87,8 @@ const cardsApi = baseApi.injectEndpoints({
       },
     }),
     upDateCard: builder.mutation<any, UpdateCardParams<string>>({
-      query: ({ userId, cardId, ...payload }) => {
 
+      query: ({ userId, cardId, ...payload }) => {
         const fecthCachedImage = async (name: string) => {
           const cache = await caches.open('filesCache');
           const response = await cache.match(name);
@@ -97,6 +97,7 @@ const cardsApi = baseApi.injectEndpoints({
           return blob;
         }
         const formData = new FormData();
+        console.log("payload", payload)
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.prefix != undefined) formData.append('card_fields.prefix', payload.cardFields.prefix)
         if (payload.cardFields.firstName != undefined) formData.append('card_fields.first_name', payload.cardFields.firstName)
@@ -115,7 +116,7 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.backgroundColor != undefined) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
         if (payload.cardDesign.logo != undefined) formData.append('card_design.logo', payload.cardDesign.logo)
         fecthCachedImage('backgroundImage').then((response) => { if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) } });
-        fecthCachedImage('logo').then((response) => { console.log(response); if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });
+        fecthCachedImage('logo').then((response) => { if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
@@ -123,6 +124,14 @@ const cardsApi = baseApi.injectEndpoints({
         if (userId != undefined) formData.append('user', userId.toString())
         if (payload.isDefault != undefined) formData.append('is_default', payload.isDefault as unknown as string)
         if (payload.cardTemplate != undefined) formData.append('card_template', payload.cardTemplate)
+        if (payload.cardInfos && Object.entries(payload.cardInfos).length != 0) {
+          Object.values(payload.cardInfos).forEach((info) => {
+            if (info?.id) formData.append(`card_infos[][id]`, info?.id);
+            if (info?.url) formData.append(`card_infos[][url]`, info?.url);
+            if (info?.displayText) formData.append(`card_infos[][display_text]`, info?.displayText);
+            if (info?.cardInfoId) formData.append(`card_infos[][card_info_id]`, info?.cardInfoId);
+          })
+        }
         return {
           url: `${apiPaths.cardsUrl}${cardId}/`,
           method: 'PATCH',
