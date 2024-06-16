@@ -20,7 +20,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="h-screen overflow-hidden max-lg:mr-2">
       {/* {status === Status.loading && <section>Loading...</section>}
       {status === Status.authenticated && ( */}
-      <section className="sm:text-base h-full text-base-mobile flex flex-col gap-2 sm:flex-row">
+      <section className="sm:text-base h-full text-base-mobile flex flex-col gap-2 sm:gap-0 sm:flex-row">
         <div className="z-10 sm:h-screen sm:top-0 sm:shrink sm:sticky lg:basis-72  border-borderMain sm:border-r-1 bg-white border-b-8 pb-2 sm:border-b-0">
           <TitleText isSideBarComp />
           <div className="px-6 sm:hidden">
@@ -31,7 +31,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
           <Sidebar />
         </div>
-        <div className="sm:grow h-full max-w-6xl sm:mx-auto overflow-y-scroll overflow-x-hidden">
+        {/* <div className="sm:grow h-full max-w-6xl sm:mx-auto overflow-y-scroll overflow-x-hidden"> */}
+        <div className="sm:grow h-full sm:mx-auto overflow-y-scroll overflow-x-hidden">
           {children}
         </div>
       </section>
