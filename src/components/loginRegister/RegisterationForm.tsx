@@ -6,7 +6,7 @@ import {
 } from '@/module/register/registerType';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
@@ -47,14 +47,16 @@ const REGISTRATION_FEILDS: REGISTRATION_FEILDS_PROPS[] = [
 const RegisterationForm: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: RegistrationSchemaType) => {
+    setIsLoading(true);
     try {
       const responseData = await dispatch(
         registerApi.endpoints.signUp.initiate({
           fullname: data.fullname,
-          email: data.email,
-          password: data.password,
+          email: data.email.toLowerCase(),
+          password: data.password.toLowerCase(),
         })
       );
       if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
@@ -65,6 +67,7 @@ const RegisterationForm: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const formik = useFormik({
@@ -117,7 +120,7 @@ const RegisterationForm: React.FC = () => {
               )} */}
             </div>
           ))}
-          <ButtonForm label="Register" bluebackground />
+          <ButtonForm label="Register" bluebackground isLoading={isLoading} />
         </form>
       </div>
     </FormWrapper>

@@ -2,10 +2,10 @@
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import userApi from '@/module/user/userApi';
-import { UserDetailType, UserType, userSchema } from '@/module/user/userType';
+import { UserType, userSchema } from '@/module/user/userType';
 import { useFormik } from 'formik';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { ZodError } from 'zod';
 
 export default function UpdateProfile() {
@@ -20,7 +20,7 @@ export default function UpdateProfile() {
     dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch]);
 
-  const validateForm = (values: UserDetailType) => {
+  const validateForm = (values: UserType) => {
     try {
       userSchema.parse(values);
     } catch (error) {
@@ -31,7 +31,7 @@ export default function UpdateProfile() {
     }
   };
 
-  const onSubmit = async (formData: UserDetailType) => {
+  const onSubmit = async (formData: UserType) => {
     setIsLoading(true);
     try {
       const responseData = await Promise.resolve(
@@ -43,16 +43,28 @@ export default function UpdateProfile() {
     }
   };
 
-  const formik = useFormik<UserDetailType>({
+  const formik = useFormik<UserType>({
     enableReinitialize: true,
     initialValues: {
       fullname: user?.fullname ?? '',
       username: user?.username ?? '',
+      email: user?.email ?? '',
+      id: user?.id ?? null,
+      updateAvatar: undefined,
+      avatar: user?.avatar ? `${user?.avatar}` : '/profile/profile.png',
     },
     validateOnChange: false,
     validate: validateForm,
     onSubmit,
   });
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // console.log('here');
+    formik.setFieldValue(e.target.name, e.target.files?.[0]);
+  };
+
+  console.log(formik.values);
+
   return (
     <section className="max-w-3xl mx-auto mb-20">
       <div className="bg-white px-5 py-9">
@@ -68,21 +80,52 @@ export default function UpdateProfile() {
               <div className="flex flex-col sm:flex-row items-center gap-3">
                 <div className="relative overflow-hidden w-14 h-14 rounded-full">
                   <Image
-                    src={`/profile/profile.png`}
+                    src={
+                      formik.values.updateAvatar
+                        ? URL.createObjectURL(formik.values.updateAvatar) ??
+                          '/profile/profile.png'
+                        : formik.values.avatar ?? '/profile/profile.png'
+                    }
                     alt="profile-image"
                     objectFit="cover"
                     layout="fill"
                     sizes="(max-width: 2000px) 75vw, 33vw"
                   />
                 </div>
-                <div>
-                  <h3 className="text-base font-semibold">Niwesh Shrestha</h3>
+                <div className="flex flex-col max-md:items-center">
+                  <h3 className="text-base font-semibold">
+                    {formik.values.fullname}
+                  </h3>
                   <p className="text-sm font-normal">Free Plan</p>
                 </div>
               </div>
-              <button className="h-10 bg-blueTheme text-white px-2 rounded shadow-lg shadow-blueTheme/60">
+              <div className="">
+                <label htmlFor="image-input">
+                  <div className=" bg-blueTheme py-2 text-white px-2 rounded shadow-lg shadow-blueTheme/60 text-center">
+                    Change Profile
+                  </div>
+                </label>
+                <input
+                  id={'image-input'}
+                  type="file"
+                  onChange={(e) => handleImageChange(e)}
+                  className="hidden"
+                  accept="image/*"
+                  // value={formik.values.updateAvatar?.name ?? ''}
+                  // value={
+                  //   formik.values.updateAvatar
+                  //     ? URL.createObjectURL(formik.values.updateAvatar)
+                  //     : undefined
+                  // }
+                  name="updateAvatar"
+                />
+              </div>
+              {/* <button
+                className=" bg-blueTheme py-2 text-white px-2 rounded shadow-lg shadow-blueTheme/60"
+                onClick={handleImageChange}
+              >
                 Change Profile
-              </button>
+              </button> */}
             </div>
             <div className="flex flex-col justify-stretch gap-1">
               <label htmlFor="username" className="text-grayfont">

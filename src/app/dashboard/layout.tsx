@@ -32,7 +32,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <Sidebar />
         </div>
         {/* <div className="sm:grow h-full max-w-6xl sm:mx-auto overflow-y-scroll overflow-x-hidden"> */}
-        <div className="sm:grow h-full sm:mx-auto overflow-y-scroll overflow-x-hidden">
+        <div className="sm:grow h-full sm:mx-auto overflow-y-scroll overflow-x-hidden px-6 py-8">
           {children}
         </div>
       </section>

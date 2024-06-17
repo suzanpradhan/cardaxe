@@ -78,8 +78,6 @@ const ContentsPage = () => {
     }
   };
 
-  console.log('cardState', cardState);
-
   return (
     <form
       onSubmit={(e) => {

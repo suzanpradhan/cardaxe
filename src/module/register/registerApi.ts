@@ -29,7 +29,6 @@ export const registerApi = baseApi.injectEndpoints({
                 }
             },
             transformResponse: (response) => {
-                console.log(response);
                 return response as any;
             },
         },),
@@ -56,7 +55,6 @@ export const registerApi = baseApi.injectEndpoints({
                 }
             },
             transformResponse: (response) => {
-                console.log(response);
                 return response as any;
             },
         },),
@@ -81,7 +79,6 @@ export const registerApi = baseApi.injectEndpoints({
                 }
             },
             transformResponse: (response) => {
-                console.log(response);
                 return response as any;
             },
         },),

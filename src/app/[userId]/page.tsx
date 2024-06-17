@@ -32,7 +32,6 @@ const page = async (props: any) => {
         { ...obj, cardInfoId: obj.cardInfo },
       ])
     );
-    console.log('defaultCard', socialsValues);
 
     if (defaultCard) {
       return (

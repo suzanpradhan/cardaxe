@@ -28,6 +28,8 @@ import {
   DesignFormUpdateSchemaType,
   DesignFromSchemaType,
 } from '@/module/cards/cardsType';
+import userApi from '@/module/user/userApi';
+import { UserType } from '@/module/user/userType';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -146,13 +148,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           if (errorMessage) {
             toast.error(`Error: Please enter all required value`);
             toggleLoading(false);
-            console.log(
-              cardState.cardDesign.errors,
-              cardState.cardFields.errors,
-              cardId,
-              session.data?.user?.id,
-              updatedCardFields
-            );
             throw errorMessage;
           }
           toast.success('Successfully updated');
@@ -167,7 +162,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         });
     } else {
       toggleLoading(false);
-      console.log(cardState.cardFields.errors);
       toast.error(`Error: Please enter all required value`);
     }
   };
@@ -275,23 +269,35 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
       cardState.cardDesign.values.logo === null ||
-      cardState.cardDesign.values.logo.length === 0
+      cardState.cardDesign.values.logo?.length === 0
         ? cardAction === 'update'
-          ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
-          : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.logo}`
+          ? card?.cardDesign.logo
+            ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
+            : undefined
+          : card?.cardTemplate.defaultCardDesign.logo
+            ? `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.logo}`
+            : undefined
         : cardState.cardDesign.values.logo?.startsWith('blob')
-        ? cardState.cardDesign.values.logo
-        : `${apiPaths.serverUrl}${cardState.cardDesign.values.logo}`,
+          ? cardState.cardDesign.values.logo
+          : cardState.cardDesign.values.logo
+            ? `${apiPaths.serverUrl}${cardState.cardDesign.values.logo}`
+            : undefined,
     backgroundUrl:
       cardState.cardDesign.values.backgroundImage === undefined ||
       cardState.cardDesign.values.backgroundImage === null ||
       cardState.cardDesign.values.backgroundImage?.length === 0
         ? cardAction === 'update'
-          ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
-          : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.backgroundImage}`
+          ? card?.cardDesign.backgroundImage
+            ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
+            : undefined
+          : card?.cardTemplate.defaultCardDesign.backgroundImage
+            ? `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.backgroundImage}`
+            : undefined
         : cardState.cardDesign.values.backgroundImage?.startsWith('blob')
-        ? cardState.cardDesign.values.backgroundImage
-        : `${apiPaths.serverUrl}${cardState.cardDesign.values.backgroundImage}`,
+          ? cardState.cardDesign.values.backgroundImage
+          : cardState.cardDesign.values.backgroundImage
+            ? `${apiPaths.serverUrl}${cardState.cardDesign.values.backgroundImage}`
+            : undefined,
     website:
       cardState?.cardFields?.values.website?.length === 0
         ? cardAction === 'update'
@@ -299,6 +305,14 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           : card?.cardTemplate.defaultCardFields.website ?? ''
         : cardState.cardFields.values.website,
   };
+
+  const user = useAppSelector(
+    (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
+  );
+
+  useEffect(() => {
+    dispatch(userApi.endpoints.getUser.initiate());
+  }, [dispatch]);
 
   return (
     <>
@@ -329,6 +343,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="shrink grow">
           <PreviewSection
             layout={currentLayout}
+            user={user}
             variableValues={variableValues}
             socialValues={cardState.cardInfos.values}
           />
@@ -350,6 +365,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             }`}
           >
             <PreviewSection
+              user={user}
               layout={currentLayout}
               variableValues={variableValues}
               socialValues={cardState.cardInfos.values}

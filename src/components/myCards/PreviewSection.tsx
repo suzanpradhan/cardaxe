@@ -4,12 +4,14 @@ import {
   DesignFormUpdateSchemaType,
   InfosFormsUpdateSchemaType,
 } from '@/module/cards/cardsType';
+import { UserType } from '@/module/user/userType';
 import CardLayouts, { VariableValueType } from '../CardLayouts';
 import FormWrapper from '../FormWrapper';
 import ProfileDescription from './ProfileDescription';
 import ProfileDetails from './ProfileDetails';
 
 const PreviewSection = ({
+  user,
   layout,
   variableValues,
   socialValues,
@@ -19,6 +21,7 @@ const PreviewSection = ({
     DesignFormUpdateSchemaType &
     VariableValueType;
   socialValues: InfosFormsUpdateSchemaType;
+  user?: UserType;
 }) => {
   return (
     <FormWrapper className="bg-white mx-auto">
@@ -29,7 +32,7 @@ const PreviewSection = ({
             variableValues={variableValues}
           />
         )}
-        <ProfileDescription variableValues={variableValues} />
+        <ProfileDescription variableValues={variableValues} user={user} />
         <ProfileDetails
           cardValues={variableValues}
           isTeamComp={false}

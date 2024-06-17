@@ -37,7 +37,6 @@ const ConfirmEmail = () => {
       if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
         console.log('regsister response', responseData);
       } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
-        console.log(responseData);
         setDisableInput(true);
       }
     } catch (error) {
@@ -55,24 +54,6 @@ const ConfirmEmail = () => {
     validate: validateForm,
     validateOnBlur: true,
   });
-  // const submit = async (data: ConfirmEmailSchemaType) => {
-  //   axios({
-  //     method: 'post',
-  //     url: `${apiPaths.baseUrl}${apiPaths.sendForgotPasswordEmail}`,
-  //     data: data,
-  //     headers: { 'Content-Type': 'multipart/form-data' },
-  //   })
-  //     .then((response) => {
-  //       console.log(response);
-  //       toast.info(response.data.msg);
-  //       setDisableInput(true);
-  //     })
-  //     .catch((AxiosError) => {
-  //       const message = AxiosError.response.data.errors.errors[0];
-  //       console.log(message);
-  //       toast.error(message);
-  //     });
-  // };
   return (
     <div className="flex flex-col w-140 mx-auto my-48">
       <FormWrapper
@@ -80,7 +61,7 @@ const ConfirmEmail = () => {
         description={'Please enter the registered verified email id.'}
       >
         <form
-          className="flex flex-col gap-4 pt-2 my-6"
+          className="flex flex-col gap-4 "
           onSubmit={(e) => {
             e.preventDefault();
             formik.handleSubmit(e);

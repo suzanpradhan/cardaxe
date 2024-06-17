@@ -1,3 +1,4 @@
+import { nonempty } from '@/core/utils/formUtils';
 import { z } from 'zod';
 
 export const userSchema = z.object({
@@ -23,10 +24,13 @@ export const userSchema = z.object({
 });
 export type UserDetailType = z.infer<typeof userSchema>;
 
-export interface UserType {
-  email: string;
-  fullname: string;
-  id: number;
-  username: string;
-  avatar: string;
-}
+export const UserProfileSchema = z.object({
+  email: z.string().pipe(nonempty),
+  fullname: z.string().pipe(nonempty),
+  id: z.number(),
+  username: z.string().pipe(nonempty),
+  avatar: z.string().optional().nullable(),
+  updateAvatar: z.custom<File>().optional(),
+});
+
+export type UserType = z.infer<typeof UserProfileSchema>;

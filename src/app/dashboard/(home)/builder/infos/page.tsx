@@ -109,8 +109,6 @@ const CardInfosFormPage = () => {
     // const result = InfosFormsUpdateSchema[categoryId as keyof InfosFormsUpdateSchemaType].;
   };
 
-  console.log('cardState', cardState);
-
   return (
     <FormWrapper>
       {socialMediaInfo?.map((item, index) => {

@@ -67,7 +67,7 @@ const DashboardPage = () => {
           <HomeFeed post={post} key={index} />
         ))}
       </div>
-      <div className="flex-col gap-2 px-6 hidden lg:flex h-fit grow ">
+      <div className="flex-col gap-2 px-6 hidden lg:flex h-fit grow max-w-xl">
         <UserProfileCard fullName={user?.fullname} />
         <h2 className="font-bold my-2">My Card</h2>
         <HomeCardTemplate userId={user?.id} />

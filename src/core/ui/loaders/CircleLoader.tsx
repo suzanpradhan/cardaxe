@@ -13,9 +13,9 @@ const CircleLoader = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-2">
       <l-ring
-        size="35"
+        size="28"
         stroke="2"
         bg-opacity="0"
         speed="2"

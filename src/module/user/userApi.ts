@@ -2,7 +2,7 @@ import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
 import { toast } from "react-toastify";
-import { UserDetailType, UserType } from "./userType";
+import { UserType } from "./userType";
 
 const userApi = baseApi.injectEndpoints({
 
@@ -15,16 +15,25 @@ const userApi = baseApi.injectEndpoints({
             providesTags: ['User'],
             transformResponse: (response: any) => {
                 const camelCaseResponse = snakeToCamel(response)
-                console.log(camelCaseResponse)
                 return camelCaseResponse;
             },
         }),
-        updateUser: builder.mutation<UserType, UserDetailType>({
-            query: ({ ...payload }) => ({
-                url: `${apiPaths.profileUrl}`,
-                method: 'PATCH',
-                body: payload,
-            }),
+        updateUser: builder.mutation<UserType, UserType>({
+            query: ({ ...payload }) => {
+                const formData = new FormData()
+                formData.append("email", payload.email);
+                formData.append("fullname", payload.fullname);
+                formData.append('id', payload.id.toString());
+                formData.append("username", payload.username);
+
+                if (payload.updateAvatar) formData.append("avatar", payload.updateAvatar);
+
+                return ({
+                    url: `${apiPaths.profileUrl}`,
+                    method: 'PATCH',
+                    body: formData,
+                })
+            },
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
