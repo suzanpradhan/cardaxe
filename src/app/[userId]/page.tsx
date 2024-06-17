@@ -33,6 +33,8 @@ const page = async (props: any) => {
       ])
     );
 
+    // const user = defaultCard.,
+
     if (defaultCard) {
       return (
         <div className="bg-componentBgGrey -z-20 h-screen flex items-center">
@@ -41,6 +43,7 @@ const page = async (props: any) => {
               variableValues={variableValues}
               layout={defaultCard.cardTemplate}
               socialValues={socialsValues}
+              user={defaultCard.user}
             />
           </div>
         </div>

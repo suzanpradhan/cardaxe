@@ -182,7 +182,7 @@ const cardsApi = baseApi.injectEndpoints({
     updateDesigns: builder.mutation<any, DesignFromSchemaType>({
       query: ({ id, ...payload }) => {
         var formData = new FormData();
-        formData.append('background_color', payload.backgroundColor);
+        if (payload.backgroundColor) formData.append('background_color', payload.backgroundColor);
         if (payload.backgroundImage?.[0])
           formData.append('background_image', payload.backgroundImage[0]);
         if (payload.logo) formData.append('logo_url', payload.logo);

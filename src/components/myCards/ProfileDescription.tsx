@@ -45,7 +45,6 @@ const ProfileDescription = ({
     VariableValueType;
   user?: UserType;
 }) => {
-  console.log('user?.avatar', user?.avatar);
   return (
     <div className="grid gap-4">
       <div className="flex gap-4 bg-transparent">
@@ -61,8 +60,7 @@ const ProfileDescription = ({
         </div>
         <div className="flex flex-col h-ustify-center gap-1">
           <h1 className="sm:text-2xl text-lg font-extrabold ">
-            {variableValues?.firstName} {variableValues?.middleName}{' '}
-            {variableValues?.lastName}
+            {user?.fullname}
           </h1>
           <p>
             {variableValues?.designation} - {variableValues?.company}

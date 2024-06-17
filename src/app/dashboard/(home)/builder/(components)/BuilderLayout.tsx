@@ -62,6 +62,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
     dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
+    dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch]);
 
   useEffect(() => {
@@ -71,6 +72,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         case 'create':
           dispatch(updateContentForm(initialState.cardFields.values));
           dispatch(updateDesignForm(initialState.cardDesign.values));
+          dispatch(updateCardTemplate('1'));
+          dispatch(updateDefaultCard(false));
+          dispatch(updateInfosForm({}));
           dispatch(validateForms('cardDesign'));
           dispatch(validateForms('cardFields'));
           break;
@@ -115,6 +119,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     const updatedCardDesign = updatedDiff(
       card.cardDesign,
       cardState.cardDesign.values as DesignFromSchemaType
+    );
+
+    console.log(
+      'cardState.cardDesign.errors',
+      cardState.cardDesign.errors,
+      cardState.cardFields.errors
     );
 
     if (
@@ -174,7 +184,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     DesignFormUpdateSchemaType &
     VariableValueType = {
     backgroundColor:
-      cardState.cardDesign.values.backgroundColor.length === 0
+      cardState.cardDesign.values.backgroundColor?.length === 0
         ? cardAction === 'update'
           ? card?.cardDesign.backgroundColor
           : card?.cardTemplate.defaultCardDesign.backgroundColor
@@ -310,10 +320,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
 
-  useEffect(() => {
-    dispatch(userApi.endpoints.getUser.initiate());
-  }, [dispatch]);
-
   return (
     <>
       <AppBar appBarLabel="My Personal Card">
@@ -338,7 +344,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         </button>
       </AppBar>
       <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
-        <SideBarMyCards cardId={cardId} cardAction={cardAction} />
+        <SideBarMyCards
+          cardId={cardId}
+          cardAction={cardAction}
+          cardState={cardState}
+        />
         <div className="basis-2/5 min-w-[100px]">{children}</div>
         <div className="shrink grow">
           <PreviewSection
@@ -356,7 +366,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
               toggle ? '' : '-translate-x-[calc(102%)]'
             }`}
           >
-            <SideBarMyCards cardId={cardId} cardAction={cardAction} />
+            <SideBarMyCards
+              cardId={cardId}
+              cardAction={cardAction}
+              cardState={cardState}
+            />
             {children}
           </div>
           <div

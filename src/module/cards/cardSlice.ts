@@ -1,6 +1,6 @@
 'use client';
 
-import { CardState, ContentFormSchema, ContentFormSchemaType, DesignFormSchema, DesignFromSchemaType } from '@/module/cards/cardsType';
+import { CardState, ContentFormSchema, ContentFormSchemaType, DesignFormUpdateSchema, DesignFromSchemaType } from '@/module/cards/cardsType';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ZodSchema } from 'zod';
 
@@ -38,7 +38,7 @@ export const initialState: CardState<string> = {
   },
   cardDesign: {
     values: {
-      backgroundColor: '',
+      backgroundColor: '#f2f2f2',
       backgroundImage: undefined,
       logo: undefined,
       showSocialIcons: false,
@@ -99,7 +99,7 @@ export const cardSlice = createSlice({
           formSchema = ContentFormSchema;
           break;
         case 'cardDesign':
-          formSchema = DesignFormSchema;
+          formSchema = DesignFormUpdateSchema;
           break;
       }
       if (!formSchema) return;

@@ -59,7 +59,6 @@ export default function UpdateProfile() {
   });
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log('here');
     formik.setFieldValue(e.target.name, e.target.files?.[0]);
   };
 
