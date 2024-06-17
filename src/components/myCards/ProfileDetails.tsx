@@ -78,14 +78,17 @@ const ProfileDetails = ({
   cardValues,
   socialValues,
 }: ProfileDetailsPropType) => {
-  console.log('socialValues', socialValues);
   const socialMedialList =
     socialValues &&
     SOCIAL_MEDIA_LIST.filter((item) => {
       if (socialValues?.[item.id]?.cardInfoId)
-        return item.id === parseInt(socialValues?.[item.id]?.cardInfoId!);
+        return (
+          item.id === parseInt(socialValues?.[item.id]?.cardInfoId!) &&
+          socialValues?.[item.id]?.url!
+        );
+    }).map((item) => {
+      return { ...item, url: socialValues?.[item.id]?.url! };
     });
-  console.log(socialMedialList);
   return (
     <div className="w-full">
       <ContactInfo cardValues={cardValues} isTeamComp={isTeamComp} />

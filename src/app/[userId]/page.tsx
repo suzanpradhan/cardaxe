@@ -32,7 +32,8 @@ const page = async (props: any) => {
         { ...obj, cardInfoId: obj.cardInfo },
       ])
     );
-    console.log('defaultCard', socialsValues);
+
+    // const user = defaultCard.,
 
     if (defaultCard) {
       return (
@@ -42,6 +43,7 @@ const page = async (props: any) => {
               variableValues={variableValues}
               layout={defaultCard.cardTemplate}
               socialValues={socialsValues}
+              user={defaultCard.user}
             />
           </div>
         </div>

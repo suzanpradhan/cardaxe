@@ -9,7 +9,7 @@ const CardTemplate = ({
   return (
     <div
       className="w-full h-60 rounded-lg  mx-auto relative "
-      style={{ backgroundColor: card.cardDesign.values.backgroundColor }}
+      // style={{ backgroundColor: card.cardDesign.values.backgroundColor }}
     >
       {card.cardDesign.values.backgroundImage && (
         <Image

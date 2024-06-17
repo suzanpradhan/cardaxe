@@ -49,7 +49,6 @@ const cardsApi = baseApi.injectEndpoints({
           ]
           : [{ type: 'CardsList', id: 'LIST' }],
       transformResponse: (response: any) => {
-        console.log(response)
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse.results;
       },
@@ -97,7 +96,6 @@ const cardsApi = baseApi.injectEndpoints({
           return blob;
         }
         const formData = new FormData();
-        console.log("payload", payload)
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.prefix != undefined) formData.append('card_fields.prefix', payload.cardFields.prefix)
         if (payload.cardFields.firstName != undefined) formData.append('card_fields.first_name', payload.cardFields.firstName)
@@ -184,7 +182,7 @@ const cardsApi = baseApi.injectEndpoints({
     updateDesigns: builder.mutation<any, DesignFromSchemaType>({
       query: ({ id, ...payload }) => {
         var formData = new FormData();
-        formData.append('background_color', payload.backgroundColor);
+        if (payload.backgroundColor) formData.append('background_color', payload.backgroundColor);
         if (payload.backgroundImage?.[0])
           formData.append('background_image', payload.backgroundImage[0]);
         if (payload.logo) formData.append('logo_url', payload.logo);

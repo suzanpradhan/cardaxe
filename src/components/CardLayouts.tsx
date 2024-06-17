@@ -14,13 +14,18 @@ export interface VariableValueType {
 type HandlebarsTemplateFunction = () => string;
 
 interface CardLayoutProps {
+  enableShadow?: boolean;
   htmlSource: string;
   variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
     VariableValueType;
 }
 
-const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
+const CardLayouts = ({
+  htmlSource,
+  variableValues,
+  enableShadow = false,
+}: CardLayoutProps) => {
   const snakeCaseVariablesValues = {
     ...camelToSnake(variableValues),
     // logo_url:
@@ -39,7 +44,15 @@ const CardLayouts = ({ htmlSource, variableValues }: CardLayoutProps) => {
 
   const processedHtml = template();
 
-  return <div className="max-w-xl mb-4 flex">{parse(processedHtml)}</div>;
+  return (
+    <div
+      className={`max-w-xl mb-4 flex rounded-lg ${
+        enableShadow ? 'shadow-grayfont shadow-lg ' : ''
+      }`}
+    >
+      {parse(processedHtml)}
+    </div>
+  );
 };
 
 export default CardLayouts;

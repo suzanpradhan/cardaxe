@@ -1,6 +1,7 @@
+'use client';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SidebarNavElementsProps } from './Sidebar';
 
 const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {

@@ -3,7 +3,6 @@
 import AutoAuthorize from '@/components/loginRegister/AutoAuthorize';
 import LoginForm from '@/components/loginRegister/LoginForm';
 import Link from 'next/link';
-import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const LoginPage = () => {
@@ -27,8 +26,18 @@ const LoginPage = () => {
             <div className="h-0 grow border-1 border-componentBgGrey "></div>
           </div>
           <AutoAuthorize />
+          <div className="flex gap-2 justify-center  my-8">
+            <span>{`Don't have an account?`}</span>
+            <Link
+              href="/register"
+              type="button"
+              className="text-grayfont hover:underline hover:text-blueTheme"
+            >
+              Sign Up!
+            </Link>
+          </div>
         </div>
-        <footer className="flex w-full justify-between text-xs ">
+        <footer className="flex w-full justify-between text-xs text-grayfont">
           <p>Terms, Privacy, Trust & Safety</p>
           <p>© 2022 Cardaxe LLC.</p>
         </footer>

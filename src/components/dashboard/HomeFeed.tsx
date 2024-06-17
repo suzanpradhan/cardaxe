@@ -1,9 +1,8 @@
-import React from 'react';
+import { PostType } from '@/app/module';
+import { Bookmark, Flash, Heart, MoreSquare, Share } from 'iconsax-react';
 import Image from 'next/image';
 import square_image from '../../../public/square_image.jpg';
-import { Bookmark, Flash, Heart, MoreSquare, Share } from 'iconsax-react';
 import CardTemplateHome from './CardTempHome';
-import { PostType } from '@/app/module';
 
 type HomeFeedType = {
   post: PostType;
@@ -26,7 +25,7 @@ const HomeFeed = ({ post }: HomeFeedType) => {
   ];
 
   return (
-    <div className="px-2 sm:px-0 w-full flex flex-col gap-4 border-borderMain border-b-8 sm:border-b-1  pb-4 mx-auto">
+    <div className="px-2 sm:px-0 w-full flex flex-col gap-4 border-borderMain border-b-8 sm:border-b-1 pb-4 mx-auto">
       <section className="flex items-center gap-2">
         <div className="relative h-8 w-8 rounded-full z-auto">
           <Image

@@ -1,6 +1,7 @@
 import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
 import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -31,16 +32,16 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 ];
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
   const navigator = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const callback = searchParams.get('callback');
   const onSubmit = async (data: LoginSchemaType) => {
+    setIsLoading(true);
     await signIn('credentials', {
-      email: data.email,
-      password: data.password,
+      email: data.email.toLowerCase(),
+      password: data.password.toLowerCase(),
       callbackUrl: '/dashboard',
       redirect: false,
     }).then((response) => {
@@ -102,14 +103,14 @@ const LoginForm: React.FC = () => {
               )}
             </div>
           ))}
-          {/* <Link
+          <Link
             href="/confirmEmail"
             type="button"
             className="text-grayfont text-right mb-2 hover:underline hover:text-blueTheme"
           >
             Forgot Password
-          </Link> */}
-          <ButtonForm label="Login" bluebackground />
+          </Link>
+          <ButtonForm label="Login" bluebackground isLoading={isLoading} />
         </div>
       </form>
     </FormWrapper>

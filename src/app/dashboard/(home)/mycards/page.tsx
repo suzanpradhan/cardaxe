@@ -54,10 +54,8 @@ const MyCardsPage = () => {
     router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
   };
 
-  console.log('cardsList', cardsList);
-
   return (
-    <div className="mt-5">
+    <>
       <AppBar appBarLabel="My Cards">
         <button
           onClick={() => hanldeCreateCard()}
@@ -66,7 +64,7 @@ const MyCardsPage = () => {
           {createLoading ? <CircleLoader /> : 'Create New card'}
         </button>
       </AppBar>
-      <div className="flex flex-col gap-5 my-10 max-w-md">
+      <div className="flex flex-col gap-5 my-10 ">
         {cardsList?.map((card, index) => {
           return (
             <div key={index} className="w-full">
@@ -78,6 +76,7 @@ const MyCardsPage = () => {
                   {card.cardDesign.logo != null &&
                     card.cardDesign.logo != undefined && (
                       <CardLayouts
+                        enableShadow
                         htmlSource={card.cardTemplate?.htmlCode}
                         variableValues={{
                           ...card.cardFields,
@@ -93,7 +92,7 @@ const MyCardsPage = () => {
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 

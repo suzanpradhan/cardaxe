@@ -1,6 +1,7 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
+import { toast } from "react-toastify";
 import { UserType } from "./userType";
 
 const userApi = baseApi.injectEndpoints({
@@ -17,7 +18,34 @@ const userApi = baseApi.injectEndpoints({
                 return camelCaseResponse;
             },
         }),
+        updateUser: builder.mutation<UserType, UserType>({
+            query: ({ ...payload }) => {
+                const formData = new FormData()
+                formData.append("email", payload.email);
+                formData.append("fullname", payload.fullname);
+                formData.append('id', payload.id.toString());
+                formData.append("username", payload.username);
 
+                if (payload.updateAvatar) formData.append("avatar", payload.updateAvatar);
+
+                return ({
+                    url: `${apiPaths.profileUrl}`,
+                    method: 'PATCH',
+                    body: formData,
+                })
+            },
+            async onQueryStarted(payload, { queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                    toast.success('Profile updated.');
+                } catch (err) {
+                    console.log(err);
+                    // toast.error();
+                    toast.error('Failed updating profile.');
+                }
+            },
+            invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+        }),
     }),
     overrideExisting: true,
 })

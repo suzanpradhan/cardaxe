@@ -81,7 +81,7 @@ const SocialMediaForm = ({
               socialMedialValue?.[item as keyof SocialMediaValueType]
             }
             name={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
-            placeholder={placeholder}
+            placeholder={index === 0 ? placeholder : 'Display Text'}
             className={clsx(
               'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
               error?.[item as keyof SocialMediaValueType]

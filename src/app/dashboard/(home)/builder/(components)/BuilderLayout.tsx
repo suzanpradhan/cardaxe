@@ -28,6 +28,8 @@ import {
   DesignFormUpdateSchemaType,
   DesignFromSchemaType,
 } from '@/module/cards/cardsType';
+import userApi from '@/module/user/userApi';
+import { UserType } from '@/module/user/userType';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -60,6 +62,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
     dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
+    dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch]);
 
   useEffect(() => {
@@ -69,6 +72,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         case 'create':
           dispatch(updateContentForm(initialState.cardFields.values));
           dispatch(updateDesignForm(initialState.cardDesign.values));
+          dispatch(updateCardTemplate('1'));
+          dispatch(updateDefaultCard(false));
+          dispatch(updateInfosForm({}));
           dispatch(validateForms('cardDesign'));
           dispatch(validateForms('cardFields'));
           break;
@@ -115,6 +121,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState.cardDesign.values as DesignFromSchemaType
     );
 
+    console.log(
+      'cardState.cardDesign.errors',
+      cardState.cardDesign.errors,
+      cardState.cardFields.errors
+    );
+
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
       Object.keys(cardState.cardFields.errors).length === 0 &&
@@ -146,13 +158,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           if (errorMessage) {
             toast.error(`Error: Please enter all required value`);
             toggleLoading(false);
-            console.log(
-              cardState.cardDesign.errors,
-              cardState.cardFields.errors,
-              cardId,
-              session.data?.user?.id,
-              updatedCardFields
-            );
             throw errorMessage;
           }
           toast.success('Successfully updated');
@@ -167,7 +172,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         });
     } else {
       toggleLoading(false);
-      console.log(cardState.cardFields.errors);
       toast.error(`Error: Please enter all required value`);
     }
   };
@@ -180,7 +184,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     DesignFormUpdateSchemaType &
     VariableValueType = {
     backgroundColor:
-      cardState.cardDesign.values.backgroundColor.length === 0
+      cardState.cardDesign.values.backgroundColor?.length === 0
         ? cardAction === 'update'
           ? card?.cardDesign.backgroundColor
           : card?.cardTemplate.defaultCardDesign.backgroundColor
@@ -275,23 +279,35 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
       cardState.cardDesign.values.logo === null ||
-      cardState.cardDesign.values.logo.length === 0
+      cardState.cardDesign.values.logo?.length === 0
         ? cardAction === 'update'
-          ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
-          : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.logo}`
+          ? card?.cardDesign.logo
+            ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
+            : undefined
+          : card?.cardTemplate.defaultCardDesign.logo
+            ? `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.logo}`
+            : undefined
         : cardState.cardDesign.values.logo?.startsWith('blob')
-        ? cardState.cardDesign.values.logo
-        : `${apiPaths.serverUrl}${cardState.cardDesign.values.logo}`,
+          ? cardState.cardDesign.values.logo
+          : cardState.cardDesign.values.logo
+            ? `${apiPaths.serverUrl}${cardState.cardDesign.values.logo}`
+            : undefined,
     backgroundUrl:
       cardState.cardDesign.values.backgroundImage === undefined ||
       cardState.cardDesign.values.backgroundImage === null ||
       cardState.cardDesign.values.backgroundImage?.length === 0
         ? cardAction === 'update'
-          ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
-          : `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.backgroundImage}`
+          ? card?.cardDesign.backgroundImage
+            ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
+            : undefined
+          : card?.cardTemplate.defaultCardDesign.backgroundImage
+            ? `${apiPaths.serverUrl}${card?.cardTemplate.defaultCardDesign.backgroundImage}`
+            : undefined
         : cardState.cardDesign.values.backgroundImage?.startsWith('blob')
-        ? cardState.cardDesign.values.backgroundImage
-        : `${apiPaths.serverUrl}${cardState.cardDesign.values.backgroundImage}`,
+          ? cardState.cardDesign.values.backgroundImage
+          : cardState.cardDesign.values.backgroundImage
+            ? `${apiPaths.serverUrl}${cardState.cardDesign.values.backgroundImage}`
+            : undefined,
     website:
       cardState?.cardFields?.values.website?.length === 0
         ? cardAction === 'update'
@@ -299,6 +315,10 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           : card?.cardTemplate.defaultCardFields.website ?? ''
         : cardState.cardFields.values.website,
   };
+
+  const user = useAppSelector(
+    (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
+  );
 
   return (
     <>
@@ -324,11 +344,16 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         </button>
       </AppBar>
       <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
-        <SideBarMyCards cardId={cardId} cardAction={cardAction} />
+        <SideBarMyCards
+          cardId={cardId}
+          cardAction={cardAction}
+          cardState={cardState}
+        />
         <div className="basis-2/5 min-w-[100px]">{children}</div>
         <div className="shrink grow">
           <PreviewSection
             layout={currentLayout}
+            user={user}
             variableValues={variableValues}
             socialValues={cardState.cardInfos.values}
           />
@@ -341,7 +366,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
               toggle ? '' : '-translate-x-[calc(102%)]'
             }`}
           >
-            <SideBarMyCards cardId={cardId} cardAction={cardAction} />
+            <SideBarMyCards
+              cardId={cardId}
+              cardAction={cardAction}
+              cardState={cardState}
+            />
             {children}
           </div>
           <div
@@ -350,6 +379,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             }`}
           >
             <PreviewSection
+              user={user}
               layout={currentLayout}
               variableValues={variableValues}
               socialValues={cardState.cardInfos.values}
