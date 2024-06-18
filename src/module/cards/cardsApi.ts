@@ -93,6 +93,7 @@ const cardsApi = baseApi.injectEndpoints({
           const response = await cache.match(name);
           if (!response) return;
           const blob = await response.blob();
+          await cache.delete(name)
           return blob;
         }
         const formData = new FormData();

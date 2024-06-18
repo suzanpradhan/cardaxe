@@ -56,7 +56,7 @@ const RegisterationForm: React.FC = () => {
         registerApi.endpoints.signUp.initiate({
           fullname: data.fullname,
           email: data.email.toLowerCase(),
-          password: data.password.toLowerCase(),
+          password: data.password,
         })
       );
       if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
