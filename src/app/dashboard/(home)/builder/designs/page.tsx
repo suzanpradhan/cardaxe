@@ -55,12 +55,12 @@ const Designpage = () => {
       dispatch(
         setErrors({
           formName: 'cardDesign',
-          error: { ...cardState.cardFields.errors, [name]: error._errors },
+          error: { ...cardState.cardDesign.errors, [name]: error._errors },
         })
       );
     } else {
       const newError = Object.fromEntries(
-        Object.entries(cardState.cardFields.errors).filter(
+        Object.entries(cardState.cardDesign.errors).filter(
           ([key]) => key !== name
         )
       );

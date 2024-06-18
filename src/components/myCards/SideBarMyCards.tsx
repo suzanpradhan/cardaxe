@@ -91,7 +91,7 @@ const SideBarMyCards = ({
                 size="20"
                 color={'#dd373a'}
                 variant="Bulk"
-                className="absolute right-1 top-1"
+                className="absolute lg:right-1 -top-2 -left-1"
               />
             )}
             <Link

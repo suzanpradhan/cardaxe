@@ -5,7 +5,7 @@ import {
   InfosFormsUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import { UserType } from '@/module/user/userType';
-import CardLayouts, { VariableValueType } from '../CardLayouts';
+import CardLayouts, { VariableValueType } from '../CardLayouts.server';
 import FormWrapper from '../FormWrapper';
 import ProfileDescription from './ProfileDescription';
 import ProfileDetails from './ProfileDetails';
