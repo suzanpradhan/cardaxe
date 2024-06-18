@@ -3,7 +3,6 @@
 import AutoAuthorize from '@/components/loginRegister/AutoAuthorize';
 import RegisterationForm from '@/components/loginRegister/RegisterationForm';
 import Link from 'next/link';
-import React from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const page = () => {
@@ -27,6 +26,16 @@ const page = () => {
             <div className="h-0 grow border-1 border-componentBgGrey "></div>
           </div>
           <AutoAuthorize />
+          <div className="flex gap-2 justify-center  my-8">
+            <span>{`Already have an account?`}</span>
+            <Link
+              href="/login"
+              type="button"
+              className="text-grayfont hover:underline hover:text-blueTheme"
+            >
+              Sign In!
+            </Link>
+          </div>
         </div>
         <footer className="flex w-full justify-between text-xs ">
           <p>Terms, Privacy, Trust & Safety</p>
