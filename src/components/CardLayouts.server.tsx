@@ -33,6 +33,9 @@ const CardLayouts = ({
     //     ? variableValues.logoUrl
     //     : 'https://source.unsplash.com/1000x700/?logo',
   };
+  Handlebars.registerHelper('isNotNull', function (value) {
+    return value != null && value != undefined;
+  });
   Object.entries(snakeCaseVariablesValues).forEach(([variable, value]) => {
     Handlebars.registerHelper(variable, () => value);
   });

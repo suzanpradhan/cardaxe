@@ -6,18 +6,7 @@ export async function middleware(req: any) {
     const token = await getToken({ req, secret: process.env.JWT_SECRET });
 
     const { pathname } = req.nextUrl;
-
-
-    // const isSiteAuth = req.cookies.get('authenticated');
-
-    // if (req?.nextUrl?.pathname === '/signup') {
-    //   return NextResponse.redirect(new URL('/login', req.url));
-    // }
-
-    // if (!cookieToken?.value) {
-    //   return NextResponse.redirect(new URL('/login', req.url));
-    // }
-
+    console.log(token)
 
     if (req.nextUrl.pathname.startsWith('/_next/')) {
         return;
@@ -25,7 +14,7 @@ export async function middleware(req: any) {
 
     if (token) {
         if (pathname === '/login') {
-            return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+            return NextResponse.redirect(new URL('/dashboard/', req.nextUrl.origin));
         }
         return;
     } else {

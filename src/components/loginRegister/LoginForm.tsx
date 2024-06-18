@@ -1,3 +1,5 @@
+'use client';
+
 import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
 import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
@@ -32,10 +34,11 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 ];
 
 const LoginForm: React.FC = () => {
+  const router = useRouter();
+
   const navigator = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
   const callback = searchParams.get('callback');
   const onSubmit = async (data: LoginSchemaType) => {
     setIsLoading(true);
@@ -44,20 +47,18 @@ const LoginForm: React.FC = () => {
       password: data.password,
       callbackUrl: '/dashboard',
       redirect: false,
-    }).then((response) => {
-      if (!response?.error) {
-        toast.success('Sucessfully logged in.');
-        if (callback) {
-          window.location.href = callback;
-          if (callback.includes('#')) window.location.reload();
+    })
+      .then((response) => {
+        if (!response?.error) {
+          router.replace('/dashboard');
+          toast.success('Sucessfully logged in.');
         } else {
-          navigator.refresh();
+          toast.error('Login Failed! Please check your credentials.');
         }
-      } else {
-        toast.error(response?.error);
-        setError(response?.error!);
-      }
-    });
+      })
+      .catch((errorResponse) => {
+        toast.error('Login Failed! Please check your credentials.');
+      });
     setIsLoading(false);
   };
   const formik = useFormik({

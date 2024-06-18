@@ -1,6 +1,6 @@
 'use client';
 
-import CardLayouts from '@/components/CardLayouts';
+import CardLayouts from '@/components/CardLayouts.server';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -26,7 +26,6 @@ const LayoutPage = () => {
   return (
     <div>
       {cardsList?.map((card, index) => {
-        const imageUrl = `${cardState.cardDesign.values.backgroundImage}`;
         return (
           <div key={index}>
             {card.id && (

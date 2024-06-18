@@ -1,6 +1,6 @@
 'use client';
 
-import { VariableValueType } from '@/components/CardLayouts';
+import { VariableValueType } from '@/components/CardLayouts.server';
 import AppBar from '@/components/dashboard/AppBar';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
@@ -319,6 +319,8 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAppSelector(
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
+
+  console.log('cardState.cardDesign', cardState);
 
   return (
     <>

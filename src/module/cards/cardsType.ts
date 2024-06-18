@@ -75,18 +75,18 @@ export type UpdateCardState<T> = {
 export const ContentFormSchema = z.object({
   id: z.number().optional(),
   address: z.string().optional().nullable(),
-  prefix: z.string().optional(),
+  prefix: z.string().optional().nullable(),
   firstName: z.string().pipe(nonempty),
   middleName: z.string().optional().nullable(),
   lastName: z.string().pipe(nonempty),
-  suffix: z.string().optional(),
+  suffix: z.string().optional().nullable(),
   bio: z.string().optional().nullable(),
   phone: z.string().length(10),
   website: z.string().optional().nullable(),
   email: z.string().email(),
-  designation: z.string().optional(),
-  department: z.string().optional(),
-  company: z.string().optional(),
+  designation: z.string().optional().nullable(),
+  department: z.string().optional().nullable(),
+  company: z.string().optional().nullable(),
 });
 
 
@@ -99,9 +99,9 @@ export const ContentFormUpdateSchema = ContentFormSchema.extend({
   bio: z.string().pipe(nonempty).optional().nullable().nullable(),
   phone: z.string().length(10).optional().nullable(),
   email: z.string().email().optional().nullable(),
-  designation: z.string().pipe(nonempty).optional().nullable(),
-  department: z.string().pipe(nonempty).optional().nullable(),
-  company: z.string().pipe(nonempty).optional().nullable(),
+  designation: z.string().optional().nullable(),
+  department: z.string().optional().nullable(),
+  company: z.string().optional().nullable(),
 })
 
 export const DesignFormSchema = z.object({

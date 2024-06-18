@@ -1,5 +1,6 @@
 'use client';
-import CardLayouts from '@/components/CardLayouts';
+
+import CardLayouts from '@/components/CardLayouts.server';
 import AppBar from '@/components/dashboard/AppBar';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
@@ -66,6 +67,7 @@ const MyCardsPage = () => {
       </AppBar>
       <div className="flex flex-col gap-5 my-10 ">
         {cardsList?.map((card, index) => {
+          console.log(card.cardTemplate.htmlCode);
           return (
             <div key={index} className="w-full">
               {card.id && (
@@ -73,19 +75,20 @@ const MyCardsPage = () => {
                   onClick={() => handleEditCard(card.id!)}
                   className="w-full"
                 >
-                  {card.cardDesign.logo != null &&
-                    card.cardDesign.logo != undefined && (
-                      <CardLayouts
-                        enableShadow
-                        htmlSource={card.cardTemplate?.htmlCode}
-                        variableValues={{
-                          ...card.cardFields,
-                          ...card.cardDesign,
-                          logoUrl: `${apiPaths.serverUrl}${card.cardDesign.logo}`,
-                          backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
-                        }}
-                      />
-                    )}
+                  {
+                    <CardLayouts
+                      enableShadow
+                      htmlSource={card.cardTemplate?.htmlCode}
+                      variableValues={{
+                        ...card.cardFields,
+                        ...card.cardDesign,
+                        logoUrl: card.cardDesign.logo
+                          ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
+                          : undefined,
+                        backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
+                      }}
+                    />
+                  }
                 </button>
               )}
             </div>

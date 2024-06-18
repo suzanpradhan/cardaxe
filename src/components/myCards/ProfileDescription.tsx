@@ -6,7 +6,7 @@ import { UserType } from '@/module/user/userType';
 import { Flash, Heart, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
 import ButtonRounded from '../ButtonRounded';
-import { VariableValueType } from '../CardLayouts';
+import { VariableValueType } from '../CardLayouts.server';
 
 const buttonLabel = (
   <div className="flex flex-nowrap">
