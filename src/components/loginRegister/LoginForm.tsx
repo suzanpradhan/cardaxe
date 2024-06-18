@@ -41,7 +41,7 @@ const LoginForm: React.FC = () => {
     setIsLoading(true);
     await signIn('credentials', {
       email: data.email.toLowerCase(),
-      password: data.password.toLowerCase(),
+      password: data.password,
       callbackUrl: '/dashboard',
       redirect: false,
     }).then((response) => {
