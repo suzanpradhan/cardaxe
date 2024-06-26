@@ -9,16 +9,35 @@ const config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   safelist: [
-    'grid-cols-12',
     'gap-y-2',
     'gap-x-2',
+    'aspect-rectangle ',
+    'rounded-lg',
+    'p-3',
+    'mb-10',
+    'bg-slate-800',
+    'flex',
+    'flex-col',
+    'justify-between',
+    'h-full',
+    'grid',
+    'grid-cols-12',
     'place-content-center',
-    "col-span-9",
-    "col-span-3",
-    'aspect-rectangle '
-
-
-
+    'col-span-9',
+    'text-xl',
+    'font-bold',
+    'text-green-500',
+    'font-medium',
+    'col-span-3',
+    'w-full',
+    'h-auto',
+    '-z-10',
+    'object-contain',
+    'items-stretch',
+    'font-normal',
+    'text-sm',
+    'text-black/75',
+    'gap-1'
 
   ],
   prefix: '',

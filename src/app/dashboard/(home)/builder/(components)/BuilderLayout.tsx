@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { updatedDiff } from 'deep-object-diff';
 
+import ButtonForm from '@/components/ButtonForm';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
-import CircleLoader from '@/core/ui/loaders/CircleLoader';
 import {
   initialState,
   updateCardTemplate,
@@ -72,7 +72,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         case 'create':
           dispatch(updateContentForm(initialState.cardFields.values));
           dispatch(updateDesignForm(initialState.cardDesign.values));
-          dispatch(updateCardTemplate('1'));
           dispatch(updateDefaultCard(false));
           dispatch(updateInfosForm({}));
           dispatch(validateForms('cardDesign'));
@@ -83,6 +82,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(updateDesignForm(card.cardDesign));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(updateDefaultCard(card.isDefault));
+          dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(
             updateInfosForm(
               Object.fromEntries(
@@ -147,9 +147,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             id: card.cardFields.id,
           } as ContentFormSchemaType,
           cardInfos: cardState.cardInfos.values,
-          cardTemplate: '1',
+          cardTemplate: cardState.cardTemplate,
           isDefault: cardState.isDefault ?? false,
-          isPublished: cardState.isPublished ?? false,
+          isPublished: true,
         })
       );
       submitresponse
@@ -176,9 +176,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const currentLayout = cardsTemplateList?.find(
-    (layout) => layout.id === parseInt(cardState.cardTemplate)
-  );
+  const currentLayout = cardState.cardTemplate
+    ? cardsTemplateList?.find(
+        (layout) => layout.id === parseInt(cardState.cardTemplate!)
+      )
+    : undefined;
 
   const variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
@@ -325,25 +327,20 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <AppBar appBarLabel="My Personal Card">
-        <button
-          onClick={() => {
+        <ButtonForm
+          label="Preview"
+          theme={!toggle ? 'blue' : 'accent'}
+          isLoading={publishLoading}
+          handleClick={() => {
             setToggle(!toggle);
           }}
-          className={`w-28 lg:hidden  grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2 ${
-            toggle ? 'bg-input' : 'bg-blueTheme text-white'
-          }`}
-        >
-          Preview
-        </button>
-        <button className="w-28 bg-input grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2">
-          Save Draft
-        </button>
-        <button
-          onClick={handlePublish}
-          className="w-28 bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
-        >
-          {publishLoading ? <CircleLoader /> : 'Publish'}
-        </button>
+        />
+        <ButtonForm label="Save Draft" theme="accent" />
+        <ButtonForm
+          label="Publish"
+          isLoading={publishLoading}
+          handleClick={handlePublish}
+        />
       </AppBar>
       <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
         <SideBarMyCards

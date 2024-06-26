@@ -1,15 +1,13 @@
 'use client';
 
 import ButtonForm from '@/components/ButtonForm';
+import SearchInput from '@/components/SearchInput';
 import Table from '@/components/teams/Table';
-import { SearchNormal1 } from 'iconsax-react';
-import React from 'react';
 import image1 from '../../../../../../../../../public/staticImages/1.jpg';
 import image2 from '../../../../../../../../../public/staticImages/2.jpg';
 import image3 from '../../../../../../../../../public/staticImages/3.jpg';
 import image4 from '../../../../../../../../../public/staticImages/4.jpg';
 import image5 from '../../../../../../../../../public/staticImages/5.jpg';
-import SearchInput from '@/components/SearchInput';
 
 const Page = () => {
   const columnHeadings = [
@@ -75,7 +73,7 @@ const Page = () => {
           <SearchInput greyBackground />
         </div>
         <div className="shadow-lg shadow-blueTheme rounded-lg">
-          <ButtonForm label="Create Team" bluebackground />
+          <ButtonForm label="Create Team" theme="blue" />
         </div>
       </div>
       <Table columnHeadings={columnHeadings} data={data} />

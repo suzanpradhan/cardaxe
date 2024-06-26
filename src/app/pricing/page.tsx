@@ -70,7 +70,7 @@ const Page = () => {
             <h2 className="font-bold text-4xl inline">$0</h2>
             <span> per month</span>
             <div className="my-4">
-              <ButtonForm bluebackground={false} label="Get Started" />
+              <ButtonForm label="Get Started" />
             </div>
             <ul className="grid gap-2 mb-32">
               {paymentDetails.map((item, index) => (
@@ -90,7 +90,7 @@ const Page = () => {
               <aside className="w-36">7-days free trial, cancel anytime</aside>
             </div>
             <div className="my-4">
-              <ButtonForm bluebackground label="Get Started" />
+              <ButtonForm theme="blue" label="Get Started" />
             </div>
             <ul className="grid gap-2 mb-32">
               {paymentDetails.map((item, index) => (

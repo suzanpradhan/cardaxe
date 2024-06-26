@@ -62,7 +62,7 @@ const cardsApi = baseApi.injectEndpoints({
           "is_published": false,
           'is_default': false,
           'user': user,
-          "card_template": 1
+          "card_template": 2
         }
         return {
           url: `${apiPaths.cardsUrl}`,

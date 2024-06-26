@@ -3,7 +3,8 @@ import clsx from 'clsx';
 
 type ButtonFormProps = {
   label: string;
-  bluebackground?: boolean;
+  theme?: 'blue' | 'white' | 'accent';
+  // bluebackground?: boolean;
   disableInput?: boolean;
   isLoading?: boolean;
   handleClick?: () => void;
@@ -13,7 +14,8 @@ const ButtonForm = ({
   label,
   isLoading = false,
   disableInput,
-  bluebackground,
+  // bluebackground,
+  theme = 'blue',
   handleClick,
 }: ButtonFormProps) => {
   return (
@@ -22,10 +24,11 @@ const ButtonForm = ({
       role="link"
       type="submit"
       className={clsx(
-        'w-full rounded-md disabled:bg-componentBgGrey active:shadow-xl h-12',
-        bluebackground
-          ? 'bg-blueTheme text-white'
-          : 'bg-transparent text-blueTheme border-1 border-blueTheme'
+        'w-full rounded-md disabled:bg-componentBgGrey active:shadow-xl h-10',
+        theme === 'blue' && 'bg-blueTheme text-white',
+        theme === 'white' &&
+          'bg-transparent text-blueTheme border-1 border-blueTheme',
+        theme === 'accent' && 'bg-input ring-gray-300 ring-1'
       )}
       disabled={disableInput}
     >
