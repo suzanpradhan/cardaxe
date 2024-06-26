@@ -120,7 +120,7 @@ const RegisterationForm: React.FC = () => {
               )} */}
             </div>
           ))}
-          <ButtonForm label="Register" bluebackground isLoading={isLoading} />
+          <ButtonForm label="Register" theme="blue" isLoading={isLoading} />
         </form>
       </div>
     </FormWrapper>

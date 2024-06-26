@@ -2,7 +2,6 @@
 import ButtonForm from '@/components/ButtonForm';
 import CreateNewTeam from '@/components/teams/CreateNewTeam';
 import TeamCard from '@/components/teams/TeamCard';
-import React from 'react';
 
 const page = () => {
   return (
@@ -13,7 +12,7 @@ const page = () => {
           <TeamCard />
         </div>
         <div className="w-32 self-end">
-          <ButtonForm label="Next" bluebackground />
+          <ButtonForm label="Next" theme="blue" />
         </div>
       </div>
     </div>

@@ -111,7 +111,7 @@ const LoginForm: React.FC = () => {
           >
             Forgot Password
           </Link>
-          <ButtonForm label="Login" bluebackground isLoading={isLoading} />
+          <ButtonForm label="Login" theme="blue" isLoading={isLoading} />
         </div>
       </form>
     </FormWrapper>

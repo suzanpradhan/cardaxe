@@ -1,17 +1,15 @@
 'use client';
 
 import ButtonForm from '@/components/ButtonForm';
-import { SearchNormal1 } from 'iconsax-react';
-import React from 'react';
+import SearchInput from '@/components/SearchInput';
+import MyTeamsCard from '@/components/teams/MyTeamsCard';
+import { useRouter } from 'next/navigation';
 import logo from '../../../../../../public/logo.png';
 import image1 from '../../../../../../public/staticImages/1.jpg';
 import image2 from '../../../../../../public/staticImages/2.jpg';
 import image3 from '../../../../../../public/staticImages/3.jpg';
 import image4 from '../../../../../../public/staticImages/4.jpg';
 import image5 from '../../../../../../public/staticImages/5.jpg';
-import MyTeamsCard from '@/components/teams/MyTeamsCard';
-import { useRouter } from 'next/navigation';
-import SearchInput from '@/components/SearchInput';
 
 const MY_CARDS_ITEMS = [
   {
@@ -49,7 +47,7 @@ const Page = () => {
         <div className="shadow-md shadow-blueTheme rounded-lg">
           <ButtonForm
             label="Create Team"
-            bluebackground
+            theme="blue"
             handleClick={handleClick}
           />
         </div>

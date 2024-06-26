@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { updatedDiff } from 'deep-object-diff';
 
+import ButtonForm from '@/components/ButtonForm';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
-import CircleLoader from '@/core/ui/loaders/CircleLoader';
 import {
   initialState,
   updateCardTemplate,
@@ -325,25 +325,20 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <AppBar appBarLabel="My Personal Card">
-        <button
-          onClick={() => {
+        <ButtonForm
+          label="Preview"
+          theme={!toggle ? 'blue' : 'accent'}
+          isLoading={publishLoading}
+          handleClick={() => {
             setToggle(!toggle);
           }}
-          className={`w-28 lg:hidden  grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2 ${
-            toggle ? 'bg-input' : 'bg-blueTheme text-white'
-          }`}
-        >
-          Preview
-        </button>
-        <button className="w-28 bg-input grow lg:grow-0 rounded-lg px-0 ring-1 ring-gray-300 py-2">
-          Save Draft
-        </button>
-        <button
-          onClick={handlePublish}
-          className="w-28 bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
-        >
-          {publishLoading ? <CircleLoader /> : 'Publish'}
-        </button>
+        />
+        <ButtonForm label="Save Draft" theme="accent" />
+        <ButtonForm
+          label="Publish"
+          isLoading={publishLoading}
+          handleClick={handlePublish}
+        />
       </AppBar>
       <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
         <SideBarMyCards

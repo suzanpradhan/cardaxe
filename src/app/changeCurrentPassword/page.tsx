@@ -111,7 +111,7 @@ const ChangeCurrentPassword = () => {
             )}
           </div>
         ))}
-        <ButtonForm label="Register" bluebackground />
+        <ButtonForm label="Register" theme="blue" />
       </form>
     </div>
   );
