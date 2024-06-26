@@ -49,7 +49,7 @@ export const initialState: CardState<string> = {
   cardInfos:
     { values: {}, errors: {} }
   ,
-  cardTemplate: "1"
+  cardTemplate: "2"
 
 };
 
@@ -83,7 +83,7 @@ export const cardSlice = createSlice({
     updateCardTemplate: (
       state, action: PayloadAction<string>
     ) => {
-      state = { ...state, cardTemplate: action.payload }
+      state.cardTemplate = action.payload
     },
     setErrors: (state, action: PayloadAction<ErrorActionType>) => {
       const { error, formName } = action.payload;

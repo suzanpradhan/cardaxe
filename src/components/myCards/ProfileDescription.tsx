@@ -46,7 +46,7 @@ const ProfileDescription = ({
   user?: UserType;
 }) => {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 mt-4">
       <div className="flex gap-4 bg-transparent">
         <div className="bg-blueTheme overflow-hidden h-[120px] w-[120px] relative rounded-full">
           <Image
@@ -63,7 +63,8 @@ const ProfileDescription = ({
             {user?.fullname}
           </h1>
           <p>
-            {variableValues?.designation} - {variableValues?.company}
+            {variableValues?.designation} - {variableValues?.company} |{' '}
+            {variableValues?.address}
           </p>
           <div className="flex gap-2">
             <ButtonRounded

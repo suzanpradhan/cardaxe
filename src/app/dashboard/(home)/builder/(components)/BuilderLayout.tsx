@@ -72,7 +72,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         case 'create':
           dispatch(updateContentForm(initialState.cardFields.values));
           dispatch(updateDesignForm(initialState.cardDesign.values));
-          dispatch(updateCardTemplate('1'));
           dispatch(updateDefaultCard(false));
           dispatch(updateInfosForm({}));
           dispatch(validateForms('cardDesign'));
@@ -83,6 +82,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(updateDesignForm(card.cardDesign));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(updateDefaultCard(card.isDefault));
+          dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(
             updateInfosForm(
               Object.fromEntries(
@@ -147,9 +147,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             id: card.cardFields.id,
           } as ContentFormSchemaType,
           cardInfos: cardState.cardInfos.values,
-          cardTemplate: '1',
+          cardTemplate: cardState.cardTemplate,
           isDefault: cardState.isDefault ?? false,
-          isPublished: cardState.isPublished ?? false,
+          isPublished: true,
         })
       );
       submitresponse
@@ -176,9 +176,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const currentLayout = cardsTemplateList?.find(
-    (layout) => layout.id === parseInt(cardState.cardTemplate)
-  );
+  const currentLayout = cardState.cardTemplate
+    ? cardsTemplateList?.find(
+        (layout) => layout.id === parseInt(cardState.cardTemplate!)
+      )
+    : undefined;
 
   const variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &

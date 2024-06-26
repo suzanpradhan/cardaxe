@@ -49,7 +49,7 @@ const CardLayouts = ({
 
   return (
     <div
-      className={`max-w-xl mb-4 flex rounded-lg ${
+      className={`max-w-xl flex rounded-lg ${
         enableShadow ? 'shadow-grayfont shadow-lg ' : ''
       }`}
     >
