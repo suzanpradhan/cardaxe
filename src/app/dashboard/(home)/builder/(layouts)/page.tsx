@@ -24,6 +24,7 @@ const LayoutPage = () => {
   );
   const cardState = useSelector((state: RootState) => state.card);
 
+  console.log('cardState.cardTemplate', cardState.cardTemplate);
   return (
     <div>
       {cardTemplates?.map((card, index) => {
