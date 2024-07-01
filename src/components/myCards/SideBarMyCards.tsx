@@ -75,7 +75,7 @@ const SideBarMyCards = ({
   }, [pathName]);
 
   return (
-    <div className="flex flex-row  lg:flex-col text-sm lg:text-base lg:justify-start justify-between lg:gap-4 h-full text-slate-600">
+    <div className="flex flex-row lg:flex-col text-sm lg:text-base lg:justify-start justify-between lg:gap-4 h-full text-slate-600">
       {myAppSideBarElements.map((item, index) => {
         const error = item.formName
           ? Object.keys(
@@ -89,9 +89,8 @@ const SideBarMyCards = ({
             {error && (
               <InfoCircle
                 size="20"
-                color={'#dd373a'}
-                variant="Bulk"
-                className="absolute lg:right-1 -top-2 -left-1"
+                variant="Bold"
+                className="absolute lg:right-1 -top-1 -left-1 text-rose-500"
               />
             )}
             <Link
@@ -100,13 +99,18 @@ const SideBarMyCards = ({
               }`}
               // onClick={(e) => handleClick(e)}
               className={clsx(
-                'flex lg:flex-col items-center max-lg:grow basis-20 sm:flex-row flex-col lg:basis-auto  px-1 lg:h-24 py-2 justify-center rounded-md hover:text-blueTheme ',
+                'flex lg:flex-col items-center max-lg:grow basis-20 sm:flex-row flex-col lg:basis-auto justify-center rounded-md text-xs p-2 border ',
                 toggleTab !== index
-                  ? 'text-grayfont'
-                  : 'text-blueTheme bg-blueBg '
+                  ? 'text-grayfont hover:border-text-grayfont'
+                  : error
+                    ? 'hover:border-rose-300 hover:text-red-600 text-red-500'
+                    : 'border-blueTheme/60 hover:border-blueTheme/80 text-blueTheme bg-blueBg/60 ',
+                error
+                  ? 'border-rose-200 hover:border-rose-300 hover:text-red-600 text-red-500 '
+                  : 'border-transparent hover:text-blueTheme hover:border-blueTheme '
               )}
             >
-              <span className="lg:w-10 lg:h-10 w-8 h-8">{item.icon}</span>
+              <span className="lg:w-7 lg:h-7 w-5 h-5">{item.icon}</span>
               <p className="pl-2 lg:pl-0">{item.name}</p>
             </Link>
           </div>

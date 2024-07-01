@@ -331,18 +331,24 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           label="Preview"
           theme={!toggle ? 'blue' : 'accent'}
           isLoading={publishLoading}
+          className="px-4 text-sm rounded-sm w-max"
           handleClick={() => {
             setToggle(!toggle);
           }}
         />
-        <ButtonForm label="Save Draft" theme="accent" />
+        <ButtonForm
+          label="Save Draft"
+          theme="accent"
+          className="px-4 text-sm rounded-sm w-max"
+        />
         <ButtonForm
           label="Publish"
+          className="px-4 text-sm rounded-sm w-max"
           isLoading={publishLoading}
           handleClick={handlePublish}
         />
       </AppBar>
-      <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
+      <div className="hidden lg:flex-row flex-col gap-6 lg:flex">
         <SideBarMyCards
           cardId={cardId}
           cardAction={cardAction}
