@@ -99,7 +99,7 @@ const SideBarMyCards = ({
               }`}
               // onClick={(e) => handleClick(e)}
               className={clsx(
-                'flex lg:flex-col items-center max-lg:grow basis-20 sm:flex-row flex-col lg:basis-auto justify-center rounded-md text-xs p-2 border ',
+                'flex flex-col sm:flex-row lg:flex-col items-center basis-20 max-lg:grow lg:basis-auto justify-center rounded-md text-xs p-2 border ',
                 toggleTab !== index
                   ? 'text-grayfont hover:border-text-grayfont'
                   : error

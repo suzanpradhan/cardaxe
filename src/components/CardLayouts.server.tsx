@@ -49,8 +49,8 @@ const CardLayouts = ({
 
   return (
     <div
-      className={`max-w-xl flex rounded-lg ${
-        enableShadow ? 'shadow-grayfont shadow-lg ' : ''
+      className={`w-full flex rounded-md ${
+        enableShadow ? 'shadow-grayfont shadow-md ' : ''
       }`}
     >
       {parse(processedHtml)}

@@ -1,9 +1,8 @@
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import React from 'react';
+import { AiFillTwitterCircle } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
-import { AiFillTwitterCircle } from 'react-icons/ai';
-import { signIn } from 'next-auth/react';
 
 const AutoAuthorize = () => {
   const handleSignIn = () => {
@@ -13,7 +12,7 @@ const AutoAuthorize = () => {
   };
 
   return (
-    <div className="flex gap-4 justify-center">
+    <div className="flex gap-4 justify-center my-4">
       <button className="text-2xl p-2 shadow-md" onClick={handleSignIn}>
         <FcGoogle />
       </button>

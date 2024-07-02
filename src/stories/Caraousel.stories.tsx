@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Caraousel from '../components/landingPage/Caraousel';
+import Carousel from '../components/landingPage/Carousel';
 
 const meta = {
   title: 'Example/Caraousel',
-  component: Caraousel,
+  component: Carousel,
   tags: ['autodocs'],
-} satisfies Meta<typeof Caraousel>;
+} satisfies Meta<typeof Carousel>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const MyCaraousel: Story = {
+export const MyCarousel: Story = {
   args: {},
 };

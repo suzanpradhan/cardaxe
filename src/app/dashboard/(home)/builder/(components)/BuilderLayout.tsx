@@ -354,8 +354,8 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           cardAction={cardAction}
           cardState={cardState}
         />
-        <div className="basis-2/5 min-w-[100px]">{children}</div>
-        <div className="shrink grow">
+        <div className="basis-2/5 max-w-xs md:max-w-lg">{children}</div>
+        <div className="shrink grow max-w-xs lg:max-w-full">
           <PreviewSection
             layout={currentLayout}
             user={user}
@@ -364,7 +364,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
       </div>
-      <div className="bloc lg:hidden  gap-12">
+      <div className="block lg:hidden gap-12">
         <div className="mt-5 relative">
           <div
             className={`absolute max-lg:w-[calc(100%-0.35rem)] flex flex-col gap-5 duration-500 ${

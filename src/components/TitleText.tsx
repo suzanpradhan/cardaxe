@@ -15,7 +15,7 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
         isSideBarComp && 'sm:px-3 sm:pt-6 pt-2 px-6 mb-2 sm:mb-0'
       )}
     >
-      <h1 className={clsx('sm:text-4xl text-2xl font-extrabold ')}>cardaxe.</h1>
+      <h1 className={clsx('md:text-3xl text-xl font-extrabold ')}>cardaxe.</h1>
       {isSideBarComp && (
         <NotificationBing
           size="30"
