@@ -1,17 +1,16 @@
-import ButtonRounded from '@/components/ButtonRounded';
+import FaqCollection from '@/app/(home)/(components)/FaqCollection';
 import CardWithImage from '@/components/landingPage/CardWithImage';
 import CardWithImageSmall from '@/components/landingPage/CardWithImageSmall';
-import Carousel from '@/components/landingPage/Carousel';
 import ContentHeading from '@/components/landingPage/ContentHeading';
-import FaqCollection from '@/components/landingPage/FaqCollection';
 import Features from '@/components/landingPage/Features';
-import clsx from 'clsx';
 import { Edit, Edit2, ElementPlus, UserEdit } from 'iconsax-react';
 import Image from 'next/image';
 import homepage_background from '../../../public/homepage_background.png';
 import square_image from '../../../public/square_image.jpg';
+import HomeGetStarted from './(components)/HomeGetStarted';
 import HomeHeroSection from './(components)/HomeHeroSection';
 import HomeVideoSection from './(components)/HomeVideoSection';
+import TestimonialSection from './(components)/TestimonialSection';
 
 const HomePage = () => {
   return (
@@ -105,35 +104,14 @@ const HomePage = () => {
           </CardWithImageSmall>
         </div>
       </div>
-      {/* 
-            Home Video Section
-            Starts Here
-        */}
+      {/* Home Video Section */}
       <HomeVideoSection bgCover={homepage_background} />
-      <div className="flex flex-col items-center max-w-7xl mx-auto px-4 mb-16 mt-24">
-        <ContentHeading headingTitle="What our clients saying?" />
-        <Carousel />
-      </div>
-      <div
-        className={clsx(
-          'w-full h-110 text-center py-28 flex flex-col items-center gap-5',
-          'circularGradientBg'
-        )}
-      >
-        <ContentHeading headingTitle="Ready When you are" />
-        <p className="max-w-xl mx-auto">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe ut hic
-          minima assumenda iusto praesentium culpa modi cupiditate ipsam! Eos.
-        </p>
-        <ButtonRounded label="Get Started" href="/register" />
-      </div>
-      <div className="text flex flex-col gap-16 lg:p-20 px-4 py-20 max-w-4xl lg:mx-auto">
-        <ContentHeading
-          headingTitle="Frequently Asked Questions"
-          center={true}
-        />
-        <FaqCollection />
-      </div>
+      {/* Home TestimonialSection Section */}
+      <TestimonialSection />
+      {/* Get Started Section */}
+      <HomeGetStarted />
+      {/* Faqs Section */}
+      <FaqCollection />
     </>
   );
 };

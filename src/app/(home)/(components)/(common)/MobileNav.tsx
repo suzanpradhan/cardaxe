@@ -8,7 +8,7 @@ const MobileNav = () => {
 
   return (
     <>
-      <div className="relative z-20 lg:hidden px-2 flex items-center justify-center">
+      <div className="relative z-20 lg:hidden mr-5 flex items-center justify-center">
         <div
           className="w-12 h-12 bg-white/50 flex items-center justify-center rounded-md shadow-md"
           onClick={() => setDrawer(!drawer)}

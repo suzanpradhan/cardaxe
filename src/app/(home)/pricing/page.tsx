@@ -1,8 +1,8 @@
 'use client';
 
+import FaqCollection from '@/app/(home)/(components)/FaqCollection';
 import ButtonForm from '@/components/ButtonForm';
 import ContentHeading from '@/components/landingPage/ContentHeading';
-import FaqCollection from '@/components/landingPage/FaqCollection';
 import { TickCircle } from 'iconsax-react';
 import Image from 'next/image';
 import { z } from 'zod';
