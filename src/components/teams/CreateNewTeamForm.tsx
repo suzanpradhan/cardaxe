@@ -63,7 +63,7 @@ const INPUT_FEILDS: InputFieldProps<
   },
 ];
 
-const CreateNewTeam = () => {
+const CreateNewTeamForm = () => {
   // const { register, handleSubmit } = useForm<NewTeamSchemaType>({
   //   resolver: zodResolver(NewTeamSchema),
   // });
@@ -71,19 +71,17 @@ const CreateNewTeam = () => {
     console.log(data);
   };
   return (
-    <div className="max-w-4xl px-4 h-full">
-      <h2 className="font-bold text-lg">Create a new team</h2>
-      <form
-        className="flex flex-col gap-4 py-2 mb-9"
-        // onSubmit={handleSubmit(submitData)}
-      >
+    <div className="max-w-4xl h-full">
+      <h2 className="font-bold text-xl text-slate-900 mb-5">
+        Create a new team
+      </h2>
+      <form className="flex flex-col gap-4">
         {INPUT_FEILDS.slice(0, 3).map((item, index) => (
-          <div key={index} className="h-16">
+          <div key={index}>
             <InputComp
               inputCompType={item.inputCompType}
               inputType={item.inputType}
               placeholder={item.placeholder}
-              // register={register}
               zSchemaName={item.zSchemaName}
               inputLabel={item.inputLabel}
             />
@@ -94,7 +92,7 @@ const CreateNewTeam = () => {
           )} */}
           </div>
         ))}
-        <div className="h-[10.8rem]">
+        <div className="">
           <InputComp
             inputCompType={INPUT_FEILDS[3].inputCompType}
             inputType={INPUT_FEILDS[3].inputType}
@@ -105,9 +103,8 @@ const CreateNewTeam = () => {
           />
         </div>
       </form>
-      <p>Add other details ˅</p>
     </div>
   );
 };
 
-export default CreateNewTeam;
+export default CreateNewTeamForm;

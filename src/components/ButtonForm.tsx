@@ -24,7 +24,7 @@ const ButtonForm = ({
       role="link"
       type="submit"
       className={clsx(
-        'w-full rounded-md disabled:bg-componentBgGrey active:shadow-xl h-10',
+        'w-full rounded-md disabled:bg-componentBgGrey active:shadow-xl h-10 px-4',
         theme === 'blue' && 'bg-blueTheme text-white',
         theme === 'white' &&
           'bg-transparent text-blueTheme border-1 border-blueTheme',

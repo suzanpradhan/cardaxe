@@ -1,7 +1,6 @@
-import React from 'react';
+import { Heart, More, ScanBarcode, Share } from 'iconsax-react';
 import Image from 'next/image';
 import logo from '../../../public/logo.png';
-import { Heart, More, ScanBarcode, Share } from 'iconsax-react';
 
 const DETAILS = [
   {
@@ -24,9 +23,9 @@ const DETAILS = [
 
 const TeamCard = () => {
   return (
-    <div className="relative">
-      <div className="-z-10 absolute h-14 bg-green-500 top-0 w-full overflow-hidden rounded-t-xl"></div>
-      <div className="p-6 grid gap-5">
+    <div className="relative border border-slate-100 overflow-hidden rounded-xl shadow-sm h-full">
+      <div className="-z-10 absolute h-14 bg-green-500 top-0 w-full"></div>
+      <div className="px-5 py-6 flex flex-col justify-between items-stretch h-full gap-2">
         <div className="flex items-end gap-4">
           <div className="relative w-44 h-44 z-10 shadow-lg rounded-lg">
             <Image
@@ -38,9 +37,13 @@ const TeamCard = () => {
               className="-z-10 rounded-lg"
             />
           </div>
-          <div className="py-6 grid gap-2">
-            <h2 className="">Organization Name</h2>
-            <p>Category</p>
+          <div className="py-6 grid gap-4">
+            <div className="flex flex-col">
+              <h2 className="text-slate-900 font-bold text-lg">Roft.ru</h2>
+              <p className="text-base text-slate-400 font-medium">
+                Technology Company
+              </p>
+            </div>
             <div className="flex gap-3">
               <Heart
                 size="42"
@@ -66,19 +69,19 @@ const TeamCard = () => {
             </div>
           </div>
         </div>
-        <div>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia
-            corrupti error nesciunt quasi, dicta libero accusamus iste cum
-            suscipit commodi dolor voluptates doloribus laudantium vel iusto,
-            nemo tenetur doloremque quibusdam!
-          </p>
-        </div>
+        <p className="text-base text-slate-500 font-normal">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia
+          corrupti error nesciunt quasi, dicta libero accusamus iste cum
+          suscipit commodi dolor voluptates doloribus laudantium vel iusto, nemo
+          tenetur doloremque quibusdam!
+        </p>
         <div className="grid gap-2">
           {DETAILS.map((item, index) => (
-            <p key={index}>
-              <strong>{item.title}:</strong>
-              <span>{item.description}</span>
+            <p key={index} className="text-sm font-normal text-slate-500">
+              <span className="font-semibold text-slate-900">
+                {item.title}:{' '}
+              </span>
+              {item.description}
             </p>
           ))}
         </div>

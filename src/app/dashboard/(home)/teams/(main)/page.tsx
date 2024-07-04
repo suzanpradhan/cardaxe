@@ -34,7 +34,7 @@ const MY_CARDS_ITEMS = [
 
 const Page = () => {
   const router = useRouter();
-  const handleClick = () => router.push('/dashboard/teams/createNewTeam');
+  const handleClick = () => router.push('/dashboard/teams/create-new-team');
   const handleCardClick = () => router.push('/dashboard/teams/myTeams');
 
   return (
