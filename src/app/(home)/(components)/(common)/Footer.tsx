@@ -17,7 +17,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between gap-5 md:gap-0 border-b-zinc-800 border-b-1 py-10">
           <div className="shrink-0 basis-full md:basis-2/6">
             <div className="max-w-xs flex flex-col gap-2">
-              <h2 className="text-white font-extrabold text-2xl">cardaxe.</h2>
+              <h2 className="font-extrabold text-2xl text-white">cardaxe.</h2>
               <p className=" text-white/60 text-sm leading-6">
                 CardAxe is your modern solution for digital business cards and
                 company portfolios. Replace traditional paper cards with a

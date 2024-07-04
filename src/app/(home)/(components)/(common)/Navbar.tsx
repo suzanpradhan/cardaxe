@@ -12,7 +12,11 @@ const Navbar = () => {
               href="/"
               className="flex items-center relative h-16 w-full ml-5 sm:ml-0"
             >
-              <h1 className={`md:text-3xl text-xl font-extrabold`}>cardaxe.</h1>
+              <h1
+                className={`md:text-3xl text-xl font-extrabold bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-700 bg-clip-text text-transparent`}
+              >
+                cardaxe.
+              </h1>
             </Link>
           </div>
           <MainMenu />

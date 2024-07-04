@@ -13,6 +13,18 @@ type FaqsDataType = {
     [key: string]: FaqItemType;
 };
 
+export interface FeaturesDataType {
+    title: string;
+    detail: string;
+    coverImage: string;
+}
+
+export interface CardaxeFlowDataType {
+    title: string;
+    detail: string;
+    icon: 'UserEdit' | 'Edit' | 'Edit2' | 'ElementPlus';
+}
+
 
 export const HEADER_HEADINGS = [
     { headingName: 'About', headingHref: '/' },
@@ -78,3 +90,44 @@ export const FAQS: FaqsDataType = {
             'Absolutely! With CardAxe, you have full control over your digital business card. You can update your information, design, and multimedia content as often as you like to keep your card current and relevant.',
     },
 };
+
+export const FEATURES_DATA: FeaturesDataType[] = [
+    {
+        "title": "Quick to Create",
+        "detail": "Get your professional digital business card up and running in minutes with CardAxe. Our intuitive design tools make it simple and fast to create a stunning card that represents you and your brand.",
+        "coverImage": ""
+    },
+    {
+        "title": "Connect Anywhere You Go",
+        "detail": "With CardAxe, your digital business card is always with you. Easily share your contact information on the go, ensuring you never miss an opportunity to network, no matter where you are.",
+        "coverImage": ""
+    },
+    {
+        "title": "Connect and Chat Effortlessly",
+        "detail": "CardAxe not only lets you share your digital business card but also enables seamless communication. Connect with your contacts and start conversations effortlessly, all from one platform.",
+        "coverImage": ""
+    },
+];
+
+export const CardaxeFlowData: CardaxeFlowDataType[] = [
+    {
+        "title": "Sign Up",
+        "detail": "Register for a free account on our platform",
+        "icon": "UserEdit",
+    },
+    {
+        "title": "Choose a Template",
+        "detail": "Select from our wide range of professionally designed templates.",
+        "icon": "Edit",
+    },
+    {
+        "title": "Customize",
+        "detail": "Add your contact information, upload your photo, and personalize your card to reflect your brand.",
+        "icon": "Edit2",
+    },
+    {
+        "title": "Save & Share",
+        "detail": "Save your card and start sharing it with your professional network instantly.",
+        "icon": "ElementPlus",
+    }
+]

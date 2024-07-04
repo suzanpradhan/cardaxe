@@ -6,6 +6,8 @@ import MenuItems from './MenuItems';
 
 const MainMenu = () => {
   const currentPath = usePathname();
+  const navButtonClass =
+    '!text-blueTheme before:bg-blueTheme/10 before:rounded-full hover:before:ring-2 hover:before:ring-blueTheme/60 before:bg-gradient-to-r before:from-blue-700 before:via-[#3366e8] before:to-blue-400 !text-white  before:hover:from-blue-800 before:hover:to-blue-500';
   const navActiveClass =
     '!text-blueTheme before:bg-blueTheme/10 before:ring-1 before:ring-blueTheme/50 hover:before:!ring-blueTheme/50';
   const navHoverClass =
@@ -17,7 +19,7 @@ const MainMenu = () => {
           ? MenuData.map((item, index) => (
               <MenuItems key={index}>
                 <li
-                  className={`relative px-5 group text-slate-600 ${navHoverClass} ${currentPath === item.link ? navActiveClass : ''}`} // add active class letter
+                  className={`relative px-5 group text-slate-600 ${navHoverClass} ${(item.link === '/login' || item.link === '/register') && navButtonClass} ${currentPath === item.link ? navActiveClass : ''}`} // add active class letter
                 >
                   <Link href={item.link} className="flex items-center h-full">
                     {item.title}

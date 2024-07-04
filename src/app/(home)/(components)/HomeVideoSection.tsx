@@ -9,12 +9,12 @@ const HomeVideoSection = ({ bgCover }: { bgCover?: StaticImageData }) => {
 
   return (
     <div
-      className="relative bg-cover bg-center mb-20"
+      className="relative bg-cover bg-center mb-16"
       style={bgCover && bgImageStyle}
     >
       <div className="container mx-auto">
-        <div className="relative top-20 flex flex-col items-center text-center">
-          <h2 className="text-zinc-900 text-xl md:text-2xl lg:text-4xl font-extrabold pb-16 max-w-xl">
+        <div className="relative top-16 flex flex-col items-center text-center">
+          <h2 className="text-zinc-900 text-xl md:text-2xl lg:text-4xl font-extrabold capitalize pb-10 md:pb-16 max-w-xl">
             Watch How{' '}
             <span className="bg-gradient-to-r from-blue-700 via-[#3366e8] to-blue-400 bg-clip-text text-transparent">
               Cardaxe

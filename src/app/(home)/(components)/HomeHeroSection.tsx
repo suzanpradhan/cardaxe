@@ -14,17 +14,17 @@ const HomeHeroSection = ({ bgCover }: { bgCover?: StaticImageData }) => {
       style={bgCover && bgImageStyle}
     >
       <div className="container mx-auto h-full">
-        <div className="grid grid-cols-12 h-full">
+        <div className="grid grid-cols-12 h-full py-10">
           <div className="col-span-12 lg:col-span-5 h-full w-full">
             <div className="flex items-center justify-center h-full">
-              <div className="flex flex-col items-center gap-5">
-                <h1 className="text-2xl md:text-3xl lg:text-4xl text-zinc-900 font-extrabold capitalize">
+              <div className="flex flex-col items-center md:items-start gap-5">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl text-zinc-900 font-extrabold capitalize text-center md:text-left">
                   <span className="bg-gradient-to-r from-blue-700 via-[#3366e8] to-blue-400 bg-clip-text text-transparent">
                     CardAxe:
                   </span>{' '}
                   The Future of Business Networking
                 </h1>
-                <p className="text-base text-zinc-900">
+                <p className="text-base text-zinc-900 text-center md:text-left">
                   Ditch traditional paper business cards and embrace CardAxe—the
                   gateway to streamlined, impactful, and
                   environmentally-conscious networking solutions.
@@ -33,6 +33,7 @@ const HomeHeroSection = ({ bgCover }: { bgCover?: StaticImageData }) => {
                   isHeader={false}
                   label="Get Started"
                   href="/login"
+                  classNames="bg-gradient-to-r from-blue-700 via-[#3366e8] to-blue-400 text-white"
                 />
               </div>
             </div>
