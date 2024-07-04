@@ -80,34 +80,36 @@ const LoginForm: React.FC = () => {
       }
     >
       <form
-        className="flex flex-col gap-4 py-2"
+        className="flex flex-col gap-4 py-5"
         // onSubmit={handleSubmit(submitData)}
         onSubmit={(e) => {
           e.preventDefault();
           formik.handleSubmit(e);
         }}
       >
-        <div className="flex flex-col ">
-          {LOGIN_FEILDS.map((item, index) => (
-            <div key={index} className="h-16">
-              <InputComp
-                inputValue={formik.values[item.zSchemaName]}
-                getFieldProps={formik.getFieldProps}
-                inputType={item.type}
-                placeholder={item.placeholder}
-                zSchemaName={item.zSchemaName}
-              />
-              {formik.errors[item.zSchemaName] && (
-                <p className="text-xs text-redError">
-                  {formik.errors[item.zSchemaName]}
-                </p>
-              )}
-            </div>
-          ))}
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
+            {LOGIN_FEILDS.map((item, index) => (
+              <div key={index}>
+                <InputComp
+                  inputValue={formik.values[item.zSchemaName]}
+                  getFieldProps={formik.getFieldProps}
+                  inputType={item.type}
+                  placeholder={item.placeholder}
+                  zSchemaName={item.zSchemaName}
+                />
+                {formik.errors[item.zSchemaName] && (
+                  <p className="text-xs text-redError">
+                    {formik.errors[item.zSchemaName]}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
           <Link
             href="/confirmEmail"
             type="button"
-            className="text-grayfont text-right mb-2 hover:underline hover:text-blueTheme"
+            className="text-grayfont text-right text-sm hover:underline hover:text-blueTheme"
           >
             Forgot Password
           </Link>

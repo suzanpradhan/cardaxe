@@ -74,7 +74,7 @@ const config = {
         160: '50rem',
       },
       minHeight: {
-        fitall: '40rem',
+        fitAll: '40rem',
       },
       flexBasis: {
         110: '28rem',

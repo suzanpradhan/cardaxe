@@ -44,7 +44,7 @@ const InputComp = ({
     switch (inputCompType) {
       case 'textArea': {
         return (
-          <div className="h-full">
+          <div className="flex flex-col items-start gap-2 w-full h-full ">
             <label
               className="inline-block pl-[0.15rem] hover:cursor-pointer"
               htmlFor={zSchemaName}
@@ -60,7 +60,7 @@ const InputComp = ({
                 placeholder={placeholder}
                 defaultValue={inputValue === null ? '' : (inputValue as string)}
                 className={clsx(
-                  'focus:outline-1 focus:outline-blueTheme p-2 mt-2 h-full bg-inputBgGrey  border-1 rounded-md w-full -mb-2',
+                  'focus:outline-1 focus:outline-blueTheme p-2 h-full bg-inputBgGrey border-1 rounded-md w-full',
                   error ? 'border-redError' : 'border-borderMain'
                 )}
               />
@@ -70,14 +70,14 @@ const InputComp = ({
       }
       case 'select': {
         return (
-          <div>
+          <div className="flex flex-col items-start gap-2 w-full h-full ">
             <InputLable
               zSchemaName={zSchemaName}
               inputLabel={inputLabel ?? ''}
             />
             <CreatableSelect
               className={clsx(
-                'mt-2 w-full bg-inputBgGrey placeholder:text-placeholder  border-1 rounded-md ',
+                'w-full bg-inputBgGrey placeholder:text-placeholder border-1 rounded-md ',
                 error ? 'border-redError' : 'border-borderMain'
               )}
               isMulti
@@ -138,7 +138,7 @@ const InputComp = ({
               <label
                 htmlFor={zSchemaName}
                 className={clsx(
-                  'truncate focus:outline-1 !h-11 focus:outline-blueTheme mt-2 block w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder',
+                  'truncate focus:outline-1 !h-11 focus:outline-blueTheme block w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder',
                   error ? 'border-redError' : 'border-borderMain'
                 )}
               >
@@ -208,7 +208,7 @@ const InputComp = ({
       }
       default: {
         return (
-          <div className="">
+          <div className="flex flex-col items-start gap-2 w-full h-full ">
             <input
               id={zSchemaName}
               type={inputType}
@@ -216,7 +216,7 @@ const InputComp = ({
               {...getFieldProps?.(zSchemaName)}
               // onChange={(e) => handleChange?.(e)}
               className={clsx(
-                'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+                'focus:outline-1 focus:outline-blueTheme w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
               // name={zSchemaName}

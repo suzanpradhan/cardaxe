@@ -60,12 +60,12 @@ const MyCardsPage = () => {
       <AppBar appBarLabel="My Cards">
         <button
           onClick={() => hanldeCreateCard()}
-          className="basis-60 shrink bg-blueTheme grow lg:grow-0 text-white rounded-lg shadow-lg shadow-blueBg py-2"
+          className="basis-60 shrink bg-blueTheme grow lg:grow-0 text-white rounded-md shadow-lg shadow-blueBg h-10 text-sm px-4"
         >
           {createLoading ? <CircleLoader /> : 'Create New card'}
         </button>
       </AppBar>
-      <div className="flex flex-col gap-5 my-10 ">
+      <div className="flex flex-col gap-5 my-2">
         {cardsList?.map((card, index) => {
           console.log(card.cardTemplate.htmlCode);
           return (

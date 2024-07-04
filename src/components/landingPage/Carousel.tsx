@@ -13,7 +13,7 @@ import 'swiper/css/zoom';
 import { clientOpinion } from '../../app/module';
 import ClientsOpinion from './ClientsOpinion';
 
-const Caraousel = () => {
+const Carousel = () => {
   const [isBeginning, toggleIsBeginning] = useState<boolean>(true);
   const [isEnd, toggleIsEnd] = useState<boolean>(false);
   const swiperRef = useRef<SwiperRef | null>(null);
@@ -81,4 +81,4 @@ const Caraousel = () => {
   );
 };
 
-export default Caraousel;
+export default Carousel;

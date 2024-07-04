@@ -1,26 +1,25 @@
-import Image, { StaticImageData } from 'next/image';
+import { FeaturesDataType } from '@/constants/appConstants';
+import Image from 'next/image';
+import defaultImage from '../../../public/square_image.jpg';
 
-interface Props {
-  headingText: string;
-  paragraphText: string;
-  featurePic: StaticImageData;
-}
-
-const Features = ({ headingText, paragraphText, featurePic }: Props) => {
+const Features = ({ data }: { data: FeaturesDataType }) => {
   return (
-    <div className="flex flex-col gap-1 items-center w-72 text-center text-black">
-      <div className="w-24 h-24 rounded-full relative mb-4">
+    <div className="flex flex-col items-center justify-stretch gap-2 w-60 mx-auto md:w-full">
+      <div className="relative w-24 h-24 rounded-full overflow-hidden">
         <Image
-          src={featurePic}
-          alt="image"
+          src={data.coverImage ? data.coverImage : defaultImage}
+          alt={data.title}
           fill
           sizes="(max-width: 768px) 100vw, 700px"
-          objectFit="cover"
-          className="rounded-full"
+          className="rounded-full object-cover"
         />
       </div>
-      <h3 className="text-2xl font-bold">{headingText}</h3>
-      <p className="">{paragraphText}</p>
+      <h3 className="text-base lg:text-xl font-bold text-zinc-900">
+        {data.title}
+      </h3>
+      <p className="text-xs md:text-sm font-normal text-zinc-700 text-center">
+        {data.detail}
+      </p>
     </div>
   );
 };
