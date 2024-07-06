@@ -31,7 +31,8 @@
     "src/app/page.tsx.back",
     "src/stories/Faq.stories.tsx.back",
     "src/stories/CardWithImageSmall.stories.tsx.back",
-    "src/stories/Features.stories.tsx.back"
+    "src/stories/Features.stories.tsx.back",
+    "src/app/register/page.tsx.back"
   ],
   "exclude": ["node_modules"]
 }

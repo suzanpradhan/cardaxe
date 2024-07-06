@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Activity,
   Cards,
@@ -8,6 +7,8 @@ import {
   Profile2User,
   ProfileCircle,
 } from 'iconsax-react';
+import Link from 'next/link';
+import React from 'react';
 import SidebarElements from './SidebarElements';
 
 export type SidebarNavElementsProps = {
@@ -114,7 +115,10 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 ];
 const Sidebar = () => {
   return (
-    <ul className="bg-white fixed bottom-0 sm:static flex gap-2 justify-between rounded-t-xl w-full sm:rounded-none sm:justify-normal sm:flex-col sm:p-2 sm:pt-5 sm:pr-2 sm:h-full">
+    <ul className="w-full flex md:flex-col justify-between md:justify-normal">
+      <Link href={'/'} className="hidden md:block h-14">
+        <h1 className="md:text-3xl text-xl font-extrabold">cardaxe.</h1>
+      </Link>
       {SIDEBAR_NAV_ELEMENTS.map((item) => (
         <SidebarElements item={item} key={item.id} />
       ))}

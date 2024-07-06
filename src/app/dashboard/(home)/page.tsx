@@ -60,32 +60,42 @@ const DashboardPage = () => {
   const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
 
   return (
-    <div className="sm:p-4 lg:flex">
+    <div className="grid grid-cols-12">
       {/* story section to be made */}
-      <div className="w-full sm:mx-auto flex flex-col gap-4 sm:px-6 max-w-xl shrink">
-        {posts.map((post, index) => (
-          <HomeFeed post={post} key={index} />
-        ))}
-      </div>
-      <div className="flex-col gap-2 px-6 hidden lg:flex h-fit grow max-w-xl">
-        <UserProfileCard fullName={user?.fullname} />
-        <h2 className="font-bold my-2">My Card</h2>
-        <HomeCardTemplate userId={user?.id} />
-        <div className="flex gap-2 my-3">{LINKS_ICONS.map((item) => item)}</div>
-        <div className="flex flex-wrap gap-2 mt-4">
-          {OPTIONS.map((item, index) => (
-            <span
-              key={index}
-              className="text-grayfont after:content-['\00B7'] after:font-extrabold after:text-3xl after:ml-2 last:after:content-[''] flex items-center"
-            >
-              {item}
-            </span>
+      <div className="col-span-12 lg:col-span-6 xl:col-span-7 border border-zinc-200 border-t-0 border-b-0">
+        <div className="grow max-w-sm sm:max-w-md lg:max-w-xl w-full mx-auto flex flex-col md:px-4">
+          {posts.map((post, index) => (
+            <HomeFeed post={post} key={index} />
           ))}
         </div>
-        <p className="text-grayfont">Copyright © 2023 CARDAXE</p>
       </div>
-      {/* <button onClick={() => handleClick()}>Change password</button>
-      <button onClick={() => signOut()}>signout</button> */}
+
+      <div className="hidden lg:block shrink-0 sticky top-0 h-screen lg:col-span-6 xl:col-span-5 py-5">
+        <div className="relative grow max-w-xl h-full flex flex-col justify-between px-4">
+          <div className="flex flex-col gap-4">
+            <UserProfileCard fullName={user?.fullname} />
+            <h2 className="font-bold">My Card</h2>
+            <HomeCardTemplate userId={user?.id} />
+            <div className="flex gap-2">{LINKS_ICONS.map((item) => item)}</div>
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 border-t border-zinc-100 pt-2 px-4">
+            <div className="flex flex-wrap gap-2">
+              {OPTIONS.map((item, index) => (
+                <span
+                  key={index}
+                  className="text-zinc-500 text-sm flex items-center after:content-['\00B7'] after:font-extrabold after:text-xl after:ml-2 last:after:content-['']"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+            <p className="text-zinc-500 text-xs font-semibold mt-2">
+              Copyright © 2023 CARDAXE
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
