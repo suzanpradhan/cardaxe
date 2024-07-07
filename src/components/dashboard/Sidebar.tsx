@@ -18,8 +18,8 @@ export type SidebarNavElementsProps = {
   icon: React.JSX.Element;
 };
 
-const ICONS_SIZE = '30';
-const ICONS_VARIANT = 'Bold';
+const ICONS_SIZE = '24';
+const ICONS_VARIANT = 'Bulk';
 const ICONS_CLASSNAME = 'inline';
 
 const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
@@ -115,7 +115,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 ];
 const Sidebar = () => {
   return (
-    <ul className="w-full flex md:flex-col justify-between md:justify-normal">
+    <ul className="w-full flex md:flex-col justify-between md:justify-normal md:gap-y-2">
       <Link href={'/'} className="hidden md:block h-14">
         <h1 className="md:text-3xl text-xl font-extrabold">cardaxe.</h1>
       </Link>
