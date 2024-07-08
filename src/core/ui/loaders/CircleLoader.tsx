@@ -13,15 +13,13 @@ const CircleLoader = () => {
   }, []);
 
   return (
-    <div className="mt-2">
-      <l-ring
-        size="24"
-        stroke="2"
-        bg-opacity="0"
-        speed="2"
-        color="white"
-      ></l-ring>
-    </div>
+    <l-ring
+      size="20"
+      stroke="2"
+      bg-opacity="0"
+      speed="2"
+      color="white"
+    ></l-ring>
   );
 };
 

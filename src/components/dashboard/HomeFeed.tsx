@@ -11,21 +11,21 @@ type HomeFeedType = {
 const HomeFeed = ({ post }: HomeFeedType) => {
   const reactions = [
     {
-      icon: <Heart size="30" variant="Bulk" />,
+      icon: <Heart size="30" variant="TwoTone" />,
       number: post.likes,
     },
     {
-      icon: <Flash size="30" variant="Bulk" />,
+      icon: <Flash size="30" variant="TwoTone" />,
       number: post.comments,
     },
     {
-      icon: <Share size="30" variant="Bold" />,
+      icon: <Share size="30" variant="TwoTone" />,
       number: post.shares,
     },
   ];
 
   return (
-    <div className="px-2 sm:px-0 w-full flex flex-col gap-4 border-borderMain border-b-8 sm:border-b-1 pb-4 mx-auto">
+    <div className="w-full mx-auto flex flex-col gap-4 border-b border-zinc-100 py-5 px-2 sm:px-0">
       <section className="flex items-center gap-2">
         <div className="relative h-8 w-8 rounded-full z-auto">
           <Image
@@ -56,7 +56,7 @@ const HomeFeed = ({ post }: HomeFeedType) => {
         {reactions.map((item, index) => (
           <button
             key={index}
-            className="flex gap-2 items-center hover:text-blueTheme active:ring-2 active:text-blueTheme active:bg-blueBg  rounded-xl text-grayfont p-1"
+            className="flex gap-2 items-center hover:text-zinc-900 active:ring-2 active:text-zinc-900 active:bg-blueBg rounded-xl text-zinc-400 p-1"
           >
             <p>{item?.icon}</p>
             <p>{item?.number}</p>
@@ -64,9 +64,9 @@ const HomeFeed = ({ post }: HomeFeedType) => {
         ))}
         <div className="grow flex justify-end">
           <Bookmark
-            variant="Bulk"
+            variant="TwoTone"
             size="30"
-            className="text-grayfont hover:text-blueTheme active:ring-2 active:text-blueTheme active:bg-blueBg"
+            className="text-zinc-300 hover:text-zinc-900 active:ring-2 active:text-zinc-900 active:bg-blueBg"
           />
         </div>
       </section>

@@ -1,4 +1,3 @@
-import React from 'react';
 import CardHomeLayout from './CardHomeLayout';
 
 type CardTempHomeTypes = {
@@ -22,7 +21,7 @@ const CardTempHome = ({
 }: CardTempHomeTypes) => {
   return (
     <CardHomeLayout>
-      <h2 className="sm:text-xl text-xl-mobile font-extrabold ">
+      <h2 className="sm:text-xl text-xl-mobile font-extrabold">
         {firstName} {lastName}
       </h2>
       <p className="font-semibold text-green-500">{designation}</p>

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NotificationBing } from 'iconsax-react';
+import { Activity, NotificationBing } from 'iconsax-react';
 import Link from 'next/link';
 
 type TitleTextProps = {
@@ -8,22 +8,25 @@ type TitleTextProps = {
 
 const TitleText = ({ isSideBarComp }: TitleTextProps) => {
   return (
-    <Link
-      href={'/'}
-      className={clsx(
-        'w-full flex justify-between items-center ',
-        isSideBarComp && 'sm:px-3 sm:pt-6 pt-2 px-6 mb-2 sm:mb-0'
-      )}
-    >
-      <h1 className={clsx('md:text-3xl text-xl font-extrabold ')}>cardaxe.</h1>
+    <div className="md:hidden w-full flex justify-between items-center h-16 px-2 border-b border-zinc-200">
+      <Link href={'/'} className="">
+        <h1 className={clsx('md:text-3xl text-xl font-extrabold')}>cardaxe.</h1>
+      </Link>
       {isSideBarComp && (
-        <NotificationBing
-          size="30"
-          variant="Bulk"
-          className="text-grayfont sm:hidden"
-        />
+        <div className="flex items-center gap-4">
+          <NotificationBing
+            size="30"
+            variant="Bulk"
+            className="text-grayfont md:hidden"
+          />
+          <Activity
+            size="30"
+            variant="Bulk"
+            className="text-grayfont md:hidden"
+          />
+        </div>
       )}
-    </Link>
+    </div>
   );
 };
 
