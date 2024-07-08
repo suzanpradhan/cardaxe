@@ -10,11 +10,48 @@ import { RootState } from '@/core/redux/store';
 import CircleLoader from '@/core/ui/loaders/CircleLoader';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
-import { Eye, Magicpen } from 'iconsax-react';
+import clsx from 'clsx';
+import {
+  BoxAdd,
+  Eye,
+  Magicpen,
+  PenAdd,
+  ScanBarcode,
+  Share,
+} from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { LINKS_ICONS, OPTIONS } from '../page';
+
+const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
+const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
+
+const NAVIGATION_ICONS = [
+  <PenAdd
+    size="32"
+    variant="Bulk"
+    key={0}
+    className={clsx('text-[#23c562] bg-[#d3f4df] ', ICONS_COMMON_CLASS)}
+  />,
+  <BoxAdd
+    size="32"
+    variant="Bulk"
+    key={1}
+    className={clsx('text-[#fba530] bg-[#ffe9cc]', ICONS_COMMON_CLASS)}
+  />,
+  <ScanBarcode
+    size="32"
+    variant="Bulk"
+    key={2}
+    className={clsx('text-[#ff1843] bg-[#ffd5d6]', ICONS_COMMON_CLASS)}
+  />,
+  <Share
+    size="32"
+    variant="Bulk"
+    key={3}
+    className={clsx('text-[#2f73fe] bg-[#d5e3ff]', ICONS_COMMON_CLASS)}
+  />,
+];
 
 const MyCardsPage = () => {
   const router = useRouter();
@@ -125,7 +162,7 @@ const MyCardsPage = () => {
               <h2 className="font-bold">My Card</h2>
               <HomeCardTemplate userId={1} />
               <div className="flex gap-2">
-                {LINKS_ICONS.map((item) => item)}
+                {NAVIGATION_ICONS.map((item) => item)}
               </div>
             </div>
 

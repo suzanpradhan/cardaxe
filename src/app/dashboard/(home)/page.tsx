@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 
 const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
-export const LINKS_ICONS = [
+const NAVIGATION_ICONS = [
   <PenAdd
     size="32"
     variant="Bulk"
@@ -41,7 +41,7 @@ export const LINKS_ICONS = [
     className={clsx('text-[#2f73fe] bg-[#d5e3ff]', ICONS_COMMON_CLASS)}
   />,
 ];
-export const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
+const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
 
 const DashboardPage = () => {
   const dispatch = useAppDispatch();
@@ -75,7 +75,9 @@ const DashboardPage = () => {
             <UserProfileCard fullName={user?.fullname} />
             <h2 className="font-bold">My Card</h2>
             <HomeCardTemplate userId={user?.id} />
-            <div className="flex gap-2">{LINKS_ICONS.map((item) => item)}</div>
+            <div className="flex gap-2">
+              {NAVIGATION_ICONS.map((item) => item)}
+            </div>
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 border-t border-zinc-100 pt-2 px-4">
