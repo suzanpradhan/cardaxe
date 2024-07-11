@@ -331,25 +331,31 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           label="Preview"
           theme={!toggle ? 'blue' : 'accent'}
           isLoading={publishLoading}
+          className="px-4 text-sm rounded-sm w-max"
           handleClick={() => {
             setToggle(!toggle);
           }}
         />
-        <ButtonForm label="Save Draft" theme="accent" />
+        <ButtonForm
+          label="Save Draft"
+          theme="accent"
+          className="px-4 text-sm rounded-sm w-max"
+        />
         <ButtonForm
           label="Publish"
+          className="px-4 text-sm rounded-sm w-max"
           isLoading={publishLoading}
           handleClick={handlePublish}
         />
       </AppBar>
-      <div className="hidden lg:flex-row flex-col gap-6 lg:flex ">
+      <div className="hidden lg:flex-row flex-col gap-6 lg:flex">
         <SideBarMyCards
           cardId={cardId}
           cardAction={cardAction}
           cardState={cardState}
         />
-        <div className="basis-2/5 min-w-[100px]">{children}</div>
-        <div className="shrink grow">
+        <div className="basis-2/5 max-w-xs md:max-w-lg">{children}</div>
+        <div className="shrink grow max-w-xs lg:max-w-full">
           <PreviewSection
             layout={currentLayout}
             user={user}
@@ -358,7 +364,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
       </div>
-      <div className="bloc lg:hidden  gap-12">
+      <div className="block lg:hidden gap-12">
         <div className="mt-5 relative">
           <div
             className={`absolute max-lg:w-[calc(100%-0.35rem)] flex flex-col gap-5 duration-500 ${

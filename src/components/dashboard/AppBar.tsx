@@ -5,13 +5,19 @@ interface AppBarProps {
 
 const AppBar = ({ children, appBarLabel }: AppBarProps) => {
   return (
-    <div className="flex flex-wrap lg:flex-nowrap w-full gap-3 lg:h-[3.25rem] h-auto">
-      <div className="px-2 grow h-full bg-componentBgGrey rounded-lg flex items-center py-2 gap-2 basis-10/12 lg:basis-auto">
-        <p className=" text-grayfont inline">Label:</p>
-        <h2 className="inline font-extrabold ">{appBarLabel}</h2>
+    <div className="flex flex-wrap lg:flex-nowrap w-full gap-3 h-auto my-4">
+      <div className="shrink-0 flex items-center gap-2 flex-grow h-10 bg-zinc-100 rounded-md px-4">
+        <p className="text-grayfont inline-block text-sm">Label:</p>
+        <h2 className="inline-block font-bold text-sm">{appBarLabel}</h2>
       </div>
-      {children}
+      <div className="flex items-center gap-2">{children}</div>
     </div>
+    // <div className="col-span-12 my-4">
+    //   <div className="flex items-center gap-2 flex-grow h-10 bg-zinc-100 rounded-md px-4">
+    //     <p className="text-grayfont inline-block text-sm">Label:</p>
+    //     <h2 className="inline-block font-bold text-sm">{appBarLabel}</h2>
+    //   </div>
+    // </div>
   );
 };
 

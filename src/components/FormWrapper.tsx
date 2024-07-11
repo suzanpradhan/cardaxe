@@ -16,10 +16,11 @@ const FormWrapper = ({
   description,
 }: FormCardProps) => {
   return (
-    <div className={`border rounded-xl flex flex-col p-4 h-fit ` + className}>
+    <div className={`flex flex-col h-fit ` + className}>
       {titleText && <TitleText />}
-      {description && <p className="pb-3">{description}</p>}
-
+      {description && (
+        <p className="text-sm font-normal text-slate-600">{description}</p>
+      )}
       {children}
     </div>
   );

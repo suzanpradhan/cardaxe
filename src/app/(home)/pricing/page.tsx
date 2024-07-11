@@ -1,14 +1,12 @@
 'use client';
 
+import FaqCollection from '@/app/(home)/(components)/FaqCollection';
 import ButtonForm from '@/components/ButtonForm';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
 import ContentHeading from '@/components/landingPage/ContentHeading';
-import FaqCollection from '@/components/landingPage/FaqCollection';
 import { TickCircle } from 'iconsax-react';
 import Image from 'next/image';
 import { z } from 'zod';
-import homepage_background from '../../../public/homepage_background.png';
+import homepage_background from '../../../../public/homepage_background.png';
 
 const SwitchSchema = z.object({
   payMonthly: z.boolean().default(true),
@@ -37,8 +35,7 @@ const Page = () => {
   // });
   return (
     <div>
-      <Header />
-      <div className="-z-10 w-full h-screen min-h-fitall absolute top-0 left-0 ">
+      <div className="w-full h-screen min-h-fitAll absolute top-0 left-0 ">
         <Image
           src={homepage_background}
           alt="image"
@@ -47,7 +44,7 @@ const Page = () => {
           objectFit="cover"
         />
       </div>
-      <div className="mx-auto max-w-7xl p-2">
+      <div className="mx-auto max-w-7xl">
         <h2 className="font-medium text-4xl text-center mt-4 py-4">
           Pricing and plans
         </h2>
@@ -109,7 +106,6 @@ const Page = () => {
         />
         <FaqCollection />
       </div>
-      <Footer />
     </div>
   );
 };

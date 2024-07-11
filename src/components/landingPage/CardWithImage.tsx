@@ -1,7 +1,4 @@
 import Image, { StaticImageData } from 'next/image';
-// import square_image from '../../public/square_image.jpg';
-import clsx from 'clsx';
-import ContentHeading from './ContentHeading';
 
 export interface Props {
   imageIsLeft?: boolean;
@@ -19,23 +16,28 @@ const CardWithImage = ({
 }: Props) => {
   return (
     <div
-      className={clsx(
-        'flex flex-col  max-w-7xl mx-auto gap-12 text-black py-8 dark:text-white items-center w-full my-14 px-10 justify-between',
-        imageIsLeft ? 'md:flex-row-reverse' : 'md:flex-row'
-      )}
+      className={`flex flex-col md:flex-row justify-around gap-5 md:gap-20 md:items-start w-full text-zinc-900 dark:text-white ${imageIsLeft ? 'md:flex-row-reverse' : 'md:flex-row'}`}
     >
-      <div className="w-80 h-80 relative shrink-0">
-        <Image
-          src={image}
-          alt="image"
-          fill
-          sizes="(max-width: 768px) 100vw, 700px"
-          objectFit="contain"
-        />
+      <div className="basis-full md:basis-2/5 flex items-center justify-center">
+        <div className="relative w-60 md:w-80 lg:w-96 h-60 md:h-80 lg:h-96">
+          <Image
+            src={image}
+            alt="image"
+            fill
+            sizes="(max-width: 768px) 100vw, 700px"
+            className="object-contain"
+          />
+        </div>
       </div>
-      <div className="flex flex-col gap-4 px-8 shrink md:basis-120 ">
-        <ContentHeading headingTitle={headingText} />
-        <p className="text-base">{paragraphText}</p>
+      <div className="grow shrink basis-full md:basis-3/5">
+        <div className="flex flex-col gap-5">
+          <h2 className="text-zinc-900 text-xl md:text-2xl lg:text-4xl font-extrabold capitalize text-center md:text-left">
+            {headingText}
+          </h2>
+          <p className="text-sm md:text-base max-w-xs mx-auto sm:max-w-full text-center md:text-left">
+            {paragraphText}
+          </p>
+        </div>
       </div>
     </div>
   );
