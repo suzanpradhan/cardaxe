@@ -11,6 +11,7 @@ const config = {
   safelist: [
     'gap-y-2',
     'gap-x-2',
+    'text-start',
     'aspect-rectangle ',
     'rounded-lg',
     'p-3',
