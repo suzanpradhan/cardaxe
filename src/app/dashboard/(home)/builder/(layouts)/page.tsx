@@ -26,7 +26,7 @@ const LayoutPage = () => {
 
   console.log('cardState.cardTemplate', cardState.cardTemplate);
   return (
-    <div>
+    <div className="px-2">
       {cardTemplates?.map((card, index) => {
         return (
           <div key={index}>

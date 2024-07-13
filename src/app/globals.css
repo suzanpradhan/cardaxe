@@ -270,8 +270,8 @@ dialog::-webkit-scrollbar-thumb:active {
   background: #2563eb; /* Change the thumb color on active state (when clicked) */
 }
 
-::-webkit-scrollbar {
-  width: 0px; /* Set the width of the scrollbar */
+/* ::-webkit-scrollbar {
+  width: 0px;
   opacity: 0;
   transition: opacity 0.3s;
-}
+} */

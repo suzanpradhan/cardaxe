@@ -46,7 +46,7 @@ const ProfileDescription = ({
   user?: UserType;
 }) => {
   return (
-    <div className="grid gap-4 mt-4">
+    <div className=" flex flex-col gap-3 mt-4">
       <div className="flex gap-4 bg-transparent">
         <div className="bg-blueTheme overflow-hidden h-[120px] w-[120px] relative rounded-full">
           <Image

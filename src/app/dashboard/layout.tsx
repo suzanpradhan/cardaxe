@@ -20,9 +20,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="fixed md:top-0 left-0 bottom-0 w-full md:w-60 h-max md:h-auto bg-white p-2 md:px-4 md:py-4 z-50 border-t md:border-t-0 md:border-r border-zinc-200">
         <Sidebar />
       </div>
-      <div className="md:ml-60 h-full pb-36 md:pb-5 overflow-y-scroll">
-        {children}
-      </div>
+      <div className="md:ml-60 h-full">{children}</div>
     </div>
   );
 };

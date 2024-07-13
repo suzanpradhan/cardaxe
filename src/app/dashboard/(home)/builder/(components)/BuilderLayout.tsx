@@ -10,6 +10,8 @@ import { updatedDiff } from 'deep-object-diff';
 import ButtonForm from '@/components/ButtonForm';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 import {
   initialState,
   updateCardTemplate,
@@ -32,11 +34,12 @@ import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
-  const [toggle, setToggle] = useState(true);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isPreview, setIsPreview] = useState(false);
   const [publishLoading, toggleLoading] = useState(false);
 
   const session = useSession();
@@ -322,77 +325,90 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
 
-  console.log('cardState.cardDesign', cardState);
-
   return (
-    <>
+    <div className="flex h-screen flex-col px-8">
       <AppBar appBarLabel="My Personal Card">
-        <ButtonForm
-          label="Preview"
-          theme={!toggle ? 'blue' : 'accent'}
-          isLoading={publishLoading}
-          className="px-4 text-sm rounded-sm w-max"
-          handleClick={() => {
-            setToggle(!toggle);
-          }}
-        />
-        <ButtonForm
-          label="Save Draft"
-          theme="accent"
-          className="px-4 text-sm rounded-sm w-max"
-        />
-        <ButtonForm
-          label="Publish"
-          className="px-4 text-sm rounded-sm w-max"
-          isLoading={publishLoading}
-          handleClick={handlePublish}
-        />
+        <span className="max-md:grow">
+          <ButtonForm
+            label="Preview"
+            theme={isPreview ? 'blue' : 'accent'}
+            isLoading={publishLoading}
+            className="rounded-sm px-4 text-sm"
+            handleClick={() => {
+              contentRef.current?.scrollTo({
+                top: 0,
+                left: !isPreview ? contentRef.current.scrollWidth : 0,
+                behavior: 'smooth',
+              });
+              setIsPreview(!isPreview);
+            }}
+          />
+        </span>
+        <span className="max-md:grow">
+          <ButtonForm
+            label="Save Draft"
+            theme="accent"
+            className="rounded-sm px-4 text-sm"
+          />
+        </span>
+        <span className="max-md:grow">
+          <ButtonForm
+            label="Publish"
+            className="rounded-sm px-4 text-sm"
+            isLoading={publishLoading}
+            handleClick={handlePublish}
+          />
+        </span>
       </AppBar>
-      <div className="hidden lg:flex-row flex-col gap-6 lg:flex">
-        <SideBarMyCards
-          cardId={cardId}
-          cardAction={cardAction}
-          cardState={cardState}
-        />
-        <div className="basis-2/5 max-w-xs md:max-w-lg">{children}</div>
-        <div className="shrink grow max-w-xs lg:max-w-full">
+      {/* web view */}
+      <div
+        className="flex min-h-0 flex-1 gap-4 overflow-x-scroll md:flex-row"
+        ref={contentRef}
+      >
+        {!isPreview && (
+          <div className="flex flex-col max-md:w-full md:flex-row md:gap-6">
+            <SideBarMyCards
+              cardId={cardId}
+              cardAction={cardAction}
+              cardState={cardState}
+            />
+            <ScrollArea className="w-[calc(100vw-168px)] shrink-0 md:w-[calc(100vw-15rem-100px-168px)] lg:w-[420px]">
+              {children}
+            </ScrollArea>
+          </div>
+        )}
+        <ScrollArea
+          className={cn('w-max shrink-0 lg:flex-1', isPreview && 'w-full')}
+        >
           <PreviewSection
             layout={currentLayout}
             user={user}
             variableValues={variableValues}
             socialValues={cardState.cardInfos.values}
           />
-        </div>
+        </ScrollArea>
       </div>
-      <div className="block lg:hidden gap-12">
-        <div className="mt-5 relative">
-          <div
-            className={`absolute max-lg:w-[calc(100%-0.35rem)] flex flex-col gap-5 duration-500 ${
-              toggle ? '' : '-translate-x-[calc(102%)]'
-            }`}
-          >
-            <SideBarMyCards
-              cardId={cardId}
-              cardAction={cardAction}
-              cardState={cardState}
-            />
-            {children}
-          </div>
-          <div
-            className={`absolute duration-500 max-lg:w-[calc(100%-0.35rem)] max-sm:pb-16 ${
-              toggle ? 'translate-x-[calc(102%)]' : ''
-            }`}
-          >
-            <PreviewSection
-              user={user}
-              layout={currentLayout}
-              variableValues={variableValues}
-              socialValues={cardState.cardInfos.values}
-            />
-          </div>
+
+      {/* mobile view */}
+      {/* <div className="relative mt-5 block gap-12 overflow-x-auto xl:hidden">
+        <div className={cn('flex flex-col gap-5 duration-500 md:flex-row')}>
+          <SideBarMyCards
+            cardId={cardId}
+            cardAction={cardAction}
+            cardState={cardState}
+          />
+          {children}
         </div>
-      </div>
-    </>
+        <div className={cn('duration-500 max-sm:pb-16')}>
+          <PreviewSection
+            user={user}
+            layout={currentLayout}
+            variableValues={variableValues}
+            socialValues={cardState.cardInfos.values}
+          />
+        </div>
+      </div> */}
+    </div>
   );
 };
 

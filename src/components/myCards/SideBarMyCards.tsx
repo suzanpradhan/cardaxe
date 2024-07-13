@@ -33,13 +33,13 @@ const MY_APP_SIDE_BAR_ELEMENTS: SideBarElementProps[] = [
   {
     icon: <Grid7 variant="Bulk" size={'auto'} />,
     formName: 'cardFields',
-    name: 'Contents',
+    name: 'Content',
     link: 'contents',
   },
   {
     icon: <Colorfilter variant="Bulk" size={'auto'} />,
     formName: 'cardDesign',
-    name: 'Designs',
+    name: 'Design',
     link: 'designs',
   },
   {
@@ -75,7 +75,7 @@ const SideBarMyCards = ({
   }, [pathName]);
 
   return (
-    <div className="flex flex-row lg:flex-col text-sm lg:text-base lg:justify-start justify-between lg:gap-4 h-full text-slate-600">
+    <div className="flex justify-between py-4 text-sm text-slate-600 md:flex-col md:justify-start md:gap-4 lg:text-base">
       {myAppSideBarElements.map((item, index) => {
         const error = item.formName
           ? Object.keys(
@@ -90,7 +90,7 @@ const SideBarMyCards = ({
               <InfoCircle
                 size="20"
                 variant="Bold"
-                className="absolute lg:right-1 -top-1 -left-1 text-rose-500"
+                className="absolute -left-1 -top-1 text-rose-500 lg:right-1"
               />
             )}
             <Link
@@ -99,19 +99,21 @@ const SideBarMyCards = ({
               }`}
               // onClick={(e) => handleClick(e)}
               className={clsx(
-                'flex flex-col sm:flex-row lg:flex-col items-center basis-20 max-lg:grow lg:basis-auto justify-center rounded-md text-xs p-2 border ',
+                'flex basis-20 items-center justify-center gap-2 rounded-md border px-2 py-3 text-xs max-md:grow sm:flex-row md:basis-auto md:flex-col md:px-5 md:py-5',
                 toggleTab !== index
-                  ? 'text-grayfont hover:border-text-grayfont'
+                  ? 'hover:border-text-grayfont text-grayfont'
                   : error
-                    ? 'hover:border-rose-300 hover:text-red-600 text-red-500'
-                    : 'border-blueTheme/60 hover:border-blueTheme/80 text-blueTheme bg-blueBg/60 ',
+                    ? 'text-red-500 hover:border-rose-300 hover:text-red-600'
+                    : 'border-blueTheme/60 bg-blueBg/60 text-blueTheme hover:border-blueTheme/80',
                 error
-                  ? 'border-rose-200 hover:border-rose-300 hover:text-red-600 text-red-500 '
-                  : 'border-transparent hover:text-blueTheme hover:border-blueTheme '
+                  ? 'border-rose-200 text-red-500 hover:border-rose-300 hover:text-red-600'
+                  : 'border-transparent hover:border-blueTheme hover:text-blueTheme'
               )}
             >
-              <span className="lg:w-7 lg:h-7 w-5 h-5">{item.icon}</span>
-              <p className="pl-2 lg:pl-0">{item.name}</p>
+              <span className="h-5 w-5 lg:h-8 lg:w-8">{item.icon}</span>
+              <p className="hidden text-xs font-medium sm:block md:text-sm">
+                {item.name}
+              </p>
             </Link>
           </div>
         );
