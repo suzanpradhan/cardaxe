@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="">
-      <body className={clsx(inter.className, 'overflow-x-clip')}>
+      <body className={clsx(inter.className)}>
         <Providers>
           <>{children}</>
         </Providers>

@@ -97,7 +97,9 @@ const cardsApi = baseApi.injectEndpoints({
           return blob;
         }
         const formData = new FormData();
+        console.log(payload)
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
+        if (payload.cardFields.title != undefined) formData.append('card_fields.title', payload.cardFields.title)
         if (payload.cardFields.prefix != undefined) formData.append('card_fields.prefix', payload.cardFields.prefix)
         if (payload.cardFields.firstName != undefined) formData.append('card_fields.first_name', payload.cardFields.firstName)
         if (payload.cardFields.lastName != undefined) formData.append('card_fields.last_name', payload.cardFields.lastName)
@@ -113,6 +115,7 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardFields.website != undefined) formData.append('card_fields.website', payload.cardFields.website)
         if (payload.cardDesign.id != undefined) formData.append('card_design.id', payload.cardDesign.id.toString())
         if (payload.cardDesign.backgroundColor != undefined) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
+        if (payload.cardDesign.foregroundColor != undefined) formData.append('card_design.foreground_color', payload.cardDesign.foregroundColor)
         if (payload.cardDesign.logo != undefined) formData.append('card_design.logo', payload.cardDesign.logo)
         fecthCachedImage('backgroundImage').then((response) => { if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) } });
         fecthCachedImage('logo').then((response) => { if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });

@@ -44,14 +44,14 @@ const InputComp = ({
     switch (inputCompType) {
       case 'textArea': {
         return (
-          <div className="flex flex-col items-start gap-2 w-full h-full ">
+          <div className="flex h-full w-full flex-col items-start gap-2">
             <label
               className="inline-block pl-[0.15rem] hover:cursor-pointer"
               htmlFor={zSchemaName}
             >
               {inputLabel}
             </label>
-            <div className="h-full">
+            <div className="h-full w-full">
               <textarea
                 name={zSchemaName}
                 onChange={(e) => handleChange?.(e)}
@@ -60,7 +60,7 @@ const InputComp = ({
                 placeholder={placeholder}
                 defaultValue={inputValue === null ? '' : (inputValue as string)}
                 className={clsx(
-                  'focus:outline-1 focus:outline-blueTheme p-2 h-full bg-inputBgGrey border-1 rounded-md w-full',
+                  'h-full w-full rounded-md border-1 bg-inputBgGrey p-2 focus:outline-1 focus:outline-blueTheme',
                   error ? 'border-redError' : 'border-borderMain'
                 )}
               />
@@ -70,14 +70,14 @@ const InputComp = ({
       }
       case 'select': {
         return (
-          <div className="flex flex-col items-start gap-2 w-full h-full ">
+          <div className="flex h-full w-full flex-col items-start gap-2">
             <InputLable
               zSchemaName={zSchemaName}
               inputLabel={inputLabel ?? ''}
             />
             <CreatableSelect
               className={clsx(
-                'w-full bg-inputBgGrey placeholder:text-placeholder border-1 rounded-md ',
+                'placeholder:text-placeholder w-full rounded-md border-1 bg-inputBgGrey',
                 error ? 'border-redError' : 'border-borderMain'
               )}
               isMulti
@@ -129,33 +129,32 @@ const InputComp = ({
       }
       case 'file': {
         return (
-          <div>
+          <div className="w-full">
             <InputLable
               zSchemaName={zSchemaName}
               inputLabel={inputLabel ?? ''}
             />
-            <div className="">
-              <label
-                htmlFor={zSchemaName}
-                className={clsx(
-                  'truncate focus:outline-1 !h-11 focus:outline-blueTheme block w-full bg-inputBgGrey placeholder:text-inputPlaceholder border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-gray-50 text-inputPlaceholder',
-                  error ? 'border-redError' : 'border-borderMain'
-                )}
-              >
-                {inputValue ?? placeholder}
-              </label>
-              <input
-                {...getFieldProps?.(zSchemaName)}
-                id={zSchemaName}
-                type={inputType}
-                onChange={(e) => handleChange?.(e)}
-                placeholder={placeholder}
-                className="hidden"
-                disabled={disableInput}
-                name={zSchemaName}
-                value={''}
-              />
-            </div>
+
+            <label
+              htmlFor={zSchemaName}
+              className={clsx(
+                'block !h-11 w-full truncate rounded-md border-1 bg-inputBgGrey p-2 text-inputPlaceholder placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-gray-50',
+                error ? 'border-redError' : 'border-borderMain'
+              )}
+            >
+              {inputValue ?? placeholder}
+            </label>
+            <input
+              {...getFieldProps?.(zSchemaName)}
+              id={zSchemaName}
+              type={inputType}
+              onChange={(e) => handleChange?.(e)}
+              placeholder={placeholder}
+              className="hidden"
+              disabled={disableInput}
+              name={zSchemaName}
+              value={''}
+            />
           </div>
         );
       }
@@ -179,7 +178,7 @@ const InputComp = ({
               {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}
               className={clsx(
-                'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+                'mt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
               // value={inputValue as string}
@@ -208,7 +207,7 @@ const InputComp = ({
       }
       default: {
         return (
-          <div className="flex flex-col items-start gap-2 w-full h-full ">
+          <div className="flex h-full w-full flex-col items-start gap-2">
             <input
               id={zSchemaName}
               type={inputType}
@@ -216,7 +215,7 @@ const InputComp = ({
               {...getFieldProps?.(zSchemaName)}
               // onChange={(e) => handleChange?.(e)}
               className={clsx(
-                'focus:outline-1 focus:outline-blueTheme w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+                'w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
               // name={zSchemaName}
@@ -237,14 +236,14 @@ const InputComp = ({
           placeholder={placeholder}
           {...getFieldProps?.(zSchemaName)}
           className={clsx(
-            'focus:outline-1 focus:outline-blueThememt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
+            'focus:outline-blueThememt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 disabled:bg-inputDisabled disabled:text-slate-600',
             error ? 'border-redError' : 'border-borderMain'
           )}
           // {...register(zSchemaName)}
           disabled={disableInput}
         />
         <button
-          className="absolute top-2 right-2 active::outline-none"
+          className="active::outline-none absolute right-2 top-2"
           onClick={(e) => {
             e.preventDefault();
             toggleShowPassword(!showPassword);

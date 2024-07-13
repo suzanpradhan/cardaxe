@@ -6,21 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-screen overflow-hidden">
-      {/* <section className="sm:text-base h-full text-base-mobile flex flex-col gap-2 sm:gap-0 sm:flex-row"> */}
-      {/* <div className="md:h-screen md:top-0 md:shrink md:sticky md:border-r-1 md:border-b-0 lg:basis-72 border-borderMain bg-white border-b-8 pb-2 z-10"> */}
-      {/* <TitleText isSideBarComp />
-          <Sidebar /> */}
-      {/* </div> */}
-      {/* <div className="sm:grow h-full sm:mx-auto overflow-y-scroll">
-          {children}
-        </div> */}
-      {/* </section> */}
+    <div className="flex h-screen flex-col md:flex-row">
       <TitleText isSideBarComp />
-      <div className="fixed md:top-0 left-0 bottom-0 w-full md:w-60 h-max md:h-auto bg-white p-2 md:px-4 md:py-4 z-50 border-t md:border-t-0 md:border-r border-zinc-200">
+      <div className="hidden h-max w-full border-t border-zinc-200 bg-white p-2 md:top-0 md:block md:h-auto md:w-60 md:border-r md:border-t-0 md:px-4 md:py-4">
         <Sidebar />
       </div>
-      <div className="md:ml-60 h-full">{children}</div>
+      <div className="min-h-0 min-w-0 flex-1">{children}</div>
+      <div className="border-t border-zinc-200 bg-white p-2 md:top-0 md:hidden md:h-auto md:w-60 md:border-r md:border-t-0 md:px-4 md:py-4">
+        <Sidebar />
+      </div>
     </div>
   );
 };

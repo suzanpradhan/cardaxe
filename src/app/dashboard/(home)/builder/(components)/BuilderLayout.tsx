@@ -11,6 +11,7 @@ import ButtonForm from '@/components/ButtonForm';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { PaginatedResponseType } from '@/core/types/responseTypes';
 import { cn } from '@/lib/utils';
 import {
   initialState,
@@ -59,14 +60,14 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const cardsTemplateList = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
-        ?.data as CardTemplatesType[]
+        ?.data as PaginatedResponseType<CardTemplatesType>
   );
 
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
     dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
-  }, [dispatch]);
+  }, [dispatch, cardId]);
 
   useEffect(() => {
     const updateCardState = (action: string) => {
@@ -180,7 +181,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const currentLayout = cardState.cardTemplate
-    ? cardsTemplateList?.find(
+    ? cardsTemplateList?.results.find(
         (layout) => layout.id === parseInt(cardState.cardTemplate!)
       )
     : undefined;
@@ -326,7 +327,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   );
 
   return (
-    <div className="flex h-screen flex-col px-8">
+    <div className="flex h-full flex-col px-8 md:h-screen">
       <AppBar appBarLabel="My Personal Card">
         <span className="max-md:grow">
           <ButtonForm
@@ -362,7 +363,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       </AppBar>
       {/* web view */}
       <div
-        className="flex min-h-0 flex-1 gap-4 overflow-x-scroll md:flex-row"
+        className="flex min-h-0 flex-1 gap-4 overflow-x-auto md:flex-row"
         ref={contentRef}
       >
         {!isPreview && (
@@ -372,7 +373,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
               cardAction={cardAction}
               cardState={cardState}
             />
-            <ScrollArea className="w-[calc(100vw-168px)] shrink-0 md:w-[calc(100vw-15rem-100px-168px)] lg:w-[420px]">
+            <ScrollArea className="w-[calc(100vw-100px)] shrink-0 md:w-[calc(100vw-15rem-100px-100px)] lg:w-[420px]">
               {children}
             </ScrollArea>
           </div>
@@ -388,26 +389,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </ScrollArea>
       </div>
-
-      {/* mobile view */}
-      {/* <div className="relative mt-5 block gap-12 overflow-x-auto xl:hidden">
-        <div className={cn('flex flex-col gap-5 duration-500 md:flex-row')}>
-          <SideBarMyCards
-            cardId={cardId}
-            cardAction={cardAction}
-            cardState={cardState}
-          />
-          {children}
-        </div>
-        <div className={cn('duration-500 max-sm:pb-16')}>
-          <PreviewSection
-            user={user}
-            layout={currentLayout}
-            variableValues={variableValues}
-            socialValues={cardState.cardInfos.values}
-          />
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { ContentFormSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import InputComp from '../InputComp';
+import { Card, CardContent, CardHeader } from '../ui/card';
 
 interface MyCardsContentForm1Props {
   // getFieldProps: (
@@ -69,51 +70,56 @@ const MyCardsContentForm1 = ({
     { value: 'vanilla', label: 'Vanilla' },
   ];
   return (
-    <div className="flex flex-col gap-3">
-      {INPUT_FEILDS.map(
-        (
-          item: InputFieldProps<
-            | React.ChangeEvent<HTMLInputElement>
-            | ChangeEvent<HTMLTextAreaElement>
-          >,
-          index: number
-        ) => (
-          <InputComp
-            inputCompType={item.inputCompType}
-            inputType="text"
-            placeholder={
-              fieldPlaceHolder?.[
-                item.zSchemaName as keyof ContentFormSchemaType
-              ]
-                ? `Your ${
-                    fieldPlaceHolder[
-                      item.zSchemaName as keyof ContentFormSchemaType
-                    ]
-                  } Required`
-                : ''
-            }
-            zSchemaName={item.zSchemaName}
-            inputLabel={item.inputLabel}
-            key={index}
-            // getFieldProps={getFieldProps}
-            handleChange={
-              handleChange as
-                | ((
-                    e:
-                      | boolean
-                      | ChangeEvent<HTMLInputElement>
-                      | ChangeEvent<HTMLTextAreaElement>
-                  ) => void)
-                | undefined
-            }
-            inputValue={
-              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
-            }
-            error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
-          />
-        )
-      )}
-    </div>
+    <Card className="pb-4 shadow-none">
+      <CardHeader className="pb-2 font-bold">Basic Info</CardHeader>
+      <CardContent className="gap-3">
+        <div className="flex flex-col gap-3">
+          {INPUT_FEILDS.map(
+            (
+              item: InputFieldProps<
+                | React.ChangeEvent<HTMLInputElement>
+                | ChangeEvent<HTMLTextAreaElement>
+              >,
+              index: number
+            ) => (
+              <InputComp
+                inputCompType={item.inputCompType}
+                inputType="text"
+                placeholder={
+                  fieldPlaceHolder?.[
+                    item.zSchemaName as keyof ContentFormSchemaType
+                  ]
+                    ? `Your ${
+                        fieldPlaceHolder[
+                          item.zSchemaName as keyof ContentFormSchemaType
+                        ]
+                      } Required`
+                    : ''
+                }
+                zSchemaName={item.zSchemaName}
+                inputLabel={item.inputLabel}
+                key={index}
+                // getFieldProps={getFieldProps}
+                handleChange={
+                  handleChange as
+                    | ((
+                        e:
+                          | boolean
+                          | ChangeEvent<HTMLInputElement>
+                          | ChangeEvent<HTMLTextAreaElement>
+                      ) => void)
+                    | undefined
+                }
+                inputValue={
+                  values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+                }
+                error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+              />
+            )
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

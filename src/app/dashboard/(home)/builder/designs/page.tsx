@@ -1,16 +1,10 @@
 'use client';
 
-import FormWrapper from '@/components/FormWrapper';
-import InputComp from '@/components/InputComp';
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
-import {
-  setErrors,
-  updateDefaultCard,
-  updateDesignForm,
-} from '@/module/cards/cardSlice';
+import { setErrors, updateDesignForm } from '@/module/cards/cardSlice';
 import {
   CardState,
   DesignFormSchema,
@@ -73,16 +67,12 @@ const Designpage = () => {
     }
   };
 
-  const handleIsDefaultChange = (e: boolean) => {
-    dispatch(updateDefaultCard(e));
-  };
-
   return (
     <form
-      className="flex gap-4 flex-col"
       onSubmit={(e) => {
         e.preventDefault();
       }}
+      className="flex flex-col gap-4"
     >
       <MyCardsDesignForm
         errors={cardState.cardDesign.errors}
@@ -94,7 +84,7 @@ const Designpage = () => {
         handleChange={handleChange}
         values={cardState.cardDesign.values}
       /> */}
-      <FormWrapper>
+      {/* <FormWrapper>
         <div className="flex flex-col gap-4">
           <InputComp
             zSchemaName="is_default"
@@ -105,7 +95,7 @@ const Designpage = () => {
             inputValue={cardState.isDefault ?? false}
           />
         </div>
-      </FormWrapper>
+      </FormWrapper> */}
     </form>
   );
 };

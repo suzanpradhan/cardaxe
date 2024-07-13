@@ -1,10 +1,9 @@
-import FormWrapper from '../FormWrapper';
-
 import { InputFieldProps } from '@/core/types/appTypes';
 import { ContentFormSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import InputComp from '../InputComp';
+import { Card, CardContent, CardHeader } from '../ui/card';
 
 interface MyCardsContentForm3Props {
   // getFieldProps: (
@@ -24,7 +23,7 @@ const INPUT_FEILDS: InputFieldProps<
 >[] = [
   {
     inputCompType: 'normal',
-    inputLabel: 'Title',
+    inputLabel: 'Designation',
     zSchemaName: 'designation',
   },
   {
@@ -45,34 +44,37 @@ const MyCardsContentForm3 = ({
   errors,
 }: MyCardsContentForm3Props) => {
   return (
-    <FormWrapper>
-      <div className="flex flex-col gap-3">
-        {INPUT_FEILDS.map((item, index) => (
-          <InputComp
-            inputType="text"
-            zSchemaName={item.zSchemaName}
-            inputLabel={item.inputLabel}
-            key={index}
-            // getFieldProps={getFieldProps}
-            inputCompType={item.inputCompType}
-            handleChange={
-              handleChange as
-                | ((
-                    e:
-                      | boolean
-                      | ChangeEvent<HTMLInputElement>
-                      | ChangeEvent<HTMLTextAreaElement>
-                  ) => void)
-                | undefined
-            }
-            inputValue={
-              values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
-            }
-            error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
-          />
-        ))}
-      </div>
-    </FormWrapper>
+    <Card className="pb-4 shadow-none">
+      <CardHeader className="pb-2 font-bold">Professional Info</CardHeader>
+      <CardContent>
+        <div className="flex flex-col gap-3">
+          {INPUT_FEILDS.map((item, index) => (
+            <InputComp
+              inputType="text"
+              zSchemaName={item.zSchemaName}
+              inputLabel={item.inputLabel}
+              key={index}
+              // getFieldProps={getFieldProps}
+              inputCompType={item.inputCompType}
+              handleChange={
+                handleChange as
+                  | ((
+                      e:
+                        | boolean
+                        | ChangeEvent<HTMLInputElement>
+                        | ChangeEvent<HTMLTextAreaElement>
+                    ) => void)
+                  | undefined
+              }
+              inputValue={
+                values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+              }
+              error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+            />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

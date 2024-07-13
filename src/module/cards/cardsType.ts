@@ -109,11 +109,13 @@ export const ContentFormUpdateSchema = ContentFormSchema.extend({
 export const DesignFormSchema = z.object({
   id: z.number().optional().nullable(),
   backgroundColor: z.string().pipe(nonempty).optional().nullable(),
+  foregroundColor: z.string().pipe(nonempty).optional().nullable(),
   backgroundImage: z.string().optional().nullable(),
   logo: z.string().optional().nullable(),
   showLogo: z.boolean().optional().nullable(),
   showSocialIcons: z.boolean().optional().nullable(),
   darkMode: z.boolean().optional().nullable(),
+
 })
 
 export const DesignFormUpdateSchema = DesignFormSchema.refine((data) => data.backgroundColor || data.backgroundImage, {

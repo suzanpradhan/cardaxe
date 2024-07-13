@@ -13,6 +13,7 @@ const config = {
     'gap-x-2',
     'text-start',
     'aspect-rectangle ',
+
     'rounded-lg',
     'p-3',
     'mb-10',

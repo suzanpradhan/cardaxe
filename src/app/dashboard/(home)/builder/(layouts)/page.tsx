@@ -4,6 +4,7 @@ import CardLayouts from '@/components/CardLayouts.server';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import { PaginatedResponseType } from '@/core/types/responseTypes';
 import { updateCardTemplate } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardTemplatesType } from '@/module/cards/cardsType';
@@ -20,20 +21,20 @@ const LayoutPage = () => {
   const cardTemplates = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
-        ?.data as CardTemplatesType[]
+        ?.data as PaginatedResponseType<CardTemplatesType>
   );
   const cardState = useSelector((state: RootState) => state.card);
 
   console.log('cardState.cardTemplate', cardState.cardTemplate);
   return (
-    <div className="px-2">
-      {cardTemplates?.map((card, index) => {
+    <div className="flex flex-col gap-2 px-2 py-2">
+      {cardTemplates?.results.map((card, index) => {
         return (
           <div key={index}>
             {card.id && (
               <button
                 onClick={() => dispatch(updateCardTemplate(card.id.toString()))}
-                className={`w-full p-1 h-full m-0 rounded-lg  ${cardState.cardTemplate === card.id.toString() ? 'ring-2 ring-blueTheme' : ''}`}
+                className={`m-0 h-full w-full rounded-lg p-1 ${cardState.cardTemplate === card.id.toString() ? 'ring-2 ring-blueTheme' : ''}`}
               >
                 {' '}
                 <CardLayouts

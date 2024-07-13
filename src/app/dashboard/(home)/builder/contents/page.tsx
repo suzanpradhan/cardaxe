@@ -3,7 +3,6 @@
 import MyCardsContentForm1 from '@/components/myCards/MyCardsContentForm1';
 import MyCardsContentForm2 from '@/components/myCards/MyCardsContentForm2';
 import MyCardsContentForm3 from '@/components/myCards/MyCardsContentForm3';
-import { Card, CardContent } from '@/components/ui/card';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
@@ -80,34 +79,30 @@ const ContentsPage = () => {
   };
 
   return (
-    <Card className="py-6 shadow-none">
-      <CardContent>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-          className="flex flex-col gap-4"
-        >
-          <MyCardsContentForm1
-            handleChange={(e) => handleChange(e)}
-            values={cardState.cardFields.values}
-            errors={cardState.cardFields.errors}
-            fieldPlaceHolder={fieldPlaceHolder}
-          />
-          <MyCardsContentForm2
-            handleChange={handleChange}
-            values={cardState.cardFields.values}
-            errors={cardState.cardFields.errors}
-            fieldPlaceHolder={fieldPlaceHolder}
-          />
-          <MyCardsContentForm3
-            handleChange={handleChange}
-            values={cardState.cardFields.values}
-            errors={cardState.cardFields.errors}
-          />
-        </form>
-      </CardContent>
-    </Card>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+      className="flex flex-col gap-4"
+    >
+      <MyCardsContentForm1
+        handleChange={(e) => handleChange(e)}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
+        fieldPlaceHolder={fieldPlaceHolder}
+      />
+      <MyCardsContentForm2
+        handleChange={handleChange}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
+        fieldPlaceHolder={fieldPlaceHolder}
+      />
+      <MyCardsContentForm3
+        handleChange={handleChange}
+        values={cardState.cardFields.values}
+        errors={cardState.cardFields.errors}
+      />
+    </form>
   );
 };
 
