@@ -21,6 +21,11 @@ const INPUT_FEILDS: InputFieldProps<
 >[] = [
   {
     inputCompType: 'normal',
+    inputLabel: 'Title',
+    zSchemaName: 'title',
+  },
+  {
+    inputCompType: 'normal',
     inputLabel: 'Prefix',
     zSchemaName: 'prefix',
   },

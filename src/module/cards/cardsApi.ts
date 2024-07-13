@@ -21,7 +21,7 @@ const cardsApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
-        return camelCaseResponse.results as any;
+        return camelCaseResponse as PaginatedResponseType<CardTemplatesType>;
       },
     }),
     getCard: builder.query<CardResponseType<CardTemplatesType>, string>({

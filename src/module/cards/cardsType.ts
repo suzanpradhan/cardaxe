@@ -76,6 +76,7 @@ export const ContentFormSchema = z.object({
   id: z.number().optional(),
   address: z.string().optional().nullable(),
   prefix: z.string().optional().nullable(),
+  title: z.string().optional().nullable(),
   firstName: z.string().pipe(nonempty),
   middleName: z.string().optional().nullable(),
   lastName: z.string().pipe(nonempty),
@@ -93,6 +94,7 @@ export const ContentFormSchema = z.object({
 export const ContentFormUpdateSchema = ContentFormSchema.extend({
   id: z.number().optional().nullable(),
   prefix: z.string().optional().nullable(),
+  title: z.string().optional().nullable(),
   firstName: z.string().optional().nullable(),
   lastName: z.string().pipe(nonempty).optional().nullable(),
   suffix: z.string().pipe(nonempty).optional().nullable(),
