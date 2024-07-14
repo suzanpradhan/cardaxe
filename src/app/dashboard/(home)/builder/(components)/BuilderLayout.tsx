@@ -453,9 +453,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
                 cardAction={cardAction}
                 cardState={cardState}
               />
-              <ScrollArea className="w-[calc(100vw-100px)] shrink-0 md:w-[calc(100vw-15rem-100px-100px)] lg:w-[420px]">
-                {children}
-              </ScrollArea>
+              {/* <ScrollArea className="w-[calc(100vw-100px)] shrink-0 md:w-[calc(100vw-15rem-100px-100px)] lg:w-[420px]"> */}
+              {children}
+              {/* </ScrollArea> */}
             </div>
           )}
           <ScrollArea
@@ -470,7 +470,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           </ScrollArea>
         </div>
       </div>
-      <div className="block gap-12 lg:hidden">
+      {/* <div className="block gap-12 lg:hidden">
         <div className="relative mt-5">
           <div
             className={`absolute flex flex-col gap-5 duration-500 max-lg:w-[calc(100%-0.35rem)]`}
@@ -493,7 +493,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
