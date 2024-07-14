@@ -53,11 +53,11 @@ const LoginForm: React.FC = () => {
           router.replace('/dashboard');
           toast.success('Sucessfully logged in.');
         } else {
-          toast.error('Login Failed! Please check your credentials.');
+          // toast.error('Login Failed! Please check your credentials.');
         }
       })
       .catch((errorResponse) => {
-        toast.error('Login Failed! Please check your credentials.');
+        // toast.error('Login Failed! Please check your credentials.');
       });
     setIsLoading(false);
   };

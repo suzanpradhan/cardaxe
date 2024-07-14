@@ -6,15 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen flex-col md:flex-row">
+    <div className="h-screen">
       <TitleText isSideBarComp />
-      <div className="hidden h-max w-full border-t border-zinc-200 bg-white p-2 md:top-0 md:block md:h-auto md:w-60 md:border-r md:border-t-0 md:px-4 md:py-4">
+      <div className="h-max w-full fixed bottom-0 left-0 border-t border-zinc-200 bg-white p-2 lg:top-0 lg:block lg:h-screen lg:w-60 lg:border-r lg:border-t-0 lg:px-4 lg:py-4 z-50">
         <Sidebar />
       </div>
-      <div className="min-h-0 min-w-0 flex-1">{children}</div>
-      <div className="border-t border-zinc-200 bg-white p-2 md:top-0 md:hidden md:h-auto md:w-60 md:border-r md:border-t-0 md:px-4 md:py-4">
-        <Sidebar />
-      </div>
+      <div className="lg:ml-60">{children}</div>
     </div>
   );
 };

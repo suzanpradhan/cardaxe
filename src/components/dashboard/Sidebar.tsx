@@ -115,9 +115,9 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 ];
 const Sidebar = () => {
   return (
-    <ul className="w-full flex md:flex-col justify-between md:justify-normal md:gap-y-2">
-      <Link href={'/'} className="hidden md:block h-14">
-        <h1 className="md:text-3xl text-xl font-extrabold">cardaxe.</h1>
+    <ul className="max-w-sm lg:max-w-none w-full mx-auto flex lg:flex-col justify-between lg:justify-normal lg:gap-y-2">
+      <Link href={'/'} className="hidden lg:block h-14">
+        <h1 className="lg:text-3xl text-xl font-extrabold">cardaxe.</h1>
       </Link>
       {SIDEBAR_NAV_ELEMENTS.map((item) => (
         <SidebarElements item={item} key={item.id} />

@@ -26,18 +26,18 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
   return (
     <li
       className={clsx(
-        'w-12 md:w-full h-12 rounded-lg hover:text-blueTheme/60 hover:bg-blueBg/60',
+        'w-12 lg:w-full h-12 rounded-lg hover:text-blueTheme/60 hover:bg-blueBg/60',
         toggle ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
         (item.label == 'Notification' || item.label == 'Analytics') &&
-          'hidden md:block'
+          'hidden lg:block'
       )}
     >
       <button
         onClick={() => handleClick()}
-        className="w-full h-full flex items-center justify-center md:justify-start gap-4 md:px-4"
+        className="w-full h-full flex items-center justify-center lg:justify-start gap-4 lg:px-4"
       >
         {item.icon}
-        <p className="hidden md:block text-sm">{item.label}</p>
+        <p className="hidden lg:block text-sm">{item.label}</p>
       </button>
     </li>
   );

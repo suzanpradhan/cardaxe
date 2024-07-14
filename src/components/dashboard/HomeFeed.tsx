@@ -11,21 +11,21 @@ type HomeFeedType = {
 const HomeFeed = ({ post }: HomeFeedType) => {
   const reactions = [
     {
-      icon: <Heart size="30" variant="TwoTone" />,
+      icon: <Heart size="24" variant="TwoTone" />,
       number: post.likes,
     },
     {
-      icon: <Flash size="30" variant="TwoTone" />,
+      icon: <Flash size="24" variant="TwoTone" />,
       number: post.comments,
     },
     {
-      icon: <Share size="30" variant="TwoTone" />,
+      icon: <Share size="24" variant="TwoTone" />,
       number: post.shares,
     },
   ];
 
   return (
-    <div className="w-full mx-auto flex flex-col gap-4 border-b border-zinc-100 py-5 px-2 sm:px-0">
+    <div className="min-w-[20rem] max-w-xs sm:min-w-[24rem] sm:max-w-sm w-full mx-auto flex flex-col gap-4 border-b border-zinc-100 py-5 px-2 xs:px-0">
       <section className="flex items-center gap-2">
         <div className="relative h-8 w-8 rounded-full z-auto">
           <Image
@@ -39,8 +39,8 @@ const HomeFeed = ({ post }: HomeFeedType) => {
         </div>
         <a className="hover:text-blueTheme font-semibold grow">Eugene Cheng</a>
         <MoreSquare
-          size="3"
-          className="text-grayfont hover:text-blueTheme bg-componentBgGrey rounded-lg hover:bg-blueBg"
+          size="24"
+          className="text-zinc-200"
         />
       </section>
       <CardTemplateHome
@@ -65,7 +65,7 @@ const HomeFeed = ({ post }: HomeFeedType) => {
         <div className="grow flex justify-end">
           <Bookmark
             variant="TwoTone"
-            size="30"
+            size="24"
             className="text-zinc-300 hover:text-zinc-900 active:ring-2 active:text-zinc-900 active:bg-blueBg"
           />
         </div>
