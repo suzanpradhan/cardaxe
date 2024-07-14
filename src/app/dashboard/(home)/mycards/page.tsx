@@ -80,15 +80,6 @@ const MyCardsPage = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => hanldeCreateCard()}
-              className="w-10 lg:w-auto h-10 bg-teal-500 rounded-md shadow-md shadow-teal-200 text-white text-xs lg:px-3"
-            >
-              <p className="flex items-center justify-center gap-2">
-                <Eye size="20" variant="Bulk" className="text-white" />
-                <span className="hidden lg:block">Preview</span>
-              </p>
-            </button>
-            <button
-              onClick={() => hanldeCreateCard()}
               className="w-10 lg:w-auto h-10 bg-blueTheme rounded-md shadow-md shadow-blueTheme/60 text-white text-xs lg:px-3"
             >
               <p className="flex items-center justify-center gap-2">
@@ -147,7 +138,7 @@ const MyCardsPage = () => {
                       </div>
                       {/* top-ends */}
                       <div className="flex items-center justify-start gap-4">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 cursor-pointer">
                           <Eye
                             size="24"
                             variant="Bulk"
@@ -157,7 +148,7 @@ const MyCardsPage = () => {
                             242
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 cursor-pointer">
                           <Share
                             size="24"
                             variant="Bulk"
@@ -167,7 +158,7 @@ const MyCardsPage = () => {
                             242
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 cursor-pointer">
                           <MouseSquare
                             size="24"
                             variant="Bulk"
@@ -181,7 +172,7 @@ const MyCardsPage = () => {
                       {/* middle-ends */}
                     </div>
                     <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm">
+                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
                         <Edit
                           size="21"
                           variant="Bulk"
@@ -191,7 +182,7 @@ const MyCardsPage = () => {
                           Edit Card
                         </span>
                       </div>
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm">
+                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
                         <BoxAdd
                           size="21"
                           variant="Bulk"
@@ -201,7 +192,7 @@ const MyCardsPage = () => {
                           Add Infos
                         </span>
                       </div>
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm">
+                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
                         <Scanning
                           size="21"
                           variant="Bulk"
@@ -211,7 +202,7 @@ const MyCardsPage = () => {
                           Show QR
                         </span>
                       </div>
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm">
+                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
                         <Share
                           size="21"
                           variant="Bulk"
