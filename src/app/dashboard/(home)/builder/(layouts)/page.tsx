@@ -25,14 +25,14 @@ const LayoutPage = () => {
   const cardState = useSelector((state: RootState) => state.card);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {cardTemplates?.map((card, index) => {
         return (
           <div key={index}>
             {card.id && (
               <button
                 onClick={() => dispatch(updateCardTemplate(card.id.toString()))}
-                className={`w-full p-1 h-full m-0 rounded-lg  ${cardState.cardTemplate === card.id.toString() ? 'ring-2 ring-blueTheme' : ''}`}
+                className={`w-full h-full m-0 rounded-lg ${cardState.cardTemplate === card.id.toString() ? 'ring-offset-4 ring-2 ring-blueTheme' : ''}`}
               >
                 {' '}
                 <CardLayouts

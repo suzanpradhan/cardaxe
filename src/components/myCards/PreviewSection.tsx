@@ -24,7 +24,7 @@ const PreviewSection = ({
   user?: UserType;
 }) => {
   return (
-    <FormWrapper className="bg-white mx-auto border rounded-xl p-1">
+    <FormWrapper className="bg-white max-w-xs md:max-w-md lg:max-w-lg mx-auto">
       <div className="flex flex-col">
         {layout?.htmlCode && (
           <CardLayouts

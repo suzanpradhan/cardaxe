@@ -49,7 +49,7 @@ const CardLayouts = ({
 
   return (
     <div
-      className={`w-full flex rounded-lg ${
+      className={`w-full rounded-lg ${
         enableShadow ? 'shadow-zinc-400 shadow-md ' : ''
       }`}
     >

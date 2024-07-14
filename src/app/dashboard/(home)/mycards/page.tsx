@@ -108,7 +108,7 @@ const MyCardsPage = () => {
           // console.log(card.cardTemplate.htmlCode);
           return (
             card.id && (
-              <div className="col-span-6 md:col-span-3" key={index}>
+              <div className="col-span-6 lg:col-span-3" key={index}>
                 <div
                   className="w-full mx-auto flex flex-col gap-4 border border-zinc-100 p-4 rounded-lg"
                   onClick={() => handleEditCard(card.id!)}

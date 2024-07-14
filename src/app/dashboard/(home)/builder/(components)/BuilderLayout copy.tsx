@@ -1,13 +1,13 @@
 'use client';
 
 import { VariableValueType } from '@/components/CardLayouts.server';
+import AppBar from '@/components/dashboard/AppBar';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { updatedDiff } from 'deep-object-diff';
 
 import ButtonForm from '@/components/ButtonForm';
-import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
 import {
@@ -30,7 +30,6 @@ import {
 } from '@/module/cards/cardsType';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
-import { Mobile, Monitor } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -39,7 +38,6 @@ import { toast } from 'react-toastify';
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(true);
   const [publishLoading, toggleLoading] = useState(false);
-  const [desktopMode, setDesktopMode] = useState(true);
 
   const session = useSession();
   const searchParams = useSearchParams();
@@ -327,79 +325,74 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   console.log('cardState.cardDesign', cardState);
 
   return (
-    <div className="grid grid-cols-12 min-h-full place-content-start">
-      <div className="col-span-12 px-4 h-min">
-        <AppBar appBarLabel="My Personal Card">
-          <ButtonForm
-            label="Preview"
-            theme={!toggle ? 'blue' : 'accent'}
-            isLoading={publishLoading}
-            className="px-4 text-sm rounded-sm w-max"
-            handleClick={() => {
-              setToggle(!toggle);
-            }}
-          />
-          <ButtonForm
-            label="Save Draft"
-            theme="accent"
-            className="px-4 text-sm rounded-sm w-max"
-          />
-          <ButtonForm
-            label="Publish"
-            className="px-4 text-sm rounded-sm w-max"
-            isLoading={publishLoading}
-            handleClick={handlePublish}
-          />
-        </AppBar>
-      </div>
-
-      <div className="min-h-[100vh-1rem] relative col-span-12 grid grid-cols-12 row-spans-2 gap-x-4 gap-y-4 mx-4 place-content-start">
-        <div className="row-span-1 lg:row-span-2 col-span-12 lg:col-span-1">
-          <SideBarMyCards
-            cardId={cardId}
-            cardAction={cardAction}
-            cardState={cardState}
+    <>
+      <AppBar appBarLabel="My Personal Card">
+        <ButtonForm
+          label="Preview"
+          theme={!toggle ? 'blue' : 'accent'}
+          isLoading={publishLoading}
+          className="px-4 text-sm rounded-sm w-max"
+          handleClick={() => {
+            setToggle(!toggle);
+          }}
+        />
+        <ButtonForm
+          label="Save Draft"
+          theme="accent"
+          className="px-4 text-sm rounded-sm w-max"
+        />
+        <ButtonForm
+          label="Publish"
+          className="px-4 text-sm rounded-sm w-max"
+          isLoading={publishLoading}
+          handleClick={handlePublish}
+        />
+      </AppBar>
+      <div className="hidden lg:flex-row flex-col gap-6 lg:flex">
+        <SideBarMyCards
+          cardId={cardId}
+          cardAction={cardAction}
+          cardState={cardState}
+        />
+        <div className="basis-2/5 max-w-xs md:max-w-lg">{children}</div>
+        <div className="shrink grow max-w-xs lg:max-w-full">
+          <PreviewSection
+            layout={currentLayout}
+            user={user}
+            variableValues={variableValues}
+            socialValues={cardState.cardInfos.values}
           />
         </div>
-        <div className="col-span-12 lg:col-span-4">
-          <div className="rounded-xl border border-zinc-200 px-4 py-4">
+      </div>
+      <div className="block lg:hidden gap-12">
+        <div className="mt-5 relative">
+          <div
+            className={`absolute max-lg:w-[calc(100%-0.35rem)] flex flex-col gap-5 duration-500 ${
+              toggle ? '' : '-translate-x-[calc(102%)]'
+            }`}
+          >
+            <SideBarMyCards
+              cardId={cardId}
+              cardAction={cardAction}
+              cardState={cardState}
+            />
             {children}
           </div>
-        </div>
-        <div
-          className={`col-span-12 lg:col-span-7 bg-white min-h-[100vh-1rem] absolute top-0 bottom-0 left-0 right-0 z-30 lg:static duration-500 ${
-            toggle ? 'translate-x-[calc(100%)] lg:translate-x-0 -right-4' : ''
-          }`}
-        >
-          <div className="h-full overflow-hidden rounded-3xl border border-zinc-200 px-4 py-4 sticky top-4">
-            <div className="flex items-center justify-center mb-10">
-              <div className="flex bg-zinc-200 rounded-md overflow-hidden text-zinc-700 hover:shadow-md">
-                <div
-                  onClick={() => setDesktopMode((prev) => !prev)}
-                  className={`px-4 h-10 flex items-center gap-2 cursor-pointer ${!desktopMode ? 'hover:bg-zinc-900 bg-zinc-800 text-white' : 'hover:bg-zinc-300'}`}
-                >
-                  <Mobile size="24" variant="Bulk" />
-                  Mobile
-                </div>
-                <div
-                  onClick={() => setDesktopMode((prev) => !prev)}
-                  className={`px-4 h-10 flex items-center gap-2 cursor-pointer ${desktopMode ? 'hover:bg-zinc-900 bg-zinc-800 text-white' : 'hover:bg-zinc-300'}`}
-                >
-                  <Monitor size="24" variant="Bulk" />
-                  Desktop
-                </div>
-              </div>
-            </div>
+          <div
+            className={`absolute duration-500 max-lg:w-[calc(100%-0.35rem)] max-sm:pb-16 ${
+              toggle ? 'translate-x-[calc(102%)]' : ''
+            }`}
+          >
             <PreviewSection
-              layout={currentLayout}
               user={user}
+              layout={currentLayout}
               variableValues={variableValues}
               socialValues={cardState.cardInfos.values}
             />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
