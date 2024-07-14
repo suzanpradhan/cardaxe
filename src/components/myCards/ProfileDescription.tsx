@@ -20,18 +20,18 @@ const PROFILE_DETAILS_BUTTONS = [
     key={1}
     size="40"
     variant="Bulk"
-    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
+    className="rounded-full text-blueTheme hover:shadow-md active:ring-2 active:ring-blueTheme"
   />,
   <Share
     key={2}
     size="40"
-    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
+    className="rounded-full text-blueTheme hover:shadow-md active:ring-2 active:ring-blueTheme"
     variant="Bold"
   />,
   <MoreCircle
     key={3}
     size="40"
-    className="active:ring-blueTheme active:ring-2 hover:shadow-md rounded-full text-blueTheme"
+    className="rounded-full text-blueTheme hover:shadow-md active:ring-2 active:ring-blueTheme"
     variant="Bulk"
   />,
 ];
@@ -46,20 +46,19 @@ const ProfileDescription = ({
   user?: UserType;
 }) => {
   return (
-    <div className=" flex flex-col gap-3 mt-4">
-      <div className="flex gap-4 bg-transparent">
-        <div className="bg-blueTheme overflow-hidden h-[120px] w-[120px] relative rounded-full">
+    <div className="my-5 grid gap-x-4">
+      <div className="flex items-center justify-stretch gap-4">
+        <div className="relative h-[105px] w-[105px] overflow-hidden rounded-full bg-zinc-100">
           <Image
             src={user?.avatar ?? '/profile/profile.png'}
             alt="image"
             fill
             sizes="(max-width: 768px) 100vw, 700px"
-            objectFit="cover "
-            // className="-z-50"
+            objectFit="cover"
           />
         </div>
-        <div className="flex flex-col h-ustify-center gap-1">
-          <h1 className="sm:text-2xl text-lg font-extrabold ">
+        <div className="flex grow flex-col gap-1 bg-slate-500">
+          <h1 className="text-lg font-extrabold sm:text-2xl">
             {user?.fullname}
           </h1>
           <p>

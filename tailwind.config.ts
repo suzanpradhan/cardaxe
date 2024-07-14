@@ -39,8 +39,9 @@ const config = {
     'font-normal',
     'text-sm',
     'text-black/75',
-    'gap-1'
-
+    'gap-1',
+    'min-h-card',
+    'sm:aspect-video',
   ],
   prefix: '',
   theme: {
@@ -77,6 +78,7 @@ const config = {
       },
       minHeight: {
         fitAll: '40rem',
+        card: '15rem',
       },
       flexBasis: {
         110: '28rem',
