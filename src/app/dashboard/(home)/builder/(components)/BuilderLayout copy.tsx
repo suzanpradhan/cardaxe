@@ -10,6 +10,7 @@ import { updatedDiff } from 'deep-object-diff';
 import ButtonForm from '@/components/ButtonForm';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
+import { PaginatedResponseType } from '@/core/types/responseTypes';
 import {
   initialState,
   updateCardTemplate,
@@ -35,7 +36,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
+const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(true);
   const [publishLoading, toggleLoading] = useState(false);
 
@@ -56,7 +57,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const cardsTemplateList = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
-        ?.data as CardTemplatesType[]
+        ?.data as PaginatedResponseType<CardTemplatesType>
   );
 
   useEffect(() => {
@@ -177,7 +178,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const currentLayout = cardState.cardTemplate
-    ? cardsTemplateList?.find(
+    ? cardsTemplateList?.results.find(
         (layout) => layout.id === parseInt(cardState.cardTemplate!)
       )
     : undefined;
@@ -331,7 +332,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           label="Preview"
           theme={!toggle ? 'blue' : 'accent'}
           isLoading={publishLoading}
-          className="px-4 text-sm rounded-sm w-max"
+          className="w-max rounded-sm px-4 text-sm"
           handleClick={() => {
             setToggle(!toggle);
           }}
@@ -339,23 +340,23 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         <ButtonForm
           label="Save Draft"
           theme="accent"
-          className="px-4 text-sm rounded-sm w-max"
+          className="w-max rounded-sm px-4 text-sm"
         />
         <ButtonForm
           label="Publish"
-          className="px-4 text-sm rounded-sm w-max"
+          className="w-max rounded-sm px-4 text-sm"
           isLoading={publishLoading}
           handleClick={handlePublish}
         />
       </AppBar>
-      <div className="hidden lg:flex-row flex-col gap-6 lg:flex">
+      <div className="hidden flex-col gap-6 lg:flex lg:flex-row">
         <SideBarMyCards
           cardId={cardId}
           cardAction={cardAction}
           cardState={cardState}
         />
-        <div className="basis-2/5 max-w-xs md:max-w-lg">{children}</div>
-        <div className="shrink grow max-w-xs lg:max-w-full">
+        <div className="max-w-xs basis-2/5 md:max-w-lg">{children}</div>
+        <div className="max-w-xs shrink grow lg:max-w-full">
           <PreviewSection
             layout={currentLayout}
             user={user}
@@ -364,10 +365,10 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
       </div>
-      <div className="block lg:hidden gap-12">
-        <div className="mt-5 relative">
+      <div className="block gap-12 lg:hidden">
+        <div className="relative mt-5">
           <div
-            className={`absolute max-lg:w-[calc(100%-0.35rem)] flex flex-col gap-5 duration-500 ${
+            className={`absolute flex flex-col gap-5 duration-500 max-lg:w-[calc(100%-0.35rem)] ${
               toggle ? '' : '-translate-x-[calc(102%)]'
             }`}
           >
@@ -396,4 +397,4 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default BuilderLayout;
+export default BuilderLayoutArchive;
