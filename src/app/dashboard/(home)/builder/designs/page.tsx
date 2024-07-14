@@ -1,7 +1,7 @@
 'use client';
 
 import MyCardsDesignForm from '@/components/myCards/MyCardsDesignForm';
-import { useAppDispatch } from '@/core/redux/clientStore';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
 import { setErrors, updateDesignForm } from '@/module/cards/cardSlice';
@@ -11,10 +11,9 @@ import {
   DesignFromSchemaType,
 } from '@/module/cards/cardsType';
 import React, { ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
 
 const Designpage = () => {
-  const cardState = useSelector((state: RootState) => state.card);
+  const cardState = useAppSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
   const timeout = useTimeoutDispatch(500);
 
@@ -72,7 +71,7 @@ const Designpage = () => {
       onSubmit={(e) => {
         e.preventDefault();
       }}
-      className="flex flex-col gap-4"
+      className="flex w-[98%] flex-col gap-4"
     >
       <MyCardsDesignForm
         errors={cardState.cardDesign.errors}

@@ -1,9 +1,9 @@
 'use client';
 
-import FormWrapper from '@/components/FormWrapper';
 import SocialMediaForm, {
   SocialMediaValueType,
 } from '@/components/myCards/SocialMediaForm';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
@@ -110,33 +110,43 @@ const CardInfosFormPage = () => {
   };
 
   return (
-    <FormWrapper>
-      {socialMediaInfo?.map((item, index) => {
-        const socialMediaErr0rs =
-          cardState.cardInfos.errors[item.id] != null
-            ? cardState.cardInfos.errors[item.id]
-            : undefined;
-        const socialMediaValue =
-          cardState.cardInfos.values[item.id] != null
-            ? cardState.cardInfos.values[item.id]
-            : undefined;
-        return (
-          <SocialMediaForm
-            error={socialMediaErr0rs as SocialMediaValueType}
-            handleChange={handleChange}
-            socialMedialValue={socialMediaValue}
-            key={index}
-            categoryId={item.id}
-            socialLinkName={
-              SOCIAL_MEDIA_FEILDS[item.name]?.socialLinkSchemaName
-            }
-            socialLinkTitle={item.name}
-            socialLinkLogo={SOCIAL_MEDIA_FEILDS[item.name]?.socialLinkLogo}
-            placeholder={SOCIAL_MEDIA_FEILDS[item.name]?.placeholder}
-          />
-        );
-      })}
-    </FormWrapper>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+      className="flex flex-col gap-4"
+    >
+      <Card className="pb-4 shadow-none">
+        <CardHeader className="pb-2 font-bold">Social Media Info</CardHeader>
+        <CardContent>
+          {socialMediaInfo?.map((item, index) => {
+            const socialMediaErr0rs =
+              cardState.cardInfos.errors[item.id] != null
+                ? cardState.cardInfos.errors[item.id]
+                : undefined;
+            const socialMediaValue =
+              cardState.cardInfos.values[item.id] != null
+                ? cardState.cardInfos.values[item.id]
+                : undefined;
+            return (
+              <SocialMediaForm
+                error={socialMediaErr0rs as SocialMediaValueType}
+                handleChange={handleChange}
+                socialMedialValue={socialMediaValue}
+                key={index}
+                categoryId={item.id}
+                socialLinkName={
+                  SOCIAL_MEDIA_FEILDS[item.name]?.socialLinkSchemaName
+                }
+                socialLinkTitle={item.name}
+                socialLinkLogo={SOCIAL_MEDIA_FEILDS[item.name]?.socialLinkLogo}
+                placeholder={SOCIAL_MEDIA_FEILDS[item.name]?.placeholder}
+              />
+            );
+          })}
+        </CardContent>
+      </Card>
+    </form>
   );
 };
 

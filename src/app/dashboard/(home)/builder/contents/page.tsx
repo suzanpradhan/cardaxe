@@ -18,12 +18,11 @@ import {
 } from '@/module/cards/cardsType';
 import { useSearchParams } from 'next/navigation';
 import { ChangeEvent, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 const ContentsPage = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  const cardState = useSelector((state: RootState) => state.card);
+  const cardState = useAppSelector((state: RootState) => state.card);
   const cardId = searchParams.get('cardId');
   const timeout = useTimeoutDispatch(500);
 

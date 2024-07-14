@@ -138,7 +138,7 @@ const InputComp = ({
             <label
               htmlFor={zSchemaName}
               className={clsx(
-                'block !h-11 w-full truncate rounded-md border-1 bg-inputBgGrey p-2 text-inputPlaceholder placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-gray-50',
+                'line-clamp-1 block !h-11 w-full truncate rounded-md border-1 bg-inputBgGrey p-2 text-inputPlaceholder placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-gray-50',
                 error ? 'border-redError' : 'border-borderMain'
               )}
             >

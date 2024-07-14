@@ -22,7 +22,7 @@ const MyCardsDesignForm = ({
 }: MyCardsDesignFormProps) => {
   return (
     <Card className="pb-4 shadow-none">
-      <CardHeader className="pb-2 font-bold">Basic Designy</CardHeader>
+      <CardHeader className="pb-2 font-bold">Basic Design</CardHeader>
       <CardContent className="">
         <div className="flex flex-col gap-3">
           <div className="flex items-end gap-2">
@@ -110,7 +110,7 @@ const MyCardsDesignForm = ({
           <InputComp
             inputCompType="file"
             inputType="file"
-            className="mb-3"
+            className="mb-3 w-[98%]"
             zSchemaName="backgroundImage"
             inputLabel="Background Image"
             placeholder="Choose Image"
@@ -147,89 +147,6 @@ const MyCardsDesignForm = ({
             }
             error={errors['logo']}
           />
-          {/* <div className="flex items-end gap-2">
-            <InputComp
-              inputCompType="normal"
-              inputType="string"
-              zSchemaName="backgroundColor"
-              inputLabel="Background Color"
-              className="inline"
-              inputValue={values['backgroundColor']}
-              handleChange={
-                handleChange as
-                  | ((
-                      e:
-                        | boolean
-                        | ChangeEvent<HTMLInputElement>
-                        | ChangeEvent<HTMLTextAreaElement>
-                    ) => void)
-                  | undefined
-              }
-              error={errors['backgroundColor']}
-              disableInput
-            />
-            <div className="h-[42px] basis-4/5 rounded-md border-1 border-borderMain bg-inputBgGrey">
-              <InputComp
-                zSchemaName="backgroundColor"
-                inputCompType="color"
-                inputType="color"
-                inputValue={values['backgroundColor']}
-                handleChange={
-                  handleChange as
-                    | ((
-                        e:
-                          | boolean
-                          | ChangeEvent<HTMLInputElement>
-                          | ChangeEvent<HTMLTextAreaElement>
-                      ) => void)
-                    | undefined
-                }
-                error={errors['backgroundColor']}
-              />
-            </div>
-          </div>
-          <div className="flex items-end gap-2">
-            <InputComp
-              inputCompType="normal"
-              inputType="string"
-              zSchemaName="backgroundColor"
-              inputLabel="Background Color"
-              className="inline"
-              inputValue={values['backgroundColor']}
-              handleChange={
-                handleChange as
-                  | ((
-                      e:
-                        | boolean
-                        | ChangeEvent<HTMLInputElement>
-                        | ChangeEvent<HTMLTextAreaElement>
-                    ) => void)
-                  | undefined
-              }
-              error={errors['backgroundColor']}
-              disableInput
-            />
-            <div className="h-[42px] basis-4/5 rounded-md border-1 border-borderMain bg-inputBgGrey">
-              <InputComp
-                zSchemaName="foregroundColor"
-                inputCompType="color"
-                inputType="color"
-                inputValue={values['foregroundColor']}
-                handleChange={
-                  handleChange as
-                    | ((
-                        e:
-                          | boolean
-                          | ChangeEvent<HTMLInputElement>
-                          | ChangeEvent<HTMLTextAreaElement>
-                      ) => void)
-                    | undefined
-                }
-                error={errors['foregroundColor']}
-              />
-            </div>
-          </div>
-           */}
         </div>
       </CardContent>
     </Card>

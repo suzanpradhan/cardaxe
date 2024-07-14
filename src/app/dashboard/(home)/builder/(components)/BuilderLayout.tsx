@@ -30,6 +30,7 @@ import {
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
   DesignFromSchemaType,
+  InfoSchemaType,
 } from '@/module/cards/cardsType';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
@@ -41,7 +42,8 @@ import { toast } from 'react-toastify';
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [isPreview, setIsPreview] = useState(false);
-  const [publishLoading, toggleLoading] = useState(false);
+  const [publishLoading, togglePublishLoading] = useState(false);
+  const [saveLoading, toggleSaveLoading] = useState(false);
 
   const session = useSession();
   const searchParams = useSearchParams();
@@ -62,6 +64,17 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
         ?.data as PaginatedResponseType<CardTemplatesType>
   );
+
+  const cardInfoKeyValue: { [key: number]: InfoSchemaType } =
+    card?.cardInfos.reduce(
+      (acc, current) => {
+        if (current.id) {
+          acc[parseInt(current.id!)] = current;
+        }
+        return acc;
+      },
+      {} as { [key: number]: InfoSchemaType }
+    );
 
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
@@ -84,6 +97,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         case 'update':
           dispatch(updateContentForm(card.cardFields));
           dispatch(updateDesignForm(card.cardDesign));
+          dispatch(updateInfosForm(cardInfoKeyValue));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(updateDefaultCard(card.isDefault));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
@@ -107,7 +121,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   }, [card, cardAction]);
 
   const handlePublish = () => {
-    toggleLoading(true);
+    toggleSaveLoading(true);
     dispatch(validateForms('cardDesign'));
     dispatch(validateForms('cardFields'));
     var submitresponse = undefined;
@@ -125,12 +139,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState.cardDesign.values as DesignFromSchemaType
     );
 
-    console.log(
-      'cardState.cardDesign.errors',
-      cardState.cardDesign.errors,
-      cardState.cardFields.errors
-    );
-
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
       Object.keys(cardState.cardFields.errors).length === 0 &&
@@ -138,6 +146,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       session.data?.user?.id &&
       updatedCardFields
     ) {
+      console.log(cardState.cardInfos);
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,
@@ -161,21 +170,90 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
             toast.error(`Error: Please enter all required value`);
-            toggleLoading(false);
+            toggleSaveLoading(false);
             throw errorMessage;
           }
           toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
-          toggleLoading(false);
+          toggleSaveLoading(false);
         })
         .catch((err) => {
           toast.error('Something went wrong');
-          toggleLoading(false);
+          toggleSaveLoading(false);
           throw err;
         });
     } else {
-      toggleLoading(false);
+      toggleSaveLoading(false);
+      toast.error(`Error: Please enter all required value`);
+    }
+  };
+
+  const handleSave = () => {
+    toggleSaveLoading(true);
+    dispatch(validateForms('cardDesign'));
+    dispatch(validateForms('cardFields'));
+    var submitresponse = undefined;
+    const updatedCardFields = {
+      ...(card.cardFields
+        ? (updatedDiff(
+            card.cardFields,
+            cardState.cardFields.values
+          ) as ContentFormSchemaType)
+        : undefined),
+    };
+
+    const updatedCardDesign = updatedDiff(
+      card.cardDesign,
+      cardState.cardDesign.values as DesignFromSchemaType
+    );
+
+    if (
+      Object.keys(cardState.cardDesign.errors).length === 0 &&
+      Object.keys(cardState.cardFields.errors).length === 0 &&
+      cardId &&
+      session.data?.user?.id &&
+      updatedCardFields
+    ) {
+      console.log(cardState.cardInfos);
+      submitresponse = dispatch(
+        cardsApi.endpoints.upDateCard.initiate({
+          cardId: cardId,
+          userId: session.data?.user?.id,
+          cardDesign: {
+            ...updatedCardDesign,
+            id: card.cardDesign.id,
+          } as DesignFromSchemaType,
+          cardFields: {
+            ...updatedCardFields,
+            id: card.cardFields.id,
+          } as ContentFormSchemaType,
+          cardInfos: cardState.cardInfos.values,
+          cardTemplate: cardState.cardTemplate,
+          isDefault: cardState.isDefault ?? false,
+          isPublished: false,
+        })
+      );
+      submitresponse
+        ?.then((res) => {
+          const errorMessage = (res as any).error;
+          if (errorMessage) {
+            toast.error(`Error: Please enter all required value`);
+            toggleSaveLoading(false);
+            throw errorMessage;
+          }
+          toast.success('Successfully updated');
+          cardAction === 'create' &&
+            router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+          toggleSaveLoading(false);
+        })
+        .catch((err) => {
+          toast.error('Something went wrong');
+          toggleSaveLoading(false);
+          throw err;
+        });
+    } else {
+      toggleSaveLoading(false);
       toast.error(`Error: Please enter all required value`);
     }
   };
@@ -333,7 +411,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           <ButtonForm
             label="Preview"
             theme={isPreview ? 'blue' : 'accent'}
-            isLoading={publishLoading}
             className="rounded-sm px-4 text-sm"
             handleClick={() => {
               contentRef.current?.scrollTo({
@@ -348,6 +425,8 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         <span className="max-md:grow">
           <ButtonForm
             label="Save Draft"
+            isLoading={saveLoading}
+            handleClick={handleSave}
             theme="accent"
             className="rounded-sm px-4 text-sm"
           />
