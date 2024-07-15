@@ -7,7 +7,6 @@ import {
 import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
 import FormWrapper from '../FormWrapper';
@@ -91,7 +90,7 @@ const RegisterationForm: React.FC = () => {
   // });
   return (
     <FormWrapper titleText={true}>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <form
           className="flex flex-col gap-4 py-2"
           onSubmit={(e) => {

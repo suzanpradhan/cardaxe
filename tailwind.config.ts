@@ -41,7 +41,8 @@ const config = {
     'text-black/75',
     'gap-1',
     'min-h-card',
-    'sm:aspect-video',
+    'aspect-businessCard',
+    'text-fluid'
   ],
   prefix: '',
   theme: {
@@ -55,6 +56,7 @@ const config = {
     extend: {
       aspectRatio: {
         rectangle: '9/4',
+        businessCard: '7 / 4',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -174,6 +176,7 @@ const config = {
         '2xl-mobile': ['26px', '34px'],
         '3xl-mobile': ['30px', '38px'],
         '4xl-mobile': ['34px', '42px'],
+        'fluid': 'clamp(.5rem, 5vw, 2.5rem)',
       },
     },
   },

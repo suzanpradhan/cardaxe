@@ -34,7 +34,6 @@ import { UserType } from '@/module/user/userType';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
 const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(true);
@@ -157,23 +156,19 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
         ?.then((res) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
-            toast.error(`Error: Please enter all required value`);
             toggleLoading(false);
             throw errorMessage;
           }
-          toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
           toggleLoading(false);
         })
         .catch((err) => {
-          toast.error('Something went wrong');
           toggleLoading(false);
           throw err;
         });
     } else {
       toggleLoading(false);
-      toast.error(`Error: Please enter all required value`);
     }
   };
 
@@ -196,7 +191,7 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
       cardState.cardFields.values.bio?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.bio
-          : card?.cardTemplate.defaultCardFields.bio ?? ''
+          : (card?.cardTemplate.defaultCardFields.bio ?? '')
         : cardState.cardFields.values.bio,
     firstName:
       cardState.cardFields.values.firstName.length === 0
@@ -208,76 +203,76 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
       cardState?.cardFields?.values.middleName?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.middleName
-          : card?.cardTemplate.defaultCardFields.middleName ?? ''
+          : (card?.cardTemplate.defaultCardFields.middleName ?? '')
         : cardState.cardFields.values.middleName,
     lastName:
       cardState?.cardFields?.values.lastName?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.lastName
-          : card?.cardTemplate.defaultCardFields.lastName ?? ''
+          : (card?.cardTemplate.defaultCardFields.lastName ?? '')
         : cardState.cardFields.values.lastName,
     email:
       cardState?.cardFields?.values.email?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.email
-          : card?.cardTemplate.defaultCardFields.email ?? ''
+          : (card?.cardTemplate.defaultCardFields.email ?? '')
         : cardState.cardFields.values.email,
     company:
       cardState?.cardFields?.values.company?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.company
-          : card?.cardTemplate.defaultCardFields.company ?? ''
+          : (card?.cardTemplate.defaultCardFields.company ?? '')
         : cardState.cardFields.values.company,
     phone:
       cardState?.cardFields?.values.phone?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.phone
-          : card?.cardTemplate.defaultCardFields.phone ?? ''
+          : (card?.cardTemplate.defaultCardFields.phone ?? '')
         : cardState.cardFields.values.phone,
     prefix:
       cardState?.cardFields?.values.prefix?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.prefix
-          : card?.cardTemplate.defaultCardFields.prefix ?? ''
+          : (card?.cardTemplate.defaultCardFields.prefix ?? '')
         : cardState.cardFields.values.prefix,
     suffix:
       cardState?.cardFields?.values.suffix?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.suffix
-          : card?.cardTemplate.defaultCardFields.suffix ?? ''
+          : (card?.cardTemplate.defaultCardFields.suffix ?? '')
         : cardState.cardFields.values.suffix,
     department:
       cardState?.cardFields?.values.department?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.department
-          : card?.cardTemplate.defaultCardFields.department ?? ''
+          : (card?.cardTemplate.defaultCardFields.department ?? '')
         : cardState.cardFields.values.department,
     address:
       cardState?.cardFields?.values.address?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.address
-          : card?.cardTemplate.defaultCardFields.address ?? ''
+          : (card?.cardTemplate.defaultCardFields.address ?? '')
         : cardState.cardFields.values.address,
     darkMode:
       cardAction === 'update'
-        ? cardState?.cardDesign?.values.darkMode ??
-          cardState.cardDesign.values.darkMode
+        ? (cardState?.cardDesign?.values.darkMode ??
+          cardState.cardDesign.values.darkMode)
         : card?.cardTemplate.defaultCardDesign.darkMode,
     showLogo:
       cardAction === 'update'
-        ? card?.cardDesign?.showLogo ?? cardState.cardDesign.values.showLogo
+        ? (card?.cardDesign?.showLogo ?? cardState.cardDesign.values.showLogo)
         : card?.cardTemplate.defaultCardDesign.showLogo,
     showSocialIcons:
       cardAction === 'update'
-        ? card?.cardDesign?.showSocialIcons ??
-          cardState.cardDesign.values.showSocialIcons
+        ? (card?.cardDesign?.showSocialIcons ??
+          cardState.cardDesign.values.showSocialIcons)
         : card?.cardTemplate.defaultCardDesign.showSocialIcons,
     id: card?.id,
     designation:
       cardState?.cardFields?.values.designation?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.designation
-          : card?.cardTemplate.defaultCardFields.designation ?? ''
+          : (card?.cardTemplate.defaultCardFields.designation ?? '')
         : cardState.cardFields.values.designation,
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
@@ -315,7 +310,7 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
       cardState?.cardFields?.values.website?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.website
-          : card?.cardTemplate.defaultCardFields.website ?? ''
+          : (card?.cardTemplate.defaultCardFields.website ?? '')
         : cardState.cardFields.values.website,
   };
 

@@ -2,7 +2,6 @@ import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
-import { toast } from "react-toastify";
 import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, SocialMediaInfo, UpdateCardParams, UpdateCardState } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
@@ -73,10 +72,10 @@ const cardsApi = baseApi.injectEndpoints({
       async onQueryStarted(payload, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          toast.success('Card successfully created.');
+          // toast.success('Card successfully created.');
         } catch (err) {
           console.log(err);
-          toast.error('Failed createing card!!');
+          // toast.error('Failed createing card!!');
         }
       },
       invalidatesTags: [{ type: 'CardsList', id: 'LIST' }],

@@ -13,8 +13,8 @@ import linkedin_image from '../../../public/linkedin_image.png';
 import openSea from '../../../public/openSea.png';
 import paypal_image from '../../../public/paypal_image.png';
 import { VariableValueType } from '../CardLayouts.server';
+import AdditionalLinks from './AdditionalLinks';
 import ContactInfo from './ContactInfo';
-import GappedTableList from './GappedTableList';
 
 type ProfileDetailsPropType = {
   isTeamComp: boolean;
@@ -27,23 +27,23 @@ type ProfileDetailsPropType = {
 const SOCIAL_MEDIA_LIST = [
   {
     id: 1,
-    icon: instagram_image,
+    icon: instagram_image.src,
     name: 'Instagram',
   },
   {
     id: 2,
-    icon: facebook_image,
+    icon: facebook_image.src,
     name: 'Facebook',
   },
   {
     id: 3,
-    icon: linkedin_image,
+    icon: linkedin_image.src,
     name: 'LinkedIn',
   },
   {
     id: 4,
-    icon: x_image,
-    name: 'X',
+    icon: x_image.src,
+    name: 'X (Twitter)',
   },
 ];
 
@@ -60,15 +60,15 @@ const PAYMENTS_LIST = [
 
 const OTHERS_LIST = [
   {
-    icon: customLink_image,
+    icon: customLink_image.src,
     name: 'Custom Link',
   },
   {
-    icon: discord_image,
+    icon: discord_image.src,
     name: 'Discord',
   },
   {
-    icon: openSea,
+    icon: openSea.src,
     name: 'OpenSea',
   },
 ];
@@ -90,13 +90,13 @@ const ProfileDetails = ({
       return { ...item, url: socialValues?.[item.id]?.url! };
     });
   return (
-    <div className="w-full">
+    <div className="flex flex-col gap-4">
       <ContactInfo cardValues={cardValues} isTeamComp={isTeamComp} />
-      {socialMedialList && Object.entries(socialMedialList).length !== 0 && (
+      {/* {socialMedialList && Object.entries(socialMedialList).length !== 0 && (
         <GappedTableList list={socialMedialList} />
-      )}
-      {/* <GappedTableList list={PAYMENTS_LIST} />
-      <GappedTableList list={MORE_LIST} /> */}
+      )} */}
+      <AdditionalLinks linkData={SOCIAL_MEDIA_LIST} title="Social Media" />
+      <AdditionalLinks linkData={OTHERS_LIST} title="More" />
     </div>
   );
 };

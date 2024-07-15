@@ -1,7 +1,6 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
-import { toast } from "react-toastify";
 import { UserType } from "./userType";
 
 const userApi = baseApi.injectEndpoints({
@@ -37,11 +36,11 @@ const userApi = baseApi.injectEndpoints({
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    toast.success('Profile updated.');
+                    // toast.success('Profile updated.');
                 } catch (err) {
                     console.log(err);
                     // toast.error();
-                    toast.error('Failed updating profile.');
+                    // toast.error('Failed updating profile.');
                 }
             },
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
