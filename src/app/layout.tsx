@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import 'react-toastify/dist/ReactToastify.css';
 import Notification from '../components/Notification';
 import Providers from '../core/redux/providers';
 import './globals.css';

@@ -26,17 +26,17 @@ const LayoutPage = () => {
   const cardState = useAppSelector((state: RootState) => state.card);
 
   return (
-    <ScrollArea className="w-[calc(100vw-100px)] shrink-0 md:w-[calc(100vw-15rem-100px-100px)] lg:w-[420px]">
-      <div className="h-[calc(100ch - 72px)] flex w-[92%] flex-col gap-2 px-2 py-2">
+    <ScrollArea className="">
+      <div className="flex flex-col gap-3 p-2">
         {cardTemplates?.results.map((card, index) => {
           return (
             <>
               {card.id && (
-                <button
+                <div
                   onClick={() =>
                     dispatch(updateCardTemplate(card.id.toString()))
                   }
-                  className={`m-0 h-full w-full rounded-lg p-1 ${cardState.cardTemplate === card.id.toString() ? 'ring-2 ring-blueTheme' : ''}`}
+                  className={`overflow-hidden rounded-lg ring-offset-4 ${cardState.cardTemplate === card.id.toString() ? 'ring-2 ring-blueTheme/60' : ''}`}
                 >
                   {' '}
                   <CardLayouts
@@ -49,7 +49,7 @@ const LayoutPage = () => {
                       backgroundUrl: `${apiPaths.serverUrl}${card.defaultCardDesign.backgroundImage}`,
                     }}
                   />
-                </button>
+                </div>
               )}
             </>
           );

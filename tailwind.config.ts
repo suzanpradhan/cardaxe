@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 const config = {
   darkMode: ["class"],
@@ -41,10 +42,15 @@ const config = {
     'text-black/75',
     'gap-1',
     'min-h-card',
-    'sm:aspect-video',
+    'aspect-businessCard',
+    'text-fluid'
   ],
   prefix: '',
   theme: {
+    screens: {
+      xs: "540px",
+      ...defaultTheme.screens,
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -55,6 +61,7 @@ const config = {
     extend: {
       aspectRatio: {
         rectangle: '9/4',
+        businessCard: '7 / 4',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -174,10 +181,11 @@ const config = {
         '2xl-mobile': ['26px', '34px'],
         '3xl-mobile': ['30px', '38px'],
         '4xl-mobile': ['34px', '42px'],
+        'fluid': 'clamp(.5rem, 5vw, 2.5rem)',
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/container-queries'),],
 } satisfies Config;
 
 export default config

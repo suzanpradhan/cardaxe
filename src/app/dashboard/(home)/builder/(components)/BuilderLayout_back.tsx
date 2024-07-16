@@ -1,16 +1,18 @@
 'use client';
 
 import { VariableValueType } from '@/components/CardLayouts.server';
-import AppBar from '@/components/dashboard/AppBar';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { updatedDiff } from 'deep-object-diff';
 
 import ButtonForm from '@/components/ButtonForm';
+import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
+import { cn } from '@/lib/utils';
 import {
   initialState,
   updateCardTemplate,
@@ -28,16 +30,19 @@ import {
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
   DesignFromSchemaType,
+  InfoSchemaType,
 } from '@/module/cards/cardsType';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
-  const [toggle, setToggle] = useState(true);
-  const [publishLoading, toggleLoading] = useState(false);
+const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isPreview, setIsPreview] = useState(false);
+  const [publishLoading, togglePublishLoading] = useState(false);
+  const [saveLoading, toggleSaveLoading] = useState(false);
 
   const session = useSession();
   const searchParams = useSearchParams();
@@ -59,11 +64,22 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
         ?.data as PaginatedResponseType<CardTemplatesType>
   );
 
+  const cardInfoKeyValue: { [key: number]: InfoSchemaType } =
+    card?.cardInfos.reduce(
+      (acc, current) => {
+        if (current.id) {
+          acc[parseInt(current.id!)] = current;
+        }
+        return acc;
+      },
+      {} as { [key: number]: InfoSchemaType }
+    );
+
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
     dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
-  }, [dispatch]);
+  }, [dispatch, cardId]);
 
   useEffect(() => {
     const updateCardState = (action: string) => {
@@ -80,6 +96,7 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
         case 'update':
           dispatch(updateContentForm(card.cardFields));
           dispatch(updateDesignForm(card.cardDesign));
+          dispatch(updateInfosForm(cardInfoKeyValue));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(updateDefaultCard(card.isDefault));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
@@ -103,7 +120,7 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
   }, [card, cardAction]);
 
   const handlePublish = () => {
-    toggleLoading(true);
+    toggleSaveLoading(true);
     dispatch(validateForms('cardDesign'));
     dispatch(validateForms('cardFields'));
     var submitresponse = undefined;
@@ -121,12 +138,6 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
       cardState.cardDesign.values as DesignFromSchemaType
     );
 
-    console.log(
-      'cardState.cardDesign.errors',
-      cardState.cardDesign.errors,
-      cardState.cardFields.errors
-    );
-
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
       Object.keys(cardState.cardFields.errors).length === 0 &&
@@ -134,6 +145,7 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
       session.data?.user?.id &&
       updatedCardFields
     ) {
+      console.log(cardState.cardInfos);
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,
@@ -156,19 +168,92 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
         ?.then((res) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
-            toggleLoading(false);
+            // toast.error(`Error: Please enter all required value`);
+            toggleSaveLoading(false);
             throw errorMessage;
           }
+          // toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
-          toggleLoading(false);
+          toggleSaveLoading(false);
         })
         .catch((err) => {
-          toggleLoading(false);
+          // toast.error('Something went wrong');
+          toggleSaveLoading(false);
           throw err;
         });
     } else {
-      toggleLoading(false);
+      toggleSaveLoading(false);
+      // toast.error(`Error: Please enter all required value`);
+    }
+  };
+
+  const handleSave = () => {
+    toggleSaveLoading(true);
+    dispatch(validateForms('cardDesign'));
+    dispatch(validateForms('cardFields'));
+    var submitresponse = undefined;
+    const updatedCardFields = {
+      ...(card.cardFields
+        ? (updatedDiff(
+            card.cardFields,
+            cardState.cardFields.values
+          ) as ContentFormSchemaType)
+        : undefined),
+    };
+
+    const updatedCardDesign = updatedDiff(
+      card.cardDesign,
+      cardState.cardDesign.values as DesignFromSchemaType
+    );
+
+    if (
+      Object.keys(cardState.cardDesign.errors).length === 0 &&
+      Object.keys(cardState.cardFields.errors).length === 0 &&
+      cardId &&
+      session.data?.user?.id &&
+      updatedCardFields
+    ) {
+      console.log(cardState.cardInfos);
+      submitresponse = dispatch(
+        cardsApi.endpoints.upDateCard.initiate({
+          cardId: cardId,
+          userId: session.data?.user?.id,
+          cardDesign: {
+            ...updatedCardDesign,
+            id: card.cardDesign.id,
+          } as DesignFromSchemaType,
+          cardFields: {
+            ...updatedCardFields,
+            id: card.cardFields.id,
+          } as ContentFormSchemaType,
+          cardInfos: cardState.cardInfos.values,
+          cardTemplate: cardState.cardTemplate,
+          isDefault: cardState.isDefault ?? false,
+          isPublished: false,
+        })
+      );
+      submitresponse
+        ?.then((res) => {
+          const errorMessage = (res as any).error;
+          if (errorMessage) {
+            // toast.error(`Error: Please enter all required value`);
+            toggleSaveLoading(false);
+            throw errorMessage;
+          }
+          // toast.success('Successfully updated');
+          cardAction === 'create' &&
+            router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+          toggleSaveLoading(false);
+        })
+        .catch((err) => {
+          // toast.error('Something went wrong');
+          toggleSaveLoading(false);
+          throw err;
+        });
+    } else {
+      toggleSaveLoading(false);
+      // toast.error(`Error: Please enter all required value`);
     }
   };
 
@@ -318,55 +403,49 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
 
-  console.log('cardState.cardDesign', cardState);
-
   return (
-    <>
+    <div className="flex h-full flex-col md:h-screen">
       <AppBar appBarLabel="My Personal Card">
-        <ButtonForm
-          label="Preview"
-          theme={!toggle ? 'blue' : 'accent'}
-          isLoading={publishLoading}
-          className="w-max rounded-sm px-4 text-sm"
-          handleClick={() => {
-            setToggle(!toggle);
-          }}
-        />
-        <ButtonForm
-          label="Save Draft"
-          theme="accent"
-          className="w-max rounded-sm px-4 text-sm"
-        />
-        <ButtonForm
-          label="Publish"
-          className="w-max rounded-sm px-4 text-sm"
-          isLoading={publishLoading}
-          handleClick={handlePublish}
-        />
-      </AppBar>
-      <div className="hidden flex-col gap-6 lg:flex lg:flex-row">
-        <SideBarMyCards
-          cardId={cardId}
-          cardAction={cardAction}
-          cardState={cardState}
-        />
-        <div className="max-w-xs basis-2/5 md:max-w-lg">{children}</div>
-        <div className="max-w-xs shrink grow lg:max-w-full">
-          <PreviewSection
-            layout={currentLayout}
-            user={user}
-            variableValues={variableValues}
-            socialValues={cardState.cardInfos.values}
+        <span className="max-md:grow">
+          <ButtonForm
+            label="Preview"
+            theme={isPreview ? 'blue' : 'accent'}
+            className="rounded-sm px-4 text-sm"
+            handleClick={() => {
+              contentRef.current?.scrollTo({
+                top: 0,
+                left: !isPreview ? contentRef.current.scrollWidth : 0,
+                behavior: 'smooth',
+              });
+              setIsPreview(!isPreview);
+            }}
           />
-        </div>
-      </div>
-      <div className="block gap-12 lg:hidden">
-        <div className="relative mt-5">
-          <div
-            className={`absolute flex flex-col gap-5 duration-500 max-lg:w-[calc(100%-0.35rem)] ${
-              toggle ? '' : '-translate-x-[calc(102%)]'
-            }`}
-          >
+        </span>
+        <span className="max-md:grow">
+          <ButtonForm
+            label="Save Draft"
+            isLoading={saveLoading}
+            handleClick={handleSave}
+            theme="accent"
+            className="rounded-sm px-4 text-sm"
+          />
+        </span>
+        <span className="max-md:grow">
+          <ButtonForm
+            label="Publish"
+            className="rounded-sm px-4 text-sm"
+            isLoading={publishLoading}
+            handleClick={handlePublish}
+          />
+        </span>
+      </AppBar>
+      {/* web view */}
+      <div
+        className="flex min-h-0 flex-1 gap-4 overflow-x-auto px-2 md:flex-row"
+        ref={contentRef}
+      >
+        {!isPreview && (
+          <div className="flex flex-col max-md:w-full md:flex-row md:gap-6">
             <SideBarMyCards
               cardId={cardId}
               cardAction={cardAction}
@@ -374,22 +453,23 @@ const BuilderLayoutArchive = ({ children }: { children: React.ReactNode }) => {
             />
             {children}
           </div>
-          <div
-            className={`absolute duration-500 max-lg:w-[calc(100%-0.35rem)] max-sm:pb-16 ${
-              toggle ? 'translate-x-[calc(102%)]' : ''
-            }`}
-          >
-            <PreviewSection
-              user={user}
-              layout={currentLayout}
-              variableValues={variableValues}
-              socialValues={cardState.cardInfos.values}
-            />
-          </div>
-        </div>
+        )}
+        <ScrollArea
+          className={cn(
+            'mb-5 w-max shrink-0 rounded-xl border-zinc-200 sm:border lg:flex-1',
+            isPreview && 'w-full'
+          )}
+        >
+          <PreviewSection
+            layout={currentLayout}
+            user={user}
+            variableValues={variableValues}
+            socialValues={cardState.cardInfos.values}
+          />
+        </ScrollArea>
       </div>
-    </>
+    </div>
   );
 };
 
-export default BuilderLayoutArchive;
+export default BuilderLayout;

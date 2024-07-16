@@ -10,9 +10,7 @@ import ButtonForm from '@/components/ButtonForm';
 import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
-import { cn } from '@/lib/utils';
 import {
   initialState,
   updateCardTemplate,
@@ -37,7 +35,6 @@ import { UserType } from '@/module/user/userType';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -169,23 +166,23 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         ?.then((res) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
-            toast.error(`Error: Please enter all required value`);
+            // toast.error(`Error: Please enter all required value`);
             toggleSaveLoading(false);
             throw errorMessage;
           }
-          toast.success('Successfully updated');
+          // toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
           toggleSaveLoading(false);
         })
         .catch((err) => {
-          toast.error('Something went wrong');
+          // toast.error('Something went wrong');
           toggleSaveLoading(false);
           throw err;
         });
     } else {
       toggleSaveLoading(false);
-      toast.error(`Error: Please enter all required value`);
+      // toast.error(`Error: Please enter all required value`);
     }
   };
 
@@ -238,23 +235,23 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         ?.then((res) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
-            toast.error(`Error: Please enter all required value`);
+            // toast.error(`Error: Please enter all required value`);
             toggleSaveLoading(false);
             throw errorMessage;
           }
-          toast.success('Successfully updated');
+          // toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
           toggleSaveLoading(false);
         })
         .catch((err) => {
-          toast.error('Something went wrong');
+          // toast.error('Something went wrong');
           toggleSaveLoading(false);
           throw err;
         });
     } else {
       toggleSaveLoading(false);
-      toast.error(`Error: Please enter all required value`);
+      // toast.error(`Error: Please enter all required value`);
     }
   };
 
@@ -277,7 +274,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState.cardFields.values.bio?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.bio
-          : card?.cardTemplate.defaultCardFields.bio ?? ''
+          : (card?.cardTemplate.defaultCardFields.bio ?? '')
         : cardState.cardFields.values.bio,
     firstName:
       cardState.cardFields.values.firstName.length === 0
@@ -289,76 +286,76 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState?.cardFields?.values.middleName?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.middleName
-          : card?.cardTemplate.defaultCardFields.middleName ?? ''
+          : (card?.cardTemplate.defaultCardFields.middleName ?? '')
         : cardState.cardFields.values.middleName,
     lastName:
       cardState?.cardFields?.values.lastName?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.lastName
-          : card?.cardTemplate.defaultCardFields.lastName ?? ''
+          : (card?.cardTemplate.defaultCardFields.lastName ?? '')
         : cardState.cardFields.values.lastName,
     email:
       cardState?.cardFields?.values.email?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.email
-          : card?.cardTemplate.defaultCardFields.email ?? ''
+          : (card?.cardTemplate.defaultCardFields.email ?? '')
         : cardState.cardFields.values.email,
     company:
       cardState?.cardFields?.values.company?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.company
-          : card?.cardTemplate.defaultCardFields.company ?? ''
+          : (card?.cardTemplate.defaultCardFields.company ?? '')
         : cardState.cardFields.values.company,
     phone:
       cardState?.cardFields?.values.phone?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.phone
-          : card?.cardTemplate.defaultCardFields.phone ?? ''
+          : (card?.cardTemplate.defaultCardFields.phone ?? '')
         : cardState.cardFields.values.phone,
     prefix:
       cardState?.cardFields?.values.prefix?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.prefix
-          : card?.cardTemplate.defaultCardFields.prefix ?? ''
+          : (card?.cardTemplate.defaultCardFields.prefix ?? '')
         : cardState.cardFields.values.prefix,
     suffix:
       cardState?.cardFields?.values.suffix?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.suffix
-          : card?.cardTemplate.defaultCardFields.suffix ?? ''
+          : (card?.cardTemplate.defaultCardFields.suffix ?? '')
         : cardState.cardFields.values.suffix,
     department:
       cardState?.cardFields?.values.department?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.department
-          : card?.cardTemplate.defaultCardFields.department ?? ''
+          : (card?.cardTemplate.defaultCardFields.department ?? '')
         : cardState.cardFields.values.department,
     address:
       cardState?.cardFields?.values.address?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.address
-          : card?.cardTemplate.defaultCardFields.address ?? ''
+          : (card?.cardTemplate.defaultCardFields.address ?? '')
         : cardState.cardFields.values.address,
     darkMode:
       cardAction === 'update'
-        ? cardState?.cardDesign?.values.darkMode ??
-          cardState.cardDesign.values.darkMode
+        ? (cardState?.cardDesign?.values.darkMode ??
+          cardState.cardDesign.values.darkMode)
         : card?.cardTemplate.defaultCardDesign.darkMode,
     showLogo:
       cardAction === 'update'
-        ? card?.cardDesign?.showLogo ?? cardState.cardDesign.values.showLogo
+        ? (card?.cardDesign?.showLogo ?? cardState.cardDesign.values.showLogo)
         : card?.cardTemplate.defaultCardDesign.showLogo,
     showSocialIcons:
       cardAction === 'update'
-        ? card?.cardDesign?.showSocialIcons ??
-          cardState.cardDesign.values.showSocialIcons
+        ? (card?.cardDesign?.showSocialIcons ??
+          cardState.cardDesign.values.showSocialIcons)
         : card?.cardTemplate.defaultCardDesign.showSocialIcons,
     id: card?.id,
     designation:
       cardState?.cardFields?.values.designation?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.designation
-          : card?.cardTemplate.defaultCardFields.designation ?? ''
+          : (card?.cardTemplate.defaultCardFields.designation ?? '')
         : cardState.cardFields.values.designation,
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
@@ -396,7 +393,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       cardState?.cardFields?.values.website?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.website
-          : card?.cardTemplate.defaultCardFields.website ?? ''
+          : (card?.cardTemplate.defaultCardFields.website ?? '')
         : cardState.cardFields.values.website,
   };
 
@@ -405,95 +402,69 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   );
 
   return (
-    <div>
-      <div className="flex h-full flex-col px-8 md:h-screen">
-        <AppBar appBarLabel="My Personal Card">
-          <span className="max-md:grow">
-            <ButtonForm
-              label="Preview"
-              theme={isPreview ? 'blue' : 'accent'}
-              className="rounded-sm px-4 text-sm"
-              handleClick={() => {
-                contentRef.current?.scrollTo({
-                  top: 0,
-                  left: !isPreview ? contentRef.current.scrollWidth : 0,
-                  behavior: 'smooth',
-                });
-                setIsPreview(!isPreview);
-              }}
-            />
-          </span>
-          <span className="max-md:grow">
-            <ButtonForm
-              label="Save Draft"
-              isLoading={saveLoading}
-              handleClick={handleSave}
-              theme="accent"
-              className="rounded-sm px-4 text-sm"
-            />
-          </span>
-          <span className="max-md:grow">
-            <ButtonForm
-              label="Publish"
-              className="rounded-sm px-4 text-sm"
-              isLoading={publishLoading}
-              handleClick={handlePublish}
-            />
-          </span>
-        </AppBar>
-        {/* web view */}
-        <div
-          className="flex min-h-0 flex-1 gap-4 overflow-x-auto md:flex-row"
-          ref={contentRef}
-        >
-          {!isPreview && (
-            <div className="flex flex-col max-md:w-full md:flex-row md:gap-6">
-              <SideBarMyCards
-                cardId={cardId}
-                cardAction={cardAction}
-                cardState={cardState}
-              />
-              {/* <ScrollArea className="w-[calc(100vw-100px)] shrink-0 md:w-[calc(100vw-15rem-100px-100px)] lg:w-[420px]"> */}
-              {children}
-              {/* </ScrollArea> */}
+    <div className="flex min-h-screen flex-col gap-5 px-2 lg:px-4">
+      <AppBar appBarLabel="My Personal Card">
+        <span className="grow">
+          <ButtonForm
+            label="Preview"
+            theme={isPreview ? 'blue' : 'accent'}
+            className="rounded-sm text-sm"
+            handleClick={() => {
+              contentRef.current?.scrollTo({
+                top: 0,
+                left: !isPreview ? contentRef.current.scrollWidth : 0,
+                behavior: 'smooth',
+              });
+              setIsPreview(!isPreview);
+            }}
+          />
+        </span>
+        <span className="grow">
+          <ButtonForm
+            label="Save Draft"
+            isLoading={saveLoading}
+            handleClick={handleSave}
+            theme="accent"
+            className="rounded-sm text-sm"
+          />
+        </span>
+        <span className="grow">
+          <ButtonForm
+            label="Publish"
+            className="rounded-sm text-sm"
+            isLoading={publishLoading}
+            handleClick={handlePublish}
+          />
+        </span>
+      </AppBar>
+      <div className="mb-5 flex grow items-start gap-4 max-lg:mb-20">
+        {!isPreview && (
+          <div className="mx-auto w-full max-w-sm lg:max-w-md">
+            <div className="flex flex-col gap-4 lg:flex-row">
+              <div className="w-full @container lg:basis-24">
+                <SideBarMyCards
+                  cardId={cardId}
+                  cardAction={cardAction}
+                  cardState={cardState}
+                />
+              </div>
+              <div className="w-full grow @container">{children}</div>
             </div>
-          )}
-          <ScrollArea
-            className={cn('w-max shrink-0 lg:flex-1', isPreview && 'w-full')}
-          >
+          </div>
+        )}
+        <div
+          className={`sticky top-4 h-[calc(100vh-6rem)] w-full grow overflow-hidden overflow-y-scroll rounded-xl border-zinc-200 lg:block lg:border ${isPreview ? 'block' : 'hidden'}`}
+        >
+          <div className="mx-auto max-w-md bg-white">
             <PreviewSection
               layout={currentLayout}
               user={user}
               variableValues={variableValues}
               socialValues={cardState.cardInfos.values}
             />
-          </ScrollArea>
+          </div>
         </div>
       </div>
-      {/* <div className="block gap-12 lg:hidden">
-        <div className="relative mt-5">
-          <div
-            className={`absolute flex flex-col gap-5 duration-500 max-lg:w-[calc(100%-0.35rem)]`}
-          >
-            <SideBarMyCards
-              cardId={cardId}
-              cardAction={cardAction}
-              cardState={cardState}
-            />
-            {children}
-          </div>
-          <div
-            className={`absolute duration-500 max-lg:w-[calc(100%-0.35rem)] max-sm:pb-16`}
-          >
-            <PreviewSection
-              user={user}
-              layout={currentLayout}
-              variableValues={variableValues}
-              socialValues={cardState.cardInfos.values}
-            />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

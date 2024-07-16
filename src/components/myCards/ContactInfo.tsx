@@ -6,7 +6,7 @@ import { Call, Location, Send2, Sms } from 'iconsax-react';
 import { VariableValueType } from '../CardLayouts.server';
 import HeadingTitles from '../HeadingTitles';
 
-const ICON_SIZE = '32';
+const ICON_SIZE = '24';
 // const ICON_CLASSNAME = 'text-grey-200';
 
 const CONTACT_INFO = [
@@ -47,21 +47,28 @@ const ContactInfo = ({
     return { ...item, value: cardFielddDetails[index] };
   });
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {!isTeamComp &&
         cardInfoWithDetails.every((item) => item.value?.length != 0) && (
           <HeadingTitles label={'Contact Info'} />
         )}
-      <div className="grid divide-y-2 border-2 rounded-lg gap-2">
+      <div className="rounded-md border-1">
         {cardInfoWithDetails
           .filter((item) => item.value != undefined && item.value.length != 0)
           .map((item, index) => (
-            <div key={index} className="flex justify-between p-2">
-              <div className="grid">
-                <p className="text-grayfont">{item.contactType}</p>
-                <h2 className="text-lg font-bold">{item.value}</h2>
+            <div
+              key={index}
+              className="flex items-center justify-between border-b border-zinc-200 px-4 py-2 last-of-type:border-b-0"
+            >
+              <div className="flex flex-col justify-center">
+                <p className="text-base font-normal leading-6 text-zinc-400">
+                  {item.contactType}
+                </p>
+                <h3 className="text-base font-semibold leading-6 text-zinc-800">
+                  {item.value}
+                </h3>
               </div>
-              <div className="hover:shadow-md hover:scale-110 text-grayfont rounded-full bg-componentBgGrey h-12 w-12 flex justify-center items-center">
+              <div className="flex aspect-square h-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 hover:scale-110 hover:shadow-md">
                 {item.icon}
               </div>
             </div>

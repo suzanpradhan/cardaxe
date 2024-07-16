@@ -48,11 +48,7 @@ const CardLayouts = ({
   const processedHtml = template();
 
   return (
-    <div
-      className={`flex aspect-rectangle w-full rounded-lg ${
-        enableShadow ? 'shadow-md shadow-zinc-400' : ''
-      }`}
-    >
+    <div className={`${enableShadow ? 'shadow-md shadow-zinc-400' : ''}`}>
       {parse(processedHtml)}
     </div>
   );

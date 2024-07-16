@@ -275,3 +275,19 @@ dialog::-webkit-scrollbar-thumb:active {
   opacity: 0;
   transition: opacity 0.3s;
 }
+
+.container-type {
+  container-type: inline-size;
+}
+
+.fluid-text-heading {
+  font-size: 5cqi;
+}
+
+.fluid-text-sub-heading {
+  font-size: 4cqi;
+}
+
+.fluid-text-paragraph {
+  font-size: 3cqi;
+}

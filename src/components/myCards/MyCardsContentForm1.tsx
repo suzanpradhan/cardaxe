@@ -71,7 +71,7 @@ const MyCardsContentForm1 = ({
   ];
   return (
     <Card className="pb-4 shadow-none">
-      <CardHeader className="pb-2 font-bold">Basic Info</CardHeader>
+      <CardHeader className="font-bold">Basic Info</CardHeader>
       <CardContent className="gap-3">
         <div className="flex flex-col gap-3">
           {INPUT_FEILDS.map(

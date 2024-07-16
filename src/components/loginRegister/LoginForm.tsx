@@ -6,7 +6,6 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
 import FormWrapper from '../FormWrapper';
@@ -51,7 +50,7 @@ const LoginForm: React.FC = () => {
       .then((response) => {
         if (!response?.error) {
           router.replace('/dashboard');
-          toast.success('Sucessfully logged in.');
+          // toast.success('Sucessfully logged in.');
         } else {
           // toast.error('Login Failed! Please check your credentials.');
         }
@@ -109,7 +108,7 @@ const LoginForm: React.FC = () => {
           <Link
             href="/confirmEmail"
             type="button"
-            className="text-grayfont text-right text-sm hover:underline hover:text-blueTheme"
+            className="text-right text-sm text-grayfont hover:text-blueTheme hover:underline"
           >
             Forgot Password
           </Link>

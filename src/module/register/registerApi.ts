@@ -1,6 +1,5 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
-import { toast } from "react-toastify";
 import { ConfirmEmailSchemaType, ForgotPasswordSchemaType, RegistrationSchemaType } from "./registerType";
 
 export const registerApi = baseApi.injectEndpoints({
@@ -22,10 +21,10 @@ export const registerApi = baseApi.injectEndpoints({
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    toast.success('Registration Successful');
+                    // toast.success('Registration Successful');
                 } catch (err) {
                     console.log(err);
-                    toast.error((err as any).error.data.errors.errors[0]);
+                    // toast.error((err as any).error.data.errors.errors[0]);
                 }
             },
             transformResponse: (response) => {
@@ -48,10 +47,10 @@ export const registerApi = baseApi.injectEndpoints({
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    toast.success('Registration Successful');
+                    // toast.success('Registration Successful');
                 } catch (err) {
                     console.log(err);
-                    toast.error('Failed to Registration');
+                    // toast.error('Failed to Registration');
                 }
             },
             transformResponse: (response) => {
@@ -72,10 +71,10 @@ export const registerApi = baseApi.injectEndpoints({
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    toast.success('Successfully send email');
+                    // toast.success('Successfully send email');
                 } catch (err) {
                     console.log(err);
-                    toast.error('Please check your email');
+                    // toast.error('Please check your email');
                 }
             },
             transformResponse: (response) => {
