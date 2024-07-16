@@ -66,47 +66,6 @@ const MyCardsDesignForm = ({
               />
             </div>
           </div>
-          <div className="flex items-end gap-2">
-            <InputComp
-              inputCompType="normal"
-              inputType="string"
-              zSchemaName="backgroundColor"
-              inputLabel="Background Color"
-              className="inline"
-              inputValue={values['backgroundColor']}
-              handleChange={
-                handleChange as
-                  | ((
-                      e:
-                        | boolean
-                        | ChangeEvent<HTMLInputElement>
-                        | ChangeEvent<HTMLTextAreaElement>
-                    ) => void)
-                  | undefined
-              }
-              error={errors['backgroundColor']}
-              disableInput
-            />
-            <div className="h-[42px] basis-4/5 rounded-md border-1 border-borderMain bg-inputBgGrey">
-              <InputComp
-                zSchemaName="foregroundColor"
-                inputCompType="color"
-                inputType="color"
-                inputValue={values['foregroundColor']}
-                handleChange={
-                  handleChange as
-                    | ((
-                        e:
-                          | boolean
-                          | ChangeEvent<HTMLInputElement>
-                          | ChangeEvent<HTMLTextAreaElement>
-                      ) => void)
-                    | undefined
-                }
-                error={errors['foregroundColor']}
-              />
-            </div>
-          </div>
           <InputComp
             inputCompType="file"
             inputType="file"

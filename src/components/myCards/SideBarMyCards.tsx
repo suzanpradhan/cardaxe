@@ -113,7 +113,7 @@ const SideBarMyCards = ({
             href={`/dashboard/builder/${item.link}${
               cardId && `/?cardId=${cardId}&action=${cardAction}`
             }`}
-            className={`xs:flex-row aspect-squire flex flex-grow flex-col items-center justify-center rounded-lg md:h-10 lg:flex-col ${
+            className={`flex aspect-rectangle flex-grow flex-col items-center justify-center rounded-lg max-lg:py-1 xs:flex-row lg:aspect-square lg:flex-col ${
               toggleTab !== index
                 ? 'hover:border-text-grayfont text-grayfont'
                 : error

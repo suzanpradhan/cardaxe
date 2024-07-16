@@ -53,17 +53,20 @@ const SocialMediaForm = ({
   socialMedialValue,
 }: SocialMediaFormProps) => {
   return (
-    <div className="flex max-w-7xl flex-wrap p-2 gap-1">
-      <p className="shrink-0 basis-full">{socialLinkTitle}</p>
-      <div className="w-12 shrink-0 p-2">
-        <Image
-          src={socialLinkLogo}
-          sizes="(max-width: 768px) 100vw, 700px"
-          objectFit="cover"
-          alt="social site image"
-        />
-      </div>
-      {/* <InputComp
+    <div className="mb-4 flex flex-wrap gap-2">
+      <p className="shrink-0 basis-full text-sm font-medium">
+        {socialLinkTitle}
+      </p>
+      <div className="flex w-full items-start justify-stretch gap-2">
+        <div className="w-10 shrink-0 rounded-sm bg-slate-50 p-1 shadow-md">
+          <Image
+            src={socialLinkLogo}
+            sizes="(max-width: 768px) 100vw, 700px"
+            objectFit="cover"
+            alt="social site image"
+          />
+        </div>
+        {/* <InputComp
             inputCompType="normal"
             socialLinkName={socialLinkName}
             key={index}
@@ -72,25 +75,26 @@ const SocialMediaForm = ({
             placeholder={index === 0 ? placeholder : 'Display Text'}
             zSchemaName={item.zSchemaName}
           /> */}
-      <div className="shrink-1 flex flex-col gap-1 grow">
-        {Object.keys(INPUT_FEILDS).map((item, index) => (
-          <input
-            onChange={(e) => handleChange?.(e, categoryId)}
-            key={index}
-            defaultValue={
-              socialMedialValue?.[item as keyof SocialMediaValueType]
-            }
-            name={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
-            placeholder={index === 0 ? placeholder : 'Display Text'}
-            className={clsx(
-              'focus:outline-1 focus:outline-blueTheme mt-1 w-full bg-inputBgGrey placeholder:text-inputPlaceholder  border-1 rounded-md p-2 disabled:bg-inputDisabled disabled:text-slate-600',
-              error?.[item as keyof SocialMediaValueType]
-                ? 'border-redError'
-                : 'border-borderMain'
-            )}
-            // value={inputValue as string}
-          />
-        ))}
+        <div className="flex w-full grow flex-col gap-2">
+          {Object.keys(INPUT_FEILDS).map((item, index) => (
+            <input
+              onChange={(e) => handleChange?.(e, categoryId)}
+              key={index}
+              defaultValue={
+                socialMedialValue?.[item as keyof SocialMediaValueType]
+              }
+              name={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
+              placeholder={index === 0 ? placeholder : 'Display Text'}
+              className={clsx(
+                'h-10 w-full rounded-md border-1 bg-inputBgGrey px-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
+                error?.[item as keyof SocialMediaValueType]
+                  ? 'border-redError'
+                  : 'border-borderMain'
+              )}
+              // value={inputValue as string}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

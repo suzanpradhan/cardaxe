@@ -404,7 +404,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex min-h-screen flex-col gap-5 px-2 lg:px-4">
       <AppBar appBarLabel="My Personal Card">
-        <span className="max-lg:grow">
+        <span className="grow">
           <ButtonForm
             label="Preview"
             theme={isPreview ? 'blue' : 'accent'}
@@ -419,7 +419,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             }}
           />
         </span>
-        <span className="max-lg:grow">
+        <span className="grow">
           <ButtonForm
             label="Save Draft"
             isLoading={saveLoading}
@@ -428,7 +428,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             className="rounded-sm text-sm"
           />
         </span>
-        <span className="max-lg:grow">
+        <span className="grow">
           <ButtonForm
             label="Publish"
             className="rounded-sm text-sm"
@@ -437,22 +437,24 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </span>
       </AppBar>
-      <div className="flex grow items-start gap-4">
+      <div className="mb-5 flex grow items-start gap-4 max-lg:mb-20">
         {!isPreview && (
           <div className="mx-auto w-full max-w-sm lg:max-w-md">
             <div className="flex flex-col gap-4 lg:flex-row">
-              <div className="@container w-full lg:basis-24">
+              <div className="w-full @container lg:basis-24">
                 <SideBarMyCards
                   cardId={cardId}
                   cardAction={cardAction}
                   cardState={cardState}
                 />
               </div>
-              <div className="@container w-full grow">{children}</div>
+              <div className="w-full grow @container">{children}</div>
             </div>
           </div>
         )}
-        <div className="hidden h-full w-full grow overflow-hidden rounded-xl border border-zinc-200 lg:block">
+        <div
+          className={`sticky top-4 h-[calc(100vh-6rem)] w-full grow overflow-hidden overflow-y-scroll rounded-xl border-zinc-200 lg:block lg:border ${isPreview ? 'block' : 'hidden'}`}
+        >
           <div className="mx-auto max-w-md bg-white">
             <PreviewSection
               layout={currentLayout}

@@ -12,7 +12,7 @@ const InputLable = ({
   zSchemaName: string;
   inputLabel: string;
 }) => (
-  <label htmlFor={zSchemaName} className="pb-2">
+  <label htmlFor={zSchemaName} className="pb-2 text-sm font-medium">
     {inputLabel}
   </label>
 );
@@ -44,13 +44,11 @@ const InputComp = ({
     switch (inputCompType) {
       case 'textArea': {
         return (
-          <div className="flex h-full w-full flex-col items-start gap-2">
-            <label
-              className="inline-block pl-[0.15rem] hover:cursor-pointer"
-              htmlFor={zSchemaName}
-            >
-              {inputLabel}
-            </label>
+          <div className="flex h-full w-full flex-col items-start">
+            <InputLable
+              zSchemaName={zSchemaName}
+              inputLabel={inputLabel ?? ''}
+            />
             <div className="h-full w-full">
               <textarea
                 name={zSchemaName}
@@ -60,7 +58,7 @@ const InputComp = ({
                 placeholder={placeholder}
                 defaultValue={inputValue === null ? '' : (inputValue as string)}
                 className={clsx(
-                  'h-full w-full rounded-md border-1 bg-inputBgGrey p-2 focus:outline-1 focus:outline-blueTheme',
+                  'h-full w-full rounded-md border-1 bg-inputBgGrey px-2 focus:outline-1 focus:outline-blueTheme',
                   error ? 'border-redError' : 'border-borderMain'
                 )}
               />
