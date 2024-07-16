@@ -98,7 +98,7 @@ const ProfileDescription = ({
                 Connect
               </button>
             </div>
-            <div className="flex items-start justify-start gap-2 sm:col-span-5">
+            <div className="col-span-5 flex items-center justify-start gap-2">
               <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
                 <Heart size="21" variant="Bulk" />
               </div>
@@ -113,7 +113,7 @@ const ProfileDescription = ({
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 sm:hidden">
-        <div className="flex shrink-0 items-start justify-start gap-2 md:col-span-5">
+        <div className="flex shrink-0 items-start justify-start gap-2">
           <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
             <Heart size="21" variant="Bulk" />
           </div>

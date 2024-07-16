@@ -5,7 +5,7 @@ const Description = ({ text }: { text?: string | null }) => {
   const [seeMore, setSeeMore] = useState<boolean>(false);
   return (
     <p
-      className={`text-normal text-sm text-zinc-400 ${seeMore ? '' : 'line-clamp-3'}`}
+      className={`text-normal cursor-pointer text-sm text-zinc-400 ${seeMore ? '' : 'line-clamp-3'}`}
       onClick={() => {
         setSeeMore((prev) => !prev);
       }}

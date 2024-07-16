@@ -10,7 +10,9 @@ import ButtonForm from '@/components/ButtonForm';
 import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
+import { cn } from '@/lib/utils';
 import {
   initialState,
   updateCardTemplate,
@@ -402,13 +404,13 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   );
 
   return (
-    <div className="flex min-h-screen flex-col gap-5 px-2 lg:px-4">
+    <div className="flex h-full flex-col md:h-screen">
       <AppBar appBarLabel="My Personal Card">
-        <span className="max-lg:grow">
+        <span className="max-md:grow">
           <ButtonForm
             label="Preview"
             theme={isPreview ? 'blue' : 'accent'}
-            className="rounded-sm text-sm"
+            className="rounded-sm px-4 text-sm"
             handleClick={() => {
               contentRef.current?.scrollTo({
                 top: 0,
@@ -419,49 +421,52 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             }}
           />
         </span>
-        <span className="max-lg:grow">
+        <span className="max-md:grow">
           <ButtonForm
             label="Save Draft"
             isLoading={saveLoading}
             handleClick={handleSave}
             theme="accent"
-            className="rounded-sm text-sm"
+            className="rounded-sm px-4 text-sm"
           />
         </span>
-        <span className="max-lg:grow">
+        <span className="max-md:grow">
           <ButtonForm
             label="Publish"
-            className="rounded-sm text-sm"
+            className="rounded-sm px-4 text-sm"
             isLoading={publishLoading}
             handleClick={handlePublish}
           />
         </span>
       </AppBar>
-      <div className="flex grow items-start gap-4">
+      {/* web view */}
+      <div
+        className="flex min-h-0 flex-1 gap-4 overflow-x-auto px-2 md:flex-row"
+        ref={contentRef}
+      >
         {!isPreview && (
-          <div className="mx-auto w-full max-w-sm lg:max-w-md">
-            <div className="flex flex-col gap-4 lg:flex-row">
-              <div className="@container w-full lg:basis-24">
-                <SideBarMyCards
-                  cardId={cardId}
-                  cardAction={cardAction}
-                  cardState={cardState}
-                />
-              </div>
-              <div className="@container w-full grow">{children}</div>
-            </div>
+          <div className="flex flex-col max-md:w-full md:flex-row md:gap-6">
+            <SideBarMyCards
+              cardId={cardId}
+              cardAction={cardAction}
+              cardState={cardState}
+            />
+            {children}
           </div>
         )}
-        <div className="hidden h-full w-full grow overflow-hidden rounded-xl border border-zinc-200 lg:block">
-          <div className="mx-auto max-w-md bg-white">
-            <PreviewSection
-              layout={currentLayout}
-              user={user}
-              variableValues={variableValues}
-              socialValues={cardState.cardInfos.values}
-            />
-          </div>
-        </div>
+        <ScrollArea
+          className={cn(
+            'mb-5 w-max shrink-0 rounded-xl border-zinc-200 sm:border lg:flex-1',
+            isPreview && 'w-full'
+          )}
+        >
+          <PreviewSection
+            layout={currentLayout}
+            user={user}
+            variableValues={variableValues}
+            socialValues={cardState.cardInfos.values}
+          />
+        </ScrollArea>
       </div>
     </div>
   );
