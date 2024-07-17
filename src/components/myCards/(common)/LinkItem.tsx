@@ -6,7 +6,7 @@ const LinkItem = ({ item }: { item: LinkDataType }) => {
   return (
     <div className="flex items-center justify-between rounded-md bg-zinc-100 px-3 py-3">
       <div className="flex items-center gap-2">
-        <div className="relative aspect-square w-9 overflow-hidden rounded-sm">
+        <div className="relative aspect-square w-7 overflow-hidden rounded-sm md:w-9">
           <Image
             src={item?.icon ? item.icon : '/profile/profile.png'}
             alt={item?.name ? item.name : 'link_icon'}
@@ -17,7 +17,7 @@ const LinkItem = ({ item }: { item: LinkDataType }) => {
         </div>
         <h3 className="text-sm font-bold">{item?.name}</h3>
       </div>
-      <ArrowRight2 size={24} variant="TwoTone" />
+      <ArrowRight2 size={21} variant="TwoTone" className="text-zinc-500" />
     </div>
   );
 };

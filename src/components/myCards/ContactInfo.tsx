@@ -61,10 +61,10 @@ const ContactInfo = ({
               className="flex items-center justify-between border-b border-zinc-200 px-4 py-2 last-of-type:border-b-0"
             >
               <div className="flex flex-col justify-center">
-                <p className="text-base font-normal leading-6 text-zinc-400">
+                <p className="text-xs font-normal leading-6 text-zinc-400 md:text-base">
                   {item.contactType}
                 </p>
-                <h3 className="text-base font-semibold leading-6 text-zinc-800">
+                <h3 className="text-xs font-semibold leading-6 text-zinc-800 md:text-base">
                   {item.value}
                 </h3>
               </div>

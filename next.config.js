@@ -23,6 +23,14 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (
+    config,
+    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  ) => {
+    // Important: return the modified config
+    config.resolve.alias['handlebars'] = 'handlebars/dist/handlebars.js'
+    return config
+  },
 };
 
 module.exports = nextConfig;
