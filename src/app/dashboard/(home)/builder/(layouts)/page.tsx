@@ -5,24 +5,71 @@ import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
-import { updateCardTemplate } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
+import { updateCardTemplate } from '@/module/cards/cardSlice';
 import { CardTemplatesType } from '@/module/cards/cardsType';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const LayoutPage = () => {
   const dispatch = useAppDispatch();
+  const cardState = useAppSelector((state: RootState) => state.card);
+
+  const [isCategoryView, toggleCategoryView] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const scrollableDivRef = useRef<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [hasMoreData, setHasMoreData] = useState(true);
+
+  const handleScroll = useCallback(async () => {
+    const scrollableDiv = scrollableDivRef.current;
+    if (
+      scrollableDiv.scrollTop + scrollableDiv.clientHeight >=
+        scrollableDiv.scrollHeight &&
+      !isLoading &&
+      hasMoreData
+    ) {
+      setIsLoading(true);
+      setCurrentPage(currentPage + 1);
+    }
+  }, [currentPage]);
 
   useEffect(() => {
-    dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
-  }, [dispatch]);
+    const fetchData = async (currentPage: number) => {
+      const response = await Promise.resolve(
+        dispatch(cardsApi.endpoints.getCardsTemplate.initiate(currentPage))
+      );
+      if (response.data) {
+        if (
+          response.data!.pagination.currentPage >=
+          response.data!.pagination.totalPage
+        ) {
+          setHasMoreData(false);
+        }
+      }
+    };
+
+    if (hasMoreData) {
+      fetchData(currentPage);
+    }
+    setIsLoading(false);
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    const scrollableDiv = scrollableDivRef.current;
+    scrollableDiv?.addEventListener('scroll', handleScroll);
+    return () => {
+      scrollableDiv?.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   const cardTemplates = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
+      state.baseApi.queries.getCardsTemplate
         ?.data as PaginatedResponseType<CardTemplatesType>
   );
-  const cardState = useAppSelector((state: RootState) => state.card);
+
+  console.log(currentPage);
 
   return (
     <div>
@@ -34,11 +81,15 @@ const LayoutPage = () => {
           Categories
         </div>
       </div>
-      <div className="h-[calc(100vh-20rem)] overflow-y-scroll lg:h-[calc(100vh-9rem)]">
+      <div
+        className="h-[calc(100vh-20rem)] overflow-y-scroll lg:h-[calc(100vh-9rem)]"
+        ref={scrollableDivRef}
+        onScroll={handleScroll}
+      >
         <div className="flex flex-col gap-3 p-1">
-          {cardTemplates?.results.map((card) => {
+          {cardTemplates?.results.map((card, index) => {
             return (
-              <>
+              <div key={index}>
                 {card.id && (
                   <div
                     onClick={() =>
@@ -59,7 +110,7 @@ const LayoutPage = () => {
                     />
                   </div>
                 )}
-              </>
+              </div>
             );
           })}
         </div>

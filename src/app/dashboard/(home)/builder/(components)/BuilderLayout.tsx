@@ -75,7 +75,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
-    dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
+    // dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch, cardId]);
 
