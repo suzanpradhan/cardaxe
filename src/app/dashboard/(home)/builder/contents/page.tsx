@@ -78,30 +78,32 @@ const ContentsPage = () => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-      className="flex flex-col gap-4"
-    >
-      <MyCardsContentForm1
-        handleChange={(e) => handleChange(e)}
-        values={cardState.cardFields.values}
-        errors={cardState.cardFields.errors}
-        fieldPlaceHolder={fieldPlaceHolder}
-      />
-      <MyCardsContentForm2
-        handleChange={handleChange}
-        values={cardState.cardFields.values}
-        errors={cardState.cardFields.errors}
-        fieldPlaceHolder={fieldPlaceHolder}
-      />
-      <MyCardsContentForm3
-        handleChange={handleChange}
-        values={cardState.cardFields.values}
-        errors={cardState.cardFields.errors}
-      />
-    </form>
+    <div className="h-[calc(100vh-17rem)] overflow-y-scroll lg:h-[calc(100vh-6rem)]">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="flex flex-col gap-4"
+      >
+        <MyCardsContentForm1
+          handleChange={(e) => handleChange(e)}
+          values={cardState.cardFields.values}
+          errors={cardState.cardFields.errors}
+          fieldPlaceHolder={fieldPlaceHolder}
+        />
+        <MyCardsContentForm2
+          handleChange={handleChange}
+          values={cardState.cardFields.values}
+          errors={cardState.cardFields.errors}
+          fieldPlaceHolder={fieldPlaceHolder}
+        />
+        <MyCardsContentForm3
+          handleChange={handleChange}
+          values={cardState.cardFields.values}
+          errors={cardState.cardFields.errors}
+        />
+      </form>
+    </div>
   );
 };
 

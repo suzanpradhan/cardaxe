@@ -88,7 +88,8 @@ const ProfileDescription = ({
               {user?.fullname}
             </h3>
             <span className="text-normal text-sm text-zinc-400">
-              Istanbul, Turkey | Creative Director - Compelling
+              {variableValues?.address} | {variableValues?.designation} -{' '}
+              {variableValues?.company}
             </span>
           </div>
           <div className="hidden grid-cols-12 gap-x-2 gap-y-2 sm:grid">
@@ -113,6 +114,12 @@ const ProfileDescription = ({
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 sm:hidden">
+        <div className="basis-36">
+          <button className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
+            <Flash size="21" variant="Bulk" />
+            Connect
+          </button>
+        </div>
         <div className="flex shrink-0 items-start justify-start gap-2">
           <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
             <Heart size="21" variant="Bulk" />
@@ -123,12 +130,6 @@ const ProfileDescription = ({
           <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
             <More size="21" variant="TwoTone" />
           </div>
-        </div>
-        <div className="basis-36">
-          <button className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
-            <Flash size="21" variant="Bulk" />
-            Connect
-          </button>
         </div>
       </div>
       <div>

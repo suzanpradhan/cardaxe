@@ -67,23 +67,24 @@ const Designpage = () => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-      className="flex w-[98%] flex-col gap-4"
-    >
-      <MyCardsDesignForm
-        errors={cardState.cardDesign.errors}
-        handleChange={handleChange}
-        values={cardState.cardDesign.values}
-      />
-      {/* <MyCardsDesignSwitch
+    <div className="h-[calc(100vh-17rem)] overflow-y-scroll lg:h-[calc(100vh-6rem)]">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="flex flex-col gap-4"
+      >
+        <MyCardsDesignForm
+          errors={cardState.cardDesign.errors}
+          handleChange={handleChange}
+          values={cardState.cardDesign.values}
+        />
+        {/* <MyCardsDesignSwitch
         errors={cardState.cardDesign.errors}
         handleChange={handleChange}
         values={cardState.cardDesign.values}
       /> */}
-      {/* <FormWrapper>
+        {/* <FormWrapper>
         <div className="flex flex-col gap-4">
           <InputComp
             zSchemaName="is_default"
@@ -95,7 +96,8 @@ const Designpage = () => {
           />
         </div>
       </FormWrapper> */}
-    </form>
+      </form>
+    </div>
   );
 };
 export default Designpage;

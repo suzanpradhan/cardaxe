@@ -37,8 +37,8 @@ const page = async (props: any) => {
 
     if (defaultCard) {
       return (
-        <div className="-z-20 h-screen overflow-y-scroll">
-          <div className="my-5">
+        <div className="h-screen overflow-y-scroll bg-zinc-100">
+          <div className="mx-auto max-w-sm bg-white px-4 py-4 lg:max-w-lg">
             <PreviewSection
               variableValues={variableValues}
               layout={defaultCard.cardTemplate}
