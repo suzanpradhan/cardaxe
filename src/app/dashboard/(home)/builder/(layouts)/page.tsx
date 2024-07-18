@@ -23,9 +23,10 @@ const LayoutPage = () => {
 
   const handleScroll = useCallback(async () => {
     const scrollableDiv = scrollableDivRef.current;
+
     if (
       scrollableDiv.scrollTop + scrollableDiv.clientHeight >=
-        scrollableDiv.scrollHeight &&
+        scrollableDiv.scrollHeight - 50 &&
       !isLoading &&
       hasMoreData
     ) {

@@ -56,12 +56,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         ?.data as CardResponseType<CardTemplatesType>
   );
 
-  const cardsTemplateList = useAppSelector(
-    (state: RootState) =>
-      state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
-        ?.data as PaginatedResponseType<CardTemplatesType>
-  );
-
   const cardInfoKeyValue: { [key: number]: InfoSchemaType } =
     card?.cardInfos.reduce(
       (acc, current) => {
@@ -254,12 +248,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       // toast.error(`Error: Please enter all required value`);
     }
   };
-
-  const currentLayout = cardState.cardTemplate
-    ? cardsTemplateList?.results.find(
-        (layout) => layout.id === parseInt(cardState.cardTemplate!)
-      )
-    : undefined;
+  const currentLayout = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries.getCardsTemplate
+        ?.data as PaginatedResponseType<CardTemplatesType>
+  )?.results.find((layout) => layout.id === parseInt(cardState.cardTemplate!));
 
   const variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
