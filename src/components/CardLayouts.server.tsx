@@ -49,7 +49,7 @@ const CardLayouts = ({
 
   return (
     <div
-      className={`cursor-pointer overflow-hidden rounded-lg shadow-md shadow-zinc-400`}
+      className={`cursor-pointer overflow-hidden rounded-lg shadow-lg shadow-black/5`}
     >
       {parse(processedHtml)}
     </div>
