@@ -1,16 +1,15 @@
-import { StaticImageData } from 'next/image';
 import HeadingTitles from '../HeadingTitles';
 import LinkItem from './(common)/LinkItem';
 
-interface LinkDataType {
+export interface LinkDataType {
   id: number;
   name: string;
-  icon: StaticImageData;
+  icon: string;
   url: string;
 }
 
 type AdditionalLinkType = {
-  linkData: LinkDataType[];
+  linkData?: LinkDataType[];
   title: string;
 };
 

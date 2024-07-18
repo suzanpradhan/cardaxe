@@ -96,8 +96,6 @@ const ProfileDetails = ({
         // <GappedTableList list={socialMedialList} />
         <AdditionalLinks linkData={socialMedialList} title="Social Media" />
       )}
-      {/* <AdditionalLinks linkData={SOCIAL_MEDIA_LIST} title="Social Media" /> */}
-      {/* <AdditionalLinks linkData={OTHERS_LIST} title="More" /> */}
     </div>
   );
 };
