@@ -2,8 +2,8 @@ interface PaginationType {
     next?: string;
     previous?: string;
     count: number;
-    total_pages: number;
-    current_page: number;
+    totalPage: number;
+    currentPage: number;
 }
 
 export interface PaginatedResponseType<T> {

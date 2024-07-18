@@ -71,10 +71,10 @@ const ProfileDescription = ({
     // </div>
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
-        <div className="shrink-0 basis-16 sm:basis-24">
+        <div className="shrink-0 basis-16 sm:basis-20">
           <div className="relative aspect-square overflow-hidden rounded-full">
             <Image
-              src={user?.avatar ?? '/profile/profile.png'}
+              src={user?.avatar ?? '/square_image.jpg'}
               alt="user_profile_image"
               fill
               sizes="(max-width: 768px) 100vw, 700px"
@@ -88,7 +88,9 @@ const ProfileDescription = ({
               {user?.fullname}
             </h3>
             <span className="text-normal text-sm text-zinc-400">
-              Istanbul, Turkey | Creative Director - Compelling
+              {variableValues?.address} {variableValues?.designation && '|'}{' '}
+              {variableValues?.designation} {variableValues?.company && '-'}{' '}
+              {variableValues?.company}
             </span>
           </div>
           <div className="hidden grid-cols-12 gap-x-2 gap-y-2 sm:grid">
@@ -113,6 +115,12 @@ const ProfileDescription = ({
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 sm:hidden">
+        <div className="basis-36">
+          <button className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
+            <Flash size="21" variant="Bulk" />
+            Connect
+          </button>
+        </div>
         <div className="flex shrink-0 items-start justify-start gap-2">
           <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
             <Heart size="21" variant="Bulk" />
@@ -123,12 +131,6 @@ const ProfileDescription = ({
           <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
             <More size="21" variant="TwoTone" />
           </div>
-        </div>
-        <div className="basis-36">
-          <button className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
-            <Flash size="21" variant="Bulk" />
-            Connect
-          </button>
         </div>
       </div>
       <div>

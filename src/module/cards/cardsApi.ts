@@ -6,8 +6,8 @@ import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromS
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType>, void>({
-      query: () => `${apiPaths.getCardTemplatesUrl}`,
+    getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType>, number>({
+      query: (pageNumber) => `${apiPaths.getCardTemplatesUrl}?page=${pageNumber}`,
       providesTags: (response) =>
         response?.results
           ? [
@@ -16,7 +16,14 @@ const cardsApi = baseApi.injectEndpoints({
           ]
           : [{ type: 'CardLayout', id: 'LIST' }],
       serializeQueryArgs: ({ endpointName }) => {
-        return endpointName + '-' + 'get-cards-endpoint';
+        return endpointName;
+      },
+      merge: (currentCache, newItems) => {
+        currentCache.pagination = newItems.pagination;
+        currentCache.results.push(...newItems.results);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
       },
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)

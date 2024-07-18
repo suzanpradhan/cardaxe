@@ -2,18 +2,18 @@ import HeadingTitles from '../HeadingTitles';
 import LinkItem from './(common)/LinkItem';
 
 export interface LinkDataType {
-  id?: number;
-  icon?: string;
-  name?: string;
+  id: number;
+  name: string;
+  icon: string;
+  url: string;
 }
 
-const AdditionalLinks = ({
-  linkData,
-  title,
-}: {
-  linkData: LinkDataType[];
-  title?: string;
-}) => {
+type AdditionalLinkType = {
+  linkData?: LinkDataType[];
+  title: string;
+};
+
+const AdditionalLinks = ({ linkData, title }: AdditionalLinkType) => {
   return (
     <div className="flex flex-col gap-4">
       <HeadingTitles label={title ? title : 'Extra Links'} />

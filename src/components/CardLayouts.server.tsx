@@ -48,7 +48,9 @@ const CardLayouts = ({
   const processedHtml = template();
 
   return (
-    <div className={`${enableShadow ? 'shadow-md shadow-zinc-400' : ''}`}>
+    <div
+      className={`cursor-pointer overflow-hidden rounded-lg shadow-lg shadow-black/5`}
+    >
       {parse(processedHtml)}
     </div>
   );

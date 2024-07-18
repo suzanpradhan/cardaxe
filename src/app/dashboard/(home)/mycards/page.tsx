@@ -66,21 +66,21 @@ const MyCardsPage = () => {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 sm:col-start-2 sm:col-span-10 xl:col-start-3 xl:col-span-8 px-2 sm:px-0">
-        <h3 className="text-lg font-bold text-zinc-900 my-4">My Cards</h3>
-        <div className="flex flex-wrap lg:flex-nowrap w-full gap-3 h-auto my-2">
-          <div className="grow flex items-center gap-2 h-auto bg-zinc-100 rounded-md px-2 md:px-4 focus-within:ring-2 ring-offset-2 ring-blueTheme/20">
+      <div className="col-span-12 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
+        <h3 className="my-4 text-lg font-bold text-zinc-900">My Cards</h3>
+        <div className="my-2 flex h-auto w-full flex-wrap gap-3 lg:flex-nowrap">
+          <div className="flex h-auto grow items-center gap-2 rounded-md bg-zinc-100 px-2 ring-blueTheme/20 ring-offset-2 focus-within:ring-2 md:px-4">
             <SearchNormal size="20" variant="Bulk" className="text-zinc-500" />
             <input
               type="search"
-              className="h-10 w-full bg-transparent outline-none text-blueTheme/75 font-medium placeholder:text-zinc-400"
+              className="h-10 w-full bg-transparent font-medium text-blueTheme/75 outline-none placeholder:text-zinc-400"
               placeholder="Search"
             />
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => hanldeCreateCard()}
-              className="w-10 lg:w-auto h-10 bg-blueTheme rounded-md shadow-md shadow-blueTheme/60 text-white text-xs lg:px-3"
+              className="h-10 w-10 rounded-md bg-blueTheme text-xs text-white shadow-md shadow-blueTheme/60 lg:w-auto lg:px-3"
             >
               <p className="flex items-center justify-center gap-2">
                 {createLoading ? (
@@ -94,14 +94,14 @@ const MyCardsPage = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-12 sm:col-start-2 sm:col-span-10 xl:col-start-3 xl:col-span-8 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:px-0">
+      <div className="col-span-12 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
         {cardsList?.map((card, index) => {
           // console.log(card.cardTemplate.htmlCode);
           return (
             card.id && (
               <div className="col-span-6 lg:col-span-3" key={index}>
                 <div
-                  className="w-full mx-auto flex flex-col gap-4 border border-zinc-100 p-4 rounded-lg"
+                  className="mx-auto flex w-full flex-col gap-4 rounded-lg border border-zinc-100 p-4"
                   onClick={() => handleEditCard(card.id!)}
                 >
                   <CardLayouts
@@ -125,7 +125,7 @@ const MyCardsPage = () => {
                             Personal
                           </h4>
                           {index == 0 && (
-                            <span className="flex items-center justify-center px-2 h-4 text-[0.60rem] text-zinc-500 font-medium bg-zinc-300 rounded-[0.15rem]">
+                            <span className="flex h-4 items-center justify-center rounded-[0.15rem] bg-zinc-300 px-2 text-[0.60rem] font-medium text-zinc-500">
                               Default
                             </span>
                           )}
@@ -138,79 +138,37 @@ const MyCardsPage = () => {
                       </div>
                       {/* top-ends */}
                       <div className="flex items-center justify-start gap-4">
-                        <div className="flex items-center gap-2 cursor-pointer">
-                          <Eye
-                            size="24"
-                            variant="Bulk"
-                            className="text-zinc-500"
-                          />
-                          <span className="text-xs font-medium text-zinc-500">
-                            242
-                          </span>
+                        <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
+                          <Eye size="24" variant="Bulk" />
+                          <span className="text-xs font-medium">242</span>
                         </div>
-                        <div className="flex items-center gap-2 cursor-pointer">
-                          <Share
-                            size="24"
-                            variant="Bulk"
-                            className="text-zinc-500"
-                          />
-                          <span className="text-xs font-medium text-zinc-500">
-                            242
-                          </span>
+                        <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
+                          <Share size="24" variant="Bulk" />
+                          <span className="text-xs font-medium">242</span>
                         </div>
-                        <div className="flex items-center gap-2 cursor-pointer">
-                          <MouseSquare
-                            size="24"
-                            variant="Bulk"
-                            className="text-zinc-500"
-                          />
-                          <span className="text-xs font-medium text-zinc-500">
-                            242
-                          </span>
+                        <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
+                          <MouseSquare size="24" variant="Bulk" />
+                          <span className="text-xs font-medium">242</span>
                         </div>
                       </div>
                       {/* middle-ends */}
                     </div>
-                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
-                        <Edit
-                          size="21"
-                          variant="Bulk"
-                          className="text-zinc-600"
-                        />{' '}
-                        <span className="text-xs font-medium text-zinc-500">
-                          Edit Card
-                        </span>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                        <Edit size="21" variant="Bulk" />{' '}
+                        <span className="text-xs font-medium">Edit Card</span>
                       </div>
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
-                        <BoxAdd
-                          size="21"
-                          variant="Bulk"
-                          className="text-zinc-600"
-                        />{' '}
-                        <span className="text-xs font-medium text-zinc-500">
-                          Add Infos
-                        </span>
+                      <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                        <BoxAdd size="21" variant="Bulk" />{' '}
+                        <span className="text-xs font-medium">Add Infos</span>
                       </div>
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
-                        <Scanning
-                          size="21"
-                          variant="Bulk"
-                          className="text-zinc-600"
-                        />{' '}
-                        <span className="text-xs font-medium text-zinc-500">
-                          Show QR
-                        </span>
+                      <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                        <Scanning size="21" variant="Bulk" />{' '}
+                        <span className="text-xs font-medium">Show QR</span>
                       </div>
-                      <div className="grow flex items-center justify-center gap-2 p-1 border border-zinc-100 rounded-sm cursor-pointer">
-                        <Share
-                          size="21"
-                          variant="Bulk"
-                          className="text-zinc-600"
-                        />{' '}
-                        <span className="text-xs font-medium text-zinc-500">
-                          Share
-                        </span>
+                      <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                        <Share size="21" variant="Bulk" />{' '}
+                        <span className="text-xs font-medium">Share</span>
                       </div>
                     </div>
                   </div>

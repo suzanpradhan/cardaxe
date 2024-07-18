@@ -56,12 +56,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         ?.data as CardResponseType<CardTemplatesType>
   );
 
-  const cardsTemplateList = useAppSelector(
-    (state: RootState) =>
-      state.baseApi.queries['getCardsTemplate-get-cards-endpoint']
-        ?.data as PaginatedResponseType<CardTemplatesType>
-  );
-
   const cardInfoKeyValue: { [key: number]: InfoSchemaType } =
     card?.cardInfos.reduce(
       (acc, current) => {
@@ -75,7 +69,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
-    dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
+    // dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch, cardId]);
 
@@ -254,12 +248,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       // toast.error(`Error: Please enter all required value`);
     }
   };
-
-  const currentLayout = cardState.cardTemplate
-    ? cardsTemplateList?.results.find(
-        (layout) => layout.id === parseInt(cardState.cardTemplate!)
-      )
-    : undefined;
+  const currentLayout = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries.getCardsTemplate
+        ?.data as PaginatedResponseType<CardTemplatesType>
+  )?.results.find((layout) => layout.id === parseInt(cardState.cardTemplate!));
 
   const variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
@@ -402,13 +395,13 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   );
 
   return (
-    <div className="flex min-h-screen flex-col gap-5 px-2 lg:px-4">
+    <div className="flex max-h-screen min-h-screen flex-col gap-4 overflow-hidden px-2 lg:px-4">
       <AppBar appBarLabel="My Personal Card">
         <span className="grow">
           <ButtonForm
             label="Preview"
             theme={isPreview ? 'blue' : 'accent'}
-            className="rounded-sm text-sm"
+            className="rounded-sm text-sm lg:hidden"
             handleClick={() => {
               contentRef.current?.scrollTo({
                 top: 0,
@@ -438,24 +431,26 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         </span>
       </AppBar>
       <div className="mb-5 flex grow items-start gap-4 max-lg:mb-20">
-        {!isPreview && (
-          <div className="mx-auto w-full max-w-sm lg:max-w-md">
-            <div className="flex flex-col gap-4 lg:flex-row">
-              <div className="w-full @container lg:basis-24">
-                <SideBarMyCards
-                  cardId={cardId}
-                  cardAction={cardAction}
-                  cardState={cardState}
-                />
-              </div>
-              <div className="w-full grow @container">{children}</div>
+        <div
+          className={`mx-auto w-full max-w-sm lg:block lg:max-w-md ${!isPreview ? 'block' : 'hidden'}`}
+        >
+          <div className="flex h-full flex-col gap-4 lg:flex-row">
+            <div className="w-full @container lg:basis-24">
+              <SideBarMyCards
+                cardId={cardId}
+                cardAction={cardAction}
+                cardState={cardState}
+              />
+            </div>
+            <div className="h-[calc(100vh-17rem)] w-full grow overflow-hidden @container lg:h-[calc(100vh-6rem)]">
+              {children}
             </div>
           </div>
-        )}
+        </div>
         <div
-          className={`sticky top-4 h-[calc(100vh-6rem)] w-full grow overflow-hidden overflow-y-scroll rounded-xl border-zinc-200 lg:block lg:border ${isPreview ? 'block' : 'hidden'}`}
+          className={`sticky top-4 h-[calc(100vh-12rem)] w-full grow overflow-hidden overflow-y-scroll rounded-xl border-zinc-200 lg:block lg:h-[calc(100vh-6rem)] lg:border ${isPreview ? 'block' : 'hidden'}`}
         >
-          <div className="mx-auto max-w-md bg-white">
+          <div className="mx-auto my-5 max-w-sm bg-white px-2 lg:max-w-lg lg:px-4">
             <PreviewSection
               layout={currentLayout}
               user={user}
