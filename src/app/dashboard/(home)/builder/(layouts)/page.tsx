@@ -26,11 +26,11 @@ const LayoutPage = () => {
 
   return (
     <div>
-      <div className="mb-2 flex h-10 items-stretch overflow-hidden rounded-lg bg-slate-200 text-sm font-bold text-zinc-900">
-        <div className="flex flex-1 grow items-center justify-center bg-zinc-900 text-zinc-50">
+      <div className="mb-2 flex h-8 items-stretch overflow-hidden rounded-lg bg-slate-200 text-sm font-semibold text-zinc-900">
+        <div className="flex flex-1 grow items-center justify-center rounded-lg bg-zinc-900 text-zinc-50">
           All
         </div>
-        <div className="flex flex-1 grow items-center justify-center">
+        <div className="flex flex-1 grow items-center justify-center rounded-lg">
           Categories
         </div>
       </div>

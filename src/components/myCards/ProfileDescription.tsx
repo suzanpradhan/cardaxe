@@ -71,10 +71,10 @@ const ProfileDescription = ({
     // </div>
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
-        <div className="shrink-0 basis-16 sm:basis-24">
+        <div className="shrink-0 basis-16 sm:basis-20">
           <div className="relative aspect-square overflow-hidden rounded-full">
             <Image
-              src={user?.avatar ?? '/profile/profile.png'}
+              src={user?.avatar ?? '/square_image.jpg'}
               alt="user_profile_image"
               fill
               sizes="(max-width: 768px) 100vw, 700px"
@@ -88,7 +88,8 @@ const ProfileDescription = ({
               {user?.fullname}
             </h3>
             <span className="text-normal text-sm text-zinc-400">
-              {variableValues?.address} | {variableValues?.designation} -{' '}
+              {variableValues?.address} {variableValues?.designation && '|'}{' '}
+              {variableValues?.designation} {variableValues?.company && '-'}{' '}
               {variableValues?.company}
             </span>
           </div>

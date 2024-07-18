@@ -1,19 +1,20 @@
+import { StaticImageData } from 'next/image';
 import HeadingTitles from '../HeadingTitles';
 import LinkItem from './(common)/LinkItem';
 
-export interface LinkDataType {
-  id?: number;
-  icon?: string;
-  name?: string;
+interface LinkDataType {
+  id: number;
+  name: string;
+  icon: StaticImageData;
+  url: string;
 }
 
-const AdditionalLinks = ({
-  linkData,
-  title,
-}: {
+type AdditionalLinkType = {
   linkData: LinkDataType[];
-  title?: string;
-}) => {
+  title: string;
+};
+
+const AdditionalLinks = ({ linkData, title }: AdditionalLinkType) => {
   return (
     <div className="flex flex-col gap-4">
       <HeadingTitles label={title ? title : 'Extra Links'} />

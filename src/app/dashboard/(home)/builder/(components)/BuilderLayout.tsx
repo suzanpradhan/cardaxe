@@ -402,7 +402,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   );
 
   return (
-    <div className="flex max-h-screen min-h-screen flex-col gap-5 overflow-hidden px-2 lg:px-4">
+    <div className="flex max-h-screen min-h-screen flex-col gap-4 overflow-hidden px-2 lg:px-4">
       <AppBar appBarLabel="My Personal Card">
         <span className="grow">
           <ButtonForm

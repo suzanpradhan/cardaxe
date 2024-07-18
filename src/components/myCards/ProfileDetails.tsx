@@ -92,11 +92,12 @@ const ProfileDetails = ({
   return (
     <div className="flex flex-col gap-4">
       <ContactInfo cardValues={cardValues} isTeamComp={isTeamComp} />
-      {/* {socialMedialList && Object.entries(socialMedialList).length !== 0 && (
-        <GappedTableList list={socialMedialList} />
-      )} */}
-      <AdditionalLinks linkData={SOCIAL_MEDIA_LIST} title="Social Media" />
-      <AdditionalLinks linkData={OTHERS_LIST} title="More" />
+      {socialMedialList && Object.entries(socialMedialList).length !== 0 && (
+        // <GappedTableList list={socialMedialList} />
+        <AdditionalLinks linkData={socialMedialList} title="Social Media" />
+      )}
+      {/* <AdditionalLinks linkData={SOCIAL_MEDIA_LIST} title="Social Media" /> */}
+      {/* <AdditionalLinks linkData={OTHERS_LIST} title="More" /> */}
     </div>
   );
 };
