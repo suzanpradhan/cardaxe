@@ -3,7 +3,11 @@
 import Sidebar from '@/components/dashboard/Sidebar';
 import TitleText from '@/components/TitleText';
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+const DashboardLayout = ({ children }: RootLayoutProps) => {
   return (
     <div className="h-screen">
       <TitleText isSideBarComp />

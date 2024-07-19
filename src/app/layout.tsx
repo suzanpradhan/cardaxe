@@ -20,11 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={clsx(inter.className)}>
+        <div id="popUpModal" />
         <Providers>
           <>{children}</>
         </Providers>
         <Notification />
-        <div id="portalBox" />
       </body>
     </html>
   );
