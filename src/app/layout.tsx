@@ -24,6 +24,7 @@ export default function RootLayout({
           <>{children}</>
         </Providers>
         <Notification />
+        <div id="portalBox" />
       </body>
     </html>
   );
