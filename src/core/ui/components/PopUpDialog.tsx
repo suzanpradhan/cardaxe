@@ -1,5 +1,7 @@
+'use client';
+
 import { CloseCircle } from 'iconsax-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 const customStyles = {
@@ -17,8 +19,13 @@ const PopUpDialog = ({
   onClose: () => void;
   children?: React.ReactNode;
 }) => {
-  const renderId = document.getElementById('popUpModal');
   const modalRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,7 +48,7 @@ const PopUpDialog = ({
     };
   }, [show, onClose]);
 
-  if (!renderId) return null;
+  if (!mounted || !show) return null;
   return (
     show &&
     createPortal(
@@ -64,7 +71,7 @@ const PopUpDialog = ({
           </div>
         </div>
       </div>,
-      renderId
+      document.body
     )
   );
 };
