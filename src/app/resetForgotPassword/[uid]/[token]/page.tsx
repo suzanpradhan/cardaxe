@@ -2,7 +2,7 @@
 
 import ButtonForm from '@/components/ButtonForm';
 import FormWrapper from '@/components/FormWrapper';
-import InputComp from '@/components/InputComp';
+import InputComp from '@/components/Inputs/InputComp';
 // import { zodResolver } from '@hookform/resolvers/zod';
 // import axios from 'axios';
 // import { useForm } from 'react-hook-form';
@@ -79,13 +79,13 @@ const ResetPage = () => {
   // };
 
   return (
-    <div className="flex flex-col w-110 mx-auto my-48">
+    <div className="mx-auto my-48 flex w-110 flex-col">
       <FormWrapper
         titleText={true}
         description={'Enter new password and confirm it to change.'}
       >
         <form
-          className="flex flex-col gap-4 pt-2  "
+          className="flex flex-col gap-4 pt-2"
           // onSubmit={handleSubmit(submit)}
         >
           {INPUT_FEILDS.map((item, index) => (

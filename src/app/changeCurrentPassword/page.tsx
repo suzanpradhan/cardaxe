@@ -1,7 +1,7 @@
 'use client';
 
 import ButtonForm from '@/components/ButtonForm';
-import InputComp from '@/components/InputComp';
+import InputComp from '@/components/Inputs/InputComp';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { registerApi } from '@/module/register/registerApi';
 import {
@@ -87,9 +87,9 @@ const ChangeCurrentPassword = () => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col w-110 mx-auto my-48">
+    <div className="mx-auto my-48 flex w-110 flex-col">
       <form
-        className="flex flex-col gap-4 pt-2 my-6"
+        className="my-6 flex flex-col gap-4 pt-2"
         onSubmit={(e) => {
           e.preventDefault();
           formik.handleSubmit(e);

@@ -8,6 +8,7 @@ export type InputFieldProps<T> = {
   setFormikFieldValue?: (field: string, value: any) => void;
   zSchemaName: string;
   inputType?: string;
+  isMulti?: boolean;
   inputValue?: string | number | boolean | null;
   error?: string
   // eslint-disable-next-line no-unused-vars
