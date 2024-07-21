@@ -65,7 +65,7 @@ export default function UpdateProfile() {
   console.log(formik.values);
 
   return (
-    <section className="max-w-3xl mx-auto mb-20">
+    <section className="mx-auto mb-20 max-w-3xl">
       <div className="bg-white px-5 py-9">
         <form
           onSubmit={(e) => {
@@ -74,16 +74,16 @@ export default function UpdateProfile() {
           }}
         >
           <div className="flex flex-col items-stretch gap-5">
-            <h3 className="text-xl font-semibold mb-5">Edit Profile</h3>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-0 w-full rounded-lg bg-slate-100 px-4 py-3">
-              <div className="flex flex-col sm:flex-row items-center gap-3">
-                <div className="relative overflow-hidden w-14 h-14 rounded-full">
+            <h3 className="mb-5 text-xl font-semibold">Edit Profile</h3>
+            <div className="flex w-full flex-col justify-between gap-2 rounded-lg bg-slate-100 px-4 py-3 md:flex-row md:items-center md:gap-0">
+              <div className="flex flex-col items-center gap-3 sm:flex-row">
+                <div className="relative h-14 w-14 overflow-hidden rounded-full">
                   <Image
                     src={
                       formik.values.updateAvatar
-                        ? URL.createObjectURL(formik.values.updateAvatar) ??
-                          '/profile/profile.png'
-                        : formik.values.avatar ?? '/profile/profile.png'
+                        ? (URL.createObjectURL(formik.values.updateAvatar) ??
+                          '/profile/profile.png')
+                        : (formik.values.avatar ?? '/profile/profile.png')
                     }
                     alt="profile-image"
                     objectFit="cover"
@@ -100,7 +100,7 @@ export default function UpdateProfile() {
               </div>
               <div className="">
                 <label htmlFor="image-input">
-                  <div className=" bg-blueTheme py-2 text-white px-2 rounded shadow-lg shadow-blueTheme/60 text-center">
+                  <div className="rounded bg-blueTheme px-2 py-2 text-center text-white shadow-lg shadow-blueTheme/60">
                     Change Profile
                   </div>
                 </label>
@@ -130,8 +130,8 @@ export default function UpdateProfile() {
               <label htmlFor="username" className="text-grayfont">
                 Username
               </label>
-              <div className="h-12 border bg-slate-100 flex items-stretch rounded focus-within:ring-2">
-                <div className="px-4 bg-slate-300 flex items-center">
+              <div className="flex h-12 items-stretch rounded border bg-slate-100 focus-within:ring-2">
+                <div className="flex items-center bg-slate-300 px-4">
                   cardaxe.com/
                 </div>
                 <input
@@ -145,7 +145,7 @@ export default function UpdateProfile() {
                 />
               </div>
               {formik.touched.username && formik.errors.username ? (
-                <span className="text-xs text-red-400 font-medium">
+                <span className="text-xs font-medium text-red-400">
                   {formik.errors.username}
                 </span>
               ) : null}
@@ -154,7 +154,7 @@ export default function UpdateProfile() {
               <label htmlFor="username" className="text-grayfont">
                 Full name
               </label>
-              <div className="h-12 border bg-slate-100 flex items-stretch rounded focus-within:ring-2">
+              <div className="flex h-12 items-stretch rounded border bg-slate-100 focus-within:ring-2">
                 <input
                   type="text"
                   placeholder="eg. Niwesh Shrestha"
@@ -166,7 +166,7 @@ export default function UpdateProfile() {
                 />
               </div>
               {formik.touched.fullname && formik.errors.fullname ? (
-                <span className="text-xs text-red-400 font-medium">
+                <span className="text-xs font-medium text-red-400">
                   {formik.errors.fullname}
                 </span>
               ) : null}
@@ -175,7 +175,7 @@ export default function UpdateProfile() {
               <label htmlFor="username" className="text-grayfont">
                 Location
               </label>
-              <div className="h-12 border bg-slate-100 flex items-stretch rounded focus-within:ring-2">
+              <div className="flex h-12 items-stretch rounded border bg-slate-100 focus-within:ring-2">
                 <input
                   type="text"
                   placeholder="Istanbul, Turkey"
@@ -187,9 +187,9 @@ export default function UpdateProfile() {
               <label htmlFor="username" className="text-grayfont">
                 Gender
               </label>
-              <div className="h-12 border bg-slate-100 flex items-stretch rounded focus-within:ring-2">
+              <div className="flex h-12 items-stretch rounded border bg-slate-100 focus-within:ring-2">
                 <select
-                  placeholder="Istanbul, Turkey"
+                  // placeholder="Istanbul, Turkey"
                   className="w-full bg-transparent indent-3 outline-none"
                 >
                   <option value="1">Male</option>
@@ -201,17 +201,17 @@ export default function UpdateProfile() {
               <label htmlFor="username" className="text-grayfont">
                 Bio
               </label>
-              <div className="border bg-slate-100 flex items-stretch rounded focus-within:ring-2">
+              <div className="flex items-stretch rounded border bg-slate-100 focus-within:ring-2">
                 <textarea
                   rows={5}
                   placeholder="Tell something about you..."
-                  className="w-full bg-transparent indent-3 outline-none py-2"
+                  className="w-full bg-transparent py-2 indent-3 outline-none"
                 ></textarea>
               </div>
             </div>
             <button
               type="submit"
-              className="h-10 bg-blueTheme text-white px-2 rounded shadow-lg shadow-blueTheme/60"
+              className="h-10 rounded bg-blueTheme px-2 text-white shadow-lg shadow-blueTheme/60"
             >
               Update Profile
             </button>

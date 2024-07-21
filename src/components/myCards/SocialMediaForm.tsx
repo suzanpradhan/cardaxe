@@ -26,20 +26,12 @@ type InputFieldsType = {
     type: string;
     zSchemaName: string;
   };
-  displayText: {
-    type: string;
-    zSchemaName: string;
-  };
 };
 
 const INPUT_FEILDS: InputFieldsType = {
   url: {
-    type: 'text',
+    type: 'url',
     zSchemaName: 'url',
-  },
-  displayText: {
-    type: 'text',
-    zSchemaName: 'displayText',
   },
 };
 const SocialMediaForm = ({
@@ -54,9 +46,9 @@ const SocialMediaForm = ({
 }: SocialMediaFormProps) => {
   return (
     <div className="mb-4 flex flex-wrap gap-2">
-      <p className="shrink-0 basis-full text-sm font-medium">
+      {/* <p className="shrink-0 basis-full text-sm font-medium">
         {socialLinkTitle}
-      </p>
+      </p> */}
       <div className="flex w-full items-start justify-stretch gap-2">
         <div className="w-10 shrink-0 rounded-sm bg-slate-50 p-1 shadow-md">
           <Image

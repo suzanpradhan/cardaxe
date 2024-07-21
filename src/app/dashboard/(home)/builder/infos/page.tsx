@@ -31,22 +31,22 @@ const SOCIAL_MEDIA_FEILDS: Record<string, SocialMediaInfoType> = {
   Instagram: {
     socialLinkSchemaName: 'instagram',
     socialLinkLogo: instagramImage,
-    placeholder: '@',
+    placeholder: 'https://instagram.com/thecardaxe',
   },
   Facebook: {
     socialLinkSchemaName: 'facebook',
     socialLinkLogo: facebookImage,
-    placeholder: 'facebook.com/',
+    placeholder: 'https://facebook.com/cardaxe',
   },
   LinkedIn: {
     socialLinkSchemaName: 'linkedIn',
     socialLinkLogo: linkedInImage,
-    placeholder: 'linkedIn.com/',
+    placeholder: 'https://linkedIn.com/cardaxe',
   },
   X: {
     socialLinkSchemaName: 'x',
     socialLinkLogo: xImage,
-    placeholder: '@',
+    placeholder: 'https://x.com/cardaxe',
   },
   Paypal: {
     socialLinkSchemaName: 'paypal',

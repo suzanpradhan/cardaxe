@@ -5,7 +5,7 @@ import { LinkDataType } from '../AdditionalLinks';
 
 const LinkItem = ({ item }: { item: LinkDataType }) => {
   return (
-    <Link href={item.url}>
+    <Link href={item.url} target="_blank">
       <div className="flex items-center justify-between rounded-md bg-zinc-100 px-3 py-3">
         <div className="flex items-center gap-2">
           <div className="relative aspect-square w-7 overflow-hidden rounded-sm md:w-9">
