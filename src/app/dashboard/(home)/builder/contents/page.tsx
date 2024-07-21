@@ -11,7 +11,6 @@ import { setErrors, updateContentForm } from '@/module/cards/cardSlice';
 
 import {
   CardResponseType,
-  CardState,
   CardTemplatesType,
   ContentFormSchema,
   ContentFormSchemaType,
@@ -24,7 +23,7 @@ const ContentsPage = () => {
   const searchParams = useSearchParams();
   const cardState = useAppSelector((state: RootState) => state.card);
   const cardId = searchParams.get('cardId');
-  const timeout = useTimeoutDispatch(500);
+  const timeout = useTimeoutDispatch(0);
 
   const card = useAppSelector(
     (state: RootState) =>
@@ -44,11 +43,11 @@ const ContentsPage = () => {
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    const updatedFormState: CardState<string>['cardFields']['values'] = {
-      ...cardState.cardFields.values,
+    const updatedFormState = {
       [name]: value,
     };
-    timeout<ContentFormSchemaType>(updateContentForm, updatedFormState);
+    // timeout<ContentFormSchemaType>(updateContentForm, updatedFormState);
+    dispatch(updateContentForm(updatedFormState));
     const result =
       ContentFormSchema.shape[name as keyof ContentFormSchemaType].safeParse(
         value

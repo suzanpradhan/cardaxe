@@ -133,7 +133,7 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.isDefault != undefined) formData.append('is_default', payload.isDefault as unknown as string)
         if (payload.cardTemplate != undefined) formData.append('card_template', payload.cardTemplate)
         if (payload.cardInfos && Object.entries(payload.cardInfos).length != 0) {
-          Object.values(payload.cardInfos).forEach((info) => {
+          Object.values(payload.cardInfos).filter((info) => info?.url?.length != 0).forEach((info) => {
             if (info?.id) formData.append(`card_infos[][id]`, info?.id);
             if (info?.url) formData.append(`card_infos[][url]`, info?.url);
             if (info?.displayText) formData.append(`card_infos[][display_text]`, info?.displayText);

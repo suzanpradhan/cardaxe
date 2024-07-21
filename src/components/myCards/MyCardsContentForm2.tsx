@@ -2,7 +2,7 @@ import { InputFieldProps } from '@/core/types/appTypes';
 import { ContentFormSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
-import InputComp from '../InputComp';
+import TextInput from '../Inputs/TextInput';
 import { Card, CardContent, CardHeader } from '../ui/card';
 
 interface MyCardsContentForm2Props {
@@ -65,25 +65,28 @@ const MyCardsContentForm2 = ({
               >,
               index: number
             ) => (
-              <InputComp
-                inputType="text"
-                // getFieldProps={getFieldProps}
-                inputCompType={item.inputCompType}
-                zSchemaName={item.zSchemaName}
-                inputLabel={item.inputLabel}
+              <TextInput
+                id={item.zSchemaName}
                 key={index}
+                name={item.zSchemaName}
+                error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+                label={item.inputLabel}
+                required={true}
+                value={
+                  values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+                }
                 placeholder={
                   fieldPlaceHolder?.[
                     item.zSchemaName as keyof ContentFormSchemaType
                   ]
-                    ? ` ${
+                    ? `eg ${
                         fieldPlaceHolder[
                           item.zSchemaName as keyof ContentFormSchemaType
                         ]
-                      }`
+                      } `
                     : ''
                 }
-                handleChange={
+                onChange={
                   handleChange as
                     | ((
                         e:
@@ -93,10 +96,6 @@ const MyCardsContentForm2 = ({
                       ) => void)
                     | undefined
                 }
-                inputValue={
-                  values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
-                }
-                error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
               />
             )
           )}

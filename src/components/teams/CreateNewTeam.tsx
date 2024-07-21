@@ -1,4 +1,4 @@
-import InputComp from '../InputComp';
+import InputComp from '../Inputs/InputComp';
 
 import { InputFieldProps } from '@/core/types/appTypes';
 import { ChangeEvent } from 'react';
@@ -71,10 +71,10 @@ const CreateNewTeam = () => {
     console.log(data);
   };
   return (
-    <div className="max-w-4xl px-4 h-full">
-      <h2 className="font-bold text-lg">Create a new team</h2>
+    <div className="h-full max-w-4xl px-4">
+      <h2 className="text-lg font-bold">Create a new team</h2>
       <form
-        className="flex flex-col gap-4 py-2 mb-9"
+        className="mb-9 flex flex-col gap-4 py-2"
         // onSubmit={handleSubmit(submitData)}
       >
         {INPUT_FEILDS.slice(0, 3).map((item, index) => (

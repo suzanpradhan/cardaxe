@@ -3,19 +3,8 @@ import clsx from 'clsx';
 import { Eye, EyeSlash } from 'iconsax-react';
 import React, { ChangeEvent, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
-import { Switch } from './ui/switch';
-
-const InputLable = ({
-  zSchemaName,
-  inputLabel,
-}: {
-  zSchemaName: string;
-  inputLabel: string;
-}) => (
-  <label htmlFor={zSchemaName} className="pb-2 text-sm font-medium">
-    {inputLabel}
-  </label>
-);
+import { Switch } from '../ui/switch';
+import InputLable from './InputLabel';
 
 const InputComp = ({
   getFieldProps,
@@ -45,10 +34,7 @@ const InputComp = ({
       case 'textArea': {
         return (
           <div className="flex h-full w-full flex-col items-start">
-            <InputLable
-              zSchemaName={zSchemaName}
-              inputLabel={inputLabel ?? ''}
-            />
+            <InputLable htmlFor={zSchemaName} inputLabel={inputLabel ?? ''} />
             <div className="h-full w-full">
               <textarea
                 name={zSchemaName}
@@ -56,6 +42,7 @@ const InputComp = ({
                 {...getFieldProps?.(zSchemaName)}
                 id={zSchemaName}
                 placeholder={placeholder}
+                value={(inputValue as string) ?? ''}
                 defaultValue={inputValue === null ? '' : (inputValue as string)}
                 className={clsx(
                   'h-full w-full rounded-md border-1 bg-inputBgGrey px-2 focus:outline-1 focus:outline-blueTheme',
@@ -69,10 +56,7 @@ const InputComp = ({
       case 'select': {
         return (
           <div className="flex h-full w-full flex-col items-start gap-2">
-            <InputLable
-              zSchemaName={zSchemaName}
-              inputLabel={inputLabel ?? ''}
-            />
+            <InputLable htmlFor={zSchemaName} inputLabel={inputLabel ?? ''} />
             <CreatableSelect
               className={clsx(
                 'placeholder:text-placeholder w-full rounded-md border-1 bg-inputBgGrey',
@@ -128,10 +112,7 @@ const InputComp = ({
       case 'file': {
         return (
           <div className="w-full">
-            <InputLable
-              zSchemaName={zSchemaName}
-              inputLabel={inputLabel ?? ''}
-            />
+            <InputLable htmlFor={zSchemaName} inputLabel={inputLabel ?? ''} />
 
             <label
               htmlFor={zSchemaName}
@@ -160,10 +141,7 @@ const InputComp = ({
         return (
           <div className={`${className}`}>
             {inputLabel && (
-              <InputLable
-                zSchemaName={zSchemaName}
-                inputLabel={inputLabel ?? ''}
-              />
+              <InputLable htmlFor={zSchemaName} inputLabel={inputLabel ?? ''} />
             )}
             <input
               onChange={(e) => handleChange?.(e)}
@@ -173,6 +151,7 @@ const InputComp = ({
                 inputValue === 'null' ? undefined : (inputValue as string)
               }
               name={zSchemaName}
+              value={(inputValue as string) ?? ''}
               {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}
               className={clsx(
@@ -242,6 +221,7 @@ const InputComp = ({
         />
         <button
           className="active::outline-none absolute right-2 top-2"
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             toggleShowPassword(!showPassword);

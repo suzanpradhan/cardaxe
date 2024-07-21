@@ -2,7 +2,7 @@ import { DesignFromSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import FormWrapper from '../FormWrapper';
-import InputComp from '../InputComp';
+import InputComp from '../Inputs/InputComp';
 
 interface MyCardsDesignSwitchProps {
   // getFieldProps: (

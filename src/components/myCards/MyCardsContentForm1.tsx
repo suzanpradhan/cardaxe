@@ -2,7 +2,7 @@ import { InputFieldProps } from '@/core/types/appTypes';
 import { ContentFormSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
-import InputComp from '../InputComp';
+import TextInput from '../Inputs/TextInput';
 import { Card, CardContent, CardHeader } from '../ui/card';
 
 interface MyCardsContentForm1Props {
@@ -54,6 +54,7 @@ const INPUT_FEILDS: InputFieldProps<
     inputCompType: 'textArea',
     inputLabel: 'Bio',
     zSchemaName: 'bio',
+    isMulti: true,
   },
 ];
 
@@ -82,25 +83,31 @@ const MyCardsContentForm1 = ({
               >,
               index: number
             ) => (
-              <InputComp
-                inputCompType={item.inputCompType}
-                inputType="text"
+              <TextInput
+                id={item.zSchemaName}
+                key={index}
+                type={item.inputCompType}
+                rows={5}
+                name={item.zSchemaName}
+                error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+                label={item.inputLabel}
+                required={true}
+                isMulti={item.isMulti}
+                value={
+                  values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+                }
                 placeholder={
                   fieldPlaceHolder?.[
                     item.zSchemaName as keyof ContentFormSchemaType
                   ]
-                    ? `Your ${
+                    ? `eg ${
                         fieldPlaceHolder[
                           item.zSchemaName as keyof ContentFormSchemaType
                         ]
-                      } Required`
+                      } `
                     : ''
                 }
-                zSchemaName={item.zSchemaName}
-                inputLabel={item.inputLabel}
-                key={index}
-                // getFieldProps={getFieldProps}
-                handleChange={
+                onChange={
                   handleChange as
                     | ((
                         e:
@@ -110,11 +117,40 @@ const MyCardsContentForm1 = ({
                       ) => void)
                     | undefined
                 }
-                inputValue={
-                  values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
-                }
-                error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
               />
+              // <InputComp
+              //   inputCompType={item.inputCompType}
+              //   inputType="text"
+              //   placeholder={
+              //     fieldPlaceHolder?.[
+              //       item.zSchemaName as keyof ContentFormSchemaType
+              //     ]
+              //       ? `Your ${
+              //           fieldPlaceHolder[
+              //             item.zSchemaName as keyof ContentFormSchemaType
+              //           ]
+              //         } Required`
+              //       : ''
+              //   }
+              //   zSchemaName={item.zSchemaName}
+              //   inputLabel={item.inputLabel}
+              //   key={index}
+              //   // getFieldProps={getFieldProps}
+              //   handleChange={
+              //     handleChange as
+              //       | ((
+              //           e:
+              //             | boolean
+              //             | ChangeEvent<HTMLInputElement>
+              //             | ChangeEvent<HTMLTextAreaElement>
+              //         ) => void)
+              //       | undefined
+              //   }
+              //   inputValue={
+              //     values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
+              //   }
+              //   error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+              // />
             )
           )}
         </div>

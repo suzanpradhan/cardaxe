@@ -15,7 +15,7 @@ import React, { ChangeEvent } from 'react';
 const Designpage = () => {
   const cardState = useAppSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
-  const timeout = useTimeoutDispatch(500);
+  const timeout = useTimeoutDispatch(0);
 
   const handleChange = async (
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -33,10 +33,10 @@ const Designpage = () => {
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
     const updatedFormState: CardState<string>['cardDesign']['values'] = {
-      ...cardState.cardDesign.values,
       [name]: stateValue,
     };
-    timeout<DesignFromSchemaType>(updateDesignForm, updatedFormState);
+    // timeout<DesignFromSchemaType>(updateDesignForm, updatedFormState);
+    dispatch(updateDesignForm(updatedFormState));
     const result =
       DesignFormSchema.shape[name as keyof DesignFromSchemaType].safeParse(
         value

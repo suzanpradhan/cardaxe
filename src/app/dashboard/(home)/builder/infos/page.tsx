@@ -9,11 +9,7 @@ import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
 import { updateInfosForm } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
-import {
-  CardState,
-  InfosFormsUpdateSchemaType,
-  SocialMediaInfo,
-} from '@/module/cards/cardsType';
+import { CardState, SocialMediaInfo } from '@/module/cards/cardsType';
 import { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
 import xImage from '../../../../../../public/X_logo.png';
@@ -90,6 +86,8 @@ const CardInfosFormPage = () => {
     (info) => info.categoryName === 'Social Media'
   );
 
+  console.log(linksInfo);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     categoryId: string
@@ -103,7 +101,10 @@ const CardInfosFormPage = () => {
         [name]: value,
       },
     };
-    timeout<InfosFormsUpdateSchemaType>(updateInfosForm, updateFormState);
+
+    // timeout<InfosFormsUpdateSchemaType>(updateInfosForm, updateFormState);
+    dispatch(updateInfosForm(updateFormState));
+    console.log('updateFormState', updateFormState, cardState.cardInfos.values);
     // const result =
     //   InfoSchema.shape[name as keyof InfoSchemaType].safeParse(value);
     // const result = InfosFormsUpdateSchema[categoryId as keyof InfosFormsUpdateSchemaType].;

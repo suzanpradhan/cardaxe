@@ -2,7 +2,7 @@
 
 import ButtonForm from '@/components/ButtonForm';
 import FormWrapper from '@/components/FormWrapper';
-import InputComp from '@/components/InputComp';
+import InputComp from '@/components/Inputs/InputComp';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { registerApi } from '@/module/register/registerApi';
 import {
@@ -55,13 +55,13 @@ const ConfirmEmail = () => {
     validateOnBlur: true,
   });
   return (
-    <div className="flex flex-col w-140 mx-auto my-48">
+    <div className="mx-auto my-48 flex w-140 flex-col">
       <FormWrapper
         titleText={true}
         description={'Please enter the registered verified email id.'}
       >
         <form
-          className="flex flex-col gap-4 "
+          className="flex flex-col gap-4"
           onSubmit={(e) => {
             e.preventDefault();
             formik.handleSubmit(e);

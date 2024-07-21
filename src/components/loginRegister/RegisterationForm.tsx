@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { toFormikValidate } from 'zod-formik-adapter';
 import ButtonForm from '../ButtonForm';
 import FormWrapper from '../FormWrapper';
-import InputComp from '../InputComp';
+import InputComp from '../Inputs/InputComp';
 
 type Z_SCHEMA_NAME = 'fullname' | 'email' | 'password' | 'confirmPassword';
 
