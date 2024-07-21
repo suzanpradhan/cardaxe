@@ -102,12 +102,8 @@ const CardInfosFormPage = () => {
       },
     };
 
-    // timeout<InfosFormsUpdateSchemaType>(updateInfosForm, updateFormState);
     dispatch(updateInfosForm(updateFormState));
     console.log('updateFormState', updateFormState, cardState.cardInfos.values);
-    // const result =
-    //   InfoSchema.shape[name as keyof InfoSchemaType].safeParse(value);
-    // const result = InfosFormsUpdateSchema[categoryId as keyof InfosFormsUpdateSchemaType].;
   };
 
   return (

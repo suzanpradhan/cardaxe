@@ -67,8 +67,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       {} as { [key: number]: InfoSchemaType }
     );
 
-  console.log('cardInfoKeyValue', cardInfoKeyValue);
-
   useEffect(() => {
     if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
     // dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
@@ -139,7 +137,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       session.data?.user?.id &&
       updatedCardFields
     ) {
-      console.log(cardState.cardInfos);
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,
@@ -208,7 +205,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       session.data?.user?.id &&
       updatedCardFields
     ) {
-      console.log(cardState.cardInfos);
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,

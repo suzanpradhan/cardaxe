@@ -59,16 +59,7 @@ const MyCardsContentForm3 = ({
               value={
                 values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
               }
-              onChange={
-                handleChange as
-                  | ((
-                      e:
-                        | boolean
-                        | ChangeEvent<HTMLInputElement>
-                        | ChangeEvent<HTMLTextAreaElement>
-                    ) => void)
-                  | undefined
-              }
+              onChange={handleChange}
             />
           ))}
         </div>

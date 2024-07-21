@@ -86,16 +86,7 @@ const MyCardsContentForm2 = ({
                       } `
                     : ''
                 }
-                onChange={
-                  handleChange as
-                    | ((
-                        e:
-                          | boolean
-                          | ChangeEvent<HTMLInputElement>
-                          | ChangeEvent<HTMLTextAreaElement>
-                      ) => void)
-                    | undefined
-                }
+                onChange={handleChange}
               />
             )
           )}
