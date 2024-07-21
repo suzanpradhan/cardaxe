@@ -2,7 +2,7 @@ import { InputFieldProps } from '@/core/types/appTypes';
 import { ContentFormSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
-import InputComp from '../InputComp';
+import TextInput from '../Inputs/TextInput';
 import { Card, CardContent, CardHeader } from '../ui/card';
 
 interface MyCardsContentForm3Props {
@@ -49,27 +49,17 @@ const MyCardsContentForm3 = ({
       <CardContent>
         <div className="flex flex-col gap-3">
           {INPUT_FEILDS.map((item, index) => (
-            <InputComp
-              inputType="text"
-              zSchemaName={item.zSchemaName}
-              inputLabel={item.inputLabel}
+            <TextInput
+              id={item.zSchemaName}
               key={index}
-              // getFieldProps={getFieldProps}
-              inputCompType={item.inputCompType}
-              handleChange={
-                handleChange as
-                  | ((
-                      e:
-                        | boolean
-                        | ChangeEvent<HTMLInputElement>
-                        | ChangeEvent<HTMLTextAreaElement>
-                    ) => void)
-                  | undefined
-              }
-              inputValue={
+              name={item.zSchemaName}
+              error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+              label={item.inputLabel}
+              required={true}
+              value={
                 values[item.zSchemaName as keyof ContentFormSchemaType] ?? ''
               }
-              error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
+              onChange={handleChange}
             />
           ))}
         </div>

@@ -59,8 +59,8 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const cardInfoKeyValue: { [key: number]: InfoSchemaType } =
     card?.cardInfos.reduce(
       (acc, current) => {
-        if (current.id) {
-          acc[parseInt(current.id!)] = current;
+        if (current.cardInfo) {
+          acc[parseInt(current.cardInfo!)] = current;
         }
         return acc;
       },
@@ -137,7 +137,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       session.data?.user?.id &&
       updatedCardFields
     ) {
-      console.log(cardState.cardInfos);
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,
@@ -206,7 +205,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       session.data?.user?.id &&
       updatedCardFields
     ) {
-      console.log(cardState.cardInfos);
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
           cardId: cardId,
@@ -270,7 +268,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           : (card?.cardTemplate.defaultCardFields.bio ?? '')
         : cardState.cardFields.values.bio,
     firstName:
-      cardState.cardFields.values.firstName.length === 0
+      cardState.cardFields.values.firstName?.length === 0
         ? cardAction === 'update'
           ? card?.cardFields.firstName
           : card?.cardTemplate.defaultCardFields.firstName

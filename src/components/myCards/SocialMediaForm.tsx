@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import Image, { StaticImageData } from 'next/image';
+import TextInput from '../Inputs/TextInput';
 
 export type SocialMediaValueType = {
   url?: string;
@@ -69,22 +69,35 @@ const SocialMediaForm = ({
           /> */}
         <div className="flex w-full grow flex-col gap-2">
           {Object.keys(INPUT_FEILDS).map((item, index) => (
-            <input
-              onChange={(e) => handleChange?.(e, categoryId)}
+            <TextInput
               key={index}
-              defaultValue={
-                socialMedialValue?.[item as keyof SocialMediaValueType]
+              id={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
+              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange?.(e, categoryId)
               }
               name={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
               placeholder={index === 0 ? placeholder : 'Display Text'}
-              className={clsx(
-                'h-10 w-full rounded-md border-1 bg-inputBgGrey px-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
-                error?.[item as keyof SocialMediaValueType]
-                  ? 'border-redError'
-                  : 'border-borderMain'
-              )}
-              // value={inputValue as string}
-            />
+              error={error?.[item as keyof SocialMediaValueType]}
+              value={
+                socialMedialValue?.[item as keyof SocialMediaValueType] ?? ''
+              }
+            /> // <input
+            //   onChange={(e) => handleChange?.(e, categoryId)}
+            //   key={index}
+            //   defaultValue={
+            //     socialMedialValue?.[item as keyof SocialMediaValueType]
+            //   }
+            //   name={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
+            //   placeholder={index === 0 ? placeholder : 'Display Text'}
+            //   className={clsx(
+            //     'h-10 w-full rounded-md border-1 bg-inputBgGrey px-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
+            //     error?.[item as keyof SocialMediaValueType]
+            //       ? 'border-redError'
+            //       : 'border-borderMain'
+            //   )}
+            //   // value={inputValue as string}
+            // />
           ))}
         </div>
       </div>

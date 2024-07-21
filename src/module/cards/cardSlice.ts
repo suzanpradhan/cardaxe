@@ -59,19 +59,19 @@ export const cardSlice = createSlice({
   reducers: {
     updateContentForm: (
       state,
-      action: PayloadAction<CardState<string>['cardFields']['values']>
+      action: PayloadAction<Record<string, any>>
     ) => {
-      state.cardFields.values = { ...action.payload };
+      state.cardFields.values = { ...state.cardFields.values, ...action.payload };
     },
     updateDesignForm: (
       state,
-      action: PayloadAction<CardState<string>['cardDesign']['values']>
+      action: PayloadAction<Record<string, any>>
     ) => {
-      state.cardDesign.values = { ...action.payload };
+      state.cardDesign.values = { ...state.cardDesign.values, ...action.payload };
     },
     updateInfosForm: (
       state,
-      action: PayloadAction<CardState<string>['cardInfos']['values']>
+      action: PayloadAction<CardState<string>["cardInfos"]['values']>
     ) => {
       state.cardInfos.values = { ...action.payload };
     },
@@ -89,8 +89,6 @@ export const cardSlice = createSlice({
       const { error, formName } = action.payload;
       state[formName].errors = { ...error }
     },
-
-
     validateForms: (state, action: PayloadAction<ErrorActionType['formName']>) => {
       const formName = action.payload;
       let formSchema;
