@@ -291,3 +291,9 @@ dialog::-webkit-scrollbar-thumb:active {
 .fluid-text-paragraph {
   font-size: 3cqi;
 }
+
+.share-qr canvas {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: 1/1 !important;
+}

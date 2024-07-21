@@ -1,9 +1,11 @@
 'use client';
 
 import CardLayouts from '@/components/CardLayouts.server';
+import QrModal from '@/components/QrModal';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import PopUpDialog from '@/core/ui/components/PopUpDialog';
 import CircleLoader from '@/core/ui/loaders/CircleLoader';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
@@ -23,7 +25,8 @@ import { useEffect, useState } from 'react';
 
 const MyCardsPage = () => {
   const router = useRouter();
-  const [createLoading, toggleLoading] = useState(false);
+  const [createLoading, toggleLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const { data } = useSession();
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -36,6 +39,14 @@ const MyCardsPage = () => {
         CardResponseType<CardTemplatesType>
       >
   );
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const hanldeCreateCard = () => {
     toggleLoading(true);
@@ -94,29 +105,30 @@ const MyCardsPage = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-12 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
+      <div className="col-span-12 mb-5 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
+        <PopUpDialog show={showModal} onClose={handleCloseModal}>
+          <QrModal />
+        </PopUpDialog>
         {cardsList?.map((card, index) => {
-          // console.log(card.cardTemplate.htmlCode);
+          console.log(card);
           return (
             card.id && (
               <div className="col-span-6 lg:col-span-3" key={index}>
-                <div
-                  className="mx-auto flex w-full flex-col gap-4 rounded-lg border border-zinc-100 p-4"
-                  onClick={() => handleEditCard(card.id!)}
-                >
-                  <CardLayouts
-                    enableShadow
-                    htmlSource={card.cardTemplate?.htmlCode}
-                    variableValues={{
-                      ...card.cardFields,
-                      ...card.cardDesign,
-                      logoUrl: card.cardDesign.logo
-                        ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
-                        : undefined,
-                      backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
-                    }}
-                  />
-
+                <div className="mx-auto flex w-full flex-col gap-4 rounded-lg border border-zinc-100 p-4">
+                  <div onClick={() => handleEditCard(card.id!)}>
+                    <CardLayouts
+                      enableShadow
+                      htmlSource={card.cardTemplate?.htmlCode}
+                      variableValues={{
+                        ...card.cardFields,
+                        ...card.cardDesign,
+                        logoUrl: card.cardDesign.logo
+                          ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
+                          : undefined,
+                        backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
+                      }}
+                    />
+                  </div>
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center justify-between">
@@ -154,7 +166,10 @@ const MyCardsPage = () => {
                       {/* middle-ends */}
                     </div>
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                      <div
+                        className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme"
+                        onClick={() => handleEditCard(card.id!)}
+                      >
                         <Edit size="21" variant="Bulk" />{' '}
                         <span className="text-xs font-medium">Edit Card</span>
                       </div>
@@ -162,7 +177,10 @@ const MyCardsPage = () => {
                         <BoxAdd size="21" variant="Bulk" />{' '}
                         <span className="text-xs font-medium">Add Infos</span>
                       </div>
-                      <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                      <div
+                        className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme"
+                        onClick={handleOpenModal}
+                      >
                         <Scanning size="21" variant="Bulk" />{' '}
                         <span className="text-xs font-medium">Show QR</span>
                       </div>
