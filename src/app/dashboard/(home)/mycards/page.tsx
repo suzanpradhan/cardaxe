@@ -110,7 +110,6 @@ const MyCardsPage = () => {
           <QrModal />
         </PopUpDialog>
         {cardsList?.map((card, index) => {
-          console.log(card);
           return (
             card.id && (
               <div className="col-span-6 lg:col-span-3" key={index}>

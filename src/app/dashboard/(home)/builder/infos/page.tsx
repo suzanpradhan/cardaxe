@@ -90,8 +90,6 @@ const CardInfosFormPage = () => {
     (info) => info.categoryName === 'Social Media'
   );
 
-  console.log(linksInfo);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     categoryId: string
@@ -112,7 +110,6 @@ const CardInfosFormPage = () => {
     //   );
     const result =
       InfoSchema.shape[name as keyof InfoSchemaType].safeParse(value);
-    console.log(result?.error?.format());
     if (!result.success && value.length > 0) {
       const error = result.error.format();
       console.log(error);
@@ -141,7 +138,6 @@ const CardInfosFormPage = () => {
         })
       );
     }
-    console.log('cardState.cardInfos.errors', cardState.cardInfos.errors);
   };
 
   return (
