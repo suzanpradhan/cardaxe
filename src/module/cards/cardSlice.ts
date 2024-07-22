@@ -1,12 +1,12 @@
 'use client';
 
-import { CardState, ContentFormSchema, ContentFormSchemaType, DesignFormUpdateSchema, DesignFromSchemaType } from '@/module/cards/cardsType';
+import { CardState, ContentFormSchema, ContentFormSchemaType, DesignFormUpdateSchema, DesignFromSchemaType, InfosFormsUpdateSchema } from '@/module/cards/cardsType';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ZodSchema } from 'zod';
 
 interface ErrorActionType {
   formName: 'cardFields' | 'cardDesign' | 'cardInfos';
-  error: { [key: string]: Array<string> };
+  error: { [key: string]: any };
 }
 
 interface ValidateFieldActionType {
@@ -98,6 +98,9 @@ export const cardSlice = createSlice({
           break;
         case 'cardDesign':
           formSchema = DesignFormUpdateSchema;
+          break;
+        case 'cardInfos':
+          formSchema = InfosFormsUpdateSchema;
           break;
       }
       if (!formSchema) return;

@@ -7,9 +7,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
-import { updateInfosForm } from '@/module/cards/cardSlice';
+import { setErrors, updateInfosForm } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
-import { CardState, SocialMediaInfo } from '@/module/cards/cardsType';
+import {
+  InfoSchema,
+  InfoSchemaType,
+  SocialMediaInfo,
+} from '@/module/cards/cardsType';
 import { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
 import xImage from '../../../../../../public/X_logo.png';
@@ -93,17 +97,51 @@ const CardInfosFormPage = () => {
     categoryId: string
   ) => {
     const { name, value } = e.target;
-    const updateFormState: CardState<string>['cardInfos']['values'] = {
+    const updateFormState = {
       ...cardState.cardInfos.values,
       [categoryId]: {
         ...cardState.cardInfos.values[categoryId],
         cardInfoId: categoryId,
         [name]: value,
-      },
+      } as InfoSchemaType,
     };
-
     dispatch(updateInfosForm(updateFormState));
-    console.log('updateFormState', updateFormState, cardState.cardInfos.values);
+    // const result =
+    //   InfosFormsUpdateSchema.shape[name as keyof DesignFromSchemaType].safeParse(
+    //     value
+    //   );
+    const result =
+      InfoSchema.shape[name as keyof InfoSchemaType].safeParse(value);
+    console.log(result?.error?.format());
+    if (!result.success && value.length > 0) {
+      const error = result.error.format();
+      console.log(error);
+      dispatch(
+        setErrors({
+          formName: 'cardInfos',
+          error: {
+            ...cardState.cardInfos.errors,
+            [categoryId]: {
+              ...cardState.cardInfos.errors[categoryId],
+              [name]: error,
+            },
+          },
+        })
+      );
+    } else {
+      const newError = Object.fromEntries(
+        Object.entries(cardState.cardDesign.errors).filter(
+          ([key]) => key !== name
+        )
+      );
+      dispatch(
+        setErrors({
+          formName: 'cardInfos',
+          error: newError,
+        })
+      );
+    }
+    console.log('cardState.cardInfos.errors', cardState.cardInfos.errors);
   };
 
   return (
