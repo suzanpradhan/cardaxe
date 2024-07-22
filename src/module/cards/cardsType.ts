@@ -55,7 +55,7 @@ export type CardState<T> = {
   id?: number;
   cardFields: { values: ContentFormSchemaType, errors: Record<string, Array<string>> },
   cardDesign: { values: DesignFromSchemaType, errors: Record<string, Array<string>> },
-  cardInfos: { values: InfosFormsUpdateSchemaType, errors: Record<string, Record<string, string>> }
+  cardInfos: { values: InfosFormsUpdateSchemaType, errors: Record<string, Record<string, Array<string>>> }
   isPublished?: boolean,
   isDefault?: boolean,
   user?: string
@@ -124,11 +124,11 @@ export const DesignFormUpdateSchema = DesignFormSchema.refine((data) => data.bac
 })
 
 export const InfoSchema = z.object({
-  id: z.string().optional(),
-  url: z.string().optional(),
-  displayText: z.string().optional(),
-  cardInfoId: z.string().optional(),
-  cardInfo: z.string().optional(),
+  id: z.string().optional().nullable(),
+  url: z.string().regex(/^https:\/\/[^\s$.?#].[^\s]*$/),
+  displayText: z.string().optional().nullable(),
+  cardInfoId: z.string().optional().nullable(),
+  cardInfo: z.string().optional().nullable(),
 
 })
 
