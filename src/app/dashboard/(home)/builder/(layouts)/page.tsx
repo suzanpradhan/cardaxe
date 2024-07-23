@@ -70,8 +70,6 @@ const LayoutPage = () => {
         ?.data as PaginatedResponseType<CardTemplatesType>
   );
 
-  console.log(currentPage);
-
   return (
     <div>
       <div className="mb-2 flex h-8 items-stretch overflow-hidden rounded-lg bg-slate-200 text-sm font-semibold text-zinc-900">

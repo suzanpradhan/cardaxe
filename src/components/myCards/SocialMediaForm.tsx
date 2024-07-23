@@ -2,9 +2,9 @@ import Image, { StaticImageData } from 'next/image';
 import TextInput from '../Inputs/TextInput';
 
 export type SocialMediaValueType = {
-  url?: string;
-  displayText?: string;
-  id?: string;
+  url?: string | null;
+  displayText?: string | null;
+  id?: string | null;
 };
 
 type SocialMediaFormProps = {
@@ -78,7 +78,7 @@ const SocialMediaForm = ({
               }
               name={INPUT_FEILDS[item as keyof InputFieldsType].zSchemaName}
               placeholder={index === 0 ? placeholder : 'Display Text'}
-              error={error?.[item as keyof SocialMediaValueType]}
+              error={error?.[item as keyof SocialMediaValueType] ?? undefined}
               value={
                 socialMedialValue?.[item as keyof SocialMediaValueType] ?? ''
               }
