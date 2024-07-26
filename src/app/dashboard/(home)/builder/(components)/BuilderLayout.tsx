@@ -112,7 +112,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   }, [card, cardAction]);
 
   const handlePublish = () => {
-    toggleSaveLoading(true);
+    togglePublishLoading(true);
     dispatch(validateForms('cardDesign'));
     dispatch(validateForms('cardFields'));
     var submitresponse = undefined;
@@ -160,21 +160,21 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           const errorMessage = (res as any).error;
           if (errorMessage) {
             // toast.error(`Error: Please enter all required value`);
-            toggleSaveLoading(false);
+            togglePublishLoading(false);
             throw errorMessage;
           }
           // toast.success('Successfully updated');
           cardAction === 'create' &&
             router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
-          toggleSaveLoading(false);
+          togglePublishLoading(false);
         })
         .catch((err) => {
           // toast.error('Something went wrong');
-          toggleSaveLoading(false);
+          togglePublishLoading(false);
           throw err;
         });
     } else {
-      toggleSaveLoading(false);
+      togglePublishLoading(false);
       // toast.error(`Error: Please enter all required value`);
     }
   };
@@ -416,13 +416,13 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             isLoading={saveLoading}
             handleClick={handleSave}
             theme="accent"
-            className="rounded-sm text-sm"
+            className="min-w-[5rem] rounded-sm text-sm"
           />
         </span>
         <span className="grow">
           <ButtonForm
             label="Publish"
-            className="rounded-sm text-sm"
+            className="min-w-[5rem] rounded-sm text-sm"
             isLoading={publishLoading}
             handleClick={handlePublish}
           />
