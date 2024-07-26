@@ -6,7 +6,7 @@ import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromS
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCardsTemplate: builder.query<PaginatedResponseType<CardTemplatesType>, number>({
+    getCardsTemplates: builder.query<PaginatedResponseType<CardTemplatesType>, number>({
       query: (pageNumber) => `${apiPaths.getCardTemplatesUrl}?page=${pageNumber}`,
       providesTags: (response) =>
         response?.results
@@ -28,6 +28,18 @@ const cardsApi = baseApi.injectEndpoints({
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse as PaginatedResponseType<CardTemplatesType>;
+      },
+    }),
+    getCardTemmplate: builder.query<CardTemplatesType, string>({
+      query: (templateId) => `${apiPaths.getCardTemplatesUrl}${templateId}/`,
+      serializeQueryArgs: ({ queryArgs, endpointName }) => {
+        return endpointName + '-' + queryArgs;
+      },
+
+      providesTags: (result, error, id) => [{ type: 'CardLayout', id: id }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
       },
     }),
     getCard: builder.query<CardResponseType<CardTemplatesType>, string>({
@@ -103,7 +115,6 @@ const cardsApi = baseApi.injectEndpoints({
           return blob;
         }
         const formData = new FormData();
-        console.log(payload)
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.title != undefined) formData.append('card_fields.title', payload.cardFields.title)
         if (payload.cardFields.prefix != undefined) formData.append('card_fields.prefix', payload.cardFields.prefix)

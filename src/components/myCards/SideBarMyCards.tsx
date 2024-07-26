@@ -78,11 +78,6 @@ const SideBarMyCards = ({
             ).length !== 0
           : undefined;
 
-        console.log(
-          'error',
-          (cardState[item.formName! as keyof CardState<string>] as any)?.errors
-        );
-
         return (
           // <div key={index} className="relative aspect-square w-full">
           //   {error && (

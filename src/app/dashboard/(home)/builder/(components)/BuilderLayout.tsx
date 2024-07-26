@@ -10,7 +10,6 @@ import ButtonForm from '@/components/ButtonForm';
 import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
-import { PaginatedResponseType } from '@/core/types/responseTypes';
 import {
   initialState,
   updateCardTemplate,
@@ -246,11 +245,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       // toast.error(`Error: Please enter all required value`);
     }
   };
-  const currentLayout = useAppSelector(
-    (state: RootState) =>
-      state.baseApi.queries.getCardsTemplate
-        ?.data as PaginatedResponseType<CardTemplatesType>
-  )?.results.find((layout) => layout.id === parseInt(cardState.cardTemplate!));
 
   const variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
@@ -450,7 +444,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         >
           <div className="mx-auto my-5 max-w-sm bg-white px-2 lg:max-w-lg lg:px-4">
             <PreviewSection
-              layout={currentLayout}
+              layout={parseInt(cardState.cardTemplate!)}
               user={user}
               variableValues={variableValues}
               socialValues={cardState.cardInfos.values}
