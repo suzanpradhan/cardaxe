@@ -38,7 +38,7 @@ const LayoutPage = () => {
   useEffect(() => {
     const fetchData = async (currentPage: number) => {
       const response = await Promise.resolve(
-        dispatch(cardsApi.endpoints.getCardsTemplate.initiate(currentPage))
+        dispatch(cardsApi.endpoints.getCardsTemplates.initiate(currentPage))
       );
       if (response.data) {
         if (
@@ -66,7 +66,7 @@ const LayoutPage = () => {
 
   const cardTemplates = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries.getCardsTemplate
+      state.baseApi.queries.getCardsTemplates
         ?.data as PaginatedResponseType<CardTemplatesType>
   );
 
