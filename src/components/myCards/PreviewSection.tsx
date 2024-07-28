@@ -52,7 +52,7 @@ const PreviewSection = ({
 
   useEffect(() => {
     dispatch(cardsApi.endpoints.getCardTemmplate.initiate(layout.toString()));
-  }, [dispatch]);
+  }, [dispatch, layout]);
 
   console.log(cardTemplate);
 
