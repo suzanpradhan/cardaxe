@@ -89,7 +89,10 @@ const DashboardPage = () => {
         <div className="col-span-12 border-zinc-100 lg:col-span-6 lg:border-r xl:col-span-7">
           <div className="flex grow flex-col">
             {allCardsList?.results?.map((card, index) => (
-              <div className="mx-auto flex w-full min-w-[20rem] max-w-xs flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm">
+              <div
+                key={index}
+                className="mx-auto flex w-full min-w-[20rem] max-w-xs flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm"
+              >
                 <section className="flex items-center gap-2">
                   <div className="relative z-auto h-8 w-8 rounded-full">
                     <Image
@@ -107,7 +110,6 @@ const DashboardPage = () => {
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>
                 <CardLayouts
-                  key={index}
                   enableShadow
                   htmlSource={card.cardTemplate?.htmlCode}
                   variableValues={{
