@@ -8,10 +8,12 @@ type TitleTextProps = {
 
 const TitleText = ({ isSideBarComp }: TitleTextProps) => {
   return (
-    <div className='border-b border-zinc-200'>
-      <div className="lg:hidden max-w-sm lg:max-w-none w-full mx-auto flex justify-between items-center h-14 px-2">
+    <div className="border-b border-zinc-200 lg:hidden">
+      <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between px-2 lg:max-w-none">
         <Link href={'/'} className="">
-          <h1 className={clsx('lg:text-3xl text-xl font-extrabold')}>cardaxe.</h1>
+          <h1 className={clsx('text-xl font-extrabold lg:text-3xl')}>
+            cardaxe.
+          </h1>
         </Link>
         {isSideBarComp && (
           <div className="flex items-center gap-4">

@@ -2,7 +2,7 @@ import { PostType } from '@/app/module';
 import { Bookmark, Flash, Heart, MoreSquare, Share } from 'iconsax-react';
 import Image from 'next/image';
 import square_image from '../../../public/square_image.jpg';
-import CardTemplateHome from './CardTempHome';
+import CardLayout from './CardLayout';
 
 type HomeFeedType = {
   post: PostType;
@@ -25,9 +25,9 @@ const HomeFeed = ({ post }: HomeFeedType) => {
   ];
 
   return (
-    <div className="min-w-[20rem] max-w-xs sm:min-w-[24rem] sm:max-w-sm w-full mx-auto flex flex-col gap-4 border-b border-zinc-100 py-5 px-2 xs:px-0">
+    <div className="mx-auto flex w-full min-w-[20rem] max-w-xs flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm">
       <section className="flex items-center gap-2">
-        <div className="relative h-8 w-8 rounded-full z-auto">
+        <div className="relative z-auto h-8 w-8 rounded-full">
           <Image
             className="rounded-full"
             src={square_image}
@@ -37,36 +37,27 @@ const HomeFeed = ({ post }: HomeFeedType) => {
             objectFit="contain"
           />
         </div>
-        <a className="hover:text-blueTheme font-semibold grow">Eugene Cheng</a>
-        <MoreSquare
-          size="24"
-          className="text-zinc-200"
-        />
+        <a className="grow font-semibold hover:text-blueTheme">Eugene Cheng</a>
+        <MoreSquare size="24" className="text-zinc-200" />
       </section>
-      <CardTemplateHome
-        firstName={post.firstName}
-        lastName={post.lastName}
-        designation={post.designation}
-        email={post.email}
-        logo={post.logo}
-        phone={post.phone}
-        website={post.website}
-      />
+
+      <CardLayout />
+
       <section className="flex gap-4">
         {reactions.map((item, index) => (
           <button
             key={index}
-            className="flex gap-2 items-center hover:text-zinc-900 active:ring-2 active:text-zinc-900 active:bg-blueBg rounded-xl text-zinc-400 p-1"
+            className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
           >
             <p>{item?.icon}</p>
             <p>{item?.number}</p>
           </button>
         ))}
-        <div className="grow flex justify-end">
+        <div className="flex grow justify-end">
           <Bookmark
             variant="TwoTone"
             size="24"
-            className="text-zinc-300 hover:text-zinc-900 active:ring-2 active:text-zinc-900 active:bg-blueBg"
+            className="text-zinc-300 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
           />
         </div>
       </section>

@@ -7,8 +7,8 @@ interface UserProfileCardProps {
 
 const UserProfileCard = ({ fullName }: UserProfileCardProps) => {
   return (
-    <div className=" w-full grid-cols-2  p-3 bg-componentBgGrey flex gap-4 items-center border-1 border-borderMain rounded-md ">
-      <div className="w-14 h-14 rounded-full relative">
+    <div className="flex w-full grid-cols-2 items-center gap-4 rounded-md border-1 border-borderMain bg-componentBgGrey p-2">
+      <div className="relative h-10 w-10 rounded-full">
         <Image
           src={square_image}
           alt="PP image"
