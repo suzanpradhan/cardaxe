@@ -71,10 +71,17 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse.results;
       },
     }),
-    getAllCards: builder.query<PaginatedResponseType<CardResponseType<CardTemplatesType>>, void>({
-      query: () => `${apiPaths.getCardUrl}`,
+    getAllCards: builder.query<PaginatedResponseType<CardResponseType<CardTemplatesType>>, number>({
+      query: (pageNumber) => `${apiPaths.getCardUrl}?page=${pageNumber}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
+      },
+      merge: (currentCache, newItems) => {
+        currentCache.pagination = newItems.pagination;
+        currentCache.results.push(...newItems.results);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
       },
       providesTags: (response) =>
         response?.results

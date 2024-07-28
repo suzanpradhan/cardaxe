@@ -25,7 +25,7 @@ import {
   Share,
 } from 'iconsax-react';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
@@ -62,19 +62,63 @@ const DashboardPage = () => {
   const user = useAppSelector(
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
+  const scrollableDivRef = useRef<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch]);
 
-  const router = useRouter();
   const handleClick = () => {
     router.push('./changeCurrentPassword');
   };
 
+  const handleScroll = useCallback(async () => {
+    const scrollableDiv = scrollableDivRef.current;
+
+    if (
+      scrollableDiv.scrollTop + scrollableDiv.clientHeight >=
+        scrollableDiv.scrollHeight - 100 &&
+      !isLoading &&
+      hasMoreData
+    ) {
+      setIsLoading(true);
+      setCurrentPage(currentPage + 1);
+    }
+  }, [currentPage]);
+
   useEffect(() => {
-    dispatch(cardsApi.endpoints.getAllCards.initiate());
-  }, [dispatch]);
+    // console.log('currentPage', currentPage, hasMoreData);
+    const fetchData = async (currentPage: number) => {
+      const response = await Promise.resolve(
+        dispatch(cardsApi.endpoints.getAllCards.initiate(currentPage))
+      );
+      if (response.data) {
+        if (
+          response.data!.pagination.currentPage >=
+          response.data!.pagination.totalPage
+        ) {
+          setHasMoreData(false);
+        }
+      }
+    };
+
+    if (hasMoreData) {
+      fetchData(currentPage);
+    }
+    setIsLoading(false);
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    const scrollableDiv = scrollableDivRef.current;
+    scrollableDiv?.addEventListener('scroll', handleScroll);
+    return () => {
+      scrollableDiv?.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   const allCardsList = useAppSelector(
     (state: RootState) =>
@@ -83,10 +127,24 @@ const DashboardPage = () => {
       >
   );
 
+  // console.log(
+  //   'scroll check:',
+  //   scrollableDivRef?.current?.scrollTop +
+  //     scrollableDivRef?.current?.clientHeight >=
+  //     scrollableDivRef?.current?.scrollHeight &&
+  //     !isLoading &&
+  //     hasMoreData,
+  //   currentPage
+  // );
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 grid grid-cols-12 xl:col-span-8 xl:col-start-3">
-        <div className="col-span-12 border-zinc-100 lg:col-span-6 lg:border-r xl:col-span-7">
+        <div
+          className="col-span-12 h-screen overflow-y-scroll border-zinc-100 lg:col-span-6 lg:border-r xl:col-span-7"
+          ref={scrollableDivRef}
+          onScroll={handleScroll}
+        >
           <div className="flex grow flex-col">
             {allCardsList?.results?.map((card, index) => (
               <div
