@@ -422,7 +422,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </span>
       </AppBar>
-      <div className="mb-5 flex grow items-start gap-4 max-lg:mb-20">
+      <div className="flex h-full grow items-stretch gap-4">
         <div
           className={`mx-auto w-full max-w-sm lg:block lg:max-w-md ${!isPreview ? 'block' : 'hidden'}`}
         >
@@ -434,7 +434,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
                 cardState={cardState}
               />
             </div>
-            <div className="h-[calc(100vh-17rem)] w-full grow overflow-hidden @container lg:h-[calc(100vh-6rem)]">
+            <div className="h-[calc(100vh-17rem)] w-full grow overflow-hidden @container lg:h-[calc(100vh)]">
               {children}
             </div>
           </div>

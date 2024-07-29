@@ -77,12 +77,12 @@ const ContentsPage = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-17rem)] overflow-y-scroll lg:h-[calc(100vh-6rem)]">
+    <div className="h-full overflow-y-scroll lg:h-full">
       <form
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="flex flex-col gap-4"
+        className="mb-20 flex flex-col gap-4 lg:mb-24"
       >
         <MyCardsContentForm1
           handleChange={(e) => handleChange(e)}

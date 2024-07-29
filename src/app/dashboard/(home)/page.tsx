@@ -127,16 +127,6 @@ const DashboardPage = () => {
       >
   );
 
-  // console.log(
-  //   'scroll check:',
-  //   scrollableDivRef?.current?.scrollTop +
-  //     scrollableDivRef?.current?.clientHeight >=
-  //     scrollableDivRef?.current?.scrollHeight &&
-  //     !isLoading &&
-  //     hasMoreData,
-  //   currentPage
-  // );
-
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 grid grid-cols-12 xl:col-span-8 xl:col-start-3">

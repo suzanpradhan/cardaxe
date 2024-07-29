@@ -81,11 +81,11 @@ const LayoutPage = () => {
         </div>
       </div>
       <div
-        className="h-[calc(100vh-20rem)] overflow-y-scroll lg:h-[calc(100vh-9rem)]"
+        className="h-screen overflow-y-scroll"
         ref={scrollableDivRef}
         onScroll={handleScroll}
       >
-        <div className="flex flex-col gap-3 p-1">
+        <div className="mb-[18.5rem] flex flex-col gap-3 p-1 lg:mb-[8.3rem]">
           {cardTemplates?.results.map((card, index) => {
             return (
               <div key={index}>
