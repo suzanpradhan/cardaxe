@@ -55,9 +55,33 @@ const cardsApi = baseApi.injectEndpoints({
       },
     }),
     getMyCards: builder.query<PaginatedResponseType<CardResponseType<CardTemplatesType>>, void>({
-      query: () => `${apiPaths.getCardUrl}`,
+      query: () => `${apiPaths.getCardUrl}me/`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
+      },
+      providesTags: (response) =>
+        response?.results
+          ? [
+            ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
+            { type: 'MyCardList', id: 'LIST' },
+          ]
+          : [{ type: 'MyCardList', id: 'LIST' }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse.results;
+      },
+    }),
+    getAllCards: builder.query<PaginatedResponseType<CardResponseType<CardTemplatesType>>, number>({
+      query: (pageNumber) => `${apiPaths.getCardUrl}?page=${pageNumber}`,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache, newItems) => {
+        currentCache.pagination = newItems.pagination;
+        currentCache.results.push(...newItems.results);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
       },
       providesTags: (response) =>
         response?.results
@@ -68,7 +92,7 @@ const cardsApi = baseApi.injectEndpoints({
           : [{ type: 'CardsList', id: 'LIST' }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
-        return camelCaseResponse.results;
+        return camelCaseResponse;
       },
     }),
     createCard: builder.mutation<UpdateCardState<CardTemplatesType>, string>({
