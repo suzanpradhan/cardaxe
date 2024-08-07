@@ -210,7 +210,7 @@ const DashboardPage = () => {
             <div className="flex flex-col gap-4">
               <UserProfileCard fullName={user?.fullname} />
               <h2 className="font-bold">My Card</h2>
-              <HomeCardTemplate userId={user?.id} />
+              <HomeCardTemplate userName={user?.username} />
               <div className="flex gap-2">
                 {NAVIGATION_ICONS.map((item) => item)}
               </div>

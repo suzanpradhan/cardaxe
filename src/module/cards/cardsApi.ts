@@ -255,7 +255,7 @@ const cardsApi = baseApi.injectEndpoints({
         // arg
       ) => response.status,
     }),
-    getDefaultCard: builder.query<UpdateCardState<CardTemplatesType>, string>({
+    getDefaultCard: builder.query<CardResponseType<CardTemplatesType>, string>({
       query: (userName) => `${apiPaths.getDefaultCardUrl}${userName}/`,
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return endpointName + '-' + queryArgs;
