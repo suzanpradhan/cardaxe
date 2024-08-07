@@ -1,7 +1,7 @@
 'use client';
 import UserProfileCard from '@/components/dashboard/UserProfileCard';
 import { useRouter } from 'next/navigation';
-import square_image from '../../../../public/square_image.jpg';
+import profileImage from '../../../../public/profile/profile.png';
 
 import CardLayouts from '@/components/CardLayouts.server';
 import HomeCardTemplate from '@/components/dashboard/HomeCardTemplate';
@@ -155,7 +155,7 @@ const DashboardPage = () => {
                   <div className="relative z-auto h-8 w-8 rounded-full">
                     <Image
                       className="rounded-full"
-                      src={square_image}
+                      src={card.user?.avatar ?? profileImage}
                       alt="image"
                       fill
                       sizes="(max-width: 768px) 100vw, 700px"
@@ -163,7 +163,7 @@ const DashboardPage = () => {
                     />
                   </div>
                   <a className="grow font-semibold hover:text-blueTheme">
-                    Eugene Cheng
+                    {card.user?.fullname}
                   </a>
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>

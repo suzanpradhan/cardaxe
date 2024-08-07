@@ -1,5 +1,6 @@
 import { nonempty } from "@/core/utils/formUtils";
 import { z } from "zod";
+import { UserType } from "../user/userType";
 
 export interface SocialMediaInfo {
   id: string,
@@ -48,7 +49,7 @@ export type CardResponseType<T> = {
   cardInfos: Array<InfoSchemaType>,
   isPublished: boolean,
   isDefault: boolean,
-  user?: string
+  user?: UserType
 }
 
 export type CardState<T> = {
