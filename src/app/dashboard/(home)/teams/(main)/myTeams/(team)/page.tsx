@@ -38,25 +38,25 @@ const REACTION_LIST = [
 
 const page = () => {
   return (
-    <div className="flex gap-6 justify-center">
-      <div className="basis-1/2 shrink max-w-lg border-1 rounded-xl border-componentBgGrey">
+    <div className="flex justify-center gap-6">
+      <div className="max-w-lg shrink basis-1/2 rounded-xl border-1 border-componentBgGrey">
         <TeamCard />
         <div className="px-6 pb-6">{/* <ProfileDetails isTeamComp /> */}</div>
       </div>
-      <div className="grid gap-4 shrink h-min basis-120 p-6 rounded-xl border-1 border-componentBgGrey">
-        <div className="shadow-lg rounded-md">
-          <CardTempSide userId={1} />
+      <div className="grid h-min shrink basis-120 gap-4 rounded-xl border-1 border-componentBgGrey p-6">
+        <div className="rounded-md shadow-lg">
+          <CardTempSide userName={'1'} />
         </div>
         <div>
           <p className="flex justify-between">
             <strong>My Roft.ru Card</strong>
-            <span className="text-green-600 text-sm">Active</span>
+            <span className="text-sm text-green-600">Active</span>
           </p>
           <div className="flex gap-4">
             {REACTION_LIST.map((item, index) => (
               <div
                 key={index}
-                className="flex gap-2 items-center text-grayfont"
+                className="flex items-center gap-2 text-grayfont"
               >
                 {item.icon}
                 <span>{item.reactions}</span>
@@ -64,11 +64,11 @@ const page = () => {
             ))}
           </div>
         </div>
-        <div className="flex gap-2 justify-between">
+        <div className="flex justify-between gap-2">
           {BUTTON_LIST.map((item, index) => (
             <button
               key={index}
-              className="rounded-md gap-1 px-2 py-1 flex border-1 items-center border-componentBgGrey text-grayfont"
+              className="flex items-center gap-1 rounded-md border-1 border-componentBgGrey px-2 py-1 text-grayfont"
             >
               {item.icon}
               <span className="text-sm">{item.description}</span>
