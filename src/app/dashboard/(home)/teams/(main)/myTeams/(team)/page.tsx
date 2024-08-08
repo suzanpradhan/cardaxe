@@ -38,7 +38,7 @@ const REACTION_LIST = [
 
 const page = () => {
   return (
-    <div className="flex justify-center gap-6">
+    <div className="flex w-full justify-center gap-6">
       <div className="max-w-lg shrink basis-1/2 rounded-xl border-1 border-componentBgGrey">
         <TeamCard />
         <div className="px-6 pb-6">{/* <ProfileDetails isTeamComp /> */}</div>

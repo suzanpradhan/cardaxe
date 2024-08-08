@@ -19,6 +19,7 @@ const Tabwrapper = ({
   triggerComp,
 }: TabWrappersPropsType) => {
   const [activeTab, setActiveTab] = useState<number>(0);
+
   const handleClick = (index: number) => (
     setActiveTab(index),
     triggerComp == 'dialog'
@@ -32,14 +33,14 @@ const Tabwrapper = ({
           onClick={() => handleClick(index)}
           key={index}
           className={clsx(
-            'pb-1 ',
-            activeTab === index && 'border-b-4 border-blue-700 -my-[2.5px]'
+            'pb-1',
+            activeTab === index && '-my-[2.5px] border-b-4 border-blue-700'
           )}
         >
           <button
             className={clsx(
-              ' p-3 rounded-md  hover:text-blue-700',
-              activeTab === index && ' bg-blue-200'
+              'rounded-md p-3 hover:text-blue-700',
+              activeTab === index && 'bg-blue-200'
             )}
           >
             {item}
