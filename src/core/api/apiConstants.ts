@@ -13,5 +13,6 @@ export const apiPaths = {
   getDefaultCardUrl: 'default/card/',
   updateContentUrl: 'card/update-content/',
   cardsUrl: 'cards/',
+  connectUrl: 'connect/',
   getSocialInfosUrl: 'card-infos'
 };
