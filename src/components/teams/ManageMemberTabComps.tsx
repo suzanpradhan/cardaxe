@@ -7,7 +7,7 @@ type ManageMemberTabCompsPropsType = {
 const ProfileTabComp = () => {
   return (
     <div className="flex flex-col gap-2">
-      <CardTempSide userId={1} />
+      <CardTempSide userName={'1'} />
       {/* <ProfileDescription />
       <ProfileDetails isTeamComp={false} /> */}
     </div>

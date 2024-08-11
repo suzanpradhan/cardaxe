@@ -1,7 +1,6 @@
 import PreviewSection from '@/components/myCards/PreviewSection';
 import { apiPaths } from '@/core/api/apiConstants';
 import { snakeToCamel } from '@/core/utils/generalFunctions';
-import { notFound } from 'next/navigation';
 
 const page = async (props: any) => {
   const userId = props.params.userId;
@@ -18,6 +17,7 @@ const page = async (props: any) => {
     );
     const response = await res.json();
     const defaultCard = snakeToCamel(response);
+    console.log('defaultCard', defaultCard);
 
     const variableValues = {
       ...defaultCard.cardFields,
@@ -53,7 +53,7 @@ const page = async (props: any) => {
     }
   } catch (error) {
     console.log(error);
-    return notFound();
+    return <>No default card</>;
   }
 };
 

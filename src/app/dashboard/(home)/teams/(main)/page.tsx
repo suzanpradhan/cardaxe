@@ -38,13 +38,13 @@ const Page = () => {
   const handleCardClick = () => router.push('/dashboard/teams/myTeams');
 
   return (
-    <div className="max-w-5xl mx-auto grid gap-4 p-4">
+    <div className="mx-auto grid max-w-5xl gap-4 p-4">
       <h2 className="font-bold">My Teams</h2>
       <div className="flex gap-2">
         <div className="grow">
           <SearchInput greyBackground={false} />
         </div>
-        <div className="shadow-md shadow-blueTheme rounded-lg">
+        <div className="rounded-lg shadow-md shadow-blueTheme">
           <ButtonForm
             label="Create Team"
             theme="blue"

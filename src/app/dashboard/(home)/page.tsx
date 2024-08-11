@@ -1,7 +1,7 @@
 'use client';
 import UserProfileCard from '@/components/dashboard/UserProfileCard';
 import { useRouter } from 'next/navigation';
-import square_image from '../../../../public/square_image.jpg';
+import profileImage from '../../../../public/profile/profile.png';
 
 import CardLayouts from '@/components/CardLayouts.server';
 import HomeCardTemplate from '@/components/dashboard/HomeCardTemplate';
@@ -11,6 +11,7 @@ import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
+import connectApi from '@/module/connect/connectApi';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import clsx from 'clsx';
@@ -24,6 +25,7 @@ import {
   ScanBarcode,
   Share,
 } from 'iconsax-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -59,7 +61,7 @@ const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
 
 const DashboardPage = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(
+  const userProfile = useAppSelector(
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
   const scrollableDivRef = useRef<any>(null);
@@ -67,6 +69,7 @@ const DashboardPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
   const router = useRouter();
+  const session = useSession();
 
   useEffect(() => {
     dispatch(userApi.endpoints.getUser.initiate());
@@ -137,6 +140,26 @@ const DashboardPage = () => {
   //   currentPage
   // );
 
+  const handleConnect = (user: UserType) => {
+    dispatch(
+      connectApi.endpoints.sendRequest.initiate({
+        to_user: {
+          fullname: user.fullname,
+          email: user.email,
+          username: user.username,
+        },
+        from_user: {
+          fullname: userProfile.fullname,
+          email: userProfile.email,
+          username: userProfile.username,
+        },
+        accepted: false,
+        id: user.id,
+        timestamp: new Date().toISOString(),
+      })
+    );
+  };
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 grid grid-cols-12 xl:col-span-8 xl:col-start-3">
@@ -155,7 +178,7 @@ const DashboardPage = () => {
                   <div className="relative z-auto h-8 w-8 rounded-full">
                     <Image
                       className="rounded-full"
-                      src={square_image}
+                      src={card.user?.avatar ?? profileImage}
                       alt="image"
                       fill
                       sizes="(max-width: 768px) 100vw, 700px"
@@ -163,7 +186,7 @@ const DashboardPage = () => {
                     />
                   </div>
                   <a className="grow font-semibold hover:text-blueTheme">
-                    Eugene Cheng
+                    {card.user?.fullname}
                   </a>
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>
@@ -184,7 +207,10 @@ const DashboardPage = () => {
                     <Heart size="24" variant="TwoTone" />
                     <p>11.1k</p>
                   </button>
-                  <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
+                  <button
+                    className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
+                    onClick={() => card.user?.id && handleConnect(card.user)}
+                  >
                     <Flash size="24" variant="TwoTone" />
                     <p>11.1k</p>
                   </button>
@@ -208,9 +234,9 @@ const DashboardPage = () => {
         <div className="sticky top-0 hidden h-screen shrink-0 py-4 lg:col-span-6 lg:block xl:col-span-5">
           <div className="relative flex h-full min-w-[24rem] max-w-sm grow flex-col justify-between px-4">
             <div className="flex flex-col gap-4">
-              <UserProfileCard fullName={user?.fullname} />
+              <UserProfileCard fullName={userProfile?.fullname} />
               <h2 className="font-bold">My Card</h2>
-              <HomeCardTemplate userId={user?.id} />
+              <HomeCardTemplate userName={userProfile?.username} />
               <div className="flex gap-2">
                 {NAVIGATION_ICONS.map((item) => item)}
               </div>

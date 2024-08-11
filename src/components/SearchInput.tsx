@@ -1,34 +1,36 @@
 import clsx from 'clsx';
 import { Filter, SearchNormal1 } from 'iconsax-react';
-import React from 'react';
 
 type SearchInputPropsType = {
   greyBackground: boolean;
   requireFilter?: boolean;
+  requireBorder?: boolean;
 };
 
 const SearchInput = ({
   greyBackground,
   requireFilter,
+  requireBorder = true,
 }: SearchInputPropsType) => {
   return (
     <label
       htmlFor="input"
       className={clsx(
-        'flex rounded-md justify-between items-center   text-grayfont border-1 border-borderMain ',
+        'flex items-center justify-between rounded-md border-borderMain text-grayfont',
         greyBackground
           ? 'bg-inputBgGrey focus-within:bg-blueBg'
-          : 'focus-within:border-blueTheme focus-within:text-blueTheme'
+          : 'focus-within:border-blueTheme focus-within:text-blueTheme',
+        requireBorder ? 'border-1' : 'border-0'
       )}
     >
-      <SearchNormal1 size="36" className="px-2 " variant="Bulk" />
+      <SearchNormal1 size="36" className="px-2" variant="Bulk" />
       <input
-        className="grow h-full rounded-md focus:outline-0 bg-transparent"
+        className="h-full grow rounded-md bg-transparent focus:outline-0"
         id="input"
         placeholder="Search"
       />
       {requireFilter && (
-        <span className="text-grayfont flex items-center bg-componentBgGrey p-1 mr-1 rounded-md">
+        <span className="mr-1 flex items-center rounded-md bg-componentBgGrey p-1 text-grayfont">
           <Filter size="20" variant="Bulk" />
           Filter
         </span>
@@ -38,12 +40,3 @@ const SearchInput = ({
 };
 
 export default SearchInput;
-
-<label htmlFor="input" className="  ">
-  <SearchNormal1 size="36" className="px-2 " variant="Bulk" />
-  <input
-    className="grow h-full rounded-md focus:outline-0 "
-    id="input"
-    placeholder="Search"
-  />
-</label>;

@@ -28,9 +28,12 @@ export const UserProfileSchema = z.object({
   email: z.string().pipe(nonempty),
   fullname: z.string().pipe(nonempty),
   id: z.number(),
+  address: z.string().optional().nullable(),
+  gender: z.string().pipe(nonempty),
   username: z.string().pipe(nonempty),
   avatar: z.string().optional().nullable(),
   updateAvatar: z.custom<File>().optional(),
+  bio: z.string().optional().nullable(),
 });
 
 export type UserType = z.infer<typeof UserProfileSchema>;

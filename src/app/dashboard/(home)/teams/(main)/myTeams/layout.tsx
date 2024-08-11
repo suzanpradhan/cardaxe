@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
 import Tabwrapper from '@/components/TabWrapper';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 
 const TAB_ELEMENTS = ['Team', 'Members', 'Analytics', 'Security', 'Settings'];
 
@@ -14,11 +14,12 @@ const MyTeamsLayout = ({ children }: { children: React.ReactNode }) => {
           `/dashboard/teams/myTeams/${TAB_ELEMENTS[index].toLowerCase()}`
         )
       : router.push(`/dashboard/teams/myTeams/`);
+
   return (
-    <div className="grid gap-4 justify-center pt-4">
-      <h2 className="font-bold">Roft.ru</h2>
+    <div className="mx-auto flex w-full max-w-5xl flex-col justify-center gap-4 p-4">
+      <h2 className="w-full font-bold">Roft.ru</h2>
       <Tabwrapper tabElements={TAB_ELEMENTS} changeRoute={changeRoute} />
-      <div>{children}</div>
+      {children}
     </div>
   );
 };

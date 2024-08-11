@@ -49,6 +49,9 @@ export default function UpdateProfile() {
       fullname: user?.fullname ?? '',
       username: user?.username ?? '',
       email: user?.email ?? '',
+      address: user?.address ?? '',
+      bio: user?.bio ?? '',
+      gender: user?.gender ?? 'MALE',
       id: user?.id ?? null,
       updateAvatar: undefined,
       avatar: user?.avatar ? `${user?.avatar}` : '/profile/profile.png',
@@ -158,8 +161,8 @@ export default function UpdateProfile() {
                 <input
                   type="text"
                   placeholder="eg. Niwesh Shrestha"
-                  name="fullname"
                   className="w-full bg-transparent indent-3 outline-none"
+                  name="fullname"
                   onChange={formik.handleChange}
                   value={formik.values.fullname}
                   onBlur={formik.handleBlur}
@@ -178,8 +181,12 @@ export default function UpdateProfile() {
               <div className="flex h-12 items-stretch rounded border bg-slate-100 focus-within:ring-2">
                 <input
                   type="text"
-                  placeholder="Istanbul, Turkey"
+                  placeholder="eg. Kathmandu, Nepal"
                   className="w-full bg-transparent indent-3 outline-none"
+                  name="address"
+                  onChange={formik.handleChange}
+                  value={formik.values.address ?? undefined}
+                  onBlur={formik.handleBlur}
                 />
               </div>
             </div>
@@ -190,10 +197,17 @@ export default function UpdateProfile() {
               <div className="flex h-12 items-stretch rounded border bg-slate-100 focus-within:ring-2">
                 <select
                   // placeholder="Istanbul, Turkey"
+
                   className="w-full bg-transparent indent-3 outline-none"
+                  name="gender"
+                  onChange={formik.handleChange}
+                  value={formik.values.gender}
+                  onBlur={formik.handleBlur}
                 >
-                  <option value="1">Male</option>
-                  <option value="2">Female</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Others</option>
+                  <option value="UNKNOWN">Unknown</option>
                 </select>
               </div>
             </div>
@@ -206,6 +220,10 @@ export default function UpdateProfile() {
                   rows={5}
                   placeholder="Tell something about you..."
                   className="w-full bg-transparent py-2 indent-3 outline-none"
+                  name="bio"
+                  onChange={formik.handleChange}
+                  value={formik.values.bio ?? undefined}
+                  onBlur={formik.handleBlur}
                 ></textarea>
               </div>
             </div>

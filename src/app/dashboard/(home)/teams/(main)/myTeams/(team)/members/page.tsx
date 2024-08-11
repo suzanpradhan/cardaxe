@@ -67,12 +67,12 @@ const Page = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex w-full flex-col gap-4">
       <div className="flex gap-2">
         <div className="grow">
           <SearchInput greyBackground />
         </div>
-        <div className="shadow-lg shadow-blueTheme rounded-lg">
+        <div className="rounded-lg shadow-lg shadow-blueTheme">
           <ButtonForm label="Create Team" theme="blue" />
         </div>
       </div>

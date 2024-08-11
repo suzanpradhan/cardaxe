@@ -410,7 +410,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             isLoading={saveLoading}
             handleClick={handleSave}
             theme="accent"
-            className="min-w-[5rem] rounded-sm text-sm"
+            className="min-w-[7rem] rounded-sm text-sm"
           />
         </span>
         <span className="grow">

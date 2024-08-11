@@ -24,7 +24,9 @@ const userApi = baseApi.injectEndpoints({
                 formData.append("fullname", payload.fullname);
                 formData.append('id', payload.id.toString());
                 formData.append("username", payload.username);
-
+                formData.append('gender', payload.gender);
+                if (payload.bio) formData.append('bio', payload.bio);
+                if (payload.address) formData.append('address', payload.address);
                 if (payload.updateAvatar) formData.append("avatar", payload.updateAvatar);
 
                 return ({
