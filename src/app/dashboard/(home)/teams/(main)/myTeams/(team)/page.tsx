@@ -1,5 +1,4 @@
 import CardTempSide from '@/components/dashboard/HomeCardTemplate';
-import TeamCard from '@/components/teams/TeamCard';
 import { BoxAdd, Edit, Eye, MouseSquare, Scanning, Share } from 'iconsax-react';
 
 const BUTTON_LIST = [
@@ -40,7 +39,7 @@ const page = () => {
   return (
     <div className="flex w-full justify-center gap-6">
       <div className="max-w-lg shrink basis-1/2 rounded-xl border-1 border-componentBgGrey">
-        <TeamCard />
+        {/* <TeamCard teamCardValues={}/> */}
         <div className="px-6 pb-6">{/* <ProfileDetails isTeamComp /> */}</div>
       </div>
       <div className="grid h-min shrink basis-120 gap-4 rounded-xl border-1 border-componentBgGrey p-6">
