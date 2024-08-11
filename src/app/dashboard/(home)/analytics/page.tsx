@@ -3,7 +3,6 @@
 import ButtonForm from '@/components/ButtonForm';
 import { Calendar, Eye, Flash, Link21, Share } from 'iconsax-react';
 import AnalyticsCard from './(components)/AnalyticsCard';
-import LineGraph from './(components)/LineGraph';
 
 const analyticsData = [
   {
@@ -64,9 +63,8 @@ const page = () => {
           />
         ))}
       </div>
-      <div>
-        <LineGraph />
-      </div>
+      {/* <div>
+      </div> */}
     </div>
   );
 };
