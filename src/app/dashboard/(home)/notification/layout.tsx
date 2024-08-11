@@ -37,9 +37,10 @@ export default function NotificationsLayout({
           Request
         </Link>
       </div>
-      <div className="mt-8 flex-1 overflow-scroll rounded-md bg-inputBgGrey/50">
+      {/* <div className="mt-8 flex-1 overflow-scroll rounded-md bg-inputBgGrey/50">
         {children}
-      </div>
+      </div> */}
+      {children}
     </div>
   );
 }
