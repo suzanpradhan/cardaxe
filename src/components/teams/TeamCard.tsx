@@ -1,36 +1,21 @@
-import React from 'react';
+import { TeamFormType } from '@/module/teams/teamTypes';
+import { Heart, More, ScanBarcode, Share } from 'iconsax-react';
 import Image from 'next/image';
 import logo from '../../../public/logo.png';
-import { Heart, More, ScanBarcode, Share } from 'iconsax-react';
 
-const DETAILS = [
-  {
-    title: 'Founders',
-    description: 'Sujan Pradhan, Saroj Khanal',
-  },
-  {
-    title: 'CEO',
-    description: 'Niwesh Shrestha',
-  },
-  {
-    title: 'Founded',
-    description: 'Jan 1 2023',
-  },
-  {
-    title: 'Headquater',
-    description: 'Kathmandu, Nepal',
-  },
-];
-
-const TeamCard = () => {
+const TeamCard = ({ teamCardValues }: { teamCardValues: TeamFormType }) => {
   return (
     <div className="relative">
-      <div className="-z-10 absolute h-14 bg-green-500 top-0 w-full overflow-hidden rounded-t-xl"></div>
-      <div className="p-6 grid gap-5">
+      <div className="absolute top-0 -z-10 h-14 w-full overflow-hidden rounded-t-xl bg-green-500"></div>
+      <div className="grid gap-5 p-6">
         <div className="flex items-end gap-4">
-          <div className="relative w-44 h-44 z-10 shadow-lg rounded-lg">
+          <div className="relative z-10 h-44 w-44 rounded-lg shadow-lg">
             <Image
-              src={logo}
+              src={
+                teamCardValues.logo?.name
+                  ? URL.createObjectURL(teamCardValues.logo)
+                  : logo
+              }
               alt="Background Image"
               fill
               objectFit="cover"
@@ -38,49 +23,63 @@ const TeamCard = () => {
               className="-z-10 rounded-lg"
             />
           </div>
-          <div className="py-6 grid gap-2">
-            <h2 className="">Organization Name</h2>
-            <p>Category</p>
+          <div className="grid gap-2 py-6">
+            <h2 className="">{teamCardValues.name ?? 'Company name'}</h2>
+            <p>{teamCardValues.category.label ?? 'Category'} </p>
             <div className="flex gap-3">
               <Heart
                 size="42"
                 color="#ff1843"
                 variant="Bulk"
-                className="bg-componentBgGrey rounded-full p-2"
+                className="rounded-full bg-componentBgGrey p-2"
               />
               <Share
                 size="42"
                 variant="Bulk"
-                className="bg-componentBgGrey rounded-full p-2 text-grayfont"
+                className="rounded-full bg-componentBgGrey p-2 text-grayfont"
               />
               <ScanBarcode
                 size="42"
                 variant="Bulk"
-                className="bg-componentBgGrey rounded-full p-2 text-grayfont"
+                className="rounded-full bg-componentBgGrey p-2 text-grayfont"
               />
               <More
                 size="42"
                 variant="Bulk"
-                className="bg-componentBgGrey rounded-full p-2 text-grayfont"
+                className="rounded-full bg-componentBgGrey p-2 text-grayfont"
               />
             </div>
           </div>
         </div>
         <div>
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia
+            {teamCardValues.bio ??
+              `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia
             corrupti error nesciunt quasi, dicta libero accusamus iste cum
             suscipit commodi dolor voluptates doloribus laudantium vel iusto,
-            nemo tenetur doloremque quibusdam!
+            nemo tenetur doloremque quibusdam!`}
           </p>
         </div>
-        <div className="grid gap-2">
-          {DETAILS.map((item, index) => (
-            <p key={index}>
-              <strong>{item.title}:</strong>
-              <span>{item.description}</span>
-            </p>
-          ))}
+        <div className="flex flex-col gap-2">
+          <p>
+            <strong>Founders : </strong>
+            <span>{teamCardValues.founders}</span>
+          </p>
+          <p>
+            <strong>CEO : </strong>
+            <span>{teamCardValues.ceo}</span>
+          </p>
+          <p>
+            <strong>Founded At : </strong>
+            <span>{teamCardValues.foundedAt?.getUTCFullYear()}</span>
+          </p>
+          <p>
+            <strong>Headquater : </strong>
+            <span>{teamCardValues.headquater}</span>
+          </p>
+          {/* {DETAILS.map((item, index) => (
+            
+          ))} */}
         </div>
       </div>
     </div>

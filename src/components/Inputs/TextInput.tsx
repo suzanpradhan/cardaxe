@@ -32,7 +32,6 @@ const TextInput = ({ isMulti, error, ...props }: TextFieldProps) => {
             'mt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
             error ? 'border-redError' : 'border-borderMain'
           )}
-          disabled={!props.required}
           onChange={props.onChange as ChangeEventHandler<HTMLInputElement>}
           {...props}
         />
