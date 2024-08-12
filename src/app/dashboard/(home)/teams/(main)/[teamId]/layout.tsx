@@ -10,10 +10,8 @@ const MyTeamsLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const changeRoute = (index: number) =>
     index
-      ? router.push(
-          `/dashboard/teams/myTeams/${TAB_ELEMENTS[index].toLowerCase()}`
-        )
-      : router.push(`/dashboard/teams/myTeams/`);
+      ? router.push(`/dashboard/teams/all/${TAB_ELEMENTS[index].toLowerCase()}`)
+      : router.push(`/dashboard/teams/all/`);
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col justify-center gap-4 p-4">

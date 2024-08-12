@@ -11,7 +11,7 @@ export const baseApi = createApi({
   tagTypes: ['CardsList',
     'Card',
     'CardLayout',
-    'CardLayoutList', 'User', 'MyCardList', 'Connections', "RequestList", "Request", "TeamCategory"],
+    'CardLayoutList', 'User', 'MyCardList', 'Connections', "RequestList", "Request", "TeamCategory", "Team", "TeamList"],
   endpoints: () => ({}),
 });
 

@@ -39,7 +39,7 @@ const Page = () => {
   const formik = useFormik<TeamFormType>({
     // enableReinitialize: true,
     initialValues: {
-      name: 'fdas',
+      name: '',
       category: {
         label: '',
         value: '',
@@ -55,7 +55,7 @@ const Page = () => {
 
   return (
     <form
-      className="mx-auto mt-28 flex h-screen max-h-screen min-h-screen w-fit flex-col-reverse justify-center gap-4 overflow-hidden md:flex-row"
+      className="mx-auto flex h-screen max-h-screen min-h-screen w-fit flex-col-reverse justify-center gap-4 overflow-hidden pt-4 md:flex-row"
       onSubmit={(e) => {
         e.preventDefault();
         formik.handleSubmit(e);
@@ -68,7 +68,21 @@ const Page = () => {
       />
       <div className="mr-4 flex flex-col gap-2">
         <div className="h-min max-w-lg rounded-xl border-1 border-componentBgGrey">
-          <TeamCard teamCardValues={formik.values} />
+          <TeamCard
+            teamCardValues={{
+              address: formik.values.headquater ?? undefined,
+              logoFile: formik.values.logo ?? undefined,
+              founded_at: formik.values.foundedAt?.toUTCString(),
+              founded_by: formik.values.founders ?? undefined,
+              categoryData: {
+                id: parseInt(formik.values.category.value),
+                title: formik.values.category.label,
+              },
+              bio: formik.values.bio ?? undefined,
+              ceo: formik.values.ceo ?? undefined,
+              name: formik.values.name ?? undefined,
+            }}
+          />
         </div>
         <div className="w-32 self-end">
           <ButtonForm label="Next" theme="blue" type="submit" />

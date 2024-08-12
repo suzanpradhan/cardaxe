@@ -1,9 +1,9 @@
-import { TeamFormType } from '@/module/teams/teamTypes';
+import { Team } from '@/module/teams/teamTypes';
 import { Heart, More, ScanBarcode, Share } from 'iconsax-react';
 import Image from 'next/image';
 import logo from '../../../public/logo.png';
 
-const TeamCard = ({ teamCardValues }: { teamCardValues: TeamFormType }) => {
+const TeamCard = ({ teamCardValues }: { teamCardValues: Team }) => {
   return (
     <div className="relative">
       <div className="absolute top-0 -z-10 h-14 w-full overflow-hidden rounded-t-xl bg-green-500"></div>
@@ -12,9 +12,9 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: TeamFormType }) => {
           <div className="relative z-10 h-44 w-44 rounded-lg shadow-lg">
             <Image
               src={
-                teamCardValues.logo?.name
-                  ? URL.createObjectURL(teamCardValues.logo)
-                  : logo
+                teamCardValues?.logoFile
+                  ? URL.createObjectURL(teamCardValues.logoFile)
+                  : (teamCardValues?.logo ?? logo)
               }
               alt="Background Image"
               fill
@@ -24,8 +24,12 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: TeamFormType }) => {
             />
           </div>
           <div className="grid gap-2 py-6">
-            <h2 className="">{teamCardValues.name ?? 'Company name'}</h2>
-            <p>{teamCardValues.category.label ?? 'Category'} </p>
+            <h2 className="">{teamCardValues?.name ?? 'Company name'}</h2>
+            <p>
+              {teamCardValues?.category ??
+                teamCardValues?.categoryData?.title ??
+                'Category'}{' '}
+            </p>
             <div className="flex gap-3">
               <Heart
                 size="42"
@@ -53,7 +57,7 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: TeamFormType }) => {
         </div>
         <div>
           <p>
-            {teamCardValues.bio ??
+            {teamCardValues?.bio ??
               `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia
             corrupti error nesciunt quasi, dicta libero accusamus iste cum
             suscipit commodi dolor voluptates doloribus laudantium vel iusto,
@@ -63,19 +67,19 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: TeamFormType }) => {
         <div className="flex flex-col gap-2">
           <p>
             <strong>Founders : </strong>
-            <span>{teamCardValues.founders}</span>
+            <span>{teamCardValues?.founded_by}</span>
           </p>
           <p>
             <strong>CEO : </strong>
-            <span>{teamCardValues.ceo}</span>
+            <span>{teamCardValues?.ceo}</span>
           </p>
           <p>
             <strong>Founded At : </strong>
-            <span>{teamCardValues.foundedAt?.getUTCFullYear()}</span>
+            <span>{teamCardValues?.founded_at}</span>
           </p>
           <p>
             <strong>Headquater : </strong>
-            <span>{teamCardValues.headquater}</span>
+            <span>{teamCardValues?.address}</span>
           </p>
           {/* {DETAILS.map((item, index) => (
             

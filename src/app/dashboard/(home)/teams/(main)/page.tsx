@@ -3,7 +3,13 @@
 import ButtonForm from '@/components/ButtonForm';
 import SearchInput from '@/components/SearchInput';
 import MyTeamsCard from '@/components/teams/MyTeamsCard';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import { PaginatedResponseType } from '@/core/types/responseTypes';
+import teamsApi from '@/module/teams/teamApi';
+import { Team } from '@/module/teams/teamTypes';
 import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import logo from '../../../../../../public/logo.png';
 import image1 from '../../../../../../public/staticImages/1.jpg';
 import image2 from '../../../../../../public/staticImages/2.jpg';
@@ -34,8 +40,61 @@ const MY_CARDS_ITEMS = [
 
 const Page = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const scrollableDivRef = useRef<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [hasMoreData, setHasMoreData] = useState(true);
+
+  const handleScroll = useCallback(async () => {
+    const scrollableDiv = scrollableDivRef.current;
+
+    if (
+      scrollableDiv.scrollTop + scrollableDiv.clientHeight >=
+        scrollableDiv.scrollHeight - 50 &&
+      !isLoading &&
+      hasMoreData
+    ) {
+      setIsLoading(true);
+      setCurrentPage(currentPage + 1);
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    const fetchData = async (currentPage: number) => {
+      const response = await Promise.resolve(
+        dispatch(teamsApi.endpoints.getMyTeams.initiate(currentPage))
+      );
+      if (response.data) {
+        if (
+          response.data!.pagination.currentPage >=
+          response.data!.pagination.totalPage
+        ) {
+          setHasMoreData(false);
+        }
+      }
+    };
+
+    if (hasMoreData) {
+      fetchData(currentPage);
+    }
+    setIsLoading(false);
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    const scrollableDiv = scrollableDivRef.current;
+    scrollableDiv?.addEventListener('scroll', handleScroll);
+    return () => {
+      scrollableDiv?.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
+  const teamsResponse = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries.getMyTeams?.data as PaginatedResponseType<Team>
+  );
   const handleClick = () => router.push('/dashboard/teams/createNewTeam');
-  const handleCardClick = () => router.push('/dashboard/teams/myTeams');
 
   return (
     <div className="mx-auto grid max-w-5xl gap-4 p-4">
@@ -52,15 +111,17 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="flex justify-between gap-4">
-        {MY_CARDS_ITEMS.map((item, index) => (
+      <div
+        className="flex justify-between gap-4"
+        ref={scrollableDivRef}
+        onScroll={handleScroll}
+      >
+        {teamsResponse?.results.map((item, index) => (
           <MyTeamsCard
-            handleCardClick={handleCardClick}
-            themeColor={item.themeColor}
             key={index}
-            images={item.images}
+            id={item.id!.toString()}
             logo={item.logo}
-            organizationName={item.organizationName}
+            organizationName={item.name}
           />
         ))}
       </div>

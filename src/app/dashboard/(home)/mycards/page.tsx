@@ -75,6 +75,8 @@ const MyCardsPage = () => {
     router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
   };
 
+  console.log('cardsList', cardsList);
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">

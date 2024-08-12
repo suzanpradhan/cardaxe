@@ -39,6 +39,20 @@ export type CategoryType = {
     title: string
 }
 
+export type Team = {
+    id?: number,
+    name?: string,
+    logo?: string,
+    logoFile?: File,
+    bio?: string,
+    address?: string,
+    founded_at?: string,
+    founded_by?: string,
+    ceo?: string,
+    category?: number
+    categoryData?: CategoryType
+}
+
 
 
 
