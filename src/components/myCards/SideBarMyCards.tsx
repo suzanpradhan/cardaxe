@@ -52,9 +52,7 @@ const SideBarMyCards = ({
 
   const [toggleTab, setToggleTab] = useState<number>(0);
 
-  const myAppSideBarElements = MY_APP_SIDE_BAR_ELEMENTS.map(
-    (item, index) => item
-  );
+  const myAppSideBarElements = MY_APP_SIDE_BAR_ELEMENTS;
 
   useEffect(() => {
     if (pathName.endsWith(`/builder`)) {
@@ -112,7 +110,7 @@ const SideBarMyCards = ({
           <Link
             key={index}
             href={`/dashboard/builder/${item.link}${
-              cardId && `/?cardId=${cardId}&action=${cardAction}`
+              cardId ? `/?cardId=${cardId}&action=${cardAction}` : ''
             }`}
             className={`flex aspect-rectangle flex-grow flex-col items-center justify-center rounded-lg max-lg:py-1 xs:flex-row lg:aspect-square lg:flex-col ${
               toggleTab !== index

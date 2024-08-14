@@ -75,10 +75,6 @@ const DashboardPage = () => {
     dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch]);
 
-  const handleClick = () => {
-    router.push('./changeCurrentPassword');
-  };
-
   const handleScroll = useCallback(async () => {
     const scrollableDiv = scrollableDivRef.current;
 

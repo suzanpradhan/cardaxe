@@ -10,33 +10,6 @@ import teamsApi from '@/module/teams/teamApi';
 import { Team } from '@/module/teams/teamTypes';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import logo from '../../../../../../public/logo.png';
-import image1 from '../../../../../../public/staticImages/1.jpg';
-import image2 from '../../../../../../public/staticImages/2.jpg';
-import image3 from '../../../../../../public/staticImages/3.jpg';
-import image4 from '../../../../../../public/staticImages/4.jpg';
-import image5 from '../../../../../../public/staticImages/5.jpg';
-
-const MY_CARDS_ITEMS = [
-  {
-    themeColor: 'black',
-    organizationName: 'Compeling',
-    logo: logo,
-    images: [image1, image2, image3, image4, image5],
-  },
-  {
-    themeColor: 'red',
-    organizationName: 'WebsiteUrl',
-    logo: logo,
-    images: [image1, image2, image3, image4, image5],
-  },
-  {
-    themeColor: 'green',
-    organizationName: 'Roft.ru',
-    logo: logo,
-    images: [image1, image2, image3, image4, image5],
-  },
-];
 
 const Page = () => {
   const router = useRouter();
@@ -112,7 +85,7 @@ const Page = () => {
         </div>
       </div>
       <div
-        className="flex justify-between gap-4"
+        className="flex flex-wrap justify-between gap-4"
         ref={scrollableDivRef}
         onScroll={handleScroll}
       >

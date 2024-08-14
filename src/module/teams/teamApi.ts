@@ -57,7 +57,7 @@ const teamsApi = baseApi.injectEndpoints({
             },
         }),
         getMyTeams: builder.query<PaginatedResponseType<Team>, number>({
-            query: (pageNumber) => `${apiPaths.teamsUrl}mine/?page=${pageNumber}`,
+            query: (pageNumber) => `${apiPaths.teamsUrl}?page=${pageNumber}`,
             providesTags: (response) =>
                 response?.results
                     ? [

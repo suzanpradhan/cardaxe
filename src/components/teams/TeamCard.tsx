@@ -4,6 +4,7 @@ import Image from 'next/image';
 import logo from '../../../public/logo.png';
 
 const TeamCard = ({ teamCardValues }: { teamCardValues: Team }) => {
+  console.log('teamCardValues', teamCardValues);
   return (
     <div className="relative">
       <div className="absolute top-0 -z-10 h-14 w-full overflow-hidden rounded-t-xl bg-green-500"></div>
@@ -25,11 +26,7 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: Team }) => {
           </div>
           <div className="grid gap-2 py-6">
             <h2 className="">{teamCardValues?.name ?? 'Company name'}</h2>
-            <p>
-              {teamCardValues?.category ??
-                teamCardValues?.categoryData?.title ??
-                'Category'}{' '}
-            </p>
+            <p>{teamCardValues?.category?.title ?? 'Category'}</p>
             <div className="flex gap-3">
               <Heart
                 size="42"

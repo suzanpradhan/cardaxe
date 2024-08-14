@@ -49,8 +49,8 @@ export type Team = {
     founded_at?: string,
     founded_by?: string,
     ceo?: string,
-    category?: number
-    categoryData?: CategoryType
+    category?: CategoryType
+    // categoryData?: CategoryType
 }
 
 

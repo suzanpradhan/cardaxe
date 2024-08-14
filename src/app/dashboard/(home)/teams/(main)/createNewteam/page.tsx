@@ -6,12 +6,14 @@ import { useAppDispatch } from '@/core/redux/clientStore';
 import teamsApi from '@/module/teams/teamApi';
 import { TeamFormSchema, TeamFormType } from '@/module/teams/teamTypes';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ZodError } from 'zod';
 
 const Page = () => {
   const dispatch = useAppDispatch();
   const [isloading, setIsLoading] = useState(false);
+  const router = useRouter();
   // const [isFormExpanded, expandForm] = useState(false);
   const onSubmit = async (formData: TeamFormType) => {
     setIsLoading(true);
@@ -19,7 +21,11 @@ const Page = () => {
       const responseData = await Promise.resolve(
         dispatch(teamsApi.endpoints.createTeam.initiate(formData))
       );
-      setIsLoading(false);
+      if ((responseData as any).data.id) {
+        router.push(
+          `/dashboard/teams/builder/?teamId=${(responseData as any).data.id}`
+        );
+      }
     } catch (error) {
       setIsLoading(false);
     }
@@ -51,11 +57,9 @@ const Page = () => {
     validate: validateForm,
   });
 
-  console.log(formik.values);
-
   return (
     <form
-      className="mx-auto flex h-screen max-h-screen min-h-screen w-fit flex-col-reverse justify-center gap-4 overflow-hidden pt-4 md:flex-row"
+      className="mx-auto flex h-screen max-h-screen min-h-screen w-full max-w-6xl flex-col-reverse justify-center gap-4 overflow-hidden pt-4 md:flex-row"
       onSubmit={(e) => {
         e.preventDefault();
         formik.handleSubmit(e);
@@ -66,15 +70,16 @@ const Page = () => {
         // expandForm={expandForm}
         // isFormExpanded={isFormExpanded}
       />
-      <div className="mr-4 flex flex-col gap-2">
-        <div className="h-min max-w-lg rounded-xl border-1 border-componentBgGrey">
+
+      <div className="mr-4 flex grow flex-col gap-2">
+        <div className="h-min w-full rounded-xl border-1 border-componentBgGrey">
           <TeamCard
             teamCardValues={{
               address: formik.values.headquater ?? undefined,
               logoFile: formik.values.logo ?? undefined,
               founded_at: formik.values.foundedAt?.toUTCString(),
               founded_by: formik.values.founders ?? undefined,
-              categoryData: {
+              category: {
                 id: parseInt(formik.values.category.value),
                 title: formik.values.category.label,
               },

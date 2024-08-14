@@ -60,7 +60,7 @@ const CreateNewTeam = ({
   };
 
   return (
-    <div className="max-w-4xl overflow-y-scroll px-4 max-md:mb-20">
+    <div className="max-w-4xl shrink-0 overflow-y-scroll px-4 max-md:mb-20">
       <h2 className="text-lg font-bold">Create a new team</h2>
       <div
         className="mb-9 flex flex-col gap-4 py-2"

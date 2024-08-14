@@ -47,7 +47,6 @@ const cardsApi = baseApi.injectEndpoints({
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return endpointName + '-' + queryArgs;
       },
-
       providesTags: (result, error, id) => [{ type: 'Card', id: id }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
