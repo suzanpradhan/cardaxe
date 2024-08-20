@@ -93,7 +93,7 @@ const Page = ({ params }: { params: { teamSlug: string } }) => {
         </div>
         <div>
           <p className="flex justify-between">
-            <strong>{team.title}</strong>
+            <strong>{team?.title}</strong>
             <span className="text-sm text-green-600">Active</span>
           </p>
           <div className="flex gap-4">

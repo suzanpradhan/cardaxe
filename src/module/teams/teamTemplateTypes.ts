@@ -14,8 +14,8 @@ export interface TeamTemplateState<T> {
 export const designSchema = z.object(({
     backgroundColor: z.string().optional().nullable(),
     showLogo: z.boolean().optional().nullable(),
-    // showSocialIcons: z.boolean().optional().nullable(),
-    // darkMode: z.boolean().optional().nullable(),
+    showSocialIcons: z.boolean().optional().nullable(),
+    darkMode: z.boolean().optional().nullable(),
     logo: z.string().optional().optional()
 
 }))

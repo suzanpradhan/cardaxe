@@ -1,6 +1,7 @@
 'use client';
 
 import ColorInput from '@/components/Inputs/ColorInput';
+import SwitchInput from '@/components/Inputs/SwitchInput';
 import TextInput from '@/components/Inputs/TextInput';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
@@ -35,39 +36,10 @@ export default function Page() {
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
     console.log(name, stateValue);
     dispatch(updateDesignForm({ [name]: stateValue }));
+  };
 
-    // const updatedFormState: TeamTemplateState<string>['design'] = {
-    //   [name]: stateValue,
-    // };
-    // timeout<DesignFromSchemaType>(updateDesignForm, updatedFormState);
-    // dispatch(updateDesignForm());
-    // const result =
-    //   DesignFormSchema.shape[name as keyof DesignFromSchemaType].safeParse(
-    //     value
-    //   );
-
-    // if (!result.success) {
-    //   const error = result.error.format();
-    //   console.log(error);
-    //   dispatch(
-    //     setErrors({
-    //       formName: 'cardDesign',
-    //       error: { ...cardState.cardDesign.errors, [name]: error._errors },
-    //     })
-    //   );
-    // } else {
-    //   const newError = Object.fromEntries(
-    //     Object.entries(cardState.cardDesign.errors).filter(
-    //       ([key]) => key !== name
-    //     )
-    //   );
-    //   dispatch(
-    //     setErrors({
-    //       formName: 'cardDesign',
-    //       error: newError,
-    //     })
-    //   );
-    // }
+  const handleSwitchChange = async (checked: boolean, zSchemaName: string) => {
+    dispatch(updateDesignForm({ [zSchemaName]: checked }));
   };
   console.log('teamTemplateState', teamTemplateState);
 
@@ -105,6 +77,31 @@ export default function Page() {
                   />
                 </div>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="pb-4 shadow-none">
+          <CardHeader className="pb-2 font-bold">Other Design</CardHeader>
+          <CardContent className="">
+            <div className="flex flex-col gap-3">
+              <SwitchInput
+                handleChange={handleSwitchChange}
+                inputLabel={'Show logo'}
+                inputValue={teamTemplateState.design.showLogo ?? false}
+                zSchemaName={'showLogo'}
+              />
+              <SwitchInput
+                handleChange={handleSwitchChange}
+                inputLabel={'Show social Icons'}
+                inputValue={teamTemplateState.design.showSocialIcons ?? false}
+                zSchemaName={'showSocialIcons'}
+              />
+              <SwitchInput
+                handleChange={handleSwitchChange}
+                inputLabel={'Dark Mode'}
+                inputValue={teamTemplateState.design.darkMode ?? false}
+                zSchemaName={'darkMode'}
+              />
               {/* <FileInput
                 id="backgroundImage"
                 // className="mb-3 w-[98%]"

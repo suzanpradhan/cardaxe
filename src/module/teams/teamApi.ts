@@ -97,6 +97,8 @@ const teamsApi = baseApi.injectEndpoints({
                 const formData = new FormData();
                 if (payload.design.backgroundColor != undefined) formData.append('card_design.background_color', payload.design.backgroundColor)
                 if (payload.design.showLogo != undefined) formData.append('card_design.show_logo', payload.design.showLogo.toString())
+                if (payload.design.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.design.showSocialIcons.toString())
+                if (payload.design.darkMode != undefined) formData.append('card_design.dark_mode', payload.design.darkMode.toString())
                 if (payload.otherValues.title != undefined) formData.append('title', payload.otherValues.title)
                 if (payload.otherValues.template != undefined) formData.append('card_template', payload.otherValues.template)
 
