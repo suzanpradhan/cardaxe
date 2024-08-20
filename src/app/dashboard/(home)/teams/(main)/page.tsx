@@ -92,7 +92,7 @@ const Page = () => {
         {teamsResponse?.results.map((item, index) => (
           <MyTeamsCard
             key={index}
-            id={item.id!.toString()}
+            slug={item.slug!.toString()}
             logo={item.logo}
             organizationName={item.name}
           />

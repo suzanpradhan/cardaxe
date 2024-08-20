@@ -1,6 +1,7 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
+import { TeamTemplateState } from "./teamTemplateTypes";
 import { CategoryType, Team, TeamFormType } from "./teamTypes";
 
 const teamsApi = baseApi.injectEndpoints({
@@ -80,15 +81,40 @@ const teamsApi = baseApi.injectEndpoints({
             },
         }),
         getEachTeam: builder.query<Team, string>({
-            query: (teamId) => `${apiPaths.teamsUrl}${teamId}/`,
+            query: (slug) => `${apiPaths.teamsUrl}${slug}/`,
             serializeQueryArgs: ({ queryArgs, endpointName }) => {
                 return endpointName + '-' + queryArgs;
             },
 
-            providesTags: (result, error, id) => [{ type: 'Team', id: id }],
+            providesTags: (result, error, slug) => [{ type: 'Team', id: slug }],
             transformResponse: (response: any) => {
                 return response;
             },
+        }),
+        createTeamTemplate: builder.mutation<any, TeamTemplateState<string>>({
+
+            query: ({ ...payload }) => {
+                const formData = new FormData();
+                if (payload.design.backgroundColor != undefined) formData.append('card_design.background_color', payload.design.backgroundColor)
+                if (payload.design.showLogo != undefined) formData.append('card_design.show_logo', payload.design.showLogo.toString())
+                if (payload.otherValues.title != undefined) formData.append('title', payload.otherValues.title)
+                if (payload.otherValues.template != undefined) formData.append('card_template', payload.otherValues.template)
+
+                return {
+                    url: `${apiPaths.teamTemplatesUrl}`,
+                    method: 'POST',
+                    body: formData,
+                    formData: true,
+                }
+            },
+            invalidatesTags: (result, error, arg) => [{ type: 'TeamTemplate', id: "LIST" }],
+            transformResponse: (response: { data: any }) =>
+                response,
+            transformErrorResponse: (
+                response: { status: string | number }
+                // meta,
+                // arg
+            ) => response.status,
         }),
     }),
     overrideExisting: true,

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { DesignFromSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
@@ -14,7 +15,7 @@ interface MyCardsDesignFormProps {
     e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void;
   values: DesignFromSchemaType;
-  errors: FormikErrors<DesignFromSchemaType>;
+  errors?: FormikErrors<DesignFromSchemaType>;
 }
 
 const MyCardsDesignForm = ({
@@ -32,7 +33,7 @@ const MyCardsDesignForm = ({
               id="backgroundColor"
               rows={5}
               name={'backgroundColor'}
-              error={errors['backgroundColor']}
+              error={errors?.['backgroundColor']}
               label={'Background Color'}
               required={true}
               value={values['backgroundColor'] ?? undefined}
@@ -45,7 +46,7 @@ const MyCardsDesignForm = ({
                 value={values['backgroundColor'] ?? undefined}
                 onChange={handleChange}
                 required={true}
-                error={errors['backgroundColor']}
+                error={errors?.['backgroundColor']}
               />
             </div>
           </div>
@@ -57,7 +58,7 @@ const MyCardsDesignForm = ({
             name="backgroundImage"
             placeholder="Background Image"
             value={values['backgroundImage'] ?? undefined}
-            error={errors['backgroundImage']}
+            error={errors?.['backgroundImage']}
             onChange={
               handleChange as
                 | ((
@@ -77,7 +78,7 @@ const MyCardsDesignForm = ({
             name="logo"
             placeholder="Logo image"
             value={values['logo'] ?? undefined}
-            error={errors['logo']}
+            error={errors?.['logo']}
             onChange={
               handleChange as
                 | ((

@@ -1,7 +1,6 @@
 'use client';
 
 import CardTempSide from '@/components/dashboard/HomeCardTemplate';
-import ProfileDetails from '@/components/myCards/ProfileDetails';
 import TeamCard from '@/components/teams/TeamCard';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -46,19 +45,21 @@ const REACTION_LIST = [
   },
 ];
 
-const Page = ({ params }: { params: { teamId: string } }) => {
+const Page = ({ params }: { params: { teamSlug: string } }) => {
   const dispatch = useAppDispatch();
 
   const team = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries[`getEachTeam-${params.teamId}`]?.data as Team
+      state.baseApi.queries[`getEachTeam-${params.teamSlug}`]?.data as Team
   );
 
   useEffect(() => {
-    dispatch(teamsApi.endpoints.getEachTeam.initiate(params.teamId));
-  }, [dispatch, params.teamId]);
+    dispatch(teamsApi.endpoints.getEachTeam.initiate(params.teamSlug));
+  }, [dispatch, params.teamSlug]);
 
-  const cardState = useAppSelector((state: RootState) => state.card);
+  const teamTemplateState = useAppSelector(
+    (state: RootState) => state.teamTemplate
+  );
 
   useEffect(() => {
     dispatch(userApi.endpoints.getUser.initiate());
@@ -72,17 +73,19 @@ const Page = ({ params }: { params: { teamId: string } }) => {
     <div className="flex w-full justify-center gap-6">
       <div className="max-w-lg shrink basis-1/2 rounded-xl border-1 border-componentBgGrey">
         <TeamCard teamCardValues={team} />
-        <div className="px-6 pb-6">
+        {/* <div className="px-6 pb-6">
           <ProfileDetails
             isTeamComp
-            cardValues={{
-              ...cardState.cardDesign.values,
-              ...cardState.cardFields.values,
-              ...cardState.cardInfos.values,
-            }}
-            socialValues={cardState.cardInfos.values}
+            cardValues={
+              {
+                // ...teamTemplateState..values,
+                // ...cardState.cardFields.values,
+                // ...cardState.cardInfos.values,
+              }
+            }
+            // socialValues={cardState.cardInfos.values}
           />
-        </div>
+        </div> */}
       </div>
       <div className="grid h-min shrink basis-120 gap-4 rounded-xl border-1 border-componentBgGrey p-6">
         <div className="rounded-md shadow-lg">
@@ -90,7 +93,7 @@ const Page = ({ params }: { params: { teamId: string } }) => {
         </div>
         <div>
           <p className="flex justify-between">
-            <strong>My Roft.ru Card</strong>
+            <strong>{team.title}</strong>
             <span className="text-sm text-green-600">Active</span>
           </p>
           <div className="flex gap-4">

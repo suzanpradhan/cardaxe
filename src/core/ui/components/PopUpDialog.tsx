@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { CloseCircle } from 'iconsax-react';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -14,9 +15,11 @@ const PopUpDialog = ({
   show,
   onClose,
   children,
+  closeButtonRequired,
 }: {
   show: boolean;
   onClose: () => void;
+  closeButtonRequired?: boolean;
   children?: React.ReactNode;
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -53,20 +56,26 @@ const PopUpDialog = ({
     show &&
     createPortal(
       <div
-        className="fixed left-0 top-0 z-[60] h-full w-full backdrop-blur-md"
+        className={cn(
+          'fixed left-0 top-0 z-[60] h-full w-full backdrop-blur-md'
+        )}
         style={customStyles.content}
       >
-        <div className="flex h-screen w-full justify-center">
+        <div className={cn('flex h-screen w-full justify-center')}>
           <div
             ref={modalRef}
             className="relative flex w-full max-w-xs items-center justify-center px-4 md:max-w-md md:px-10"
           >
-            <div
-              className="absolute left-0 top-0 ml-1 mt-1 aspect-square w-auto text-zinc-900"
-              onClick={onClose}
-            >
-              <CloseCircle size={30} variant="Bulk" />
-            </div>
+            {closeButtonRequired ? (
+              <div
+                className="absolute left-0 top-0 ml-1 mt-1 aspect-square w-auto text-zinc-900"
+                onClick={onClose}
+              >
+                <CloseCircle size={30} variant="Bulk" />
+              </div>
+            ) : (
+              <></>
+            )}
             {children}
           </div>
         </div>

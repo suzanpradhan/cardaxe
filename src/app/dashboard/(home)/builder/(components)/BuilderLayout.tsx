@@ -3,15 +3,14 @@
 import { VariableValueType } from '@/components/CardLayouts.server';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
-import { RootState } from '@/core/redux/store';
 import { updatedDiff } from 'deep-object-diff';
 
 import ButtonForm from '@/components/ButtonForm';
-import AppBar from '@/components/dashboard/AppBar';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import SideBarMyCards from '@/components/myCards/SideBarMyCards';
+import { RootState } from '@/core/redux/store';
 import {
-  initialState,
+  updateCardBasics,
   updateCardTemplate,
   updateContentForm,
   updateDefaultCard,
@@ -31,6 +30,7 @@ import {
 } from '@/module/cards/cardsType';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
+import { Edit } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -39,11 +39,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [isPreview, setIsPreview] = useState(false);
   const [publishLoading, togglePublishLoading] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [saveLoading, toggleSaveLoading] = useState(false);
 
   const session = useSession();
   const searchParams = useSearchParams();
-  const cardId = searchParams.get('cardId');
+  const cardSlug = searchParams.get('slug');
   const cardAction = searchParams.get('action');
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -51,7 +52,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
 
   const card = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries[`getCard-${cardId}`]
+      state.baseApi.queries[`getCard-${cardSlug}`]
         ?.data as CardResponseType<CardTemplatesType>
   );
 
@@ -67,18 +68,18 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     );
 
   useEffect(() => {
-    if (cardId) dispatch(cardsApi.endpoints.getCard.initiate(cardId));
+    if (cardSlug) dispatch(cardsApi.endpoints.getCard.initiate(cardSlug));
     // dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
-  }, [dispatch, cardId]);
+  }, [dispatch, cardSlug]);
 
   useEffect(() => {
     const updateCardState = (action: string) => {
       if (!card) return;
       switch (action) {
         case 'create':
-          dispatch(updateContentForm(initialState.cardFields.values));
-          dispatch(updateDesignForm(initialState.cardDesign.values));
+          // dispatch(updateContentForm(initialState.cardFields.values));
+          // dispatch(updateDesignForm(initialState.cardDesign.values));
           dispatch(updateDefaultCard(false));
           dispatch(updateInfosForm({}));
           dispatch(validateForms('cardDesign'));
@@ -90,6 +91,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(updateInfosForm(cardInfoKeyValue));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(updateDefaultCard(card.isDefault));
+          dispatch(updateCardBasics({ title: card.title, slug: card.slug }));
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(
             updateInfosForm(
@@ -132,14 +134,18 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
       Object.keys(cardState.cardFields.errors).length === 0 &&
-      cardId &&
+      cardSlug &&
       session.data?.user?.id &&
       updatedCardFields
     ) {
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
-          cardId: cardId,
           userId: session.data?.user?.id,
+          cardBasics: {
+            slug: cardState.cardBasics.values.slug,
+            title: cardState.cardBasics.values.title,
+          },
+          cardSlug: cardSlug,
           cardDesign: {
             ...updatedCardDesign,
             id: card.cardDesign.id,
@@ -163,8 +169,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             throw errorMessage;
           }
           // toast.success('Successfully updated');
-          cardAction === 'create' &&
-            router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+          if ((res as any).data.slug) {
+            router.push(
+              `/dashboard/builder/?slug=${(res as any).data.slug}&action=update`
+            );
+          }
+
           togglePublishLoading(false);
         })
         .catch((err) => {
@@ -200,14 +210,18 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     if (
       Object.keys(cardState.cardDesign.errors).length === 0 &&
       Object.keys(cardState.cardFields.errors).length === 0 &&
-      cardId &&
+      cardSlug &&
       session.data?.user?.id &&
       updatedCardFields
     ) {
       submitresponse = dispatch(
         cardsApi.endpoints.upDateCard.initiate({
-          cardId: cardId,
           userId: session.data?.user?.id,
+          cardSlug: cardSlug,
+          cardBasics: {
+            slug: cardState.cardBasics.values.slug,
+            title: cardState.cardBasics.values.title,
+          },
           cardDesign: {
             ...updatedCardDesign,
             id: card.cardDesign.id,
@@ -231,8 +245,12 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             throw errorMessage;
           }
           // toast.success('Successfully updated');
-          cardAction === 'create' &&
-            router.push(`/dashboard/builder/?cardId=${cardId}&action=update`);
+
+          if ((res as any).data.slug) {
+            router.push(
+              `/dashboard/builder/?slug=${(res as any).data.slug}&action=update`
+            );
+          }
           toggleSaveLoading(false);
         })
         .catch((err) => {
@@ -386,42 +404,64 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
   );
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateCardBasics({ title: e.target.value }));
+  };
+
   return (
     <div className="flex max-h-screen min-h-screen flex-col gap-4 overflow-hidden px-2 lg:px-4">
-      <AppBar appBarLabel="My Personal Card">
-        <span className="grow">
-          <ButtonForm
-            label="Preview"
-            theme={isPreview ? 'blue' : 'accent'}
-            className="rounded-sm text-sm lg:hidden"
-            handleClick={() => {
-              contentRef.current?.scrollTo({
-                top: 0,
-                left: !isPreview ? contentRef.current.scrollWidth : 0,
-                behavior: 'smooth',
-              });
-              setIsPreview(!isPreview);
-            }}
+      <div className="mx-auto mt-4 flex h-auto w-full max-w-sm flex-col gap-3 lg:max-w-none lg:flex-row">
+        <div className="has-[:focus]:border-1 has-[:focus]:border-black group flex h-10 min-w-max flex-grow items-center gap-2 rounded-md bg-zinc-100 px-4">
+          <label htmlFor="title" className="text-sm text-grayfont">
+            Title:
+          </label>
+          {/* <h2 className="text-sm font-bold">{appBarLabel}</h2> */}
+          <input
+            id="title"
+            type="text"
+            className="h-full w-80 grow bg-transparent text-sm font-bold focus:border-0 focus:outline-0"
+            value={cardState.cardBasics.values.title ?? ''}
+            onChange={(e) => handleTitleChange(e)}
           />
-        </span>
-        <span className="grow">
-          <ButtonForm
-            label="Save Draft"
-            isLoading={saveLoading}
-            handleClick={handleSave}
-            theme="accent"
-            className="min-w-[7rem] rounded-sm text-sm"
-          />
-        </span>
-        <span className="grow">
-          <ButtonForm
-            label="Publish"
-            className="min-w-[5rem] rounded-sm text-sm"
-            isLoading={publishLoading}
-            handleClick={handlePublish}
-          />
-        </span>
-      </AppBar>
+          <label htmlFor="title" className="text-grayfont">
+            <Edit size="20" />
+          </label>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="grow">
+            <ButtonForm
+              label="Preview"
+              theme={isPreview ? 'blue' : 'accent'}
+              className="rounded-sm text-sm lg:hidden"
+              handleClick={() => {
+                contentRef.current?.scrollTo({
+                  top: 0,
+                  left: !isPreview ? contentRef.current.scrollWidth : 0,
+                  behavior: 'smooth',
+                });
+                setIsPreview(!isPreview);
+              }}
+            />
+          </span>
+          <span className="grow">
+            <ButtonForm
+              label="Save Draft"
+              isLoading={saveLoading}
+              handleClick={handleSave}
+              theme="accent"
+              className="min-w-[7rem] rounded-sm text-sm"
+            />
+          </span>
+          <span className="grow">
+            <ButtonForm
+              label="Publish"
+              className="min-w-[5rem] rounded-sm text-sm"
+              isLoading={publishLoading}
+              handleClick={handlePublish}
+            />
+          </span>
+        </div>
+      </div>
       <div className="mb-5 flex grow items-start gap-4 max-lg:mb-20">
         <div
           className={`mx-auto w-full max-w-sm lg:block lg:max-w-md ${!isPreview ? 'block' : 'hidden'}`}
@@ -429,7 +469,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex h-full flex-col gap-4 lg:flex-row">
             <div className="w-full @container lg:basis-24">
               <SideBarMyCards
-                cardId={cardId}
+                cardSlug={cardSlug}
                 cardAction={cardAction}
                 cardState={cardState}
               />

@@ -23,7 +23,7 @@ const Page = () => {
       );
       if ((responseData as any).data.id) {
         router.push(
-          `/dashboard/teams/builder/?teamId=${(responseData as any).data.id}`
+          `/dashboard/teams/builder/?slug=${(responseData as any).data.slug}`
         );
       }
     } catch (error) {

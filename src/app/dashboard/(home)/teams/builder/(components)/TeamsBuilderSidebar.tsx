@@ -4,9 +4,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface TeamsBuilderSidebarProps {
-  cardId: string | null;
-  cardAction?: string | null;
-  //   cardState: CardState<string>;
+  teamSlug: string | null;
+  // cardAction?: string | null;
+  // cardState: CardState<string>;
 }
 
 const MY_APP_SIDE_BAR_ELEMENTS = [
@@ -21,13 +21,15 @@ const MY_APP_SIDE_BAR_ELEMENTS = [
     name: 'Designs',
     link: 'design',
   },
+  // {
+  //   icon: <Share variant="Bulk" size={'auto'} />,
+  //   // formName: 'cardBasics',
+  //   name: 'Share',
+  //   link: 'share',
+  // },
 ];
 
-const TeamsBuilderSidebar = ({
-  cardId,
-  cardAction,
-  //   cardState,
-}: TeamsBuilderSidebarProps) => {
+const TeamsBuilderSidebar = ({ teamSlug }: TeamsBuilderSidebarProps) => {
   const [toggleTab, setToggleTab] = useState<number>(0);
   const pathName = usePathname();
 
@@ -52,7 +54,10 @@ const TeamsBuilderSidebar = ({
         return (
           <Link
             key={index}
-            href={`/dashboard/teams/builder/${item.link}`}
+            // href={`/dashboard/teams/builder/${item.link}`}
+            href={`/dashboard/teams/builder/${item.link}${
+              teamSlug ? `/?slug=${teamSlug}` : ''
+            }`}
             className={`flex aspect-rectangle flex-grow flex-col items-center justify-center rounded-lg max-lg:py-1 xs:flex-row lg:aspect-square lg:flex-col ${
               toggleTab !== index
                 ? 'hover:border-text-grayfont text-grayfont'

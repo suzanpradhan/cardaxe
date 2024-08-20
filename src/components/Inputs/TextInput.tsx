@@ -20,9 +20,9 @@ export interface TextFieldProps {
     | undefined;
 }
 
-const TextInput = ({ isMulti, error, ...props }: TextFieldProps) => {
+const TextInput = ({ isMulti, className, error, ...props }: TextFieldProps) => {
   return (
-    <div className={`${props.className}`}>
+    <div className={`${className}`}>
       {props.label && props.id && (
         <InputLable htmlFor={props.id} inputLabel={props.label} />
       )}

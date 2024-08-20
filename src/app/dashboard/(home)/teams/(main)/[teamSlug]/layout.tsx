@@ -15,7 +15,7 @@ const MyTeamsLayout = ({
   params,
 }: {
   children: React.ReactNode;
-  params: { teamId: number };
+  params: { teamSlug: number };
 }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -26,15 +26,17 @@ const MyTeamsLayout = ({
 
   const team = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries[`getEachTeam-${params.teamId}`]?.data as Team
+      state.baseApi.queries[`getEachTeam-${params.teamSlug}`]?.data as Team
   );
 
   useEffect(() => {
-    dispatch(teamsApi.endpoints.getEachTeam.initiate(params.teamId.toString()));
-  }, [dispatch, params.teamId]);
+    dispatch(
+      teamsApi.endpoints.getEachTeam.initiate(params.teamSlug.toString())
+    );
+  }, [dispatch, params.teamSlug]);
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col justify-center gap-4 p-4">
-      <h2 className="w-full font-bold">{team.name}</h2>
+      <h2 className="w-full font-bold">{team?.name}</h2>
       <Tabwrapper tabElements={TAB_ELEMENTS} changeRoute={changeRoute} />
       {children}
     </div>

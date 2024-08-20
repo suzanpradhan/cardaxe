@@ -6,15 +6,17 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
 import cardsApi from '@/module/cards/cardsApi';
-import { updateCardTemplate } from '@/module/cards/cardSlice';
 import { CardTemplatesType } from '@/module/cards/cardsType';
+import { updateTemplate } from '@/module/teams/teamTemplateSlice';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function Page() {
   const scrollableDivRef = useRef<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
-  const cardState = useAppSelector((state: RootState) => state.card);
+  const teamTemplateState = useAppSelector(
+    (state: RootState) => state.teamTemplate
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
@@ -68,6 +70,10 @@ export default function Page() {
         ?.data as PaginatedResponseType<CardTemplatesType>
   );
 
+  const handleClick = (id: number) => {
+    dispatch(updateTemplate(id.toString()));
+  };
+
   return (
     <div>
       <div className="mb-2 flex h-8 items-stretch overflow-hidden rounded-lg bg-slate-200 text-sm font-semibold text-zinc-900">
@@ -89,10 +95,8 @@ export default function Page() {
               <div key={index}>
                 {card.id && (
                   <div
-                    onClick={() =>
-                      dispatch(updateCardTemplate(card.id.toString()))
-                    }
-                    className={`overflow-hidden rounded-lg ring-offset-2 ${cardState.cardTemplate === card.id.toString() ? 'ring-2 ring-blueTheme/60' : ''}`}
+                    onClick={() => handleClick(card.id)}
+                    className={`overflow-hidden rounded-lg ring-offset-2 ${teamTemplateState.otherValues.template === card.id.toString() ? 'ring-2 ring-blueTheme/60' : ''}`}
                   >
                     {' '}
                     <CardLayouts

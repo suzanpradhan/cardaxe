@@ -2,6 +2,8 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import cardSlice from '../../module/cards/cardSlice';
+
+import teamTemplateSlice from '@/module/teams/teamTemplateSlice';
 import { rtkQueryErrorLogger } from '../api/apiMiddleWare';
 import { baseApi } from '../api/apiQuery';
 
@@ -12,7 +14,7 @@ export const store = () => {
       baseApi: baseApi.reducer,
       // [cardApi.reducerPath]: cardApi.reducer,
       card: cardSlice,
-
+      teamTemplate: teamTemplateSlice
     },
     middleware(getDefaultMiddleware) {
       return getDefaultMiddleware().concat(baseApi.middleware).concat(rtkQueryErrorLogger);

@@ -17,5 +17,6 @@ export const apiPaths = {
   connectionRequestUrl: 'connect/requests/',
   getTeamsCategoryUrl: 'team-categories',
   teamsUrl: 'teams/',
+  teamTemplatesUrl: 'team/template/',
   getSocialInfosUrl: 'card-infos'
 };

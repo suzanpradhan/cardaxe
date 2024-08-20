@@ -2,7 +2,7 @@ import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
-import { CardResponseType, CardTemplatesType, ContentFormSchemaType, DesignFromSchemaType, SocialMediaInfo, UpdateCardParams, UpdateCardState } from "./cardsType";
+import { CardResponseType, CardTemplatesType, ContentFormSchemaType, CreateCardResponseType, DesignFromSchemaType, SocialMediaInfo, UpdateCardParams } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -43,11 +43,11 @@ const cardsApi = baseApi.injectEndpoints({
       },
     }),
     getCard: builder.query<CardResponseType<CardTemplatesType>, string>({
-      query: (cardId) => `${apiPaths.getCardUrl}${cardId}/`,
+      query: (slug) => `${apiPaths.getCardUrl}${slug}/`,
       serializeQueryArgs: ({ queryArgs, endpointName }) => {
         return endpointName + '-' + queryArgs;
       },
-      providesTags: (result, error, id) => [{ type: 'Card', id: id }],
+      providesTags: (result, error, slug) => [{ type: 'Card', id: slug }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;
@@ -61,7 +61,7 @@ const cardsApi = baseApi.injectEndpoints({
       providesTags: (response) =>
         response?.results
           ? [
-            ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
+            ...response.results.map((card) => ({ type: 'Card', id: card.slug } as const)),
             { type: 'MyCardList', id: 'LIST' },
           ]
           : [{ type: 'MyCardList', id: 'LIST' }],
@@ -94,15 +94,14 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
-    createCard: builder.mutation<UpdateCardState<CardTemplatesType>, string>({
-      query: (user) => {
+    createCard: builder.mutation<CreateCardResponseType<CardTemplatesType>, { user: string, title: string }>({
+      query: ({ user, title }) => {
         // var formData = new FormData();
         const payload = {
           'card_fields': {},
           'card_design': {},
-          "is_published": false,
-          'is_default': false,
           'user': user,
+          'title': title,
           "card_template": 2
         }
         return {
@@ -128,7 +127,7 @@ const cardsApi = baseApi.injectEndpoints({
     }),
     upDateCard: builder.mutation<any, UpdateCardParams<string>>({
 
-      query: ({ userId, cardId, ...payload }) => {
+      query: ({ userId, cardSlug, ...payload }) => {
         const fecthCachedImage = async (name: string) => {
           const cache = await caches.open('filesCache');
           const response = await cache.match(name);
@@ -137,6 +136,7 @@ const cardsApi = baseApi.injectEndpoints({
           await cache.delete(name)
           return blob;
         }
+        console.log("payload", payload)
         const formData = new FormData();
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.title != undefined) formData.append('card_fields.title', payload.cardFields.title)
@@ -156,7 +156,6 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.id != undefined) formData.append('card_design.id', payload.cardDesign.id.toString())
         if (payload.cardDesign.backgroundColor != undefined) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
         if (payload.cardDesign.foregroundColor != undefined) formData.append('card_design.foreground_color', payload.cardDesign.foregroundColor)
-        if (payload.cardDesign.logo != undefined) formData.append('card_design.logo', payload.cardDesign.logo)
         fecthCachedImage('backgroundImage').then((response) => { if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) } });
         fecthCachedImage('logo').then((response) => { if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
@@ -164,6 +163,8 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
         if (payload.isPublished != undefined) formData.append('is_published', payload.isPublished.toString())
         if (userId != undefined) formData.append('user', userId.toString())
+        if (payload.cardBasics.slug) formData.append("slug", payload.cardBasics.slug)
+        if (payload.cardBasics.title) formData.append("title", payload.cardBasics.title)
         if (payload.isDefault != undefined) formData.append('is_default', payload.isDefault as unknown as string)
         if (payload.cardTemplate != undefined) formData.append('card_template', payload.cardTemplate)
         if (payload.cardInfos && Object.entries(payload.cardInfos).length != 0) {
@@ -175,15 +176,15 @@ const cardsApi = baseApi.injectEndpoints({
           })
         }
         return {
-          url: `${apiPaths.cardsUrl}${cardId}/`,
+          url: `${apiPaths.cardsUrl}${cardSlug}/`,
           method: 'PATCH',
           body: formData,
           formData: true,
         }
       },
-      invalidatesTags: (result, error, arg) => [{ type: 'Card', id: arg.cardId }],
+      invalidatesTags: (result, error, arg) => [{ type: 'Card', id: arg.cardBasics.slug ?? 'slug' }],
       transformResponse: (response: { data: any }) =>
-        response.data,
+        response,
       transformErrorResponse: (
         response: { status: string | number }
         // meta,

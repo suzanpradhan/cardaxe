@@ -10,14 +10,18 @@ import Imageoverlay from './Imageoverlay';
 
 type MyTeamsCardPropsType = {
   organizationName?: string;
-  id: string;
+  slug: string;
   logo?: string;
 };
 
-const MyTeamsCard = ({ organizationName, logo, id }: MyTeamsCardPropsType) => {
+const MyTeamsCard = ({
+  organizationName,
+  logo,
+  slug,
+}: MyTeamsCardPropsType) => {
   return (
     <Link
-      href={`/dashboard/teams/${id}`}
+      href={`/dashboard/teams/${slug}`}
       className="relative max-w-3xl grow rounded-lg border-1 border-borderMain"
     >
       <div

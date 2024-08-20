@@ -40,8 +40,10 @@ export type CategoryType = {
 }
 
 export type Team = {
+    title?: string,
     id?: number,
     name?: string,
+    slug?: string,
     logo?: string,
     logoFile?: File,
     bio?: string,
