@@ -1,36 +1,37 @@
-import React from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
+import Link from 'next/link';
+import staticLogoImage from '../../../public/logo.png';
+import image1 from '../../../public/staticImages/1.jpg';
+import image2 from '../../../public/staticImages/2.jpg';
+import image3 from '../../../public/staticImages/3.jpg';
+import image4 from '../../../public/staticImages/4.jpg';
+import image5 from '../../../public/staticImages/5.jpg';
 import Imageoverlay from './Imageoverlay';
 
 type MyTeamsCardPropsType = {
-  organizationName: string;
-  logo: StaticImageData;
-  images: StaticImageData[];
-  themeColor: string;
-  handleCardClick: () => void;
+  organizationName?: string;
+  slug: string;
+  logo?: string;
 };
 
 const MyTeamsCard = ({
   organizationName,
   logo,
-  images,
-  themeColor,
-  handleCardClick,
+  slug,
 }: MyTeamsCardPropsType) => {
   return (
-    <div
-      role="button"
-      onClick={handleCardClick}
-      className="  grow max-w-3xl relative border-1 border-borderMain rounded-lg"
+    <Link
+      href={`/dashboard/teams/${slug}`}
+      className="relative max-w-3xl grow rounded-lg border-1 border-borderMain"
     >
       <div
         className="absolute top-0 h-10 w-full rounded-t-lg"
-        style={{ backgroundColor: themeColor }}
+        style={{ backgroundColor: 'red' }}
       ></div>
-      <div className="p-4 grid gap-2">
-        <div className="relative w-20 h-20 shadow-lg rounded-lg">
+      <div className="grid gap-2 p-4">
+        <div className="relative h-20 w-20 rounded-lg shadow-lg">
           <Image
-            src={logo}
+            src={logo ?? staticLogoImage}
             alt="Background Image"
             fill
             objectFit="cover"
@@ -42,9 +43,9 @@ const MyTeamsCard = ({
           <strong>{organizationName}</strong>
           <span>Active</span>
         </div>
-        <Imageoverlay images={images} />
+        <Imageoverlay images={[image1, image2, image3, image4, image5]} />
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -16,6 +16,28 @@ import FormWrapper from '../FormWrapper';
 import ProfileDescription from './ProfileDescription';
 import ProfileDetails from './ProfileDetails';
 
+// export type PreviewVariablesTypes = {
+//   cardTitle: string;
+//   contentTitle: string;
+//   prefix: string;
+//   firstName: string;
+//   middleName: string;
+//   lastName: string;
+//   suffix: string;
+//   bio: string;
+//   phone: string;
+//   website: string;
+//   email: string;
+//   address: string;
+//   designation: string;
+//   department: string;
+//   company: string;
+//   backgroundColor: string;
+//   backgroundImage: string;
+//   logo: string;
+
+// }
+
 const PreviewSection = ({
   user,
   layout,
@@ -26,7 +48,7 @@ const PreviewSection = ({
   variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
     VariableValueType;
-  socialValues: InfosFormsUpdateSchemaType;
+  socialValues?: InfosFormsUpdateSchemaType;
   user?: UserType;
 }) => {
   console.log('layout', layout);
@@ -54,7 +76,7 @@ const PreviewSection = ({
     dispatch(cardsApi.endpoints.getCardTemmplate.initiate(layout.toString()));
   }, [dispatch, layout]);
 
-  console.log(cardTemplate);
+  console.log('variableValues', variableValues);
 
   return (
     <FormWrapper className="">
@@ -66,11 +88,15 @@ const PreviewSection = ({
           />
         )}
         <ProfileDescription variableValues={variableValues} user={user} />
-        <ProfileDetails
-          cardValues={variableValues}
-          isTeamComp={false}
-          socialValues={socialValues}
-        />
+        {socialValues ? (
+          <ProfileDetails
+            cardValues={variableValues}
+            isTeamComp={false}
+            socialValues={socialValues}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </FormWrapper>
   );

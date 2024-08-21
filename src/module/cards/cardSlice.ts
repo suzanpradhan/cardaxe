@@ -1,11 +1,11 @@
 'use client';
 
-import { CardState, ContentFormSchema, ContentFormSchemaType, DesignFormUpdateSchema, DesignFromSchemaType, InfosFormsUpdateSchema } from '@/module/cards/cardsType';
+import { CardBasicsSchema, CardBasicsType, CardState, ContentFormSchema, ContentFormSchemaType, DesignFormUpdateSchema, DesignFromSchemaType, InfosFormsUpdateSchema } from '@/module/cards/cardsType';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ZodSchema } from 'zod';
 
 interface ErrorActionType {
-  formName: 'cardFields' | 'cardDesign' | 'cardInfos';
+  formName: 'cardFields' | 'cardDesign' | 'cardInfos' | 'cardBasics';
   error: { [key: string]: any };
 }
 
@@ -33,6 +33,12 @@ export const initialState: CardState<string> = {
       website: '',
       phone: '',
       email: '',
+    },
+    errors: {}
+  },
+  cardBasics: {
+    values: {
+      title: ''
     },
     errors: {}
   },
@@ -75,6 +81,13 @@ export const cardSlice = createSlice({
     ) => {
       state.cardInfos.values = { ...action.payload };
     },
+    updateCardBasics: (
+      state,
+      action: PayloadAction<Record<string, any>>
+    ) => {
+      state.cardBasics.values = { ...state.cardBasics.values, ...action.payload };
+    },
+
     updateDefaultCard: (
       state, action: PayloadAction<boolean>
     ) => {
@@ -102,22 +115,32 @@ export const cardSlice = createSlice({
         case 'cardInfos':
           formSchema = InfosFormsUpdateSchema;
           break;
+
+        case 'cardBasics':
+          formSchema = CardBasicsSchema
+          break;
       }
       if (!formSchema) return;
 
       const formValues = state[formName].values;
       const parseResult = formSchema.safeParse(formValues);
 
+
+
       if (!parseResult.success) {
         const errorObject = parseResult.error.format();
 
+
         state[formName].errors = Object.keys(errorObject).reduce((acc: { [key: string]: Array<string> }, key: string) => {
-          if (key !== '_errors') { acc[key] = errorObject[key as keyof ContentFormSchemaType & keyof DesignFromSchemaType]?._errors || []; }
+          if (key !== '_errors') { acc[key] = (errorObject[key as keyof ContentFormSchemaType & keyof DesignFromSchemaType & keyof CardBasicsType] as any)?._errors || []; }
           return acc;
         }, {})
       } else {
         state[formName].errors = {};
       }
+
+      console.log("errorObject", state.cardBasics.errors)
+
 
     },
   },
@@ -132,7 +155,7 @@ export const {
   updateCardTemplate,
   setErrors,
   validateForms,
-  // validateField
+  updateCardBasics,
   updateInfosForm,
 } = cardSlice.actions;
 

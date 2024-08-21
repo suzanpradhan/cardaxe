@@ -24,14 +24,15 @@ export type CardTemplatesType = {
 
 export type UpdateCardParams<T> = {
   userId: string;
-  cardId: string;
+  cardId?: string;
   cardTemplate: T;
+  cardSlug?: string;
   cardFields: ContentFormUpdateSchemaType,
   cardDesign: DesignFormUpdateSchemaType,
   cardInfos: InfosFormsUpdateSchemaType,
+  cardBasics: CardBasicsUpdateType,
   isPublished: boolean,
   isDefault: boolean,
-
 }
 
 export type InfosFormStateType = {
@@ -44,6 +45,8 @@ export type ErrorType = { errors: Record<string, string> };
 export type CardResponseType<T> = {
   id?: number;
   cardTemplate: T;
+  slug?: string;
+  title?: string;
   cardFields: ContentFormSchemaType,
   cardDesign: DesignFromSchemaType,
   cardInfos: Array<InfoSchemaType>,
@@ -52,18 +55,21 @@ export type CardResponseType<T> = {
   user?: UserType
 }
 
+
+
 export type CardState<T> = {
   id?: number;
   cardFields: { values: ContentFormSchemaType, errors: Record<string, Array<string>> },
   cardDesign: { values: DesignFromSchemaType, errors: Record<string, Array<string>> },
   cardInfos: { values: InfosFormsUpdateSchemaType, errors: Record<string, Record<string, Array<string>>> }
+  cardBasics: { values: CardBasicsUpdateType, errors: Record<string, Array<string>> }
   isPublished?: boolean,
   isDefault?: boolean,
   user?: string
   cardTemplate: T
 }
 
-export type UpdateCardState<T> = {
+export type CreateCardResponseType<T> = {
   id?: number;
   cardFields: { values: ContentFormUpdateSchemaType, errors: Record<string, string> },
   cardDesign: { values: DesignFormUpdateSchemaType, errors: Record<string, string> },
@@ -74,7 +80,7 @@ export type UpdateCardState<T> = {
 }
 
 export const ContentFormSchema = z.object({
-  id: z.number().optional(),
+  id: z.number().optional().nullable(),
   address: z.string().optional().nullable(),
   prefix: z.string().optional().nullable(),
   title: z.string().optional().nullable(),
@@ -93,18 +99,10 @@ export const ContentFormSchema = z.object({
 
 
 export const ContentFormUpdateSchema = ContentFormSchema.extend({
-  id: z.number().optional().nullable(),
-  prefix: z.string().optional().nullable(),
-  title: z.string().optional().nullable(),
   firstName: z.string().optional().nullable(),
-  lastName: z.string().pipe(nonempty).optional().nullable(),
-  suffix: z.string().pipe(nonempty).optional().nullable(),
-  bio: z.string().pipe(nonempty).optional().nullable().nullable(),
+  lastName: z.string().optional().nullable(),
   phone: z.string().length(10).optional().nullable(),
   email: z.string().email().optional().nullable(),
-  designation: z.string().optional().nullable(),
-  department: z.string().optional().nullable(),
-  company: z.string().optional().nullable(),
 })
 
 export const DesignFormSchema = z.object({
@@ -135,6 +133,16 @@ export const InfoSchema = z.object({
 
 export const InfosFormsSchema = z.record(z.string(), InfoSchema)
 export const InfosFormsUpdateSchema = z.record(z.string(), InfoSchema.optional())
+
+export const CardBasicsSchema = z.object({
+  title: z.string().pipe(nonempty),
+  slug: z.string().optional().nullable(),
+})
+
+export const CardBasicsUpdateSchema = CardBasicsSchema.extend({ title: z.string().optional().nullable(), })
+
+export type CardBasicsType = z.infer<typeof CardBasicsSchema>
+export type CardBasicsUpdateType = z.infer<typeof CardBasicsUpdateSchema>
 
 export type InfoSchemaType = z.infer<typeof InfoSchema>
 export type ContentFormSchemaType = z.infer<typeof ContentFormSchema>;
