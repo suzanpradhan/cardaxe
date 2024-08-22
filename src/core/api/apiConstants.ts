@@ -18,5 +18,9 @@ export const apiPaths = {
   getTeamsCategoryUrl: 'team-categories',
   teamsUrl: 'teams/',
   teamTemplatesUrl: 'team/template/',
+  teamMembersUrl: 'team/members/',
+  teamRequestUrl: 'team/requests/',
+
+  requestByTeamUrl: 'team/requests-by-team/',
   getSocialInfosUrl: 'card-infos'
 };

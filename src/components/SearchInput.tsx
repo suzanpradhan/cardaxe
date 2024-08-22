@@ -11,6 +11,7 @@ const SearchInput = ({
   greyBackground,
   requireFilter,
   requireBorder = true,
+  ...props
 }: SearchInputPropsType) => {
   return (
     <label
@@ -28,6 +29,7 @@ const SearchInput = ({
         className="h-full grow rounded-md bg-transparent focus:outline-0"
         id="input"
         placeholder="Search"
+        {...props}
       />
       {requireFilter && (
         <span className="mr-1 flex items-center rounded-md bg-componentBgGrey p-1 text-grayfont">

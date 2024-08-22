@@ -30,20 +30,20 @@ const Table = ({ columnHeadings, data }: TabelPropsType) => {
   const closeDialog = () => setIsDialogOpen(false);
 
   return (
-    <div className="w-[60rem] border-t-1 border-b-1 border-t-borderMain border-b-borderMain">
-      <div className="grid py-2 grid-cols-table-grid justify-between items-center ">
+    <div className="w-[62rem] border-b-1 border-t-1 border-b-borderMain border-t-borderMain">
+      <div className="grid grid-cols-table-grid items-center justify-between py-2">
         {columnHeadings.map((item, index) => (
           <p key={index}>{item}</p>
         ))}
       </div>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         {data.map((item, index) => (
           <div
             key={index}
-            className="py-2 grid grid-cols-table-grid border-t-1 items-center"
+            className="grid grid-cols-table-grid items-center border-t-1 py-2"
           >
-            <div className="flex gap-2 items-center">
-              <div className="relative w-8 h-8 shadow-lg rounded-full">
+            <div className="flex items-center gap-2">
+              <div className="relative h-8 w-8 rounded-full shadow-lg">
                 <Image
                   src={item.profileImage}
                   alt="Background Image"
@@ -61,10 +61,10 @@ const Table = ({ columnHeadings, data }: TabelPropsType) => {
             <div>{item.title}</div>
             <div>{item.department}</div>
             <div>{item.accessLevel}</div>
-            <div className="flex text-grayfont justify-between items-center">
+            <div className="flex items-center justify-between text-grayfont">
               {ACTIONS_BUTTONS.map((item, index) => (
                 <button
-                  className="bg-componentBgGrey rounded-full p-2"
+                  className="rounded-full bg-componentBgGrey p-2"
                   key={index}
                   onClick={() => openDialog()}
                 >
