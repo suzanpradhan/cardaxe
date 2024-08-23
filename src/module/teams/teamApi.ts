@@ -132,8 +132,8 @@ const teamsApi = baseApi.injectEndpoints({
                 return response as PaginatedResponseType<TeamRequest>;
             },
         }),
-        getAllMembers: builder.query<PaginatedResponseType<Member>, number>({
-            query: (pageNumber) => `${apiPaths.teamMembersUrl}?page=${pageNumber}`,
+        getEachMembers: builder.query<PaginatedResponseType<Member>, { pageNumber: number, teamId: number }>({
+            query: ({ pageNumber, teamId }) => `${apiPaths.teamMembersUrl}${teamId}`,
             providesTags: (response) =>
                 response?.results
                     ? [

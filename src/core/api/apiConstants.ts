@@ -20,7 +20,6 @@ export const apiPaths = {
   teamTemplatesUrl: 'team/template/',
   teamMembersUrl: 'team/members/',
   teamRequestUrl: 'team/requests/',
-
   requestByTeamUrl: 'team/requests-by-team/',
   getSocialInfosUrl: 'card-infos'
 };
