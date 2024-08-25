@@ -27,6 +27,7 @@ import {
 } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
@@ -181,9 +182,12 @@ const DashboardPage = () => {
                       objectFit="contain"
                     />
                   </div>
-                  <a className="grow font-semibold hover:text-blueTheme">
+                  <Link
+                    href={'dashboard/profile/' + card.user?.username}
+                    className="grow font-semibold hover:text-blueTheme"
+                  >
                     {card.user?.fullname}
-                  </a>
+                  </Link>
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>
                 <CardLayouts

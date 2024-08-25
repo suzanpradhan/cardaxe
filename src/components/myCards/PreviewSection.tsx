@@ -87,7 +87,15 @@ const PreviewSection = ({
             variableValues={variableValues}
           />
         )}
-        <ProfileDescription variableValues={variableValues} user={user} />
+        <ProfileDescription
+          values={{
+            address: variableValues.address ?? '',
+            designation:  variableValues.designation ?? '',
+            company:  variableValues.company ?? '',
+            bio:  variableValues.bio ?? '',
+          }}
+          user={user}
+        />
         {socialValues ? (
           <ProfileDetails
             cardValues={variableValues}

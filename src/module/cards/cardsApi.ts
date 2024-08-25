@@ -94,6 +94,30 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
+    getUsersCard: builder.query<PaginatedResponseType<CardResponseType<CardTemplatesType>>, { pageNumber: number, slug: string }>({
+      query: ({ pageNumber, slug }) => `${apiPaths.getPublicCardsUrl}${slug}?page=${pageNumber}`,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache, newItems) => {
+        currentCache.pagination = newItems.pagination;
+        currentCache.results.push(...newItems.results);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+      providesTags: (response) =>
+        response?.results
+          ? [
+            ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
+            { type: 'CardsList', id: 'LIST' },
+          ]
+          : [{ type: 'CardsList', id: 'LIST' }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
+      },
+    }),
     createCard: builder.mutation<CreateCardResponseType<CardTemplatesType>, { user: string, title: string }>({
       query: ({ user, title }) => {
         // var formData = new FormData();
