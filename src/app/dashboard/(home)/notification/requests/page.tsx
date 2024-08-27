@@ -1,5 +1,6 @@
 'use client';
 
+import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
@@ -47,7 +48,6 @@ export default function Page() {
   }, [dispatch]);
 
   useEffect(() => {
-    // console.log('currentPage', currentPage, hasMoreData);
     const fetchData = async (currentPage: number) => {
       const response = await Promise.resolve(
         dispatch(connectApi.endpoints.getConnectRequests.initiate(currentPage))
@@ -100,7 +100,11 @@ export default function Page() {
             <div className="relative h-16 w-16 rounded-full">
               <Image
                 className="rounded-full"
-                src={request.from_user.avatar ?? profileImage}
+                src={
+                  request.from_user.avatar
+                    ? `${apiPaths.serverUrl}${request.from_user.avatar}`
+                    : profileImage
+                }
                 alt="image"
                 fill
                 sizes="(max-width: 768px) 100vw, 700px"
@@ -110,23 +114,27 @@ export default function Page() {
             <div className="grow">
               <p>
                 <span className="font-bold">{request.from_user.fullname}</span>{' '}
-                sent you a reuest
+                sent you a reuest.
               </p>
               <p className="text-sm text-grayfont">5h ago</p>
             </div>
-            <div className="flex gap-4">
-              <button
-                className="rounded-md bg-blueTheme px-3 py-2 text-white"
-                onClick={() =>
-                  handleAcceptRequest(request.from_user, request.id)
-                }
-              >
-                Accept
-              </button>
-              <button className="rounded-md bg-red-500 px-3 py-2 text-white">
-                Decline
-              </button>
-            </div>
+            {!request.accepted ? (
+              <div className="flex gap-4">
+                <button
+                  className="rounded-md bg-blueTheme px-3 py-2 text-white"
+                  onClick={() =>
+                    handleAcceptRequest(request.from_user, request.id)
+                  }
+                >
+                  Accept
+                </button>
+                <button className="rounded-md bg-red-500 px-3 py-2 text-white">
+                  Decline
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </li>
         ))}
       </ul>

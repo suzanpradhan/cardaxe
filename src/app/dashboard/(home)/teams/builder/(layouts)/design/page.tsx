@@ -34,14 +34,12 @@ export default function Page() {
 
     const stateValue =
       type === 'file' && files ? window.URL.createObjectURL(files[0]) : value;
-    console.log(name, stateValue);
     dispatch(updateDesignForm({ [name]: stateValue }));
   };
 
   const handleSwitchChange = async (checked: boolean, zSchemaName: string) => {
     dispatch(updateDesignForm({ [zSchemaName]: checked }));
   };
-  console.log('teamTemplateState', teamTemplateState);
 
   return (
     <div className="h-[calc(100vh-17rem)] overflow-y-scroll lg:h-[calc(100vh-6rem)]">

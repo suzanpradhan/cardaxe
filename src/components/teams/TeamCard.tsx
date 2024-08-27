@@ -4,7 +4,6 @@ import Image from 'next/image';
 import logo from '../../../public/logo.png';
 
 const TeamCard = ({ teamCardValues }: { teamCardValues: Team }) => {
-  console.log('teamCardValues', teamCardValues);
   return (
     <div className="relative">
       <div className="absolute top-0 -z-10 h-14 w-full overflow-hidden rounded-t-xl bg-green-500"></div>

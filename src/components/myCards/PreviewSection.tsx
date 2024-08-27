@@ -51,7 +51,6 @@ const PreviewSection = ({
   socialValues?: InfosFormsUpdateSchemaType;
   user?: UserType;
 }) => {
-  console.log('layout', layout);
   const dispatch = useAppDispatch();
 
   // try {
@@ -76,8 +75,6 @@ const PreviewSection = ({
     dispatch(cardsApi.endpoints.getCardTemmplate.initiate(layout.toString()));
   }, [dispatch, layout]);
 
-  console.log('variableValues', variableValues);
-
   return (
     <FormWrapper className="">
       <div className="flex flex-col gap-4">
@@ -90,9 +87,9 @@ const PreviewSection = ({
         <ProfileDescription
           values={{
             address: variableValues.address ?? '',
-            designation:  variableValues.designation ?? '',
-            company:  variableValues.company ?? '',
-            bio:  variableValues.bio ?? '',
+            designation: variableValues.designation ?? '',
+            company: variableValues.company ?? '',
+            bio: variableValues.bio ?? '',
           }}
           user={user}
         />

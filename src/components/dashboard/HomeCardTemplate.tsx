@@ -25,8 +25,6 @@ const HomeCardTemplate = ({ userName }: HomeCardTemplateProps) => {
       dispatch(cardsApi.endpoints.getDefaultCard.initiate(userName.toString()));
   }, [dispatch, userName]);
 
-  console.log('userId', defaultCard);
-
   const variableValues = {
     ...defaultCard?.cardFields,
     ...defaultCard?.cardDesign,

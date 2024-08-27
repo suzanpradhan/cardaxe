@@ -37,13 +37,13 @@ export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
   );
 
   useEffect(() => {
-    if (!hasMoreData || !team.id) return;
+    if (!hasMoreData || !team?.id) return;
     const fetchData = async (currentPage: number) => {
       const response = await Promise.resolve(
         dispatch(
           teamsApi.endpoints.getRequestByTeam.initiate({
             pageNumber: currentPage,
-            teamId: team.id!.toString(),
+            teamId: team?.id!.toString(),
           })
         )
       );
@@ -57,7 +57,7 @@ export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
       }
     };
     fetchData(currentPage);
-  }, [currentPage, team.id]);
+  }, [currentPage, team?.id]);
 
   const onSubmit = async (formData: InviteMembersType) => {
     setIsLoading(true);
@@ -85,14 +85,12 @@ export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
   const formik = useFormik<InviteMembersType>({
     initialValues: {
       email: '',
-      team: team.id?.toString() ?? '',
+      team: team?.id?.toString() ?? '',
     },
     validateOnChange: true,
     onSubmit,
     validate: validateForm,
   });
-
-  console.log('formik.errors', formik.errors);
 
   return (
     <div className="flex h-96 w-full flex-col gap-2 p-4 lg:w-[60rem]">

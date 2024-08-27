@@ -51,11 +51,24 @@ export type CardResponseType<T> = {
   cardDesign: DesignFromSchemaType,
   cardInfos: Array<InfoSchemaType>,
   isPublished: boolean,
+  isLiked: boolean,
+  isConnected: boolean,
   isDefault: boolean,
   user?: UserType
 }
 
+export type LikeCardResponse = {
+  id: number,
+  user: number,
+  card: number
+}
 
+export const likeCardSchema = z.object({
+  user: z.number(),
+  card: z.number(),
+})
+
+export type LikeCardSchemaType = z.infer<typeof likeCardSchema>
 
 export type CardState<T> = {
   id?: number;

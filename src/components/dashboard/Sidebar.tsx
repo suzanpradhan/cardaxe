@@ -102,7 +102,7 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
   {
     id: 7,
     label: 'Profile',
-    link: 'profile/me',
+    link: 'account/me',
 
     icon: (
       <ProfileCircle

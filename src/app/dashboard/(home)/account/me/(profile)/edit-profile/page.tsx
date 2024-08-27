@@ -1,6 +1,6 @@
-import FeedbackOptions from '../(components)/FeedbackOptions';
-import MyProfileCard from '../(components)/MyProfileCard';
-import SettingOptions from '../(components)/SettingOptions';
+import FeedbackOptions from '../../../(components)/FeedbackOptions';
+import MyProfileCard from '../../../(components)/MyProfileCard';
+import SettingOptions from '../../../(components)/SettingOptions';
 
 const ProfilePage = () => {
   return (

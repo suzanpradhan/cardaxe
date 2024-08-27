@@ -1,8 +1,9 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
+import { UserType } from "../user/userType";
 import { TeamTemplateState } from "./teamTemplateTypes";
-import { CategoryType, InviteMembersType, Member, Team, TeamFormType, TeamRequest } from "./teamTypes";
+import { CategoryType, InviteMembersType, Team, TeamFormType, TeamRequest } from "./teamTypes";
 
 const teamsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -37,7 +38,6 @@ const teamsApi = baseApi.injectEndpoints({
 
             // invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: arg.id }],
             transformResponse: (response) => {
-                console.log("response", response);
                 return response
             }
         }),
@@ -82,7 +82,6 @@ const teamsApi = baseApi.injectEndpoints({
 
             invalidatesTags: (result, error, arg) => [{ type: 'RequestByTeamList', id: arg.team }],
             transformResponse: (response) => {
-                console.log("response", response);
                 return response
             }
         }),
@@ -132,29 +131,45 @@ const teamsApi = baseApi.injectEndpoints({
                 return response as PaginatedResponseType<TeamRequest>;
             },
         }),
-        getEachMembers: builder.query<PaginatedResponseType<Member>, { pageNumber: number, teamId: number }>({
-            query: ({ pageNumber, teamId }) => `${apiPaths.teamMembersUrl}${teamId}`,
+        getEachTeamMembers: builder.query<Array<UserType>, { pageNumber: number, slug: string }>({
+            query: ({ pageNumber, slug }) => `${apiPaths.teamsUrl}${slug}/members/`,
             providesTags: (response) =>
-                response?.results
+                response
                     ? [
-                        ...response.results.map((layout) => ({ type: 'Member', id: layout.id } as const)),
+                        ...response.map((layout) => ({ type: 'Member', id: layout.id } as const)),
                         { type: 'MemberList', id: 'LIST' },
                     ]
                     : [{ type: 'MemberList', id: 'LIST' }],
-            serializeQueryArgs: ({ endpointName }) => {
-                return endpointName;
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${queryArgs.slug}`;
             },
-            merge: (currentCache, newItems) => {
-                currentCache.pagination = newItems.pagination;
-                currentCache.results.push(...newItems.results);
-            },
-            forceRefetch({ currentArg, previousArg }) {
-                return currentArg !== previousArg;
-            },
+            // merge: (currentCache, newItems) => {
+            //     currentCache.pagination = newItems.pagination;
+            //     currentCache.results.push(...newItems.results);
+            // },
+            // forceRefetch({ currentArg, previousArg }) {
+            //     return currentArg !== previousArg;
+            // },
             transformResponse: (response: any) => {
-                return response as PaginatedResponseType<Member>;
+                return response as Array<UserType>;
             },
         }),
+        // deleteTeamMember: builder.query<any, { pageNumber: number, slug: string }>({
+        //     query: ({ pageNumber, slug }) => `${apiPaths.teamsUrl}${slug}/members/`,
+        //     providesTags: (response) =>
+        //         response
+        //             ? [
+        //                 ...response.map((layout) => ({ type: 'Member', id: layout.id } as const)),
+        //                 { type: 'MemberList', id: 'LIST' },
+        //             ]
+        //             : [{ type: 'MemberList', id: 'LIST' }],
+        //     serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        //         return `${endpointName}-${queryArgs.slug}`;
+        //     },
+        //     transformResponse: (response: any) => {
+        //         return response as Array<UserType>;
+        //     },
+        // }),
         getEachTeam: builder.query<Team, string>({
             query: (slug) => `${apiPaths.teamsUrl}${slug}/`,
             serializeQueryArgs: ({ queryArgs, endpointName }) => {

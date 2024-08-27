@@ -24,7 +24,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const userProfile = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries[`getPublicProfile`]?.data as UserType
+      state.baseApi.queries[`getPublicProfile-${params.slug}`]?.data as UserType
   );
 
   const userCards = useAppSelector(
@@ -35,7 +35,6 @@ export default function Page({ params }: { params: { slug: string } }) {
   );
 
   useEffect(() => {
-    // console.log('currentPage', currentPage, hasMoreData);
     const fetchData = async (currentPage: number) => {
       const response = await Promise.resolve(
         dispatch(
@@ -60,8 +59,6 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
     setIsLoading(false);
   }, [dispatch, currentPage]);
-
-  console.log(userCards);
 
   return (
     <div className="my-4 flex w-full flex-col gap-4">

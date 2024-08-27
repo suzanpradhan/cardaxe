@@ -19,8 +19,8 @@ const userApi = baseApi.injectEndpoints({
         }),
         getPublicProfile: builder.query<UserType, string>({
             query: (slug) => `${apiPaths.publicProfileUrl}/${slug}`,
-            serializeQueryArgs: ({ endpointName }) => {
-                return endpointName;
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${queryArgs}`;
             },
             providesTags: ['User'],
             transformResponse: (response: any) => {

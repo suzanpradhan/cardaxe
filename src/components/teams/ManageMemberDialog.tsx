@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Tabwrapper from '../TabWrapper';
+import { useState } from 'react';
 import ManageMemberTabComps from './ManageMemberTabComps';
 
 const TAB_ELEMENTS = ['Profile', 'Analytics', 'Access Control', 'Settings'];
@@ -10,15 +9,15 @@ const ManageMemberDialog = () => {
 
   return (
     <div
-      className="max-h-120 px-5 py-3 grid gap-2 overflow-hidden hover:overflow-auto justify-start hover:pr-[19px]"
+      className="grid max-h-120 justify-start gap-2 overflow-hidden px-5 py-3 hover:overflow-auto hover:pr-[19px]"
       onClick={(e) => e.stopPropagation()}
     >
       <h2 className="font-bold">Sujan Pradhan</h2>
-      <Tabwrapper
+      {/* <Tabwrapper
         tabElements={TAB_ELEMENTS}
         triggerComp={'dialog'}
         changeTab={changeTab}
-      />
+      /> */}
       <ManageMemberTabComps activeTab={activeTab} />
     </div>
   );

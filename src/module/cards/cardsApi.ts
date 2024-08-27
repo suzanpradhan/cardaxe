@@ -2,7 +2,7 @@ import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
 import { snakeToCamel } from "@/core/utils/generalFunctions";
-import { CardResponseType, CardTemplatesType, ContentFormSchemaType, CreateCardResponseType, DesignFromSchemaType, SocialMediaInfo, UpdateCardParams } from "./cardsType";
+import { CardResponseType, CardTemplatesType, ContentFormSchemaType, CreateCardResponseType, DesignFromSchemaType, LikeCardResponse, LikeCardSchemaType, SocialMediaInfo, UpdateCardParams } from "./cardsType";
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -149,8 +149,31 @@ const cardsApi = baseApi.injectEndpoints({
         return camelCaseResponse;
       },
     }),
+    likeCard: builder.mutation<LikeCardResponse, LikeCardSchemaType>({
+      query: (card) => {
+        return {
+          url: `${apiPaths.favoritesUrl}`,
+          method: 'POST',
+          body: card,
+        }
+      },
+      async onQueryStarted(payload, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // toast.success('Card successfully created.');
+        } catch (err) {
+          console.log(err);
+          // toast.error('Failed createing card!!');
+        }
+      },
+      // invalidatesTags: [{ type: 'CardsList', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [{ type: 'CardsList', id: arg.card }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
+      },
+    }),
     upDateCard: builder.mutation<any, UpdateCardParams<string>>({
-
       query: ({ userId, cardSlug, ...payload }) => {
         const fecthCachedImage = async (name: string) => {
           const cache = await caches.open('filesCache');
@@ -160,7 +183,6 @@ const cardsApi = baseApi.injectEndpoints({
           await cache.delete(name)
           return blob;
         }
-        console.log("payload", payload)
         const formData = new FormData();
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.title != undefined) formData.append('card_fields.title', payload.cardFields.title)

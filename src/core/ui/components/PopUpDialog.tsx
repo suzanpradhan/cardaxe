@@ -57,7 +57,7 @@ const PopUpDialog = ({
     createPortal(
       <div
         className={cn(
-          'fixed left-0 top-0 z-[60] h-full w-full backdrop-blur-md'
+          'fixed left-0 top-0 z-[60] h-full w-full bg-white backdrop-blur-md'
         )}
         style={customStyles.content}
       >

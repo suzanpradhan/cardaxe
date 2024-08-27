@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 type DialogPropsType = {
   children: React.ReactNode;
   triggerComponent: React.ReactNode;
+  className?: string;
 };
 
-const Dialog = ({ children, triggerComponent }: DialogPropsType) => {
+const Dialog = ({ children, triggerComponent, className }: DialogPropsType) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const openDialog = () => {
     if (dialogRef.current) {
@@ -19,6 +20,7 @@ const Dialog = ({ children, triggerComponent }: DialogPropsType) => {
   const closeDialog = () => {
     if (dialogRef.current) {
       dialogRef.current.close();
+      // dialogRef.current.rese;
     }
   };
 
@@ -54,9 +56,12 @@ const Dialog = ({ children, triggerComponent }: DialogPropsType) => {
       <dialog
         ref={dialogRef}
         // onClick={() => setIsDialogOpen(false)}
-        className="rounded-xl backdrop:bg-componentBgGrey backdrop:bg-opacity-60"
+        className={
+          'rounded-xl backdrop:bg-componentBgGrey backdrop:bg-opacity-60 ' +
+          className
+        }
       >
-        {children}
+        {dialogRef ? children : <></>}
       </dialog>
     </div>
   );

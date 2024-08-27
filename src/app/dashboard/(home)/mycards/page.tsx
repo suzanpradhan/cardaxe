@@ -41,8 +41,6 @@ const MyCardsPage = () => {
       >
   );
 
-  console.log('cardsList', cardsList);
-
   // const hanldeCreateCard = () => {
   //   toggleLoading(true);
 

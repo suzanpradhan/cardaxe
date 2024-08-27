@@ -13,8 +13,6 @@ export default function SharePage() {
     dispatch(updateCardBasics({ slug: e.target.value }));
   };
 
-  console.log('title and slug', cardState);
-
   return (
     <div className="h-[calc(100vh-17rem)] overflow-y-scroll lg:h-[calc(100vh-6rem)]">
       <form

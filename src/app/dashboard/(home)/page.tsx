@@ -9,6 +9,7 @@ import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
+import { cn } from '@/lib/utils';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import connectApi from '@/module/connect/connectApi';
@@ -127,16 +128,6 @@ const DashboardPage = () => {
       >
   );
 
-  // console.log(
-  //   'scroll check:',
-  //   scrollableDivRef?.current?.scrollTop +
-  //     scrollableDivRef?.current?.clientHeight >=
-  //     scrollableDivRef?.current?.scrollHeight &&
-  //     !isLoading &&
-  //     hasMoreData,
-  //   currentPage
-  // );
-
   const handleConnect = (user: UserType) => {
     dispatch(
       connectApi.endpoints.sendRequest.initiate({
@@ -153,6 +144,15 @@ const DashboardPage = () => {
         accepted: false,
         id: user.id,
         timestamp: new Date().toISOString(),
+      })
+    );
+  };
+
+  const handleLike = (userId: number, cardId: number) => {
+    dispatch(
+      cardsApi.endpoints.likeCard.initiate({
+        card: cardId,
+        user: userId,
       })
     );
   };
@@ -203,12 +203,25 @@ const DashboardPage = () => {
                   }}
                 />
                 <section className="flex gap-4">
-                  <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
+                  <button
+                    className={cn(
+                      'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
+                      card.isLiked ? 'text-blueTheme' : 'text-zinc-400'
+                    )}
+                    onClick={() =>
+                      card.user?.id &&
+                      card.id &&
+                      handleLike(card.user.id, card.id!)
+                    }
+                  >
                     <Heart size="24" variant="TwoTone" />
                     <p>11.1k</p>
                   </button>
                   <button
-                    className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
+                    className={cn(
+                      'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
+                      card.isConnected ? 'text-blueTheme' : 'text-zinc-400'
+                    )}
                     onClick={() => card.user?.id && handleConnect(card.user)}
                   >
                     <Flash size="24" variant="TwoTone" />

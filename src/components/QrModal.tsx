@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Instagram from '../../public/instagram_image.png';
 import Linkedin from '../../public/linkedin_image.png';
 
-const QrModal = () => {
+const QrModal = ({ userName }: { userName?: string }) => {
   return (
     <div className="w-full">
       <div className="flex flex-col gap-4">
@@ -15,7 +15,7 @@ const QrModal = () => {
               <QrCodeGenerate link={`https://google.com`} />
             </div>
             <span className="text-sm font-semibold text-zinc-900">
-              @_eugene_cheng
+              {`@${userName ?? 'eugene_cheng'}`}
             </span>
           </div>
           <div className="relative flex w-full max-w-[15rem] items-center justify-evenly gap-2 overflow-hidden rounded-xl py-2 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm">

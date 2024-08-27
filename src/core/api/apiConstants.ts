@@ -23,5 +23,6 @@ export const apiPaths = {
   teamRequestUrl: 'team/requests/',
   requestByTeamUrl: 'team/requests-by-team/',
   getSocialInfosUrl: 'card-infos',
-  getPublicCardsUrl: 'public/cards/'
+  getPublicCardsUrl: 'public/cards/',
+  favoritesUrl: 'favorites/'
 };

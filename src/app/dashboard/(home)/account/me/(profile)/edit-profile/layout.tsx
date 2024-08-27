@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ProfileAside from '../../(components)/ProfileAside';
+import ProfileAside from '../../../(components)/ProfileAside';
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const [isProfile, setIsProfile] = useState<boolean>(false);
