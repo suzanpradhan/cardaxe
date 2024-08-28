@@ -63,7 +63,7 @@ const connectApi = baseApi.injectEndpoints({
                     console.log(err);
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'RequestList', id: arg.id }],
+            invalidatesTags: (result, error, arg) => [{ type: 'Request', id: arg.id }],
             transformResponse: (response) => {
                 return response
             }

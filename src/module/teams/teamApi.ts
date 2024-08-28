@@ -154,22 +154,21 @@ const teamsApi = baseApi.injectEndpoints({
                 return response as Array<UserType>;
             },
         }),
-        // deleteTeamMember: builder.query<any, { pageNumber: number, slug: string }>({
-        //     query: ({ pageNumber, slug }) => `${apiPaths.teamsUrl}${slug}/members/`,
-        //     providesTags: (response) =>
-        //         response
-        //             ? [
-        //                 ...response.map((layout) => ({ type: 'Member', id: layout.id } as const)),
-        //                 { type: 'MemberList', id: 'LIST' },
-        //             ]
-        //             : [{ type: 'MemberList', id: 'LIST' }],
-        //     serializeQueryArgs: ({ endpointName, queryArgs }) => {
-        //         return `${endpointName}-${queryArgs.slug}`;
-        //     },
-        //     transformResponse: (response: any) => {
-        //         return response as Array<UserType>;
-        //     },
-        // }),
+        deleteTeamMember: builder.mutation<any, string>({
+
+            query: (slug) => { return { url: `${apiPaths.teamMembersUrl}${slug}`, method: "DELETE" } },
+            invalidatesTags: (result, error, arg) => [{ type: 'Member', id: arg }],
+            async onQueryStarted(payload, { queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+            transformResponse: (response: any) => {
+                return response as Array<UserType>;
+            },
+        }),
         getEachTeam: builder.query<Team, string>({
             query: (slug) => `${apiPaths.teamsUrl}${slug}/`,
             serializeQueryArgs: ({ queryArgs, endpointName }) => {

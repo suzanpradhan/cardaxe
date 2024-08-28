@@ -9,7 +9,7 @@ export type ProfileAsideElementsProps = {
   icon: React.JSX.Element;
 };
 
-const ICONS_SIZE = '30';
+const ICONS_SIZE = '24';
 const ICONS_VARIANT = 'Bulk';
 const ICONS_CLASSNAME = 'inline';
 

@@ -35,7 +35,7 @@ const ProfileAsideElements = ({
         className="flex w-full items-center justify-center gap-3 md:justify-normal"
       >
         {item.icon}
-        <span className="hidden md:block">{item.label}</span>
+        <span className="hidden text-sm md:block">{item.label}</span>
       </Link>
     </li>
   );

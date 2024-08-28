@@ -55,6 +55,8 @@ export type CardResponseType<T> = {
   isConnected: boolean,
   isDefault: boolean,
   user?: UserType
+  likes: number,
+  views: number,
 }
 
 export type LikeCardResponse = {

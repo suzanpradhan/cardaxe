@@ -1,11 +1,11 @@
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import teamsApi from '@/module/teams/teamApi';
+import { UserType } from '@/module/user/userType';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import staticLogoImage from '../../../public/logo.png';
-import image1 from '../../../public/staticImages/1.jpg';
-import image2 from '../../../public/staticImages/2.jpg';
-import image3 from '../../../public/staticImages/3.jpg';
-import image4 from '../../../public/staticImages/4.jpg';
-import image5 from '../../../public/staticImages/5.jpg';
 import Imageoverlay from './Imageoverlay';
 
 type MyTeamsCardPropsType = {
@@ -19,6 +19,22 @@ const MyTeamsCard = ({
   logo,
   slug,
 }: MyTeamsCardPropsType) => {
+  const dispatch = useAppDispatch();
+
+  const teamMembers = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries[`getEachTeamMembers-${slug.toString()}`]
+        ?.data as Array<UserType>
+  );
+
+  useEffect(() => {
+    dispatch(
+      teamsApi.endpoints.getEachTeamMembers.initiate({
+        pageNumber: 0,
+        slug: slug,
+      })
+    );
+  }, [dispatch, slug]);
   return (
     <Link
       href={`/dashboard/teams/${slug}`}
@@ -43,7 +59,9 @@ const MyTeamsCard = ({
           <strong>{organizationName}</strong>
           <span>Active</span>
         </div>
-        <Imageoverlay images={[image1, image2, image3, image4, image5]} />
+        <Imageoverlay
+          images={teamMembers?.map((item, index) => item.avatar ?? undefined)}
+        />
       </div>
     </Link>
   );

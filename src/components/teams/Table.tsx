@@ -40,10 +40,8 @@ const ACTIONS_BUTTONS = [
 ];
 
 const Table = ({ teamSlug }: { teamSlug: string }) => {
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const openDialog = () => setIsDialogOpen(true);
-  const closeDialog = () => setIsDialogOpen(false);
   const dispatch = useAppDispatch();
+  const [loading, setIsLoading] = useState(false);
 
   const teamMembers = useAppSelector(
     (state: RootState) =>
@@ -59,6 +57,18 @@ const Table = ({ teamSlug }: { teamSlug: string }) => {
       })
     );
   }, [dispatch, teamSlug]);
+
+  const handleRemove = async (memberId: string) => {
+    setIsLoading(true);
+    try {
+      const responseData = await Promise.resolve(
+        dispatch(teamsApi.endpoints.deleteTeamMember.initiate(memberId))
+      );
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-[62rem] border-b-1 border-t-1 border-b-borderMain border-t-borderMain">
@@ -126,7 +136,10 @@ const Table = ({ teamSlug }: { teamSlug: string }) => {
               <div className="rounded-full bg-componentBgGrey p-2">
                 <More size="26" variant="Bulk" key={3} />
               </div>
-              <button className="rounded-full bg-red-500 p-2 text-white">
+              <button
+                className="rounded-full bg-red-500 p-2 text-white"
+                onClick={() => handleRemove(item.id.toString())}
+              >
                 <Trash size="26" variant="Bulk" key={1} />
               </button>
               {/* <button
