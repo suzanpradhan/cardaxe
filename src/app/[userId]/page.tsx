@@ -17,7 +17,6 @@ const page = async (props: any) => {
     );
     const response = await res.json();
     const defaultCard = snakeToCamel(response);
-    console.log('defaultCard', defaultCard);
 
     const variableValues = {
       ...defaultCard.cardFields,
@@ -52,7 +51,6 @@ const page = async (props: any) => {
       return <></>;
     }
   } catch (error) {
-    console.log(error);
     return <>No default card</>;
   }
 };

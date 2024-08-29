@@ -62,12 +62,12 @@ export default function CreateCardPopup({ userId }: { userId: string }) {
           sizes="(max-width: 768px) 100vw, 33vw"
         />
       </div>
-      <div className="mt-2 h-10 bg-white px-4">
+      <div className="mt-2 flex h-10 w-full flex-col items-end bg-white px-4">
         <TextInput
           id={'title'}
           type={'text'}
           rows={1}
-          className="flex flex-col bg-white pb-4"
+          className="flex w-full flex-col bg-white pb-4"
           name={'title'}
           // error={errors[item.zSchemaName as keyof ContentFormSchemaType]}
           label={'Title'}
@@ -80,7 +80,7 @@ export default function CreateCardPopup({ userId }: { userId: string }) {
         />
         <button
           onClick={() => hanldeCreateCard()}
-          className="h-10 w-10 rounded-md bg-blueTheme text-xs text-white shadow-md shadow-blueTheme/60 lg:w-auto lg:px-3"
+          className="rounded-md bg-blueTheme py-2 text-xs text-white shadow-md shadow-blueTheme/60 lg:w-auto lg:px-3"
         >
           {!createLoading ? (
             <p className="flex items-center justify-center gap-2">

@@ -1,50 +1,57 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // interface TabWrapperProps {
 //   className?: string;
 // }
 
 type TabWrappersPropsType = {
-  tabElements: string[];
-  triggerComp?: string;
-  changeRoute?: (index: number) => void;
-  changeTab?: (index: number) => void;
+  tabElements: Array<{ name: string; link: string }>;
+  slug: string;
 };
 
 const Tabwrapper = ({
   tabElements,
-  changeRoute,
-  changeTab,
-  triggerComp,
+  // changeRoute,
+  slug,
 }: TabWrappersPropsType) => {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState<number>(0);
+  useEffect(() => {
+    if (pathname.endsWith(`/teams/${slug}`)) {
+      setActiveTab(0);
+    } else if (pathname.endsWith(`/teams/${slug}/members`)) {
+      setActiveTab(1);
+    } else if (pathname.endsWith(`/teams/${slug}/analytics`)) {
+      setActiveTab(2);
+    } else if (pathname.endsWith(`/teams/${slug}/security`)) {
+      setActiveTab(3);
+    } else if (pathname.endsWith(`/teams/${slug}/settings`)) {
+      setActiveTab(4);
+    }
+  }, [pathname]);
 
-  const handleClick = (index: number) => (
-    setActiveTab(index),
-    triggerComp == 'dialog'
-      ? changeTab && changeTab(index)
-      : changeRoute && changeRoute(index)
-  );
   return (
     <ul className="flex w-full border-b-2">
       {tabElements.map((item, index) => (
         <li
-          onClick={() => handleClick(index)}
           key={index}
           className={clsx(
-            'pb-1',
+            'pb-2',
             activeTab === index && '-my-[2.5px] border-b-4 border-blue-700'
           )}
         >
-          <button
+          <Link
+            href={`${slug}/${item.link}`}
             className={clsx(
-              'rounded-md p-3 hover:text-blue-700',
+              'mb-2 w-full rounded-md p-3 hover:text-blue-700',
               activeTab === index && 'bg-blue-200'
             )}
           >
-            {item}
-          </button>
+            {item.name}
+          </Link>
         </li>
       ))}
     </ul>

@@ -6,7 +6,6 @@ export async function middleware(req: any) {
     const token = await getToken({ req, secret: process.env.JWT_SECRET });
 
     const { pathname } = req.nextUrl;
-    console.log(token)
 
     if (req.nextUrl.pathname.startsWith('/_next/')) {
         return;

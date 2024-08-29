@@ -17,6 +17,17 @@ const userApi = baseApi.injectEndpoints({
                 return camelCaseResponse;
             },
         }),
+        getPublicProfile: builder.query<UserType, string>({
+            query: (slug) => `${apiPaths.publicProfileUrl}/${slug}`,
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${queryArgs}`;
+            },
+            providesTags: ['User'],
+            transformResponse: (response: any) => {
+                const camelCaseResponse = snakeToCamel(response)
+                return camelCaseResponse;
+            },
+        }),
         updateUser: builder.mutation<UserType, UserType>({
             query: ({ ...payload }) => {
                 const formData = new FormData()

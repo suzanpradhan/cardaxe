@@ -4,11 +4,13 @@ import { useRouter } from 'next/navigation';
 import profileImage from '../../../../public/profile/profile.png';
 
 import CardLayouts from '@/components/CardLayouts.server';
-import HomeCardTemplate from '@/components/dashboard/HomeCardTemplate';
+import Dialog from '@/components/Dialog';
+import QrModal from '@/components/QrModal';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
+import { cn } from '@/lib/utils';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import connectApi from '@/module/connect/connectApi';
@@ -16,8 +18,8 @@ import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import clsx from 'clsx';
 import {
-  Bookmark,
   BoxAdd,
+  Eye,
   Flash,
   Heart,
   MoreSquare,
@@ -27,7 +29,9 @@ import {
 } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import HomePageAside from '../(components)/HomePageAside';
 
 const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
@@ -126,16 +130,6 @@ const DashboardPage = () => {
       >
   );
 
-  // console.log(
-  //   'scroll check:',
-  //   scrollableDivRef?.current?.scrollTop +
-  //     scrollableDivRef?.current?.clientHeight >=
-  //     scrollableDivRef?.current?.scrollHeight &&
-  //     !isLoading &&
-  //     hasMoreData,
-  //   currentPage
-  // );
-
   const handleConnect = (user: UserType) => {
     dispatch(
       connectApi.endpoints.sendRequest.initiate({
@@ -152,6 +146,15 @@ const DashboardPage = () => {
         accepted: false,
         id: user.id,
         timestamp: new Date().toISOString(),
+      })
+    );
+  };
+
+  const handleLike = (userId: number, cardId: number) => {
+    dispatch(
+      cardsApi.endpoints.likeCard.initiate({
+        card: cardId,
+        user: userId,
       })
     );
   };
@@ -181,9 +184,25 @@ const DashboardPage = () => {
                       objectFit="contain"
                     />
                   </div>
-                  <a className="grow font-semibold hover:text-blueTheme">
+                  <Link
+                    href={'dashboard/profile/' + card.user?.username}
+                    className="grow font-semibold hover:text-blueTheme"
+                  >
                     {card.user?.fullname}
-                  </a>
+                  </Link>
+                  {!card.isConnected ? (
+                    <button
+                      className={cn(
+                        'bg flex items-center gap-1 rounded-sm bg-blueTheme p-1 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'
+                      )}
+                      onClick={() => card.user?.id && handleConnect(card.user)}
+                    >
+                      <Flash size="16" variant={'Bulk'} />{' '}
+                      <p className="text-sm">Connect</p>
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>
                 <CardLayouts
@@ -199,28 +218,47 @@ const DashboardPage = () => {
                   }}
                 />
                 <section className="flex gap-4">
-                  <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                    <Heart size="24" variant="TwoTone" />
-                    <p>11.1k</p>
-                  </button>
                   <button
-                    className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
-                    onClick={() => card.user?.id && handleConnect(card.user)}
+                    className={cn(
+                      'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
+                      card.isLiked ? 'text-blueTheme' : 'text-zinc-400'
+                    )}
+                    onClick={() =>
+                      card.user?.id &&
+                      card.id &&
+                      handleLike(card.user.id, card.id!)
+                    }
                   >
-                    <Flash size="24" variant="TwoTone" />
+                    <Heart
+                      size="24"
+                      variant={card.isLiked ? 'Bulk' : 'TwoTone'}
+                    />
                     <p>11.1k</p>
                   </button>
                   <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                    <Share size="24" variant="TwoTone" />
-                    <p>11.1k</p>
+                    <Eye size="24" variant="TwoTone" />
+                    <p>{card.views}</p>
                   </button>
-                  <div className="flex grow justify-end">
+                  <Dialog
+                    className="bg-transparent"
+                    triggerComponent={
+                      <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
+                        <Share size="24" variant="TwoTone" />
+                        {/* <p>11.1k</p> */}
+                      </div>
+                    }
+                  >
+                    <QrModal userName={card.slug} />
+                  </Dialog>
+                  <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"></button>
+
+                  {/* <div className="flex grow justify-end">
                     <Bookmark
                       variant="TwoTone"
                       size="24"
                       className="text-zinc-300 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
                     />
-                  </div>
+                  </div> */}
                 </section>
               </div>
             ))}
@@ -230,12 +268,11 @@ const DashboardPage = () => {
         <div className="sticky top-0 hidden h-screen shrink-0 py-4 lg:col-span-6 lg:block xl:col-span-5">
           <div className="relative flex h-full min-w-[24rem] max-w-sm grow flex-col justify-between px-4">
             <div className="flex flex-col gap-4">
-              <UserProfileCard fullName={userProfile?.fullname} />
-              <h2 className="font-bold">My Card</h2>
-              <HomeCardTemplate userName={userProfile?.username} />
-              <div className="flex gap-2">
-                {NAVIGATION_ICONS.map((item) => item)}
-              </div>
+              <UserProfileCard
+                fullName={userProfile?.fullname}
+                avatar={userProfile?.avatar ?? undefined}
+              />
+              <HomePageAside userName={userProfile?.username} />
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 border-t border-zinc-100 px-4 pt-2">

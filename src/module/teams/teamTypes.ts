@@ -39,6 +39,26 @@ export type CategoryType = {
     title: string
 }
 
+export const inviteMembersSchema = z.object({
+    email: z.string().email(),
+    team: z.string().pipe(nonempty)
+})
+
+export type InviteMembersType = z.infer<typeof inviteMembersSchema>
+
+export type TeamRequest = {
+    id: number,
+    email: string,
+    team: number
+}
+
+export type Member = {
+    id: number;
+    team: number;
+    user: number;
+    card: number
+}
+
 export type Team = {
     title?: string,
     id?: number,

@@ -1,11 +1,6 @@
-import {
-  ContentFormUpdateSchemaType,
-  DesignFormUpdateSchemaType,
-} from '@/module/cards/cardsType';
 import { UserType } from '@/module/user/userType';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
-import { VariableValueType } from '../CardLayouts.server';
 import Description from './Description';
 
 const PROFILE_DETAILS_BUTTONS = [
@@ -29,46 +24,21 @@ const PROFILE_DETAILS_BUTTONS = [
   />,
 ];
 
+type ProfileValueType = {
+  address: string;
+  designation: string;
+  company: string;
+  bio: string;
+};
+
 const ProfileDescription = ({
-  variableValues,
+  values,
   user,
 }: {
-  variableValues: ContentFormUpdateSchemaType &
-    DesignFormUpdateSchemaType &
-    VariableValueType;
+  values: ProfileValueType;
   user?: UserType;
 }) => {
   return (
-    // <div className="my-5 grid gap-x-4">
-    //   <div className="flex items-center justify-stretch gap-4">
-    //     <div className="relative h-[105px] w-[105px] overflow-hidden rounded-full bg-zinc-100">
-    //       <Image
-    //         src={user?.avatar ?? '/profile/profile.png'}
-    //         alt="image"
-    //         fill
-    //         sizes="(max-width: 768px) 100vw, 700px"
-    //         objectFit="cover"
-    //       />
-    //     </div>
-    //     <div className="flex grow flex-col gap-1 bg-slate-500">
-    //       <h1 className="text-lg font-extrabold sm:text-2xl">
-    //         {user?.fullname}
-    //       </h1>
-    //       <p>
-    //         {variableValues?.designation} - {variableValues?.company} |{' '}
-    //         {variableValues?.address}
-    //       </p>
-    //       <div className="flex gap-2">
-    //         <ButtonRounded
-    //           label={buttonLabel}
-    //           isHeader={false}
-    //           href="http://localhost:3000/dashboard/myCards/builder/contents"
-    //         />
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <p>{variableValues?.bio}</p>
-    // </div>
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
         <div className="shrink-0 basis-16 sm:basis-20">
@@ -88,18 +58,15 @@ const ProfileDescription = ({
               {user?.fullname}
             </h3>
             <span className="text-normal text-sm text-zinc-400">
-              {variableValues?.address} {variableValues?.designation && '|'}{' '}
-              {variableValues?.designation} {variableValues?.company && '-'}{' '}
-              {variableValues?.company}
+              {values?.address} {values?.designation && '|'}{' '}
+              {values?.designation} {values?.company && '-'} {values?.company}
             </span>
           </div>
-          <div className="hidden grid-cols-12 gap-x-2 gap-y-2 sm:grid">
-            <div className="col-span-6">
-              <button className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
-                <Flash size="21" variant="Bulk" />
-                Connect
-              </button>
-            </div>
+          <div className="flex gap-2">
+            <button className="flex h-8 w-48 items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
+              <Flash size="21" variant="Bulk" />
+              Connect
+            </button>
             <div className="col-span-5 flex items-center justify-start gap-2">
               <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
                 <Heart size="21" variant="Bulk" />
@@ -134,7 +101,7 @@ const ProfileDescription = ({
         </div>
       </div>
       <div>
-        <Description text={variableValues?.bio} />
+        <Description text={values?.bio} />
       </div>
     </div>
   );

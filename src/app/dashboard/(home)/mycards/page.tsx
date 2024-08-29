@@ -1,11 +1,11 @@
 'use client';
 
 import CardLayouts from '@/components/CardLayouts.server';
+import Dialog from '@/components/Dialog';
 import QrModal from '@/components/QrModal';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
-import PopUpDialog from '@/core/ui/components/PopUpDialog';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import {
@@ -40,8 +40,6 @@ const MyCardsPage = () => {
         CardResponseType<CardTemplatesType>
       >
   );
-
-  console.log('cardsList', cardsList);
 
   // const hanldeCreateCard = () => {
   //   toggleLoading(true);
@@ -83,28 +81,29 @@ const MyCardsPage = () => {
               placeholder="Search"
             />
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowCreateCardModal(true)}
-              className="h-10 w-10 rounded-md bg-blueTheme text-xs text-white shadow-md shadow-blueTheme/60 lg:w-auto lg:px-3"
-            >
-              <p className="flex items-center justify-center gap-2">
-                {/* {createLoading ? (
-                  <CircleLoader />
-                ) : (
-                  <Magicpen size="20" variant="Bulk" className="text-white" />
-                )} */}
+          <Dialog
+            triggerComponent={
+              <div
+                // onClick={() => setShowCreateCardModal(true)}
+                className="flex h-10 w-10 items-center justify-center gap-2 rounded-md bg-blueTheme text-xs text-white shadow-md shadow-blueTheme/60 lg:w-auto lg:px-3"
+              >
                 <Magicpen size="20" variant="Bulk" className="text-white" />
                 <span className="hidden lg:block">Create New card</span>
-              </p>
-            </button>
-          </div>
+              </div>
+            }
+          >
+            {sessionData?.user ? (
+              <CreateCardPopup userId={sessionData.user.id} />
+            ) : (
+              <></>
+            )}
+          </Dialog>
         </div>
       </div>
       <div className="col-span-12 mb-5 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
-        <PopUpDialog show={showQrModal} onClose={() => setShowQrModal(false)}>
-          <QrModal />
-        </PopUpDialog>
+        {/* <PopUpDialog show={showQrModal} onClose={() => setShowQrModal(false)}>
+          
+        </PopUpDialog> */}
         {cardsList?.map((card, index) => {
           return (
             <div className="col-span-6 lg:col-span-3" key={index}>
@@ -171,13 +170,18 @@ const MyCardsPage = () => {
                       <BoxAdd size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Add Infos</span>
                     </div>
-                    <div
-                      className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme"
-                      onClick={() => setShowQrModal(true)}
+                    <Dialog
+                      className="bg-transparent"
+                      triggerComponent={
+                        <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                          <Scanning size="21" variant="Bulk" />{' '}
+                          <span className="text-xs font-medium">Show QR</span>
+                        </div>
+                      }
                     >
-                      <Scanning size="21" variant="Bulk" />{' '}
-                      <span className="text-xs font-medium">Show QR</span>
-                    </div>
+                      <QrModal />
+                    </Dialog>
+
                     <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
                       <Share size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Share</span>
@@ -189,15 +193,6 @@ const MyCardsPage = () => {
           );
         })}
       </div>
-      {sessionData?.user?.id && (
-        <PopUpDialog
-          show={showCreateCardModal}
-          onClose={() => setShowCreateCardModal(false)}
-          closeButtonRequired={false}
-        >
-          <CreateCardPopup userId={sessionData.user.id} />
-        </PopUpDialog>
-      )}
     </div>
   );
 };

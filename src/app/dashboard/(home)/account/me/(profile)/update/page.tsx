@@ -65,8 +65,6 @@ export default function UpdateProfile() {
     formik.setFieldValue(e.target.name, e.target.files?.[0]);
   };
 
-  console.log(formik.values);
-
   return (
     <section className="mx-auto mb-20 max-w-3xl">
       <div className="bg-white px-5 py-9">

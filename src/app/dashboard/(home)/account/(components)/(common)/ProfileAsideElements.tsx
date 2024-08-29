@@ -1,5 +1,6 @@
 'use client';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ProfileAsideElementsProps } from '../ProfileAside';
@@ -13,7 +14,7 @@ const ProfileAsideElements = ({
   const pathName = usePathname();
   const router = useRouter();
   const handleClick = () => {
-    router.push('/dashboard/profile' + item.link);
+    router.push('/dashboard/account/me' + item.link);
   };
   useEffect(() => {
     if (pathName.endsWith(item.link)) {
@@ -23,18 +24,19 @@ const ProfileAsideElements = ({
   return (
     <li
       className={clsx(
-        'p-3 rounded-lg  hover:text-blueTheme min-w-fit w-full',
+        'w-full min-w-fit rounded-lg p-3 hover:text-blueTheme',
         isActive ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
         item.label == 'Notification' && 'hidden sm:block'
       )}
     >
-      <button
-        onClick={() => handleClick()}
-        className="flex gap-3 items-center justify-center md:justify-normal w-full"
+      <Link
+        href={item.link}
+        // onClick={() => handleClick()}
+        className="flex w-full items-center justify-center gap-3 md:justify-normal"
       >
         {item.icon}
-        <span className="hidden md:block">{item.label}</span>
-      </button>
+        <span className="hidden text-sm md:block">{item.label}</span>
+      </Link>
     </li>
   );
 };

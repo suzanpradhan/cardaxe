@@ -20,7 +20,11 @@ export const baseApi = createApi({
     "RequestList",
     "Request",
     "TeamCategory",
+    "Member",
+    "MemberList",
     "Team",
+    "RequestByTeamList",
+    "RequestByTeam",
     "TeamList"],
 
   endpoints: () => ({}),

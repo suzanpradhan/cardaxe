@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Instagram from '../../public/instagram_image.png';
 import Linkedin from '../../public/linkedin_image.png';
 
-const QrModal = () => {
+const QrModal = ({ userName }: { userName?: string }) => {
   return (
     <div className="w-full">
       <div className="flex flex-col gap-4">
@@ -15,7 +15,7 @@ const QrModal = () => {
               <QrCodeGenerate link={`https://google.com`} />
             </div>
             <span className="text-sm font-semibold text-zinc-900">
-              @_eugene_cheng
+              {`@${userName ?? 'eugene_cheng'}`}
             </span>
           </div>
           <div className="relative flex w-full max-w-[15rem] items-center justify-evenly gap-2 overflow-hidden rounded-xl py-2 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm">
@@ -45,7 +45,7 @@ const QrModal = () => {
             </div>
           </div>
         </div>
-        <div className="relative flex flex-col overflow-hidden rounded-xl bg-white/20 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm">
+        <div className="relative flex min-w-96 flex-col overflow-hidden rounded-xl bg-white/20 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm">
           <div className="flex h-auto items-center gap-4 border-b border-white/80 px-4 py-4 last-of-type:border-0">
             <div className="flex aspect-square h-8 items-center justify-center rounded-md bg-white text-2xl text-zinc-900 shadow-md shadow-zinc-500/10">
               <Sms variant="Bulk" />

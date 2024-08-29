@@ -34,7 +34,6 @@ const connectApi = baseApi.injectEndpoints({
 
             invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: arg.id }],
             transformResponse: (response) => {
-                console.log("response", response);
                 return response
             }
         }),
@@ -64,9 +63,8 @@ const connectApi = baseApi.injectEndpoints({
                     console.log(err);
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'RequestList', id: arg.id }],
+            invalidatesTags: (result, error, arg) => [{ type: 'Request', id: arg.id }],
             transformResponse: (response) => {
-                console.log("response", response);
                 return response
             }
         }),

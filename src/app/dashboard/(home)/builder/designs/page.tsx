@@ -44,7 +44,6 @@ const Designpage = () => {
 
     if (!result.success) {
       const error = result.error.format();
-      console.log(error);
       dispatch(
         setErrors({
           formName: 'cardDesign',

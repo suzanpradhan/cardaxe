@@ -1,8 +1,9 @@
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
+import { UserType } from "../user/userType";
 import { TeamTemplateState } from "./teamTemplateTypes";
-import { CategoryType, Team, TeamFormType } from "./teamTypes";
+import { CategoryType, InviteMembersType, Team, TeamFormType, TeamRequest } from "./teamTypes";
 
 const teamsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -37,7 +38,6 @@ const teamsApi = baseApi.injectEndpoints({
 
             // invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: arg.id }],
             transformResponse: (response) => {
-                console.log("response", response);
                 return response
             }
         }),
@@ -57,8 +57,36 @@ const teamsApi = baseApi.injectEndpoints({
                 return response as PaginatedResponseType<CategoryType>;
             },
         }),
+        intiviteMembers: builder.mutation<any, InviteMembersType>({
+            query: ({ ...payload }) => {
+                const formData = new FormData();
+                formData.append('email', payload.email);
+                formData.append('team', payload.team.toString());
+
+
+                return {
+                    url: `${apiPaths.teamRequestUrl}`,
+                    method: 'POST',
+                    body: formData,
+                    formData: true,
+                }
+            },
+
+            async onQueryStarted(payload, { queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+
+            invalidatesTags: (result, error, arg) => [{ type: 'RequestByTeamList', id: arg.team }],
+            transformResponse: (response) => {
+                return response
+            }
+        }),
         getMyTeams: builder.query<PaginatedResponseType<Team>, number>({
-            query: (pageNumber) => `${apiPaths.teamsUrl}?page=${pageNumber}`,
+            query: (pageNumber) => `${apiPaths.teamsUrl}mine/?page=${pageNumber}`,
             providesTags: (response) =>
                 response?.results
                     ? [
@@ -78,6 +106,67 @@ const teamsApi = baseApi.injectEndpoints({
             },
             transformResponse: (response: any) => {
                 return response as PaginatedResponseType<Team>;
+            },
+        }),
+        getRequestByTeam: builder.query<PaginatedResponseType<TeamRequest>, { pageNumber?: number, teamId: string }>({
+            query: ({ pageNumber, teamId }) => `${apiPaths.requestByTeamUrl}${teamId}${pageNumber ? `?page=${pageNumber}` : ''}`,
+            providesTags: (response) =>
+                response?.results
+                    ? [
+                        ...response.results.map((layout) => ({ type: 'RequestByTeam', id: layout.id } as const)),
+                        { type: 'RequestByTeamList', id: 'LIST' },
+                    ]
+                    : [{ type: 'RequestByTeamList', id: 'LIST' }],
+            serializeQueryArgs: ({ endpointName }) => {
+                return endpointName;
+            },
+            merge: (currentCache, newItems) => {
+                currentCache.pagination = newItems.pagination;
+                currentCache.results.push(...newItems.results);
+            },
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg;
+            },
+            transformResponse: (response: any) => {
+                return response as PaginatedResponseType<TeamRequest>;
+            },
+        }),
+        getEachTeamMembers: builder.query<Array<UserType>, { pageNumber: number, slug: string }>({
+            query: ({ pageNumber, slug }) => `${apiPaths.teamsUrl}${slug}/members/`,
+            providesTags: (response) =>
+                response
+                    ? [
+                        ...response.map((layout) => ({ type: 'Member', id: layout.id } as const)),
+                        { type: 'MemberList', id: 'LIST' },
+                    ]
+                    : [{ type: 'MemberList', id: 'LIST' }],
+            serializeQueryArgs: ({ endpointName, queryArgs }) => {
+                return `${endpointName}-${queryArgs.slug}`;
+            },
+            // merge: (currentCache, newItems) => {
+            //     currentCache.pagination = newItems.pagination;
+            //     currentCache.results.push(...newItems.results);
+            // },
+            // forceRefetch({ currentArg, previousArg }) {
+            //     return currentArg !== previousArg;
+            // },
+            transformResponse: (response: any) => {
+                return response as Array<UserType>;
+            },
+        }),
+        deleteTeamMember: builder.mutation<any, string>({
+
+            query: (slug) => { return { url: `${apiPaths.teamMembersUrl}${slug}`, method: "DELETE" } },
+            invalidatesTags: (result, error, arg) => [{ type: 'Member', id: arg }],
+            async onQueryStarted(payload, { queryFulfilled }) {
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+            transformResponse: (response: any) => {
+                return response as Array<UserType>;
             },
         }),
         getEachTeam: builder.query<Team, string>({

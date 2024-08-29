@@ -42,7 +42,6 @@ export const teamTemplateSlice = createSlice({
             action: PayloadAction<string>
         ) => {
             state.otherValues = { ...state.otherValues, template: action.payload };
-            console.log("action.payload", state);
         },
         updateTeamDetails: (
             state,

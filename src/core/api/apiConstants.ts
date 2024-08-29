@@ -5,6 +5,7 @@ export const apiPaths = {
   registerUrl: 'user/register/',
   loginUrl: 'user/login/',
   profileUrl: 'user/profile/',
+  publicProfileUrl: 'user/public/profile',
   changeCurrentPasswordUrl: 'user/change-password/',
   resetPasswordUrl: 'user/reset-password/',
   sendForgotPasswordEmailUrl: 'user/send-forgot-password-email/',
@@ -18,5 +19,10 @@ export const apiPaths = {
   getTeamsCategoryUrl: 'team-categories',
   teamsUrl: 'teams/',
   teamTemplatesUrl: 'team/template/',
-  getSocialInfosUrl: 'card-infos'
+  teamMembersUrl: 'team/members/',
+  teamRequestUrl: 'team/requests/',
+  requestByTeamUrl: 'team/requests-by-team/',
+  getSocialInfosUrl: 'card-infos',
+  getPublicCardsUrl: 'public/cards/',
+  favoritesUrl: 'favorites/'
 };

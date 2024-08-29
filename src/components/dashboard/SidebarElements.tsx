@@ -1,5 +1,6 @@
 'use client';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SidebarNavElementsProps } from './Sidebar';
@@ -26,19 +27,20 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
   return (
     <li
       className={clsx(
-        'w-12 lg:w-full h-12 rounded-lg hover:text-blueTheme/60 hover:bg-blueBg/60',
+        'h-12 w-12 rounded-lg hover:bg-blueBg/60 hover:text-blueTheme/60 lg:w-full',
         toggle ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
         (item.label == 'Notification' || item.label == 'Analytics') &&
           'hidden lg:block'
       )}
     >
-      <button
-        onClick={() => handleClick()}
-        className="w-full h-full flex items-center justify-center lg:justify-start gap-4 lg:px-4"
+      <Link
+        href={'/dashboard/' + item.link}
+        // onClick={() => handleClick()}
+        className="flex h-full w-full items-center justify-center gap-4 lg:justify-start lg:px-4"
       >
         {item.icon}
-        <p className="hidden lg:block text-sm">{item.label}</p>
-      </button>
+        <p className="hidden text-sm lg:block">{item.label}</p>
+      </Link>
     </li>
   );
 };
