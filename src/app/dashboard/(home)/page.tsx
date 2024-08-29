@@ -150,13 +150,16 @@ const DashboardPage = () => {
     );
   };
 
-  const handleLike = (userId: number, cardId: number) => {
+  const handleLike = (cardId: number) => {
     dispatch(
       cardsApi.endpoints.likeCard.initiate({
-        card: cardId,
-        user: userId,
+        card: cardId.toString(),
+        user: userProfile.id.toString(),
       })
     );
+  };
+  const handleDislike = (cardSlug: string) => {
+    dispatch(cardsApi.endpoints.dislikeCard.initiate(cardSlug));
   };
 
   return (
@@ -226,14 +229,17 @@ const DashboardPage = () => {
                     onClick={() =>
                       card.user?.id &&
                       card.id &&
-                      handleLike(card.user.id, card.id!)
+                      card.slug &&
+                      (card.isLiked
+                        ? handleDislike(card.slug)
+                        : handleLike(card.id))
                     }
                   >
                     <Heart
                       size="24"
                       variant={card.isLiked ? 'Bulk' : 'TwoTone'}
                     />
-                    <p>11.1k</p>
+                    <p>{card.likes}</p>
                   </button>
                   <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
                     <Eye size="24" variant="TwoTone" />

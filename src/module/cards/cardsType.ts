@@ -66,8 +66,8 @@ export type LikeCardResponse = {
 }
 
 export const likeCardSchema = z.object({
-  user: z.number(),
-  card: z.number(),
+  user: z.string(),
+  card: z.string(),
 })
 
 export type LikeCardSchemaType = z.infer<typeof likeCardSchema>

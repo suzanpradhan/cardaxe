@@ -15,20 +15,11 @@ import { CloseCircle } from 'iconsax-react';
 import { useEffect, useState } from 'react';
 import { ZodError } from 'zod';
 
-export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
+export default function AddMembersPopup({ team }: { team: Team }) {
   const [hasMoreData, setHasMoreData] = useState(true);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const team = useAppSelector(
-    (state: RootState) =>
-      state.baseApi.queries[`getEachTeam-${teamSlug}`]?.data as Team
-  );
-
-  useEffect(() => {
-    dispatch(teamsApi.endpoints.getEachTeam.initiate(teamSlug));
-  }, [dispatch, teamSlug]);
 
   const requestsResponse = useAppSelector(
     (state: RootState) =>
@@ -57,7 +48,7 @@ export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
       }
     };
     fetchData(currentPage);
-  }, [currentPage, team?.id]);
+  }, [dispatch, currentPage, team?.id]);
 
   const onSubmit = async (formData: InviteMembersType) => {
     setIsLoading(true);
@@ -83,6 +74,7 @@ export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
   };
 
   const formik = useFormik<InviteMembersType>({
+    enableReinitialize: true,
     initialValues: {
       email: '',
       team: team?.id?.toString() ?? '',
@@ -109,7 +101,7 @@ export default function AddMembersPopup({ teamSlug }: { teamSlug: string }) {
           <ButtonForm
             label="Invite"
             className="h-9"
-            disableInput={formik.errors.email != null}
+            disableInput={Object.keys(formik.errors).length != 0}
             theme="blue"
             type="submit"
           />

@@ -8,9 +8,23 @@ import Table from '@/components/teams/Table';
 // import image3 from '../../../../../../../../public/staticImages/3.jpg';
 // import image4 from '../../../../../../../../public/staticImages/4.jpg';
 // import image5 from '../../../../../../../../public/staticImages/5.jpg';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
+import teamsApi from '@/module/teams/teamApi';
+import { Team } from '@/module/teams/teamTypes';
+import { useEffect } from 'react';
 import AddMembersPopup from './(components)/AddMembersPopup';
 
 const Page = ({ params }: { params: { teamSlug: string } }) => {
+  const dispatch = useAppDispatch();
+  const team = useAppSelector(
+    (state: RootState) =>
+      state.baseApi.queries[`getEachTeam-${params.teamSlug}`]?.data as Team
+  );
+
+  useEffect(() => {
+    dispatch(teamsApi.endpoints.getEachTeam.initiate(params.teamSlug));
+  }, [dispatch, params.teamSlug]);
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex gap-2">
@@ -28,7 +42,7 @@ const Page = ({ params }: { params: { teamSlug: string } }) => {
               </div>
             }
           >
-            <AddMembersPopup teamSlug={params.teamSlug} />
+            {team?.id ? <AddMembersPopup team={team} /> : <></>}
           </Dialog>
         </div>
       </div>

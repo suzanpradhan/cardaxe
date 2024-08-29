@@ -9,6 +9,7 @@ type ImageoverlayPropsType = {
 const Imageoverlay = ({ images }: ImageoverlayPropsType) => {
   let imageCount: number = 0;
   const imageList = images?.slice(0, 5).map((image, index) => image);
+  console.log(imageList);
   return (
     <div className="flex h-10">
       {imageList?.map((item, index) => {

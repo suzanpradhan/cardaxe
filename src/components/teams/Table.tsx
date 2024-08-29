@@ -58,11 +58,16 @@ const Table = ({ teamSlug }: { teamSlug: string }) => {
     );
   }, [dispatch, teamSlug]);
 
-  const handleRemove = async (memberId: string) => {
+  const handleRemove = async (userSlug: string) => {
     setIsLoading(true);
     try {
       const responseData = await Promise.resolve(
-        dispatch(teamsApi.endpoints.deleteTeamMember.initiate(memberId))
+        dispatch(
+          teamsApi.endpoints.deleteTeamMember.initiate({
+            teamSlug: teamSlug,
+            userSlug: userSlug,
+          })
+        )
       );
       setIsLoading(false);
     } catch (error) {
@@ -138,7 +143,7 @@ const Table = ({ teamSlug }: { teamSlug: string }) => {
               </div>
               <button
                 className="rounded-full bg-red-500 p-2 text-white"
-                onClick={() => handleRemove(item.id.toString())}
+                onClick={() => handleRemove(item.username)}
               >
                 <Trash size="26" variant="Bulk" key={1} />
               </button>

@@ -118,7 +118,7 @@ export default function Page() {
               </p>
               <p className="text-sm text-grayfont">5h ago</p>
             </div>
-            {!request.accepted ? (
+            {request.accepted === false ? (
               <div className="flex gap-4">
                 <button
                   className="rounded-md bg-blueTheme px-3 py-2 text-white"

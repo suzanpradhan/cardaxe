@@ -63,7 +63,7 @@ const connectApi = baseApi.injectEndpoints({
                     console.log(err);
                 }
             },
-            invalidatesTags: (result, error, arg) => [{ type: 'Request', id: arg.id }],
+            invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: arg.id }, { type: "Card", id: "LIST" }],
             transformResponse: (response) => {
                 return response
             }
@@ -74,8 +74,13 @@ const connectApi = baseApi.injectEndpoints({
                 return endpointName;
             },
             merge: (currentCache, newItems) => {
-                currentCache.pagination = newItems.pagination;
-                currentCache.results.push(...newItems.results);
+                if (currentCache.pagination.currentPage === newItems.pagination.currentPage) {
+                    currentCache.pagination = newItems.pagination;
+                    currentCache.results = newItems.results;
+                } else {
+                    currentCache.pagination = newItems.pagination;
+                    currentCache.results.push(...newItems.results);
+                }
             },
             forceRefetch({ currentArg, previousArg }) {
                 return currentArg !== previousArg;
@@ -83,10 +88,10 @@ const connectApi = baseApi.injectEndpoints({
             providesTags: (response) =>
                 response?.results
                     ? [
-                        ...response.results.map((card) => ({ type: 'Request', id: card.id } as const)),
-                        { type: 'RequestList', id: 'LIST' },
+                        ...response.results.map((card) => ({ type: 'Connections', id: card.id } as const)),
+                        { type: 'Connections', id: 'LIST' },
                     ]
-                    : [{ type: 'RequestList', id: 'LIST' }],
+                    : [{ type: 'Connections', id: 'LIST' }],
             transformResponse: (response: any) => {
                 return response;
             },

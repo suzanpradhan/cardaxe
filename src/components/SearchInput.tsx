@@ -17,14 +17,14 @@ const SearchInput = ({
     <label
       htmlFor="input"
       className={clsx(
-        'flex items-center justify-between rounded-md border-borderMain text-grayfont',
+        'flex items-center justify-between rounded-md border-borderMain text-black',
         greyBackground
           ? 'bg-inputBgGrey focus-within:bg-blueBg'
           : 'focus-within:border-blueTheme focus-within:text-blueTheme',
         requireBorder ? 'border-1' : 'border-0'
       )}
     >
-      <SearchNormal1 size="36" className="px-2" variant="Bulk" />
+      <SearchNormal1 size="36" className="px-2 text-grayfont" variant="Bulk" />
       <input
         className="h-full grow rounded-md bg-transparent focus:outline-0"
         id="input"
