@@ -62,9 +62,9 @@ const cardsApi = baseApi.injectEndpoints({
         response?.results
           ? [
             ...response.results.map((card) => ({ type: 'Card', id: card.slug } as const)),
-            { type: 'MyCardList', id: 'LIST' },
+            { type: 'Card', id: 'LIST' },
           ]
-          : [{ type: 'MyCardList', id: 'LIST' }],
+          : [{ type: 'Card', id: 'LIST' }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse.results;
@@ -76,8 +76,13 @@ const cardsApi = baseApi.injectEndpoints({
         return endpointName;
       },
       merge: (currentCache, newItems) => {
-        currentCache.pagination = newItems.pagination;
-        currentCache.results.push(...newItems.results);
+        if (currentCache.pagination.currentPage === newItems.pagination.currentPage) {
+          currentCache.pagination = newItems.pagination;
+          currentCache.results = newItems.results;
+        } else {
+          currentCache.pagination = newItems.pagination;
+          currentCache.results.push(...newItems.results);
+        }
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;
@@ -85,10 +90,10 @@ const cardsApi = baseApi.injectEndpoints({
       providesTags: (response) =>
         response?.results
           ? [
-            ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
-            { type: 'CardsList', id: 'LIST' },
+            ...response.results.map((card) => ({ type: 'Card', id: card.slug } as const)),
+            { type: 'Card', id: 'LIST' },
           ]
-          : [{ type: 'CardsList', id: 'LIST' }],
+          : [{ type: 'Card', id: 'LIST' }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;
@@ -109,10 +114,10 @@ const cardsApi = baseApi.injectEndpoints({
       providesTags: (response) =>
         response?.results
           ? [
-            ...response.results.map((card) => ({ type: 'Card', id: card.id } as const)),
-            { type: 'CardsList', id: 'LIST' },
+            ...response.results.map((card) => ({ type: 'Card', id: card.slug } as const)),
+            { type: 'Card', id: 'LIST' },
           ]
-          : [{ type: 'CardsList', id: 'LIST' }],
+          : [{ type: 'Card', id: 'LIST' }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;
@@ -143,7 +148,7 @@ const cardsApi = baseApi.injectEndpoints({
           // toast.error('Failed createing card!!');
         }
       },
-      invalidatesTags: [{ type: 'CardsList', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Card', id: 'LIST' }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;
@@ -166,13 +171,38 @@ const cardsApi = baseApi.injectEndpoints({
           // toast.error('Failed createing card!!');
         }
       },
+
       // invalidatesTags: [{ type: 'CardsList', id: 'LIST' }],
-      invalidatesTags: (result, error, arg) => [{ type: 'CardsList', id: arg.card }],
+      invalidatesTags: (result, error, arg) => [{ type: 'Card', id: "LIST" }],
       transformResponse: (response: any) => {
         const camelCaseResponse = snakeToCamel(response)
         return camelCaseResponse;
       },
     }),
+    dislikeCard: builder.mutation<LikeCardResponse, string>({
+      query: (cardSlug) => {
+        return {
+          url: `${apiPaths.favoritesUrl}${cardSlug}/`,
+          method: 'DELETE',
+        }
+      },
+      async onQueryStarted(payload, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // toast.success('Card successfully created.');
+        } catch (err) {
+          console.log(err);
+          // toast.error('Failed createing card!!');
+        }
+      },
+
+      invalidatesTags: (result, error, arg) => [{ type: 'Card', id: "LIST" }],
+      transformResponse: (response: any) => {
+        const camelCaseResponse = snakeToCamel(response)
+        return camelCaseResponse;
+      },
+    }),
+
     upDateCard: builder.mutation<any, UpdateCardParams<string>>({
       query: ({ userId, cardSlug, ...payload }) => {
         const fecthCachedImage = async (name: string) => {

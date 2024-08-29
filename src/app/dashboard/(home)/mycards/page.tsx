@@ -12,8 +12,8 @@ import {
   BoxAdd,
   Edit,
   Eye,
+  Heart,
   Magicpen,
-  MouseSquare,
   Scanning,
   SearchNormal,
   Share,
@@ -127,7 +127,7 @@ const MyCardsPage = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center justify-start gap-2">
                         <h4 className="text-base font-bold text-zinc-800">
-                          Personal
+                          {card.title}
                         </h4>
                         {index == 0 && (
                           <span className="flex h-4 items-center justify-center rounded-[0.15rem] bg-zinc-300 px-2 text-[0.60rem] font-medium text-zinc-500">
@@ -143,37 +143,41 @@ const MyCardsPage = () => {
                     </div>
                     {/* top-ends */}
                     <div className="flex items-center justify-start gap-4">
-                      <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
+                      <div className="flex items-center gap-2 text-zinc-500">
                         <Eye size="24" variant="Bulk" />
-                        <span className="text-xs font-medium">242</span>
+                        <span className="text-xs font-medium">
+                          {card.views}
+                        </span>
                       </div>
-                      <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
-                        <Share size="24" variant="Bulk" />
-                        <span className="text-xs font-medium">242</span>
+                      <div className="flex items-center gap-2 text-zinc-500">
+                        <Heart size="24" variant="Bulk" />
+                        <span className="text-xs font-medium">
+                          {card.likes}
+                        </span>
                       </div>
-                      <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
+                      {/* <div className="flex cursor-pointer items-center gap-2 text-zinc-500 hover:text-blueTheme">
                         <MouseSquare size="24" variant="Bulk" />
                         <span className="text-xs font-medium">242</span>
-                      </div>
+                      </div> */}
                     </div>
                     {/* middle-ends */}
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div
-                      className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme"
+                      className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme"
                       onClick={() => handleEditCard(card.slug!)}
                     >
                       <Edit size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Edit Card</span>
                     </div>
-                    <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                    <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
                       <BoxAdd size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Add Infos</span>
                     </div>
                     <Dialog
                       className="bg-transparent"
                       triggerComponent={
-                        <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                        <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
                           <Scanning size="21" variant="Bulk" />{' '}
                           <span className="text-xs font-medium">Show QR</span>
                         </div>
@@ -182,7 +186,7 @@ const MyCardsPage = () => {
                       <QrModal />
                     </Dialog>
 
-                    <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:text-blueTheme">
+                    <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
                       <Share size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Share</span>
                     </div>

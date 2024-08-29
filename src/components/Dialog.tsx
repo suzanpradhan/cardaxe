@@ -57,7 +57,7 @@ const Dialog = ({ children, triggerComponent, className }: DialogPropsType) => {
         ref={dialogRef}
         // onClick={() => setIsDialogOpen(false)}
         className={
-          'rounded-xl backdrop:bg-componentBgGrey backdrop:bg-opacity-85 ' +
+          'rounded-xl bg-transparent backdrop:bg-inputBgGrey backdrop:bg-opacity-85 ' +
           className
         }
       >
