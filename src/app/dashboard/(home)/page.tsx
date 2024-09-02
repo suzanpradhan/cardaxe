@@ -188,7 +188,7 @@ const DashboardPage = () => {
                     />
                   </div>
                   <Link
-                    href={'dashboard/profile/' + card.user?.username}
+                    href={'dashboard/account/' + card.user?.username}
                     className="grow font-semibold hover:text-blueTheme"
                   >
                     {card.user?.fullname}
@@ -209,7 +209,7 @@ const DashboardPage = () => {
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>
                 {card.user?.username && card.slug ? (
-                  <Link href={`${card.user?.username}/${card.slug}`}>
+                  <Link href={card.isDefault ? card.user.username : card.slug}>
                     <CardLayouts
                       enableShadow
                       htmlSource={card.cardTemplate?.htmlCode}

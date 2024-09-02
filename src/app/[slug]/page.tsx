@@ -7,7 +7,7 @@ const page = async (props: any) => {
   // const card = props.params.slugs[1];
 
   let cardInfo;
-  const cardUrl = `${apiPaths.baseUrl}${apiPaths.getDefaultCardUrl}${slug}/`;
+  const cardUrl = `${apiPaths.baseUrl}${apiPaths.cardsUrl}${slug}/`;
 
   try {
     const res = await fetch(cardUrl, {
@@ -23,7 +23,7 @@ const page = async (props: any) => {
     throw Error(err as string);
   }
 
-  console.log(cardInfo);
+  console.log('template number ', cardInfo);
 
   if ((cardInfo as any).detail) {
     return <>Not found</>;
@@ -47,9 +47,9 @@ const page = async (props: any) => {
       <div className="mx-auto max-w-sm bg-white px-4 py-4 lg:max-w-lg">
         <PreviewSection
           variableValues={variableValues}
-          layout={cardInfo.cardTemplate}
+          layout={cardInfo?.cardTemplate.id}
           socialValues={socialsValues}
-          user={cardInfo.user}
+          user={cardInfo?.user}
         />
       </div>
     </div>
