@@ -4,9 +4,15 @@ type DialogPropsType = {
   children: React.ReactNode;
   triggerComponent: React.ReactNode;
   className?: string;
+  dialogClassName?: string;
 };
 
-const Dialog = ({ children, triggerComponent, className }: DialogPropsType) => {
+const Dialog = ({
+  children,
+  triggerComponent,
+  className,
+  dialogClassName,
+}: DialogPropsType) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   // const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -50,14 +56,16 @@ const Dialog = ({ children, triggerComponent, className }: DialogPropsType) => {
   }, []);
 
   return (
-    <div>
-      <button onClick={openDialog}>{triggerComponent}</button>
+    <div className={dialogClassName}>
+      <button className="w-full" onClick={openDialog}>
+        {triggerComponent}
+      </button>
 
       <dialog
         ref={dialogRef}
         // onClick={() => setIsDialogOpen(false)}
         className={
-          'rounded-xl bg-transparent backdrop:bg-inputBgGrey backdrop:bg-opacity-85 ' +
+          'rounded-xl bg-transparent backdrop:bg-gray-600/90 backdrop:bg-opacity-85' +
           className
         }
       >

@@ -31,7 +31,7 @@ const Tabwrapper = ({
     } else if (pathname.endsWith(`/teams/${slug}/settings`)) {
       setActiveTab(4);
     }
-  }, [pathname]);
+  }, [pathname, slug]);
 
   return (
     <ul className="flex w-full border-b-2">
@@ -46,7 +46,7 @@ const Tabwrapper = ({
           <Link
             href={`${slug}/${item.link}`}
             className={clsx(
-              'mb-2 w-full rounded-md p-3 hover:text-blue-700',
+              'mb-2 w-full rounded-md p-3 text-sm hover:text-blue-700',
               activeTab === index && 'bg-blue-200'
             )}
           >

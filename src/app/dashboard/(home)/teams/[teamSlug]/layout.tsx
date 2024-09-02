@@ -37,7 +37,7 @@ const MyTeamsLayout = ({
     );
   }, [dispatch, params.teamSlug]);
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col justify-center gap-4 p-4">
+    <div className="mx-auto flex w-full max-w-5xl flex-col justify-center gap-4 p-4 max-xl:max-w-96">
       <h2 className="w-full font-bold">{team?.name}</h2>
       {params.teamSlug ? (
         <Tabwrapper tabElements={TAB_ELEMENTS} slug={params.teamSlug} />

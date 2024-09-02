@@ -35,7 +35,6 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
     >
       <Link
         href={'/dashboard/' + item.link}
-        // onClick={() => handleClick()}
         className="flex h-full w-full items-center justify-center gap-4 lg:justify-start lg:px-4"
       >
         {item.icon}

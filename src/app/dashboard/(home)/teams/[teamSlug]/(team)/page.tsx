@@ -1,6 +1,6 @@
 'use client';
 
-import CardTempSide from '@/components/dashboard/HomeCardTemplate';
+import HomeCardTemplate from '@/components/dashboard/HomeCardTemplate';
 import TeamCard from '@/components/teams/TeamCard';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -70,26 +70,13 @@ const Page = ({ params }: { params: { teamSlug: string } }) => {
   );
 
   return (
-    <div className="flex w-full justify-center gap-6">
-      <div className="max-w-lg shrink basis-1/2 rounded-xl border-1 border-componentBgGrey">
+    <div className="flex w-full justify-center gap-6 max-xl:max-w-96 max-xl:flex-col">
+      <div className="min-w-[22rem] max-w-lg shrink basis-1/2 rounded-xl border-1 border-componentBgGrey">
         <TeamCard teamCardValues={team} />
-        {/* <div className="px-6 pb-6">
-          <ProfileDetails
-            isTeamComp
-            cardValues={
-              {
-                // ...teamTemplateState..values,
-                // ...cardState.cardFields.values,
-                // ...cardState.cardInfos.values,
-              }
-            }
-            // socialValues={cardState.cardInfos.values}
-          />
-        </div> */}
       </div>
-      <div className="grid h-min shrink basis-120 gap-4 rounded-xl border-1 border-componentBgGrey p-6">
+      <div className="mb-16 grid h-min min-w-[22rem] shrink gap-4 rounded-xl border-1 border-componentBgGrey p-2 lg:mb-0 xl:p-6">
         <div className="rounded-md shadow-lg">
-          <CardTempSide userName={userProfile?.username} />
+          <HomeCardTemplate userName={userProfile?.username} />
         </div>
         <div>
           <p className="flex justify-between">
@@ -108,11 +95,11 @@ const Page = ({ params }: { params: { teamSlug: string } }) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-wrap justify-between gap-2">
           {BUTTON_LIST.map((item, index) => (
             <button
               key={index}
-              className="flex items-center gap-1 rounded-md border-1 border-componentBgGrey px-2 py-1 text-grayfont"
+              className="flex grow items-center gap-1 rounded-md border-1 border-componentBgGrey px-2 py-1 text-grayfont"
             >
               {item.icon}
               <span className="text-sm">{item.description}</span>

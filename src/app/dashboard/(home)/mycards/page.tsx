@@ -14,7 +14,6 @@ import {
   Eye,
   Heart,
   Magicpen,
-  Scanning,
   SearchNormal,
   Share,
 } from 'iconsax-react';
@@ -174,22 +173,25 @@ const MyCardsPage = () => {
                       <BoxAdd size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Add Infos</span>
                     </div>
-                    <Dialog
-                      className="bg-transparent"
-                      triggerComponent={
-                        <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
-                          <Scanning size="21" variant="Bulk" />{' '}
-                          <span className="text-xs font-medium">Show QR</span>
-                        </div>
-                      }
-                    >
-                      <QrModal />
-                    </Dialog>
-
-                    <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
-                      <Share size="21" variant="Bulk" />{' '}
-                      <span className="text-xs font-medium">Share</span>
-                    </div>
+                    {card.slug && card.user?.username ? (
+                      <Dialog
+                        className="bg-transparent"
+                        dialogClassName="grow"
+                        triggerComponent={
+                          <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
+                            <Share size="21" variant="Bulk" />{' '}
+                            <span className="text-xs font-medium">Share</span>
+                          </div>
+                        }
+                      >
+                        <QrModal
+                          cardSlug={card.slug}
+                          userName={card.user?.username}
+                        />
+                      </Dialog>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>

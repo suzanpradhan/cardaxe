@@ -35,7 +35,7 @@ const Page = ({ params }: { params: { teamSlug: string } }) => {
           <Dialog
             triggerComponent={
               <div
-                className="flex h-9 items-center rounded-sm bg-blueTheme px-4 text-white"
+                className="flex h-9 items-center rounded-sm bg-blueTheme px-4 text-white max-xl:text-sm"
                 // handleClick={() => setIsDialogOpen(true)}
               >
                 Add Members
