@@ -188,7 +188,7 @@ const DashboardPage = () => {
                     />
                   </div>
                   <Link
-                    href={'dashboard/profile/' + card.user?.username}
+                    href={'dashboard/account/' + card.user?.username}
                     className="grow font-semibold hover:text-blueTheme"
                   >
                     {card.user?.fullname}
@@ -208,18 +208,24 @@ const DashboardPage = () => {
                   )}
                   <MoreSquare size="24" className="text-zinc-200" />
                 </section>
-                <CardLayouts
-                  enableShadow
-                  htmlSource={card.cardTemplate?.htmlCode}
-                  variableValues={{
-                    ...card.cardFields,
-                    ...card.cardDesign,
-                    logoUrl: card.cardDesign.logo
-                      ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
-                      : undefined,
-                    backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
-                  }}
-                />
+                {card.user?.username && card.slug ? (
+                  <Link href={card.isDefault ? card.user.username : card.slug}>
+                    <CardLayouts
+                      enableShadow
+                      htmlSource={card.cardTemplate?.htmlCode}
+                      variableValues={{
+                        ...card.cardFields,
+                        ...card.cardDesign,
+                        logoUrl: card.cardDesign.logo
+                          ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
+                          : undefined,
+                        backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
+                      }}
+                    />
+                  </Link>
+                ) : (
+                  <></>
+                )}
                 <section className="flex gap-4">
                   <button
                     className={cn(
@@ -245,17 +251,24 @@ const DashboardPage = () => {
                     <Eye size="24" variant="TwoTone" />
                     <p>{card.views}</p>
                   </button>
-                  <Dialog
-                    className="bg-transparent"
-                    triggerComponent={
-                      <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                        <Share size="24" variant="TwoTone" />
-                        {/* <p>11.1k</p> */}
-                      </div>
-                    }
-                  >
-                    <QrModal userName={card.slug} />
-                  </Dialog>
+                  {card.user?.username && card.slug ? (
+                    <Dialog
+                      className="bg-transparent"
+                      triggerComponent={
+                        <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
+                          <Share size="24" variant="TwoTone" />
+                          {/* <p>11.1k</p> */}
+                        </div>
+                      }
+                    >
+                      <QrModal
+                        userName={card.user?.username}
+                        cardSlug={card.slug}
+                      />
+                    </Dialog>
+                  ) : (
+                    <></>
+                  )}
                   <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"></button>
 
                   {/* <div className="flex grow justify-end">

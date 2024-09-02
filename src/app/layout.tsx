@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/toaster';
 import clsx from 'clsx';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -25,6 +26,7 @@ export default function RootLayout({
           <>{children}</>
         </Providers>
         <Notification />
+        <Toaster />
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 export const apiPaths = {
-  clientBaseUrl: process.env.NEXT_PUBLIC_CLIENT_BASE_URL,
+  clientBaseUrl: process.env.NEXTAUTH_URL,
   serverUrl: process.env.NEXT_PUBLIC_SERVER_URL,
   baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}` + '/api/v1/',
   registerUrl: 'user/register/',

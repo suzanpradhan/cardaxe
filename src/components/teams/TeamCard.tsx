@@ -7,7 +7,7 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: Team }) => {
   return (
     <div className="relative">
       <div className="absolute top-0 -z-10 h-14 w-full overflow-hidden rounded-t-xl bg-green-500"></div>
-      <div className="grid gap-5 p-6">
+      <div className="grid gap-5 p-4 xl:p-6">
         <div className="flex items-end gap-4">
           <div className="relative z-10 h-44 w-44 rounded-lg shadow-lg">
             <Image
@@ -26,27 +26,23 @@ const TeamCard = ({ teamCardValues }: { teamCardValues: Team }) => {
           <div className="grid gap-2 py-6">
             <h2 className="">{teamCardValues?.name ?? 'Company name'}</h2>
             <p>{teamCardValues?.category?.title ?? 'Category'}</p>
-            <div className="flex gap-3">
+            <div className="flex gap-1 text-lg xl:gap-3">
               <Heart
-                size="42"
                 color="#ff1843"
                 variant="Bulk"
-                className="rounded-full bg-componentBgGrey p-2"
+                className="h-12 w-12 rounded-full bg-componentBgGrey p-2 max-xl:h-8 max-xl:w-8"
               />
               <Share
-                size="42"
                 variant="Bulk"
-                className="rounded-full bg-componentBgGrey p-2 text-grayfont"
+                className="h-12 w-12 rounded-full bg-componentBgGrey p-2 text-grayfont max-xl:h-8 max-xl:w-8"
               />
               <ScanBarcode
-                size="42"
                 variant="Bulk"
-                className="rounded-full bg-componentBgGrey p-2 text-grayfont"
+                className="h-12 w-12 rounded-full bg-componentBgGrey p-2 text-grayfont max-xl:h-8 max-xl:w-8"
               />
               <More
-                size="42"
                 variant="Bulk"
-                className="rounded-full bg-componentBgGrey p-2 text-grayfont"
+                className="h-12 w-12 rounded-full bg-componentBgGrey p-2 text-grayfont max-xl:h-8 max-xl:w-8"
               />
             </div>
           </div>

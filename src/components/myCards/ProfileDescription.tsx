@@ -1,3 +1,4 @@
+import { apiPaths } from '@/core/api/apiConstants';
 import { UserType } from '@/module/user/userType';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
@@ -44,7 +45,13 @@ const ProfileDescription = ({
         <div className="shrink-0 basis-16 sm:basis-20">
           <div className="relative aspect-square overflow-hidden rounded-full">
             <Image
-              src={user?.avatar ?? '/square_image.jpg'}
+              src={
+                user?.avatar
+                  ? user.avatar.startsWith('https')
+                    ? user.avatar
+                    : `${apiPaths.serverUrl}${user.avatar}`
+                  : '/square_image.jpg'
+              }
               alt="user_profile_image"
               fill
               sizes="(max-width: 768px) 100vw, 700px"

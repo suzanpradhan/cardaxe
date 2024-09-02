@@ -75,6 +75,8 @@ const PreviewSection = ({
     dispatch(cardsApi.endpoints.getCardTemmplate.initiate(layout.toString()));
   }, [dispatch, layout]);
 
+  console.log('template', user);
+
   return (
     <FormWrapper className="">
       <div className="flex flex-col gap-4">

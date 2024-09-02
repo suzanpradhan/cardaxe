@@ -72,11 +72,11 @@ const Page = () => {
   return (
     <div className="mx-auto grid max-w-5xl gap-4 p-4">
       <h2 className="font-bold">My Teams</h2>
-      <div className="flex gap-2">
+      <div className="flex gap-2 max-sm:flex-wrap">
         <div className="grow">
           <SearchInput greyBackground={false} />
         </div>
-        <div className="rounded-lg shadow-md shadow-blueTheme">
+        <div className="rounded-lg max-sm:grow">
           <ButtonForm
             label="Create Team"
             theme="blue"

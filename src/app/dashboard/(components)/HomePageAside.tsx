@@ -45,38 +45,48 @@ export default function HomePageAside({ userName }: { userName: string }) {
               className={cn('bg-[#d3f4df] text-[#23c562]', ICONS_COMMON_CLASS)}
             />
           </Link>
-          <Dialog
-            className="bg-transparent"
-            triggerComponent={
-              <Share
-                size="32"
-                variant="Bulk"
-                key={3}
-                className={cn(
-                  'bg-[#d5e3ff] text-[#2f73fe]',
-                  ICONS_COMMON_CLASS
-                )}
+          {defaultCard.user?.username && defaultCard.slug && (
+            <Dialog
+              className="bg-transparent"
+              triggerComponent={
+                <Share
+                  size="32"
+                  variant="Bulk"
+                  key={3}
+                  className={cn(
+                    'bg-[#d5e3ff] text-[#2f73fe]',
+                    ICONS_COMMON_CLASS
+                  )}
+                />
+              }
+            >
+              <QrModal
+                userName={defaultCard.user?.username ?? ''}
+                cardSlug={defaultCard.slug ?? ''}
               />
-            }
-          >
-            <QrModal userName={defaultCard.slug} />
-          </Dialog>
-          <Dialog
-            className="bg-transparent"
-            triggerComponent={
-              <ScanBarcode
-                size="32"
-                variant="Bulk"
-                key={2}
-                className={cn(
-                  'bg-[#ffd5d6] text-[#ff1843]',
-                  ICONS_COMMON_CLASS
-                )}
+            </Dialog>
+          )}
+          {defaultCard.user?.username && defaultCard.slug && (
+            <Dialog
+              className="bg-transparent"
+              triggerComponent={
+                <ScanBarcode
+                  size="32"
+                  variant="Bulk"
+                  key={2}
+                  className={cn(
+                    'bg-[#ffd5d6] text-[#ff1843]',
+                    ICONS_COMMON_CLASS
+                  )}
+                />
+              }
+            >
+              <QrModal
+                userName={defaultCard.user.username!}
+                cardSlug={defaultCard.slug}
               />
-            }
-          >
-            <QrModal userName={defaultCard.slug} />
-          </Dialog>
+            </Dialog>
+          )}
         </div>
       </>
     );
