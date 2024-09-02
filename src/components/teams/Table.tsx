@@ -135,7 +135,7 @@ const Table = ({ teamSlug }: { teamSlug: string }) => {
                   </div>
                 }
               >
-                <QrModal userName={item.username} />
+                <QrModal userName={item.username} cardSlug={item.username} />
               </Dialog>
 
               <div className="rounded-full bg-componentBgGrey p-2">
