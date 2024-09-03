@@ -262,8 +262,8 @@ const DashboardPage = () => {
                       }
                     >
                       <QrModal
-                        userName={card.user?.username}
-                        cardSlug={card.slug}
+                        username={card.user?.username}
+                        slug={card.slug}
                       />
                     </Dialog>
                   ) : (
