@@ -185,8 +185,10 @@ const MyCardsPage = () => {
                         }
                       >
                         <QrModal
-                          cardSlug={card.slug}
-                          userName={card.user?.username}
+                          slug={
+                            card.isDefault ? card.user?.username : card.slug
+                          }
+                          username={card.user?.username}
                         />
                       </Dialog>
                     ) : (

@@ -9,15 +9,9 @@ import Link from 'next/link';
 import ShareLinkButton, { Alignment } from './ShareLinkButton';
 import { useToast } from './ui/use-toast';
 
-const QrModal = ({
-  userName,
-  cardSlug,
-}: {
-  userName: string;
-  cardSlug: string;
-}) => {
+const QrModal = ({ slug, username }: { slug: string; username: string }) => {
   const { toast } = useToast();
-  const cardLink = `https://www.cardaxe.com/${userName}/${cardSlug}`;
+  const cardLink = `https://www.cardaxe.com/${slug}`;
 
   const handleCopy = async () => {
     try {
@@ -40,7 +34,7 @@ const QrModal = ({
               <QrCodeGenerate link={cardLink} />
             </div>
             <span className="text-sm font-semibold text-zinc-900">
-              {`@${userName ?? 'eugene_cheng'}`}
+              {`@${username ?? 'eugene_cheng'}`}
             </span>
           </div>
           <div className="relative flex w-full max-w-[15rem] items-center justify-evenly gap-2 overflow-hidden rounded-xl py-2 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm">

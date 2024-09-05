@@ -21,8 +21,7 @@ export default function HomePageAside({ userName }: { userName: string }) {
   );
 
   useEffect(() => {
-    if (userName)
-      dispatch(cardsApi.endpoints.getDefaultCard.initiate(userName.toString()));
+    if (userName) dispatch(cardsApi.endpoints.getCard.initiate(userName));
   }, [dispatch, userName]);
   if (defaultCard) {
     return (
@@ -61,8 +60,8 @@ export default function HomePageAside({ userName }: { userName: string }) {
               }
             >
               <QrModal
-                userName={defaultCard.user?.username ?? ''}
-                cardSlug={defaultCard.slug ?? ''}
+                username={defaultCard.user?.username ?? ''}
+                slug={defaultCard.user?.username}
               />
             </Dialog>
           )}
@@ -82,8 +81,8 @@ export default function HomePageAside({ userName }: { userName: string }) {
               }
             >
               <QrModal
-                userName={defaultCard.user.username!}
-                cardSlug={defaultCard.slug}
+                username={defaultCard.user?.username ?? ''}
+                slug={defaultCard.user?.username}
               />
             </Dialog>
           )}
