@@ -1,12 +1,16 @@
 'use client';
 
+import { useAppDispatch } from '@/core/redux/clientStore';
 import { LoginSchemaType, loginSchema } from '@/module/login/loginType';
+import userApi from '@/module/user/userApi';
+import { useMutation } from 'convex/react';
 import { useFormik } from 'formik';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { toFormikValidate } from 'zod-formik-adapter';
+import { api } from '../../../convex/_generated/api';
 import ButtonForm from '../ButtonForm';
 import FormWrapper from '../FormWrapper';
 import InputComp from '../Inputs/InputComp';
@@ -34,11 +38,18 @@ const LOGIN_FEILDS: LoginFeildProps[] = [
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const navigator = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const saveUser = useMutation(api.rooms.saveUser);
+
   const callback = searchParams.get('callback');
+
+  // useEffect(() => {
+  //   dispatch(userApi.endpoints.getUser.initiate());
+  // }, [dispatch]);
+
   const onSubmit = async (data: LoginSchemaType) => {
     setIsLoading(true);
     await signIn('credentials', {
@@ -47,9 +58,25 @@ const LoginForm: React.FC = () => {
       callbackUrl: '/dashboard',
       redirect: false,
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response?.error) {
-          router.replace('/dashboard');
+          await dispatch(userApi.endpoints.getUser.initiate())
+            .then((userResponse) => {
+              if ((userResponse as any).data) {
+                saveUser({
+                  avatar: userResponse.data!.avatar ?? undefined,
+                  email: userResponse.data!.email,
+                  name: userResponse.data!.fullname,
+                  uuid: userResponse.data!.id.toString(),
+                });
+                router.replace('/dashboard');
+              } else {
+                router.refresh();
+                throw 'No user found';
+              }
+            })
+            .catch((error) => {});
+
           // toast.success('Sucessfully logged in.');
         } else {
           // toast.error('Login Failed! Please check your credentials.');

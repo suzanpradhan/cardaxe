@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import Notification from '../components/Notification';
 import Providers from '../core/redux/providers';
 import './globals.css';
+import { ConvexClientProvider } from './providers/ConvexClientProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body className={clsx(inter.className)}>
         <div id="popUpModal" />
         <Providers>
-          <>{children}</>
+          <ConvexClientProvider>
+            <>{children}</>
+          </ConvexClientProvider>
         </Providers>
         <Notification />
         <Toaster />
