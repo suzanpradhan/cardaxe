@@ -8,8 +8,10 @@ import connectApi from '@/module/connect/connectApi';
 import { ConnectionType, ConnectUserType } from '@/module/connect/connectTypes';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
+import { useMutation } from 'convex/react';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { api } from '../../../../../../convex/_generated/api';
 import profileImage from '../../../../../../public/profile/profile.png';
 
 export default function Page() {
@@ -17,6 +19,9 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const scrollableDivRef = useRef<any>(null);
+  const addMember = useMutation(api.rooms.addMembers);
+
+  const createRoom = useMutation(api.rooms.createRoom);
   const dispatch = useAppDispatch();
 
   const userProfile = useAppSelector(
@@ -68,8 +73,11 @@ export default function Page() {
     setIsLoading(false);
   }, [dispatch, currentPage]);
 
-  const handleAcceptRequest = (toUser: ConnectUserType, requestId: number) => {
-    dispatch(
+  const handleAcceptRequest = async (
+    toUser: ConnectUserType,
+    requestId: number
+  ) => {
+    await dispatch(
       connectApi.endpoints.acceptRequest.initiate({
         to_user: {
           fullname: toUser.fullname,
@@ -85,7 +93,21 @@ export default function Page() {
         id: requestId,
         timestamp: new Date().toISOString(),
       })
-    );
+    )
+      .then((response: any) => {
+        createRoom({ name: `${userProfile.id} - ${toUser.id}` });
+        addMember({
+          profileId: userProfile.id.toString(),
+          roomName: `${userProfile.id} - ${toUser.id}`,
+        });
+        if (toUser.id) {
+          addMember({
+            profileId: toUser.id.toString(),
+            roomName: `${userProfile.id} - ${toUser.id}`,
+          });
+        }
+      })
+      .catch(Error);
   };
 
   return (
