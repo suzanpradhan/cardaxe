@@ -32,9 +32,9 @@ export default function MessageCard({ roomId, profileId }: MessageCardProps) {
           objectFit="contain"
         />
       </span>
-      <span className="flex flex-col">
+      <span className="flex w-[80%] flex-1 flex-col">
         <p className="text-sm">{roomMembers?.[0]?.name}</p>
-        <p className="text-xs text-grayfont">
+        <p className="line-clamp-1 w-full overflow-hidden truncate text-ellipsis text-xs text-grayfont">
           {messages?.at(-1)?.content ?? '--'}
         </p>
       </span>
