@@ -1,5 +1,5 @@
 'use client';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ const SidebarElements = ({ item }: { item: SidebarNavElementsProps }) => {
   }, [pathName, setToggle, item]);
   return (
     <li
-      className={clsx(
+      className={cn(
         'h-12 w-12 rounded-lg hover:bg-blueBg/60 hover:text-blueTheme/60 lg:w-full',
         toggle ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
         (item.label == 'Notification' || item.label == 'Analytics') &&

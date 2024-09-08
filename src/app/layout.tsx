@@ -1,5 +1,5 @@
 import { Toaster } from '@/components/ui/toaster';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Notification from '../components/Notification';
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="">
-      <body className={clsx(inter.className)}>
+      <body className={cn(inter.className)}>
         <div id="popUpModal" />
         <Providers>
           <ConvexClientProvider>

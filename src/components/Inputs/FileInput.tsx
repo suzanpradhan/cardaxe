@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { ChangeEventHandler } from 'react';
 import InputLable from './InputLabel';
 
@@ -23,7 +23,7 @@ const FileInput = ({ required = true, ...props }: FileInputProps) => {
 
       <label
         htmlFor={props.id}
-        className={clsx(
+        className={cn(
           'line-clamp-1 block !h-11 w-full truncate rounded-md border-1 bg-inputBgGrey p-2 text-inputPlaceholder placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-gray-50',
           props.error ? 'border-redError' : 'border-borderMain'
         )}

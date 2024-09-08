@@ -8,7 +8,6 @@ import ContentHeading from '@/components/landingPage/ContentHeading';
 import FaqCollection from '@/components/landingPage/FaqCollection';
 import Features from '@/components/landingPage/Features';
 import HeadingWithText from '@/components/landingPage/HeadingWithText';
-import clsx from 'clsx';
 import { Edit, Edit2, ElementPlus, UserEdit } from 'iconsax-react';
 import Image from 'next/image';
 import { default as homepage_background } from '../../public/homepage_background.png';

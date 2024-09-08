@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
 interface ButtonProps {
@@ -16,12 +16,12 @@ const ButtonRounded = ({ isHeader, label, href, classNames }: ButtonProps) => {
         <Link
           href={href}
           type="button"
-          className={clsx(
-            'text-sm md:text-base cursor-pointer rounded-full inline-block px-10 py-[10px] w-fit',
+          className={cn(
+            'inline-block w-fit cursor-pointer rounded-full px-10 py-[10px] text-sm md:text-base',
             classNames && classNames,
             isHeader
-              ? 'text-black bg-transparent  dark:text-white hover:ring-black hover:ring-2 active:bg-black active:shadow-xl active:text-white'
-              : 'text-white bg-blueTheme shadow-xl dark:bg-blueTheme active:ring-black active:ring-1'
+              ? 'bg-transparent text-black hover:ring-2 hover:ring-black active:bg-black active:text-white active:shadow-xl dark:text-white'
+              : 'bg-blueTheme text-white shadow-xl active:ring-1 active:ring-black dark:bg-blueTheme'
           )}
         >
           {label}

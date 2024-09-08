@@ -1,5 +1,5 @@
 'use client';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ const ProfileAsideElements = ({
   }, [pathName, setIsActive, item]);
   return (
     <li
-      className={clsx(
+      className={cn(
         'w-full min-w-fit rounded-lg p-3 hover:text-blueTheme',
         isActive ? 'bg-blueBg text-blueTheme' : 'text-grayfont',
         item.label == 'Notification' && 'hidden sm:block'

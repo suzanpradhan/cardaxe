@@ -6,7 +6,7 @@ import { EffectCoverflow, Navigation, Zoom } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import square_image from '../../../public/square_image.jpg';
 // import 'swiper/swiper-bundle.min.css';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { useRef, useState } from 'react';
 import 'swiper/css/navigation';
 import 'swiper/css/zoom';
@@ -38,19 +38,19 @@ const Carousel = () => {
 
   return (
     <div className="relative w-full">
-      <div className="text-black md:flex gap-4 absolute hidden right-0 ">
+      <div className="absolute right-0 hidden gap-4 text-black md:flex">
         <button
           // disabled={swiperRef.current?.swiper.isBeginning}
           onClick={() => swiperRef.current?.swiper.slidePrev()}
-          className={clsx(
-            'p-1 border-2 border-black rounded-full disabled:border-gray-500 disabled:text-red-500'
+          className={cn(
+            'rounded-full border-2 border-black p-1 disabled:border-gray-500 disabled:text-red-500'
           )}
         >
           <GrFormPrevious />
         </button>
         <button
           // disabled={swiperRef.current?.swiper.isEnd}
-          className="p-1 border-2 border-black rounded-full disabled:border-gray-500 disabled:text-red-500"
+          className="rounded-full border-2 border-black p-1 disabled:border-gray-500 disabled:text-red-500"
           onClick={() => swiperRef.current?.swiper.slideNext()}
         >
           <GrFormNext />
@@ -61,7 +61,7 @@ const Carousel = () => {
         navigation={false}
         zoom={true}
         breakpoints={breakpoints}
-        className="w-full m-8 mt-12"
+        className="m-8 mt-12 w-full"
         ref={swiperRef}
         onSlideChange={() => {}}
       >

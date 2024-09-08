@@ -13,8 +13,6 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "prepare": "husky"
   },
   "dependencies": {
@@ -25,14 +23,12 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@reduxjs/toolkit": "^2.2.5",
     "@tailwindcss/container-queries": "^0.1.1",
-    "@types/cookie": "^0.5.1",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/react-html-parser": "^2.0.2",
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.7.0",
-    "classnames": "^2.3.2",
+    "clsx": "^2.1.1",
     "convex": "^1.15.0",
-    "cookie": "^0.5.0",
     "date-fns": "^3.6.0",
     "deep-object-diff": "^1.1.9",
     "eslint": "8.46.0",
@@ -72,7 +68,6 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-modal": "^3.16.3",
-    "eslint-plugin-storybook": "^0.6.13",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5"
   }

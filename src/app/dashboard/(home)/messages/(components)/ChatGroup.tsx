@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 import profileImage from '../../../../../../public/profile/profile.png';
@@ -11,7 +11,7 @@ export default function ChatGroup({
   isMyChat?: boolean;
 }) {
   return (
-    <div className={clsx('flex w-full gap-4')}>
+    <div className={cn('flex w-full gap-4')}>
       {!isMyChat ? (
         <div className="relative h-12 w-12 rounded-full">
           <Image
@@ -27,7 +27,7 @@ export default function ChatGroup({
         <></>
       )}
       <div
-        className={clsx(
+        className={cn(
           'flex flex-1 flex-col gap-4',
           isMyChat ? 'items-end' : 'items-start'
         )}
