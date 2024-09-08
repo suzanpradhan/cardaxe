@@ -1,6 +1,6 @@
 'use client';
 
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { Mobile, Monitor } from 'iconsax-react';
 import React, { useState } from 'react';
 
@@ -33,16 +33,16 @@ const MobileDesktopSwitch = () => {
     setView(item.value);
   };
   return (
-    <div className="flex mx-auto ">
+    <div className="mx-auto flex">
       {MOBILE_DESKTOP_SWITCH_VALUES.map((item, index) => (
         <button
           key={index}
           onClick={(e) => handleClick(e, item)}
-          className={clsx(
-            ' rounded flex px-3 py-2',
+          className={cn(
+            'flex rounded px-3 py-2',
             view === item.value
-              ? 'text-white bg-black '
-              : 'text-grayfont bg-componentBgGrey'
+              ? 'bg-black text-white'
+              : 'bg-componentBgGrey text-grayfont'
           )}
         >
           {item.icon}

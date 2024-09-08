@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { GroupBase, MultiValue, SingleValue } from 'react-select';
 import { AsyncPaginate, LoadOptions } from 'react-select-async-paginate';
 import { z } from 'zod';
@@ -87,7 +87,7 @@ const SelectInput = ({
         getOptionValue={(option: any) => option.value}
         getOptionLabel={(option: any) => option.label}
         onChange={props.handleChange}
-        className={clsx(
+        className={cn(
           'placeholder:text-placeholder mt-1 w-full rounded-md border-1 bg-inputBgGrey',
           error ? 'border-redError' : 'border-borderMain'
         )}

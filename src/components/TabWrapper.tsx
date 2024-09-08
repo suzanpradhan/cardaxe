@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -38,14 +38,14 @@ const Tabwrapper = ({
       {tabElements.map((item, index) => (
         <li
           key={index}
-          className={clsx(
+          className={cn(
             'pb-2',
             activeTab === index && '-my-[2.5px] border-b-4 border-blue-700'
           )}
         >
           <Link
             href={`${slug}/${item.link}`}
-            className={clsx(
+            className={cn(
               'mb-2 w-full rounded-md p-3 text-sm hover:text-blue-700',
               activeTab === index && 'bg-blue-200'
             )}

@@ -1,6 +1,6 @@
 'use client';
 
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -16,7 +16,7 @@ export default function NotificationsLayout({
       <div className="flex gap-2">
         <Link
           href={'/dashboard/notification'}
-          className={clsx(
+          className={cn(
             'min-w-[5rem] rounded-md p-2 text-center',
             pathname.endsWith('notification')
               ? 'bg-blueBg text-blueTheme'
@@ -27,7 +27,7 @@ export default function NotificationsLayout({
         </Link>
         <Link
           href={'/dashboard/notification/requests'}
-          className={clsx(
+          className={cn(
             'min-w-[5rem] rounded-md p-2 text-center',
             pathname.endsWith('requests')
               ? 'bg-blueBg text-blueTheme'

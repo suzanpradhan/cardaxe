@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { Filter, SearchNormal1 } from 'iconsax-react';
 
 type SearchInputPropsType = {
@@ -16,7 +16,7 @@ const SearchInput = ({
   return (
     <label
       htmlFor="input"
-      className={clsx(
+      className={cn(
         'flex items-center justify-between rounded-md border-borderMain text-black',
         greyBackground
           ? 'bg-inputBgGrey focus-within:bg-blueBg'

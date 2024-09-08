@@ -28,7 +28,7 @@ const MessagePage = () => {
   // });
 
   return (
-    <div className="h-screen p-4">
+    <div className="mx-auto h-screen p-4 max-lg:w-96">
       <h3 className="mb-5 text-xl font-semibold">Message</h3>
       <div className="flex h-[95%] gap-4">
         <aside className="flex h-full max-w-md shrink-0 basis-110 flex-col gap-4">

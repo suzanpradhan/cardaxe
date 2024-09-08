@@ -1,5 +1,5 @@
+import { cn } from '@/lib/utils';
 import { ArrowDownRight, ArrowUpRight } from '@phosphor-icons/react';
-import clsx from 'clsx';
 import { More } from 'iconsax-react';
 
 type AnalyticsCardProps = {
@@ -34,9 +34,7 @@ export default function AnalyticsCard({
         ) : (
           <ArrowDownRight size={24} className="text-red-600" />
         )}
-        <span
-          className={clsx(increase > 0 ? 'text-green-600' : 'text-red-600')}
-        >
+        <span className={cn(increase > 0 ? 'text-green-600' : 'text-red-600')}>
           {`${Math.abs(increase)}%  `}{' '}
         </span>
         <span>from last week</span>

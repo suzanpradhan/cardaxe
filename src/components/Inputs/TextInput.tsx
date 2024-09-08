@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { ChangeEventHandler } from 'react';
 import InputLable from './InputLabel';
 
@@ -28,7 +28,7 @@ const TextInput = ({ isMulti, className, error, ...props }: TextFieldProps) => {
       )}
       {!isMulti ? (
         <input
-          className={clsx(
+          className={cn(
             'mt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
             error ? 'border-redError' : 'border-borderMain'
           )}
@@ -37,7 +37,7 @@ const TextInput = ({ isMulti, className, error, ...props }: TextFieldProps) => {
         />
       ) : (
         <textarea
-          className={clsx(
+          className={cn(
             'mt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
             error ? 'border-redError' : 'border-borderMain'
           )}

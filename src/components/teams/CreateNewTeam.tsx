@@ -3,9 +3,9 @@ import { CategoryType, TeamFormType } from '@/module/teams/teamTypes';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
+import { cn } from '@/lib/utils';
 import teamsApi from '@/module/teams/teamApi';
 import { CaretDown, CaretUp } from '@phosphor-icons/react';
-import clsx from 'clsx';
 import { FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
@@ -157,9 +157,9 @@ const CreateNewTeam = ({
         {isFormExpanded ? <CaretDown size={24} /> : <CaretUp size={24} />}
       </button>
 
-      <div className={clsx('relative overflow-clip')}>
+      <div className={cn('relative overflow-clip')}>
         <section
-          className={clsx(
+          className={cn(
             'flex flex-col gap-4 py-2 transition duration-300',
             !isFormExpanded ? '-translate-y-full' : 'translate-y-0'
           )}

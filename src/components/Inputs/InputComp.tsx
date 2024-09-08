@@ -1,5 +1,5 @@
 import { InputFieldProps } from '@/core/types/appTypes';
-import clsx from 'clsx';
+import { cn } from '@/lib/utils';
 import { Eye, EyeSlash } from 'iconsax-react';
 import React, { ChangeEvent, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
@@ -44,7 +44,7 @@ const InputComp = ({
                 placeholder={placeholder}
                 value={(inputValue as string) ?? ''}
                 defaultValue={inputValue === null ? '' : (inputValue as string)}
-                className={clsx(
+                className={cn(
                   'h-full w-full rounded-md border-1 bg-inputBgGrey px-2 focus:outline-1 focus:outline-blueTheme',
                   error ? 'border-redError' : 'border-borderMain'
                 )}
@@ -58,7 +58,7 @@ const InputComp = ({
           <div className="flex h-full w-full flex-col items-start gap-2">
             <InputLable htmlFor={zSchemaName} inputLabel={inputLabel ?? ''} />
             <CreatableSelect
-              className={clsx(
+              className={cn(
                 'placeholder:text-placeholder w-full rounded-md border-1 bg-inputBgGrey',
                 error ? 'border-redError' : 'border-borderMain'
               )}
@@ -116,7 +116,7 @@ const InputComp = ({
 
             <label
               htmlFor={zSchemaName}
-              className={clsx(
+              className={cn(
                 'line-clamp-1 block !h-11 w-full truncate rounded-md border-1 bg-inputBgGrey p-2 text-inputPlaceholder placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-gray-50',
                 error ? 'border-redError' : 'border-borderMain'
               )}
@@ -154,7 +154,7 @@ const InputComp = ({
               value={(inputValue as string) ?? ''}
               {...getFieldProps?.(zSchemaName)}
               placeholder={placeholder}
-              className={clsx(
+              className={cn(
                 'mt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
@@ -191,7 +191,7 @@ const InputComp = ({
               placeholder={placeholder}
               {...getFieldProps?.(zSchemaName)}
               // onChange={(e) => handleChange?.(e)}
-              className={clsx(
+              className={cn(
                 'w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 focus:outline-blueTheme disabled:bg-inputDisabled disabled:text-slate-600',
                 error ? 'border-redError' : 'border-borderMain'
               )}
@@ -212,7 +212,7 @@ const InputComp = ({
           type={showPassword ? 'text' : 'password'}
           placeholder={placeholder}
           {...getFieldProps?.(zSchemaName)}
-          className={clsx(
+          className={cn(
             'focus:outline-blueThememt-1 w-full rounded-md border-1 bg-inputBgGrey p-2 placeholder:text-inputPlaceholder focus:outline-1 disabled:bg-inputDisabled disabled:text-slate-600',
             error ? 'border-redError' : 'border-borderMain'
           )}

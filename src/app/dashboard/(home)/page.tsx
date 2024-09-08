@@ -16,7 +16,6 @@ import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import connectApi from '@/module/connect/connectApi';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
-import clsx from 'clsx';
 import {
   BoxAdd,
   Eye,
@@ -40,25 +39,25 @@ const NAVIGATION_ICONS = [
     size="32"
     variant="Bulk"
     key={0}
-    className={clsx('bg-[#d3f4df] text-[#23c562]', ICONS_COMMON_CLASS)}
+    className={cn('bg-[#d3f4df] text-[#23c562]', ICONS_COMMON_CLASS)}
   />,
   <BoxAdd
     size="32"
     variant="Bulk"
     key={1}
-    className={clsx('bg-[#ffe9cc] text-[#fba530]', ICONS_COMMON_CLASS)}
+    className={cn('bg-[#ffe9cc] text-[#fba530]', ICONS_COMMON_CLASS)}
   />,
   <ScanBarcode
     size="32"
     variant="Bulk"
     key={2}
-    className={clsx('bg-[#ffd5d6] text-[#ff1843]', ICONS_COMMON_CLASS)}
+    className={cn('bg-[#ffd5d6] text-[#ff1843]', ICONS_COMMON_CLASS)}
   />,
   <Share
     size="32"
     variant="Bulk"
     key={3}
-    className={clsx('bg-[#d5e3ff] text-[#2f73fe]', ICONS_COMMON_CLASS)}
+    className={cn('bg-[#d5e3ff] text-[#2f73fe]', ICONS_COMMON_CLASS)}
   />,
 ];
 const OPTIONS = ['About', 'Help', 'Privacy', 'Terms', 'Language'];
