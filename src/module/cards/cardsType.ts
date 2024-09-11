@@ -52,7 +52,6 @@ export type CardResponseType<T> = {
   cardInfos: Array<InfoSchemaType>,
   isPublished: boolean,
   isLiked: boolean,
-  isConnected: boolean,
   isDefault: boolean,
   user?: UserType
   likes: number,

@@ -34,6 +34,8 @@ export const UserProfileSchema = z.object({
   avatar: z.string().optional().nullable(),
   updateAvatar: z.custom<File>().optional(),
   bio: z.string().optional().nullable(),
+  isConnected: z.boolean().optional().nullable(),
+  isRequested: z.boolean().optional().nullable(),
 });
 
 export type UserType = z.infer<typeof UserProfileSchema>;

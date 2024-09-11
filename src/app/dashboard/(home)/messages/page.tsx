@@ -28,10 +28,12 @@ const MessagePage = () => {
   // });
 
   return (
-    <div className="mx-auto h-screen p-4 max-lg:w-96">
-      <h3 className="mb-5 text-xl font-semibold">Message</h3>
-      <div className="flex h-[95%] gap-4">
-        <aside className="flex h-full max-w-md shrink-0 basis-110 flex-col gap-4">
+    <div className="mx-auto flex h-full flex-col p-4 max-lg:w-96">
+      <h3 className="mb-5 block text-xl font-semibold max-lg:hidden">
+        Message
+      </h3>
+      <div className="my-4 flex flex-1 flex-row gap-4 overflow-x-scroll">
+        <aside className="flex h-full max-w-md shrink-0 basis-80 flex-col gap-4 lg:basis-110">
           <div className="flex w-full gap-2">
             <span className="">Inbox</span>
             <span className="m-0 flex flex-1 items-center p-0">
