@@ -1,4 +1,6 @@
 import { apiPaths } from '@/core/api/apiConstants';
+import { useAppDispatch } from '@/core/redux/clientStore';
+import connectApi from '@/module/connect/connectApi';
 import { UserType } from '@/module/user/userType';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
@@ -35,10 +37,33 @@ type ProfileValueType = {
 const ProfileDescription = ({
   values,
   user,
+  userProfile,
 }: {
   values: ProfileValueType;
   user?: UserType;
+  userProfile?: UserType;
 }) => {
+  const dispatch = useAppDispatch();
+  const handleConnect = (toUser: UserType, fromUser: UserType) => {
+    console.log('here');
+    dispatch(
+      connectApi.endpoints.sendRequest.initiate({
+        to_user: {
+          fullname: toUser!.fullname,
+          email: toUser!.email,
+          username: toUser!.username,
+        },
+        from_user: {
+          fullname: fromUser!.fullname,
+          email: fromUser!.email,
+          username: fromUser!.username,
+        },
+        accepted: false,
+        id: user!.id,
+        timestamp: new Date().toISOString(),
+      })
+    );
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
@@ -70,10 +95,22 @@ const ProfileDescription = ({
             </span>
           </div>
           <div className="flex gap-2">
-            <button className="flex h-8 w-48 items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
-              <Flash size="21" variant="Bulk" />
-              Connect
-            </button>
+            {userProfile &&
+            !user?.isConnected &&
+            !user?.isRequested &&
+            user &&
+            userProfile.username !== user?.username ? (
+              <button
+                onClick={() => handleConnect(user, userProfile)}
+                type="button"
+                className="flex h-8 w-48 items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+              >
+                <Flash size="21" variant="Bulk" />
+                Connect
+              </button>
+            ) : (
+              <></>
+            )}
             <div className="col-span-5 flex items-center justify-start gap-2">
               <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
                 <Heart size="21" variant="Bulk" />

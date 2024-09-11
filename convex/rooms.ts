@@ -139,7 +139,6 @@ export const getRoomMembers = query({
     handler: async (ctx, args) => {
         const members = await ctx.db.query("members").filter(q => q.eq(q.field("room_id"), args.roomId) && q.neq(q.field('profile_id'), args.uuid)).collect();
         const membersProfile = await Promise.all(members.map((item, index) => ctx.db.query("profiles").filter(q => q.eq(q.field("id"), item.profile_id)).first()))
-        console.log("members", membersProfile)
         return membersProfile
 
 

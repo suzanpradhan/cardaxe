@@ -47,8 +47,6 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
 
   const sendMessage = useMutation(api.rooms.sendMessage);
 
-  console.log('message', messages);
-
   return (
     <section className="flex h-full shrink grow basis-0 flex-col rounded-lg">
       <div className="flex w-full items-center gap-4 border-x-1 border-t-1 border-inputBgGrey bg-inputBgGrey px-4 py-3">
@@ -107,7 +105,6 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
           <button
             className="active:text-blueTheme"
             onClick={() => {
-              console.log('send message', roomId);
               sendMessage({
                 content: message,
                 profile_id: profileId,

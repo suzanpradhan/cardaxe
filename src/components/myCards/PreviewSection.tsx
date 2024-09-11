@@ -43,6 +43,7 @@ const PreviewSection = ({
   layout,
   variableValues,
   socialValues,
+  userProfile,
 }: {
   layout: number;
   variableValues: ContentFormUpdateSchemaType &
@@ -50,6 +51,7 @@ const PreviewSection = ({
     VariableValueType;
   socialValues?: InfosFormsUpdateSchemaType;
   user?: UserType;
+  userProfile?: UserType;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -75,7 +77,7 @@ const PreviewSection = ({
     dispatch(cardsApi.endpoints.getCardTemmplate.initiate(layout.toString()));
   }, [dispatch, layout]);
 
-  console.log('template', user);
+  console.log('template', userProfile);
 
   return (
     <FormWrapper className="">
@@ -94,6 +96,7 @@ const PreviewSection = ({
             bio: variableValues.bio ?? '',
           }}
           user={user}
+          userProfile={userProfile}
         />
         {socialValues ? (
           <ProfileDetails

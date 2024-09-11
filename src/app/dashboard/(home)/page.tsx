@@ -192,7 +192,9 @@ const DashboardPage = () => {
                   >
                     {card.user?.fullname}
                   </Link>
-                  {!card.isConnected ? (
+                  {card.user?.username !== userProfile.username &&
+                  !card.user?.isConnected &&
+                  !card.user?.isRequested ? (
                     <button
                       className={cn(
                         'bg flex items-center gap-1 rounded-sm bg-blueTheme p-1 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'

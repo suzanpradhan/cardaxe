@@ -89,7 +89,6 @@ const InputComp = ({
               role="switch"
               name={zSchemaName}
               onChange={(e) => {
-                console.log(e.target.name, e.target.value, !inputValue);
                 const event = {
                   ...e,
                   target: {

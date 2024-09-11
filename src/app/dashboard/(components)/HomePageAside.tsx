@@ -14,15 +14,18 @@ const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
 export default function HomePageAside({ userName }: { userName: string }) {
   const dispatch = useAppDispatch();
+
   const defaultCard = useAppSelector(
     (state: RootState) =>
-      state.baseApi.queries[`getDefaultCard-${userName}`]
+      state.baseApi.queries[`getCard-${userName}`]
         ?.data as CardResponseType<CardTemplatesType>
   );
 
   useEffect(() => {
     if (userName) dispatch(cardsApi.endpoints.getCard.initiate(userName));
   }, [dispatch, userName]);
+
+  console.log('defaultCard', defaultCard);
   if (defaultCard) {
     return (
       <>
