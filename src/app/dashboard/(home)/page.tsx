@@ -162,10 +162,10 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-12 grid grid-cols-12 xl:col-span-8 xl:col-start-3">
+    <div className="grid h-full grid-cols-12">
+      <div className="full col-span-12 grid grid-cols-12 xl:col-span-8 xl:col-start-3">
         <div
-          className="col-span-12 h-screen overflow-y-scroll border-zinc-100 lg:col-span-6 lg:border-r xl:col-span-7"
+          className="full col-span-12 overflow-y-scroll border-zinc-100 max-lg:mb-20 lg:col-span-6 lg:border-r xl:col-span-7"
           ref={scrollableDivRef}
           onScroll={handleScroll}
         >

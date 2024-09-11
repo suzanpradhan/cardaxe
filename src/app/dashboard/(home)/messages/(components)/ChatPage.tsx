@@ -48,7 +48,7 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
   const sendMessage = useMutation(api.rooms.sendMessage);
 
   return (
-    <section className="flex h-full shrink grow basis-0 flex-col rounded-lg">
+    <section className="flex h-full shrink grow basis-0 flex-col rounded-lg max-lg:w-[22rem]">
       <div className="flex w-full items-center gap-4 border-x-1 border-t-1 border-inputBgGrey bg-inputBgGrey px-4 py-3">
         <div className="relative h-12 w-12 rounded-full">
           <Image

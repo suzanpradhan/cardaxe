@@ -409,9 +409,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="flex max-h-screen min-h-screen flex-col gap-4 overflow-hidden px-2 lg:px-4">
+    <div className="flex h-full flex-col gap-4 overflow-hidden px-2 lg:px-4">
       <div className="mx-auto mt-4 flex h-auto w-full max-w-sm flex-col gap-3 lg:max-w-none lg:flex-row">
-        <div className="has-[:focus]:border-1 has-[:focus]:border-black group flex h-10 min-w-max flex-grow items-center gap-2 rounded-md bg-zinc-100 px-4">
+        <div className="group flex h-10 w-full flex-grow items-center gap-2 rounded-md bg-zinc-100 px-4 has-[:focus]:border-1 has-[:focus]:border-black">
           <label htmlFor="title" className="text-sm text-grayfont">
             Title:
           </label>
@@ -462,7 +462,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           </span>
         </div>
       </div>
-      <div className="mb-5 flex grow items-start gap-4 max-lg:mb-20">
+      <div className="mb-5 flex flex-1 grow items-start gap-4 max-lg:mb-20">
         <div
           className={`mx-auto w-full max-w-sm lg:block lg:max-w-md ${!isPreview ? 'block' : 'hidden'}`}
         >
