@@ -27,6 +27,8 @@ const page = async (props: any) => {
       });
       const response = await res.json();
 
+      console.log('response', response);
+
       cardInfo = snakeToCamel(response);
     }
   } catch (err) {
@@ -53,7 +55,11 @@ const page = async (props: any) => {
   }
 
   if ((cardInfo as any).detail) {
-    return <>Not found</>;
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        Not found
+      </div>
+    );
   }
 
   const variableValues = {

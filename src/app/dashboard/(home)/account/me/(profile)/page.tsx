@@ -40,7 +40,7 @@ export default function Page() {
     <div className="my-4 flex w-full flex-col gap-4">
       {user ? (
         <>
-          <div className="mx-auto w-140 min-w-min border-1 border-borderMain p-4">
+          <div className="mx-auto w-full min-w-min border-1 border-borderMain p-4 lg:w-140">
             <ProfileDescription
               values={{
                 address: user.address ?? '',
@@ -51,7 +51,7 @@ export default function Page() {
               user={user}
             />
           </div>
-          <div className="mx-auto w-140 min-w-min border-1 border-borderMain p-4">
+          <div className="mx-auto w-full min-w-min border-1 border-borderMain p-4 lg:w-140">
             <h2></h2>
             <h3 className="text-base font-semibold leading-5 text-zinc-900">
               Business card

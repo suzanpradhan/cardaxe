@@ -9,7 +9,7 @@ import { Eye, Flash, Heart, MoreSquare, Share } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 // import profileImage from '../../public/profile/profile.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardLayouts from './CardLayouts.server';
 import Dialog from './Dialog';
 import QrModal from './QrModal';
@@ -25,11 +25,14 @@ export default function HomePageCard({
   card,
   userProfile,
 }: HomePageCardProps) {
-  const [isConnectionLoading, toggleConnectionLoading] = useState(false);
+  // const [isConnectionLoading, toggleConnectionLoading] = useState(false);
+  const [isLiked, toggleLiked] = useState(false);
+  const [isConnected, toggleConnected] = useState(false);
+
   const dispatch = useAppDispatch();
 
   const handleConnect = (user: UserType) => {
-    toggleConnectionLoading(true);
+    toggleConnected(true);
     dispatch(
       connectApi.endpoints.sendRequest.initiate({
         to_user: {
@@ -47,10 +50,10 @@ export default function HomePageCard({
         timestamp: new Date().toISOString(),
       })
     );
-    toggleConnectionLoading(false);
   };
 
   const handleLike = (cardId: number) => {
+    toggleLiked(true);
     dispatch(
       cardsApi.endpoints.likeCard.initiate({
         card: cardId.toString(),
@@ -59,8 +62,27 @@ export default function HomePageCard({
     );
   };
   const handleDislike = (cardSlug: string) => {
+    toggleLiked(false);
+
     dispatch(cardsApi.endpoints.dislikeCard.initiate(cardSlug));
   };
+
+  useEffect(() => {
+    if (card.user?.isConnected || card.user?.isRequested) {
+      toggleConnected(true);
+    } else {
+      toggleConnected(false);
+    }
+  }, [card.user?.isConnected, card.user?.isRequested]);
+
+  useEffect(() => {
+    if (card.isLiked) {
+      toggleLiked(true);
+    } else {
+      toggleLiked(false);
+    }
+  }, [card.isLiked]);
+
   return (
     <div
       key={index}
@@ -83,23 +105,17 @@ export default function HomePageCard({
         >
           {card.user?.fullname}
         </Link>
-        {card.user?.username !== userProfile.username &&
-        !card.user?.isConnected &&
-        !card.user?.isRequested ? (
+        {card.user?.username !== userProfile.username && !isConnected ? (
           <button
             className={cn(
               'bg flex items-center gap-1 rounded-sm bg-blueTheme p-1 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'
             )}
             onClick={() => card.user?.id && handleConnect(card.user)}
           >
-            {isConnectionLoading ? (
-              <p className="text-sm">Connecting</p>
-            ) : (
-              <>
-                <Flash size="16" variant={'Bulk'} />{' '}
-                <p className="text-sm">Connect</p>
-              </>
-            )}
+            <>
+              <Flash size="16" variant={'Bulk'} />{' '}
+              <p className="text-sm">Connect</p>
+            </>
           </button>
         ) : (
           <></>
@@ -128,16 +144,16 @@ export default function HomePageCard({
         <button
           className={cn(
             'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
-            card.isLiked ? 'text-blueTheme' : 'text-zinc-400'
+            isLiked ? 'text-blueTheme' : 'text-zinc-400'
           )}
           onClick={() =>
             card.user?.id &&
             card.id &&
             card.slug &&
-            (card.isLiked ? handleDislike(card.slug) : handleLike(card.id))
+            (isLiked ? handleDislike(card.slug) : handleLike(card.id))
           }
         >
-          <Heart size="24" variant={card.isLiked ? 'Bulk' : 'TwoTone'} />
+          <Heart size="24" variant={isLiked ? 'Bulk' : 'TwoTone'} />
           <p>{card.likes}</p>
         </button>
         <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
