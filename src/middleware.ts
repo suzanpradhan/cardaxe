@@ -12,12 +12,12 @@ export async function middleware(req: any) {
     }
 
     if (token) {
-        if (pathname === '/login') {
+        if (pathname === '/login' || pathname === '/register') {
             return NextResponse.redirect(new URL('/dashboard/', req.nextUrl.origin));
         }
         return;
     } else {
-        if (pathname === '/login') {
+        if (pathname === '/login' || pathname === '/register') {
             return;
         }
         return NextResponse.redirect(new URL('/login' + "?callback=" + req.url, req.nextUrl.origin));
@@ -25,5 +25,5 @@ export async function middleware(req: any) {
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*',],
+    matcher: ['/dashboard/:path*', '/login', '/register'],
 };

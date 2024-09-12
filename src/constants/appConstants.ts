@@ -53,14 +53,14 @@ export const MenuData: MenuDataType[] = [
         title: 'Services',
         link: '/services',
     },
-    {
-        title: 'Login',
-        link: '/login',
-    },
-    {
-        title: 'Register',
-        link: '/register',
-    },
+    // {
+    //     title: 'Login',
+    //     link: '/login',
+    // },
+    // {
+    //     title: 'Register',
+    //     link: '/register',
+    // },
 ];
 
 export const FAQS: FaqsDataType = {
