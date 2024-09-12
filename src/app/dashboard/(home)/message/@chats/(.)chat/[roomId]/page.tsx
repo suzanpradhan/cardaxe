@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import ChatPage from '../../../messages/(components)/ChatPage';
+import ChatPage from '../../../(components)/ChatPage';
 
 export default function Page({ params }: { params: { roomId: string } }) {
   const session = useSession();

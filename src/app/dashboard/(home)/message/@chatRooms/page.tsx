@@ -7,14 +7,16 @@ import { Setting2 } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import MessageCard from '../(components)/MessageCard';
 import { api } from '../../../../../../convex/_generated/api';
-import MessageCard from '../../messages/(components)/MessageCard';
 
 export default function Page() {
   const session = useSession();
   const roomIds = useQuery(api.rooms.getMyRoomIds, {
     uuid: session.data?.user?.id.toString() ?? '',
   });
+
+  console.log('roomIds', roomIds);
 
   const [activeRoom, setActiveRoom] = useState<string | undefined>(undefined);
 
@@ -23,7 +25,7 @@ export default function Page() {
   }, [roomIds]);
 
   return (
-    <aside className="flex h-full max-w-md shrink-0 basis-80 flex-col gap-4 lg:basis-110">
+    <aside className="flex h-full max-w-md shrink-0 basis-full flex-col gap-4 lg:basis-110">
       <div className="flex w-full gap-2">
         <span className="">Inbox</span>
         <span className="m-0 flex flex-1 items-center p-0">
@@ -39,7 +41,7 @@ export default function Page() {
           roomIds?.map((item, index) => (
             <li key={index} onClick={() => setActiveRoom(item)}>
               <Link
-                href={`/dashboard/messageV2/${roomIds}`}
+                href={`/dashboard/message/chat/${item}`}
                 className={cn(
                   'flex items-center gap-4 rounded-md p-2',
                   activeRoom === item ? 'bg-blueBg' : ''

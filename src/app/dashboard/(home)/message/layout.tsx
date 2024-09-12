@@ -15,7 +15,7 @@ export default function Layout({
   const pathname = usePathname();
   const [showMessages, setShowMessage] = useState<boolean>(true);
   useEffect(() => {
-    if (pathname.endsWith('messageV2')) {
+    if (pathname.endsWith('message')) {
       setShowMessage(false);
     } else {
       setShowMessage(true);
@@ -28,13 +28,13 @@ export default function Layout({
     // </div>
     <div className="mx-auto flex h-full flex-col p-4 max-lg:w-96">
       {page}
-      {/* <div className="my-4 flex flex-1 flex-row gap-4 overflow-x-scroll max-lg:hidden">
-        {chatRooms}
-        {chats}
-      </div> */}
-      <div className="my-4 flex flex-1 flex-row gap-4 overflow-x-scroll">
+      <div className="my-4 flex flex-1 flex-row gap-4 overflow-x-scroll lg:hidden">
         {!showMessages ? chatRooms : <></>}
         {showMessages ? chats : <></>}
+      </div>
+      <div className="my-4 flex flex-1 flex-row gap-4 overflow-x-scroll max-lg:hidden">
+        {chatRooms}
+        {chats}
       </div>
     </div>
   );

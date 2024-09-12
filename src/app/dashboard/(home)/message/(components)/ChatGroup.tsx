@@ -11,7 +11,7 @@ export default function ChatGroup({
   isMyChat?: boolean;
 }) {
   return (
-    <div className={cn('flex w-full gap-4')}>
+    <div className={cn('flex w-full gap-4 overflow-x-hidden')}>
       {!isMyChat ? (
         <div className="relative h-12 w-12 rounded-full">
           <Image
