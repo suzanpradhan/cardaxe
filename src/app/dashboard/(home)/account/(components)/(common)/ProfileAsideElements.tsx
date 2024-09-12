@@ -32,10 +32,10 @@ const ProfileAsideElements = ({
       <Link
         href={item.link}
         // onClick={() => handleClick()}
-        className="flex w-full items-center justify-center gap-3 md:justify-normal"
+        className="flex w-full items-center justify-center gap-3 lg:justify-normal"
       >
         {item.icon}
-        <span className="hidden text-sm md:block">{item.label}</span>
+        <span className="text-sm">{item.label}</span>
       </Link>
     </li>
   );

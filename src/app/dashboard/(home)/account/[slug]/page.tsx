@@ -61,10 +61,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   }, [dispatch, currentPage]);
 
   return (
-    <div className="my-4 flex w-full flex-col gap-4">
+    <div className="mx-auto my-4 flex w-full flex-col gap-4 max-lg:w-96">
       {userProfile ? (
         <>
-          <div className="mx-auto w-140 min-w-min border-1 border-borderMain p-4">
+          <div className="mx-auto mt-5 w-full border-1 border-borderMain p-4 lg:w-140">
             <ProfileDescription
               values={{
                 address: userProfile.address!,
@@ -75,7 +75,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               user={userProfile}
             />
           </div>
-          <div className="mx-auto w-140 min-w-min border-1 border-borderMain p-4">
+          <div className="mx-auto w-full border-1 border-borderMain p-4 lg:w-140">
             <h2></h2>
             <h3 className="text-base font-semibold leading-5 text-zinc-900">
               Business card
