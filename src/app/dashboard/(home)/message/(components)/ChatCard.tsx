@@ -11,7 +11,7 @@ export default function ChatCard({ isMyChat, chatText }: ChatCardProps) {
       className={cn(
         'rounded-md p-4 shadow-md',
         isMyChat
-          ? 'max-w-[85%] bg-blueTheme text-right text-white'
+          ? 'max-w-[85%] overflow-x-hidden text-wrap bg-blueTheme text-right text-white'
           : 'bg-white text-left'
       )}
     >

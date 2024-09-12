@@ -6,9 +6,14 @@ export const createRoom = mutation({
         name: v.string()
     },
     handler: async (ctx, args) => {
-        await ctx.db.insert("rooms", {
-            name: args.name
-        })
+        const roomId = await getRoomId(ctx, { name: args.name })
+        console.log("roomId", roomId)
+        if (!roomId) {
+            await ctx.db.insert("rooms", {
+                name: args.name
+            })
+        }
+
     }
 })
 
@@ -114,8 +119,6 @@ export const getMyRoomIds = query({
         const userExists = await checkUser(ctx, args);
         if (userExists) {
             const myRooms = await ctx.db.query("members").filter(q => q.eq(q.field('profile_id'), args.uuid)).collect();
-
-
             return myRooms.map((rooms) => rooms.room_id);
         }
     }
@@ -137,7 +140,8 @@ export const getRoomMembers = query({
         uuid: v.string()
     },
     handler: async (ctx, args) => {
-        const members = await ctx.db.query("members").filter(q => q.eq(q.field("room_id"), args.roomId) && q.neq(q.field('profile_id'), args.uuid)).collect();
+        // const members = await ctx.db.query("members").filter(q => q.eq(q.field("room_id"), args.roomId) && q.neq(q.field('profile_id'), args.uuid)).collect();
+        const members = await ctx.db.query("members").filter(q => q.eq(q.field("room_id"), args.roomId)).filter(q => q.neq(q.field("profile_id"), args.uuid)).collect();
         const membersProfile = await Promise.all(members.map((item, index) => ctx.db.query("profiles").filter(q => q.eq(q.field("id"), item.profile_id)).first()))
         return membersProfile
 

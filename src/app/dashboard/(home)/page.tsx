@@ -1,12 +1,8 @@
 'use client';
 import UserProfileCard from '@/components/dashboard/UserProfileCard';
 import { useRouter } from 'next/navigation';
-import profileImage from '../../../../public/profile/profile.png';
 
-import CardLayouts from '@/components/CardLayouts.server';
-import Dialog from '@/components/Dialog';
-import QrModal from '@/components/QrModal';
-import { apiPaths } from '@/core/api/apiConstants';
+import HomePageCard from '@/components/HomePageCard';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { PaginatedResponseType } from '@/core/types/responseTypes';
@@ -16,19 +12,8 @@ import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import connectApi from '@/module/connect/connectApi';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
-import {
-  BoxAdd,
-  Eye,
-  Flash,
-  Heart,
-  MoreSquare,
-  PenAdd,
-  ScanBarcode,
-  Share,
-} from 'iconsax-react';
+import { BoxAdd, PenAdd, ScanBarcode, Share } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import HomePageAside from '../(components)/HomePageAside';
 
@@ -171,116 +156,12 @@ const DashboardPage = () => {
         >
           <div className="flex grow flex-col">
             {allCardsList?.results?.map((card, index) => (
-              <div
+              <HomePageCard
+                card={card}
+                index={index}
+                userProfile={userProfile}
                 key={index}
-                className="mx-auto flex w-full min-w-[20rem] max-w-xs flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm"
-              >
-                <section className="flex items-center gap-2">
-                  <div className="relative z-auto h-8 w-8 rounded-full">
-                    <Image
-                      className="rounded-full"
-                      src={card.user?.avatar ?? profileImage}
-                      alt="image"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 700px"
-                      objectFit="contain"
-                    />
-                  </div>
-                  <Link
-                    href={'dashboard/account/' + card.user?.username}
-                    className="grow font-semibold hover:text-blueTheme"
-                  >
-                    {card.user?.fullname}
-                  </Link>
-                  {card.user?.username !== userProfile.username &&
-                  !card.user?.isConnected &&
-                  !card.user?.isRequested ? (
-                    <button
-                      className={cn(
-                        'bg flex items-center gap-1 rounded-sm bg-blueTheme p-1 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'
-                      )}
-                      onClick={() => card.user?.id && handleConnect(card.user)}
-                    >
-                      <Flash size="16" variant={'Bulk'} />{' '}
-                      <p className="text-sm">Connect</p>
-                    </button>
-                  ) : (
-                    <></>
-                  )}
-                  <MoreSquare size="24" className="text-zinc-200" />
-                </section>
-                {card.user?.username && card.slug ? (
-                  <Link href={card.isDefault ? card.user.username : card.slug}>
-                    <CardLayouts
-                      enableShadow
-                      htmlSource={card.cardTemplate?.htmlCode}
-                      variableValues={{
-                        ...card.cardFields,
-                        ...card.cardDesign,
-                        logoUrl: card.cardDesign.logo
-                          ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
-                          : undefined,
-                        backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
-                      }}
-                    />
-                  </Link>
-                ) : (
-                  <></>
-                )}
-                <section className="flex gap-4">
-                  <button
-                    className={cn(
-                      'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
-                      card.isLiked ? 'text-blueTheme' : 'text-zinc-400'
-                    )}
-                    onClick={() =>
-                      card.user?.id &&
-                      card.id &&
-                      card.slug &&
-                      (card.isLiked
-                        ? handleDislike(card.slug)
-                        : handleLike(card.id))
-                    }
-                  >
-                    <Heart
-                      size="24"
-                      variant={card.isLiked ? 'Bulk' : 'TwoTone'}
-                    />
-                    <p>{card.likes}</p>
-                  </button>
-                  <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                    <Eye size="24" variant="TwoTone" />
-                    <p>{card.views}</p>
-                  </button>
-                  {card.user?.username && card.slug ? (
-                    <Dialog
-                      className="bg-transparent"
-                      triggerComponent={
-                        <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                          <Share size="24" variant="TwoTone" />
-                          {/* <p>11.1k</p> */}
-                        </div>
-                      }
-                    >
-                      <QrModal
-                        username={card.user?.username}
-                        slug={card.slug}
-                      />
-                    </Dialog>
-                  ) : (
-                    <></>
-                  )}
-                  <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"></button>
-
-                  {/* <div className="flex grow justify-end">
-                    <Bookmark
-                      variant="TwoTone"
-                      size="24"
-                      className="text-zinc-300 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
-                    />
-                  </div> */}
-                </section>
-              </div>
+              />
             ))}
           </div>
         </div>
