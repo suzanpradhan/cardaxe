@@ -3,6 +3,7 @@ import {
   DesignFormUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import { Call, Location, Send2, Sms } from 'iconsax-react';
+import Link from 'next/link';
 import { VariableValueType } from '../CardLayouts.server';
 import HeadingTitles from '../HeadingTitles';
 
@@ -13,18 +14,22 @@ const CONTACT_INFO = [
   {
     contactType: 'Phone',
     icon: <Call size={ICON_SIZE} variant="Bulk" />,
+    href: 'tel:',
   },
   {
     contactType: 'Email',
     icon: <Sms size={ICON_SIZE} variant="Bulk" />,
+    href: 'mailto:',
   },
   {
     contactType: 'Website',
     icon: <Send2 size={ICON_SIZE} variant="Bulk" />,
+    href: '',
   },
   {
     contactType: 'Location',
     icon: <Location size={ICON_SIZE} variant="Bulk" />,
+    href: 'https://www.google.com/maps/',
   },
 ];
 
@@ -55,24 +60,30 @@ const ContactInfo = ({
       <div className="rounded-md border-1">
         {cardInfoWithDetails
           .filter((item) => item.value != undefined && item.value.length != 0)
-          .map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between border-b border-zinc-200 px-4 py-2 last-of-type:border-b-0"
-            >
-              <div className="flex flex-col justify-center">
-                <p className="text-xs font-normal leading-6 text-zinc-400 md:text-base">
-                  {item.contactType}
-                </p>
-                <h3 className="text-xs font-semibold leading-6 text-zinc-800 md:text-base">
-                  {item.value}
-                </h3>
+          .map((item, index) => {
+            const href = `${item.href}${item.value}`;
+            return (
+              <div
+                key={index}
+                className="flex items-center justify-between border-b border-zinc-200 px-4 py-2 last-of-type:border-b-0"
+              >
+                <div className="flex flex-col justify-center">
+                  <p className="text-xs font-normal leading-6 text-zinc-400 md:text-base">
+                    {item.contactType}
+                  </p>
+                  <h3 className="text-xs font-semibold leading-6 text-zinc-800 md:text-base">
+                    {item.value}
+                  </h3>
+                </div>
+                <Link
+                  href={href}
+                  className="flex aspect-square h-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 hover:scale-110 hover:shadow-md"
+                >
+                  {item.icon}
+                </Link>
               </div>
-              <div className="flex aspect-square h-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 hover:scale-110 hover:shadow-md">
-                {item.icon}
-              </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ export default function Page() {
           roomIds?.map((item, index) => (
             <li key={index} onClick={() => setActiveRoom(item)}>
               <Link
-                href={`/dashboard/message/chat/${item}`}
+                href={`/dashboard/messages/chat/${item}`}
                 className={cn(
                   'flex items-center gap-4 rounded-md p-2',
                   activeRoom === item ? 'bg-blueBg' : ''
