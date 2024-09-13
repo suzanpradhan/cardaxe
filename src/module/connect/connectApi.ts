@@ -32,7 +32,7 @@ const connectApi = baseApi.injectEndpoints({
                 }
             },
 
-            invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: "LIST" }, { type: 'Card', id: "LIST" }],
+            invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: "LIST" }, { type: 'Card', id: "LIST" },],
             transformResponse: (response) => {
                 return response
             }
