@@ -20,6 +20,7 @@ import {
 } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 import {
+  CardBasicsUpdateType,
   CardResponseType,
   CardTemplatesType,
   ContentFormSchemaType,
@@ -265,6 +266,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const variableValues: ContentFormUpdateSchemaType &
+    CardBasicsUpdateType &
     DesignFormUpdateSchemaType &
     VariableValueType = {
     backgroundColor:

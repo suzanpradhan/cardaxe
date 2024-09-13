@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import {
-  CardBasicsType,
+  CardBasicsUpdateType,
   CardTemplatesType,
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
@@ -52,7 +52,7 @@ const PreviewSection = ({
   variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
     VariableValueType &
-    CardBasicsType;
+    CardBasicsUpdateType;
   socialValues?: InfosFormsUpdateSchemaType;
   user?: UserType;
   userProfile?: UserType;
