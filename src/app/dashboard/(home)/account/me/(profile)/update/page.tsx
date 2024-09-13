@@ -1,4 +1,5 @@
 'use client';
+import ButtonForm from '@/components/ButtonForm';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import { getMinUserName } from '@/core/utils/generalFunctions';
@@ -79,7 +80,7 @@ export default function UpdateProfile() {
           <div className="flex flex-col items-stretch gap-5">
             <h3 className="mb-5 text-xl font-semibold">Edit Profile</h3>
             <div className="flex w-full flex-col justify-between gap-2 rounded-lg bg-slate-100 px-4 py-3 md:flex-row md:items-center md:gap-0">
-              <div className="flex flex-col items-center gap-3 sm:flex-row">
+              <div className="flex flex-row items-center gap-3">
                 <div className="relative h-14 w-14">
                   {formik.values.avatar || formik.values.updateAvatar ? (
                     <Image
@@ -239,12 +240,11 @@ export default function UpdateProfile() {
                 ></textarea>
               </div>
             </div>
-            <button
-              type="submit"
-              className="h-10 rounded bg-blueTheme px-2 text-white shadow-lg shadow-blueTheme/60"
-            >
-              Update Profile
-            </button>
+            <ButtonForm
+              label="Update Profile"
+              theme="blue"
+              isLoading={isloading}
+            />
           </div>
         </form>
       </div>

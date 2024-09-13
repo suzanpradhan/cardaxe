@@ -11,7 +11,7 @@ const userApi = baseApi.injectEndpoints({
             serializeQueryArgs: ({ endpointName }) => {
                 return endpointName;
             },
-            providesTags: ['User'],
+            providesTags: (response) => [{ type: 'User', id: response?.id }],
             transformResponse: (response: any) => {
                 const camelCaseResponse = snakeToCamel(response)
                 return camelCaseResponse;
@@ -56,7 +56,7 @@ const userApi = baseApi.injectEndpoints({
                     // toast.error('Failed updating profile.');
                 }
             },
-            invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+            invalidatesTags: (result, error, { id }) => [{ type: 'User', id }, { type: 'Card', id: "LIST" }],
         }),
     }),
     overrideExisting: true,
