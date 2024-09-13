@@ -78,7 +78,7 @@ const page = async (props: any) => {
 
   console.log('cardInfo', cardInfo);
   return (
-    <div className="h-screen overflow-y-scroll bg-zinc-100">
+    <div className="h-screen overflow-y-scroll">
       <div className="mx-auto max-w-md bg-white px-4 py-4 lg:max-w-lg">
         <PreviewSection
           variableValues={variableValues}

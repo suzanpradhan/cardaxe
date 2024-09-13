@@ -1,5 +1,6 @@
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch } from '@/core/redux/clientStore';
+import { getMinUserName } from '@/core/utils/generalFunctions';
 import connectApi from '@/module/connect/connectApi';
 import { UserType } from '@/module/user/userType';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
@@ -46,7 +47,6 @@ const ProfileDescription = ({
 }) => {
   const dispatch = useAppDispatch();
   const handleConnect = (toUser: UserType, fromUser: UserType) => {
-    console.log('here');
     dispatch(
       connectApi.endpoints.sendRequest.initiate({
         to_user: {
@@ -73,19 +73,29 @@ const ProfileDescription = ({
             href={`/dashboard/account/` + user?.username}
             className="relative block aspect-square overflow-hidden rounded-full"
           >
-            <Image
-              src={
-                user?.avatar
-                  ? user.avatar.startsWith('https')
-                    ? user.avatar
-                    : `${apiPaths.serverUrl}${user.avatar}`
-                  : '/square_image.jpg'
-              }
-              alt="user_profile_image"
-              fill
-              sizes="(max-width: 768px) 100vw, 700px"
-              objectFit="cover"
-            />
+            {user?.avatar && user.avatar.startsWith('https') ? (
+              <Image
+                src={
+                  user?.avatar
+                    ? user.avatar.startsWith('https')
+                      ? user.avatar
+                      : `${apiPaths.serverUrl}${user.avatar}`
+                    : '/square_image.jpg'
+                }
+                alt="user_profile_image"
+                fill
+                sizes="(max-width: 768px) 100vw, 700px"
+                objectFit="cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-blue-700">
+                {user?.fullname && (
+                  <h5 className="text-base font-extrabold text-white">
+                    {getMinUserName(user?.fullname)}
+                  </h5>
+                )}
+              </div>
+            )}
           </Link>
         </div>
         <div className="flex grow flex-col items-stretch justify-between gap-2">
