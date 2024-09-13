@@ -43,6 +43,17 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
     []
   );
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      sendMessage({
+        content: message,
+        profile_id: profileId,
+        read: false,
+        room_id: roomId,
+      });
+    }
+  };
+
   useEffect(() => {
     if (scrollableRef.current) {
       scrollableRef.current.scrollTop = scrollableRef.current.scrollHeight;
@@ -113,6 +124,7 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
           ></textarea>
           <button
             className="active:text-blueTheme"
+            onKeyDown={(e) => handleKeyDown(e)}
             onClick={() => {
               sendMessage({
                 content: message,
