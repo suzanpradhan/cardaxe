@@ -4,6 +4,7 @@ import connectApi from '@/module/connect/connectApi';
 import { UserType } from '@/module/user/userType';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Description from './Description';
 
 const PROFILE_DETAILS_BUTTONS = [
@@ -68,7 +69,10 @@ const ProfileDescription = ({
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
         <div className="shrink-0 basis-16 sm:basis-20">
-          <div className="relative aspect-square overflow-hidden rounded-full">
+          <Link
+            href={`/dashboard/account/` + user?.username}
+            className="relative block aspect-square overflow-hidden rounded-full"
+          >
             <Image
               src={
                 user?.avatar
@@ -82,19 +86,21 @@ const ProfileDescription = ({
               sizes="(max-width: 768px) 100vw, 700px"
               objectFit="cover"
             />
-          </div>
+          </Link>
         </div>
         <div className="flex grow flex-col items-stretch justify-between gap-2">
           <div className="flex flex-col items-start justify-start">
-            <h3 className="text-lg font-semibold leading-5 text-zinc-900">
-              {user?.fullname}
+            <h3 className="mb-1 text-base font-semibold leading-5 text-zinc-900 sm:text-lg">
+              <Link href={`/dashboard/account/` + user?.username}>
+                {user?.fullname}
+              </Link>
             </h3>
-            <span className="text-normal text-sm text-zinc-400">
+            <span className="text-xs font-normal leading-5 tracking-tight text-zinc-500 sm:text-sm">
               {values?.address} {values?.designation && '|'}{' '}
               {values?.designation} {values?.company && '-'} {values?.company}
             </span>
           </div>
-          <div className="flex gap-2">
+          <div className="hidden gap-2 lg:flex">
             {userProfile &&
             !user?.isConnected &&
             !user?.isRequested &&
@@ -103,10 +109,24 @@ const ProfileDescription = ({
               <button
                 onClick={() => handleConnect(user, userProfile)}
                 type="button"
-                className="flex h-8 w-48 items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+                className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
               >
                 <Flash size="21" variant="Bulk" />
                 Connect
+              </button>
+            ) : (
+              <></>
+            )}
+            {userProfile &&
+            user?.isConnected &&
+            user &&
+            userProfile.username !== user?.username ? (
+              <button
+                type="button"
+                className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-red-600 px-4 text-sm font-medium text-white shadow-md shadow-red-600/60"
+              >
+                <Flash size="21" variant="Bulk" />
+                Disconnect
               </button>
             ) : (
               <></>
@@ -125,13 +145,43 @@ const ProfileDescription = ({
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-2 sm:hidden">
-        <div className="basis-36">
-          <button className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60">
-            <Flash size="21" variant="Bulk" />
-            Connect
-          </button>
-        </div>
+      <div
+        className={`flex items-center gap-2 lg:hidden ${userProfile && userProfile.username !== user?.username ? 'justify-between' : 'justify-start'}`}
+      >
+        {userProfile &&
+        !user?.isConnected &&
+        !user?.isRequested &&
+        user &&
+        userProfile.username !== user?.username ? (
+          <div className="basis-36">
+            <button
+              onClick={() => handleConnect(user, userProfile)}
+              type="button"
+              className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+            >
+              <Flash size="21" variant="Bulk" />
+              Connect
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+        {userProfile &&
+        user?.isConnected &&
+        user &&
+        userProfile.username !== user?.username ? (
+          <div className="basis-36">
+            <button
+              type="button"
+              className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-red-600 px-4 text-sm font-medium text-white shadow-md shadow-red-600/60"
+            >
+              <Flash size="21" variant="Bulk" />
+              Disconnect
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="flex shrink-0 items-start justify-start gap-2">
           <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
             <Heart size="21" variant="Bulk" />
