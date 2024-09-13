@@ -32,7 +32,7 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
           <div className="flex items-center gap-4">
             <Link href={'/dashboard/notification'}>
               <NotificationBing
-                size="30"
+                size="23"
                 variant="Bulk"
                 className={cn(
                   'lg:hidden',
@@ -41,7 +41,7 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
               />
             </Link>
             <Activity
-              size="30"
+              size="23"
               variant="Bulk"
               className="text-grayfont lg:hidden"
             />

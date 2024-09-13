@@ -5,7 +5,7 @@ import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import connectApi from '@/module/connect/connectApi';
 import { UserType } from '@/module/user/userType';
-import { Eye, Flash, Heart, MoreSquare, Share } from 'iconsax-react';
+import { Eye, Flash, Heart, Share } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 // import profileImage from '../../public/profile/profile.png';
@@ -86,7 +86,7 @@ export default function HomePageCard({
   return (
     <div
       key={index}
-      className="mx-auto flex w-full min-w-[20rem] max-w-xs flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm"
+      className="mx-auto flex w-full min-w-[20rem] max-w-sm flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm"
     >
       <section className="flex items-center gap-2">
         <div className="relative z-auto h-8 w-8 rounded-full">
@@ -96,7 +96,7 @@ export default function HomePageCard({
             alt="image"
             fill
             sizes="(max-width: 768px) 100vw, 700px"
-            objectFit="contain"
+            objectFit="cover"
           />
         </div>
         <Link
@@ -105,22 +105,24 @@ export default function HomePageCard({
         >
           {card.user?.fullname}
         </Link>
-        {card.user?.username !== userProfile.username && !isConnected ? (
-          <button
-            className={cn(
-              'bg flex items-center gap-1 rounded-sm bg-blueTheme p-1 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'
-            )}
-            onClick={() => card.user?.id && handleConnect(card.user)}
-          >
-            <>
-              <Flash size="16" variant={'Bulk'} />{' '}
-              <p className="text-sm">Connect</p>
-            </>
-          </button>
-        ) : (
-          <></>
-        )}
-        <MoreSquare size="24" className="text-zinc-200" />
+        <div className="flex items-center gap-1">
+          {card.user?.username !== userProfile.username && !isConnected ? (
+            <button
+              className={cn(
+                'text-x flex h-8 items-center gap-1 rounded-sm bg-blueTheme px-3 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'
+              )}
+              onClick={() => card.user?.id && handleConnect(card.user)}
+            >
+              <>
+                <Flash size="15" variant={'Bulk'} />{' '}
+                <p className="text-sm">Connect</p>
+              </>
+            </button>
+          ) : (
+            <></>
+          )}
+          {/* <More size="30" className="text-zinc-500" /> */}
+        </div>
       </section>
       {card.user?.username && card.slug ? (
         <Link href={card.isDefault ? card.user.username : card.slug}>
@@ -140,7 +142,7 @@ export default function HomePageCard({
       ) : (
         <></>
       )}
-      <section className="flex gap-4">
+      <section className="flex gap-1">
         <button
           className={cn(
             'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
@@ -153,11 +155,11 @@ export default function HomePageCard({
             (isLiked ? handleDislike(card.slug) : handleLike(card.id))
           }
         >
-          <Heart size="24" variant={isLiked ? 'Bulk' : 'TwoTone'} />
+          <Heart size="23" variant={isLiked ? 'Bulk' : 'TwoTone'} />
           <p>{card.likes}</p>
         </button>
         <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-          <Eye size="24" variant="TwoTone" />
+          <Eye size="23" variant="TwoTone" />
           <p>{card.views}</p>
         </button>
         {card.user?.username && card.slug ? (
@@ -165,8 +167,8 @@ export default function HomePageCard({
             className="bg-transparent"
             triggerComponent={
               <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                <Share size="24" variant="TwoTone" />
-                {/* <p>11.1k</p> */}
+                <Share size="23" variant="TwoTone" />
+                <p>0</p>
               </div>
             }
           >

@@ -154,7 +154,7 @@ const DashboardPage = () => {
           ref={scrollableDivRef}
           onScroll={handleScroll}
         >
-          <div className="flex grow flex-col">
+          <div className="mt-2 flex grow flex-col">
             {allCardsList?.results?.map((card, index) => (
               <HomePageCard
                 card={card}
