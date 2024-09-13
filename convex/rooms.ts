@@ -8,11 +8,11 @@ export const createRoom = mutation({
     handler: async (ctx, args) => {
         const roomId = await getRoomId(ctx, { name: args.name })
         console.log("roomId", roomId)
-        if (!roomId) {
-            await ctx.db.insert("rooms", {
-                name: args.name
-            })
-        }
+        if (roomId != undefined && roomId != null && roomId != "null") return;
+        await ctx.db.insert("rooms", {
+            name: args.name
+        })
+
 
     }
 })
@@ -68,6 +68,9 @@ export const addMembers = mutation({
     handler: async (ctx, args) => {
         const roomId = await getRoomId(ctx, { name: args.roomName })
         if (roomId) {
+            const members = await checkMemberInRoom(ctx, { profileId: args.profileId, roomId: roomId })
+
+            if (members && members.length > 0) return;
             await ctx.db.insert("members", {
                 profile_id: args.profileId,
                 room_id: roomId
@@ -146,5 +149,15 @@ export const getRoomMembers = query({
         return membersProfile
 
 
+    }
+})
+
+export const checkMemberInRoom = internalQuery({
+    args: {
+        profileId: v.string(),
+        roomId: v.string()
+    }, handler: async (ctx, args) => {
+        const members = await ctx.db.query("members").filter(q => q.eq(q.field("room_id"), args.roomId)).filter(q => q.eq(q.field('profile_id'), args.profileId)).collect();
+        return members;
     }
 })
