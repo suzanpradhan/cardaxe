@@ -12,7 +12,7 @@ export default function NotificationsLayout({
   const pathname = usePathname();
   return (
     <div className="mx-auto flex h-full max-w-xl flex-col pt-6 max-lg:max-w-96">
-      <h2 className="mb-5 text-xl font-semibold">Notification</h2>
+      <h2 className="mb-5 px-2 text-xl font-semibold">Notification</h2>
       <div className="flex gap-2">
         <Link
           href={'/dashboard/notification'}

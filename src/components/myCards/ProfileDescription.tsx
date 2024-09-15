@@ -141,17 +141,21 @@ const ProfileDescription = ({
             ) : (
               <></>
             )}
-            <div className="col-span-5 flex items-center justify-start gap-2">
-              <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-                <Heart size="21" variant="Bulk" />
+            {userProfile && userProfile.username !== user?.username ? (
+              <div className="col-span-5 flex items-center justify-start gap-2">
+                <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+                  <Heart size="21" variant="Bulk" />
+                </div>
+                <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+                  <Share size="21" variant="Bulk" />
+                </div>
+                <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+                  <More size="21" variant="TwoTone" />
+                </div>
               </div>
-              <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-                <Share size="21" variant="Bulk" />
-              </div>
-              <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-                <More size="21" variant="TwoTone" />
-              </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
@@ -192,17 +196,21 @@ const ProfileDescription = ({
         ) : (
           <></>
         )}
-        <div className="flex shrink-0 items-start justify-start gap-2">
-          <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-            <Heart size="21" variant="Bulk" />
+        {userProfile && userProfile.username !== user?.username ? (
+          <div className="flex shrink-0 items-start justify-start gap-2">
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <Heart size="21" variant="Bulk" />
+            </div>
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <Share size="21" variant="Bulk" />
+            </div>
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <More size="21" variant="TwoTone" />
+            </div>
           </div>
-          <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-            <Share size="21" variant="Bulk" />
-          </div>
-          <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-            <More size="21" variant="TwoTone" />
-          </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div>
         <Description text={values?.bio} />

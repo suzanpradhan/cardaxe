@@ -119,45 +119,50 @@ export default function Page() {
     >
       <ul className="flex h-full flex-col gap-4 p-4">
         {allRequests?.results.map((request, i) => (
-          <li className="flex items-center gap-4" key={i}>
-            <div className="relative h-16 w-16 rounded-full">
-              <Image
-                className="rounded-full"
-                src={
-                  request.from_user.avatar
-                    ? `${apiPaths.serverUrl}${request.from_user.avatar}`
-                    : profileImage
-                }
-                alt="image"
-                fill
-                sizes="(max-width: 768px) 100vw, 700px"
-                objectFit="contain"
-              />
-            </div>
-            <div className="grow">
-              <p>
-                <span className="font-bold">{request.from_user.fullname}</span>{' '}
-                sent you a reuest.
-              </p>
-              <p className="text-sm text-grayfont">5h ago</p>
-            </div>
-            {request.accepted === false ? (
-              <div className="flex gap-4">
-                <button
-                  className="rounded-md bg-blueTheme px-3 py-2 text-white"
-                  onClick={() =>
-                    handleAcceptRequest(request.from_user, request.id)
+          <li key={i}>
+            <div className="flex items-center gap-4">
+              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full">
+                <Image
+                  src={
+                    request.from_user.avatar
+                      ? `${apiPaths.serverUrl}${request.from_user.avatar}`
+                      : profileImage
                   }
-                >
-                  Accept
-                </button>
-                <button className="rounded-md bg-red-500 px-3 py-2 text-white">
-                  Decline
-                </button>
+                  alt="image"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 700px"
+                  objectFit="cover"
+                />
               </div>
-            ) : (
-              <></>
-            )}
+              <div className="flex grow flex-col gap-2 *:text-sm">
+                <div>
+                  <p>
+                    <span className="font-bold">
+                      {request.from_user.fullname}
+                    </span>{' '}
+                    sent you a reuest.
+                  </p>
+                  <p className="text-sm text-grayfont">5h ago</p>
+                </div>
+                {request.accepted === false ? (
+                  <div className="flex gap-2 *:text-xs">
+                    <button
+                      className="h-7 rounded-md bg-blueTheme px-2 text-white"
+                      onClick={() =>
+                        handleAcceptRequest(request.from_user, request.id)
+                      }
+                    >
+                      Accept
+                    </button>
+                    <button className="h-7 rounded-md bg-red-500 px-2 text-white">
+                      Decline
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
           </li>
         ))}
       </ul>

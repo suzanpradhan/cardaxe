@@ -159,7 +159,6 @@ export default function HomePageCard({
             isLiked ? 'text-blueTheme' : 'text-zinc-400'
           )}
           onClick={() =>
-            card.user?.id &&
             card.id &&
             card.slug &&
             (isLiked ? handleDislike(card.slug) : handleLike(card.id))

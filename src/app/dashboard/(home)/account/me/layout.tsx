@@ -6,7 +6,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
       <div className="hidden px-2 md:border-r lg:block lg:basis-72">
         <ProfileAside />
       </div>
-      <div className="mx-auto max-lg:w-96 lg:grow">{children}</div>
+      <div className="mx-auto min-w-min max-lg:w-96 lg:grow">{children}</div>
     </div>
   );
 }
