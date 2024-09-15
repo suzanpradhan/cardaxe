@@ -174,7 +174,6 @@ export default function HomePageCard({
         </button>
         {card.user?.username && card.slug ? (
           <Dialog
-            className="bg-transparent"
             triggerComponent={
               <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
                 <Share size="23" variant="TwoTone" />
@@ -188,14 +187,6 @@ export default function HomePageCard({
           <></>
         )}
         <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"></button>
-
-        {/* <div className="flex grow justify-end">
-                    <Bookmark
-                      variant="TwoTone"
-                      size="24"
-                      className="text-zinc-300 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"
-                    />
-                  </div> */}
       </section>
     </div>
   );
