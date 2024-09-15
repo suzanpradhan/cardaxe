@@ -84,8 +84,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
       if (!card) return;
       switch (action) {
         case 'create':
-          // dispatch(updateContentForm(initialState.cardFields.values));
-          // dispatch(updateDesignForm(initialState.cardDesign.values));
           dispatch(updateDefaultCard(false));
           dispatch(updateContentForm(card.cardFields));
           dispatch(updateDesignForm(card.cardDesign));
@@ -94,6 +92,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(validateForms('cardDesign'));
           dispatch(validateForms('cardFields'));
+
           break;
         case 'update':
           dispatch(updateContentForm(card.cardFields));

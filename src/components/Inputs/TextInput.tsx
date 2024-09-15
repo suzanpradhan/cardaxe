@@ -21,7 +21,13 @@ export interface TextFieldProps {
     | undefined;
 }
 
-const TextInput = ({ isMulti, className, error, ...props }: TextFieldProps) => {
+const TextInput = ({
+  prefix,
+  isMulti,
+  className,
+  error,
+  ...props
+}: TextFieldProps) => {
   return (
     <div className={`${className}`}>
       {props.label && props.id && (
