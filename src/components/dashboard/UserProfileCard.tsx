@@ -15,7 +15,7 @@ const UserProfileCard = ({ fullName, avatar }: UserProfileCardProps) => {
           alt="PP image"
           fill
           sizes="(max-width: 768px) 100vw, 700px"
-          objectFit="contain"
+          objectFit="cover"
           className="rounded-full"
         />
       </div>

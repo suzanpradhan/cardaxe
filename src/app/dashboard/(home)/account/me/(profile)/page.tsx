@@ -37,10 +37,10 @@ export default function Page() {
   );
 
   return (
-    <div className="my-4 flex w-full flex-col gap-4">
+    <div className="my-4 flex w-full flex-col gap-4 max-sm:px-2 lg:px-5">
       {user ? (
         <>
-          <div className="mx-auto w-full min-w-min border-1 border-borderMain p-4 lg:w-140">
+          <div className="mx-auto w-full min-w-min lg:w-110">
             <ProfileDescription
               values={{
                 address: user.address ?? '',
@@ -51,15 +51,14 @@ export default function Page() {
               user={user}
             />
           </div>
-          <div className="mx-auto w-full min-w-min border-1 border-borderMain p-4 lg:w-140">
-            <h2></h2>
+          <div className="mx-auto w-full min-w-min lg:w-110">
             <h3 className="text-base font-semibold leading-5 text-zinc-900">
               Business card
             </h3>
             {myCards?.map((card, index) => (
               <div
                 key={index}
-                className="mx-auto flex w-full flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0"
+                className="flex w-full flex-col gap-4 border-b border-zinc-100 py-5 lg:max-w-lg"
               >
                 <CardLayouts
                   enableShadow

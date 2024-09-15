@@ -3,7 +3,6 @@ import {
   DesignFormUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import { Call, Location, Send2, Sms } from 'iconsax-react';
-import Link from 'next/link';
 import { VariableValueType } from '../CardLayouts.server';
 import HeadingTitles from '../HeadingTitles';
 
@@ -68,19 +67,19 @@ const ContactInfo = ({
                 className="flex items-center justify-between border-b border-zinc-200 px-4 py-2 last-of-type:border-b-0"
               >
                 <div className="flex flex-col justify-center">
-                  <p className="text-xs font-normal leading-6 text-zinc-400 md:text-base">
+                  <p className="text-sm font-normal leading-6 text-zinc-400 md:text-base">
                     {item.contactType}
                   </p>
-                  <h3 className="text-xs font-semibold leading-6 text-zinc-800 md:text-base">
+                  <h3 className="text-sm font-semibold leading-6 text-zinc-800 md:text-base">
                     {item.value}
                   </h3>
                 </div>
-                <Link
+                <a
                   href={href}
                   className="flex aspect-square h-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 hover:scale-110 hover:shadow-md"
                 >
                   {item.icon}
-                </Link>
+                </a>
               </div>
             );
           })}

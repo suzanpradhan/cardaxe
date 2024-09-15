@@ -17,7 +17,7 @@ const LinkItem = ({ item }: { item: LinkDataType }) => {
               objectFit="cover"
             />
           </div>
-          <h3 className="text-sm font-bold">{item?.name}</h3>
+          <h3 className="text-sm font-bold md:text-base">{item?.name}</h3>
         </div>
         <ArrowRight2 size={21} variant="TwoTone" className="text-zinc-500" />
       </div>
