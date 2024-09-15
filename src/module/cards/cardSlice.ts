@@ -47,9 +47,9 @@ export const initialState: CardState<string> = {
       backgroundColor: '#f2f2f2',
       backgroundImage: undefined,
       logo: undefined,
-      showSocialIcons: false,
-      showLogo: false,
-      darkMode: false,
+      showSocialIcons: true,
+      showLogo: true,
+      darkMode: true,
     }, errors: {}
   },
   cardInfos:

@@ -10,6 +10,7 @@ export interface TextFieldProps {
   name?: string;
   type?: string;
   isMulti?: boolean;
+  prefix?: React.ReactNode;
   rows?: number;
   className?: string;
   required?: boolean;

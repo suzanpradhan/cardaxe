@@ -56,7 +56,7 @@ const MyCardsPage = () => {
   // };
 
   const handleEditCard = (slug: string) => {
-    router.push(`/dashboard/builder/?slug=${slug}&action=update`);
+    router.push(`/dashboard/builder/${slug}/?action=update`);
   };
 
   return (

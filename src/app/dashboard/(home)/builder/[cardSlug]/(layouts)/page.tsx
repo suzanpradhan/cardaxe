@@ -72,20 +72,20 @@ const LayoutPage = () => {
 
   return (
     <div>
-      <div className="mb-2 flex h-8 items-stretch overflow-hidden rounded-lg bg-slate-200 text-sm font-semibold text-zinc-900">
+      {/* <div className="mb-2 flex h-8 items-stretch overflow-hidden rounded-lg bg-slate-200 text-sm font-semibold text-zinc-900">
         <div className="flex flex-1 grow items-center justify-center rounded-lg bg-zinc-900 text-zinc-50">
           All
         </div>
         <div className="flex flex-1 grow items-center justify-center rounded-lg">
           Categories
         </div>
-      </div>
+      </div> */}
       <div
-        className="h-[calc(100vh-20rem)] overflow-y-scroll lg:h-[calc(100vh-9rem)]"
+        className="h-[calc(100vh-16rem)] overflow-y-scroll lg:h-[calc(100vh-5rem)]"
         ref={scrollableDivRef}
         onScroll={handleScroll}
       >
-        <div className="flex flex-col gap-3 p-1">
+        <div className="mb-4 flex flex-col gap-3 p-1">
           {cardTemplates?.results.map((card, index) => {
             return (
               <div key={index}>

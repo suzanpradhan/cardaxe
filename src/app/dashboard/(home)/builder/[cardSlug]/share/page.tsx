@@ -1,6 +1,6 @@
 'use client';
 
-import TextInput from '@/components/Inputs/TextInput';
+import AddOnInput from '@/components/Inputs/AddOnInput';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -24,12 +24,23 @@ export default function SharePage() {
         <Card className="pb-4 shadow-none">
           <CardHeader className="font-bold">Share Card Info</CardHeader>
           <CardContent className="flex flex-col gap-3">
-            <TextInput
+            {/* <TextInput
               id={'slug'}
               type={'text'}
               name={'slug'}
               //   error={cardState.cardBasics.errors.slug}
               label={'Card Slug'}
+              value={cardState.cardBasics.values.slug ?? ''}
+              placeholder={'edit your card slug'}
+              onChange={handleChange}
+            /> */}
+            <AddOnInput
+              id={'slug'}
+              type={'text'}
+              name={'slug'}
+              prefix={<>cardaxe.com/</>}
+              //   error={cardState.cardBasics.errors.slug}
+              label={'Card Link'}
               value={cardState.cardBasics.values.slug ?? ''}
               placeholder={'edit your card slug'}
               onChange={handleChange}
