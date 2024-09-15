@@ -10,15 +10,22 @@ import {
   DesignFormSchema,
   DesignFromSchemaType,
 } from '@/module/cards/cardsType';
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 
 const Designpage = () => {
   const cardState = useAppSelector((state: RootState) => state.card);
   const dispatch = useAppDispatch();
   const timeout = useTimeoutDispatch(0);
 
+  // const removeImage = async (name: string) => {
+  //   await caches.delete(name);
+  //   const updatedFormState: CardState<string>['cardDesign']['values'] = {
+  //     [name]: undefined,
+  //   };
+  // };
+
   const handleChange = async (
-    e: React.ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
 

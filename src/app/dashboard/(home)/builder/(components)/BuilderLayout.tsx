@@ -92,7 +92,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(validateForms('cardDesign'));
           dispatch(validateForms('cardFields'));
-
           break;
         case 'update':
           dispatch(updateContentForm(card.cardFields));
@@ -372,9 +371,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         : cardState.cardFields.values.designation,
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
-      cardState.cardDesign.values.logo === null ||
-      cardState.cardDesign.values.logo?.length === 0
-        ? cardAction === 'update'
+      cardState.cardDesign.values.logo === null
+        ? // cardState.cardDesign.values.logo?.length === 0
+          cardAction === 'update'
           ? card?.cardDesign.logo
             ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
             : undefined
@@ -388,9 +387,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             : undefined,
     backgroundUrl:
       cardState.cardDesign.values.backgroundImage === undefined ||
-      cardState.cardDesign.values.backgroundImage === null ||
-      cardState.cardDesign.values.backgroundImage?.length === 0
-        ? cardAction === 'update'
+      cardState.cardDesign.values.backgroundImage === null
+        ? // cardState.cardDesign.values.backgroundImage?.length === 0
+          cardAction === 'update'
           ? card?.cardDesign.backgroundImage
             ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
             : undefined
