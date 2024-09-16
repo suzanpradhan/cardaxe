@@ -17,11 +17,25 @@ const page = async (props: any) => {
   try {
     const session = await getServerSession(authOptions);
 
+    console.log('session', session);
+
     if (session) {
       const res = await fetch(cardUrl, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           Authorization: `Bearer ${session.user?.token}`,
+        },
+        cache: 'no-store',
+      });
+      const response = await res.json();
+
+      console.log('response', response);
+
+      cardInfo = snakeToCamel(response);
+    } else {
+      const res = await fetch(cardUrl, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
         },
         cache: 'no-store',
       });
@@ -49,6 +63,8 @@ const page = async (props: any) => {
       const response = await res.json();
 
       userProfile = snakeToCamel(response) as UserType;
+
+      console.log('userProfile', userProfile);
     }
   } catch (err) {
     throw Error(err as string);
@@ -65,6 +81,8 @@ const page = async (props: any) => {
   const variableValues = {
     ...cardInfo.cardFields,
     ...cardInfo.cardDesign,
+    slug: cardInfo.slug,
+    id: cardInfo.id,
     logoUrl: `${apiPaths.serverUrl}${cardInfo.cardDesign?.logo}`,
     backgroundUrl: `${apiPaths.serverUrl}${cardInfo.cardDesign?.backgroundImage}`,
   };
@@ -85,6 +103,7 @@ const page = async (props: any) => {
           layout={cardInfo?.cardTemplate.id}
           socialValues={socialsValues}
           user={cardInfo?.user}
+          isLiked={cardInfo.isLiked}
           userProfile={userProfile}
         />
       </div>

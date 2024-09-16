@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import {
+  CardBasicsUpdateType,
   CardTemplatesType,
   ContentFormUpdateSchemaType,
   DesignFormUpdateSchemaType,
@@ -44,11 +45,14 @@ const PreviewSection = ({
   variableValues,
   socialValues,
   userProfile,
+  isLiked,
 }: {
+  isLiked?: boolean;
   layout: number;
   variableValues: ContentFormUpdateSchemaType &
     DesignFormUpdateSchemaType &
-    VariableValueType;
+    VariableValueType &
+    CardBasicsUpdateType;
   socialValues?: InfosFormsUpdateSchemaType;
   user?: UserType;
   userProfile?: UserType;
@@ -77,8 +81,6 @@ const PreviewSection = ({
     dispatch(cardsApi.endpoints.getCardTemmplate.initiate(layout.toString()));
   }, [dispatch, layout]);
 
-  console.log('template', userProfile);
-
   return (
     <FormWrapper className="">
       <div className="flex flex-col gap-4">
@@ -96,6 +98,9 @@ const PreviewSection = ({
             bio: variableValues.bio ?? '',
           }}
           user={user}
+          cardId={variableValues.id ?? undefined}
+          cardSlug={variableValues.slug ?? undefined}
+          isLiked={isLiked}
           userProfile={userProfile}
         />
         {socialValues ? (

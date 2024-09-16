@@ -20,6 +20,7 @@ import {
 } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 import {
+  CardBasicsUpdateType,
   CardResponseType,
   CardTemplatesType,
   ContentFormSchemaType,
@@ -32,11 +33,12 @@ import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import { Edit } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const params = useParams();
   const [isPreview, setIsPreview] = useState(false);
   const [publishLoading, togglePublishLoading] = useState(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -44,7 +46,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
 
   const session = useSession();
   const searchParams = useSearchParams();
-  const cardSlug = searchParams.get('slug');
+  const cardSlug: string = params.cardSlug as string;
   const cardAction = searchParams.get('action');
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -71,17 +73,23 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     if (cardSlug) dispatch(cardsApi.endpoints.getCard.initiate(cardSlug));
     // dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
-  }, [dispatch, cardSlug]);
+    console.log('card refetched');
+  }, [dispatch, params]);
+
+  console.log('card', card);
+  console.log('cardState', cardState);
 
   useEffect(() => {
     const updateCardState = (action: string) => {
       if (!card) return;
       switch (action) {
         case 'create':
-          // dispatch(updateContentForm(initialState.cardFields.values));
-          // dispatch(updateDesignForm(initialState.cardDesign.values));
           dispatch(updateDefaultCard(false));
-          dispatch(updateInfosForm({}));
+          dispatch(updateContentForm(card.cardFields));
+          dispatch(updateDesignForm(card.cardDesign));
+          dispatch(updateInfosForm(cardInfoKeyValue));
+          dispatch(updateCardBasics({ title: card.title, slug: card.slug }));
+          dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(validateForms('cardDesign'));
           dispatch(validateForms('cardFields'));
           break;
@@ -92,7 +100,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(updateDefaultCard(card.isDefault));
           dispatch(updateCardBasics({ title: card.title, slug: card.slug }));
-          dispatch(updateCardTemplate(card.cardTemplate.id.toString()));
           dispatch(
             updateInfosForm(
               Object.fromEntries(
@@ -107,10 +114,11 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(validateForms('cardFields'));
           break;
       }
+      console.log('>>>>>>>>>cardState', cardState);
     };
 
     if (cardAction) updateCardState(cardAction);
-  }, [card, cardAction]);
+  }, [card?.slug, card?.title, cardAction, cardSlug, dispatch]);
 
   const handlePublish = () => {
     togglePublishLoading(true);
@@ -171,7 +179,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           // toast.success('Successfully updated');
           if ((res as any).data.slug) {
             router.push(
-              `/dashboard/builder/?slug=${(res as any).data.slug}&action=update`
+              `/dashboard/builder/${(res as any).data.slug}/?action=update`
             );
           }
 
@@ -248,7 +256,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
 
           if ((res as any).data.slug) {
             router.push(
-              `/dashboard/builder/?slug=${(res as any).data.slug}&action=update`
+              `/dashboard/builder/${(res as any).data.slug}/?action=update`
             );
           }
           toggleSaveLoading(false);
@@ -265,6 +273,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const variableValues: ContentFormUpdateSchemaType &
+    CardBasicsUpdateType &
     DesignFormUpdateSchemaType &
     VariableValueType = {
     backgroundColor:
@@ -362,9 +371,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
         : cardState.cardFields.values.designation,
     logoUrl:
       cardState.cardDesign.values.logo === undefined ||
-      cardState.cardDesign.values.logo === null ||
-      cardState.cardDesign.values.logo?.length === 0
-        ? cardAction === 'update'
+      cardState.cardDesign.values.logo === null
+        ? // cardState.cardDesign.values.logo?.length === 0
+          cardAction === 'update'
           ? card?.cardDesign.logo
             ? `${apiPaths.serverUrl}${card?.cardDesign.logo}`
             : undefined
@@ -378,9 +387,9 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
             : undefined,
     backgroundUrl:
       cardState.cardDesign.values.backgroundImage === undefined ||
-      cardState.cardDesign.values.backgroundImage === null ||
-      cardState.cardDesign.values.backgroundImage?.length === 0
-        ? cardAction === 'update'
+      cardState.cardDesign.values.backgroundImage === null
+        ? // cardState.cardDesign.values.backgroundImage?.length === 0
+          cardAction === 'update'
           ? card?.cardDesign.backgroundImage
             ? `${apiPaths.serverUrl}${card?.cardDesign.backgroundImage}`
             : undefined

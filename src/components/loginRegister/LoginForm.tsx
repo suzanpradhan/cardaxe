@@ -46,16 +46,12 @@ const LoginForm: React.FC = () => {
 
   const callback = searchParams.get('callback');
 
-  // useEffect(() => {
-  //   dispatch(userApi.endpoints.getUser.initiate());
-  // }, [dispatch]);
-
   const onSubmit = async (data: LoginSchemaType) => {
     setIsLoading(true);
     await signIn('credentials', {
       email: data.email.toLowerCase(),
       password: data.password,
-      callbackUrl: '/dashboard',
+      // callbackUrl: callback!,
       redirect: false,
     })
       .then(async (response) => {
@@ -69,7 +65,7 @@ const LoginForm: React.FC = () => {
                   name: userResponse.data!.fullname,
                   uuid: userResponse.data!.id.toString(),
                 });
-                router.replace('/dashboard');
+                router.replace(callback ?? '/dashboard');
               } else {
                 router.refresh();
                 throw 'No user found';

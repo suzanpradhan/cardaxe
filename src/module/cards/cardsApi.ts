@@ -217,7 +217,10 @@ const cardsApi = baseApi.injectEndpoints({
           const blob = await response.blob();
           await cache.delete(name)
           return blob;
+
         }
+
+        console.log("payload", payload)
         const formData = new FormData();
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.title != undefined) formData.append('card_fields.title', payload.cardFields.title)
@@ -237,8 +240,18 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.id != undefined) formData.append('card_design.id', payload.cardDesign.id.toString())
         if (payload.cardDesign.backgroundColor != undefined) formData.append('card_design.background_color', payload.cardDesign.backgroundColor)
         if (payload.cardDesign.foregroundColor != undefined) formData.append('card_design.foreground_color', payload.cardDesign.foregroundColor)
-        fecthCachedImage('backgroundImage').then((response) => { if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) } });
-        fecthCachedImage('logo').then((response) => { if (response) formData.append('card_design.logo', new File([response], 'filename.png')) });
+        if (payload.cardDesign.backgroundImage != undefined && payload.cardDesign.backgroundImage.length > 0) {
+          fecthCachedImage('backgroundImage').then((response) => {
+            if (response) { console.log("cathched image", response); formData.append('card_design.background_image', new File([response], 'filename.png')) }
+            else { formData.append('card_design.background_image', payload.cardDesign.backgroundImage!) }
+          });
+        } else { formData.append('card_design.background_image', '') }
+        if (payload.cardDesign.backgroundImage != undefined && payload.cardDesign.backgroundImage.length > 0) {
+          fecthCachedImage('logo').then((response) => {
+            if (response) { formData.append('card_design.logo', new File([response], 'filename.png')) }
+            else { formData.append('card_design.logo', payload.cardDesign.logo!) }
+          });
+        } else { formData.append('card_design.logo', '') }
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())

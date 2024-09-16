@@ -2,7 +2,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Notification from '../components/Notification';
 import Providers from '../core/redux/providers';
 import './globals.css';
 import { ConvexClientProvider } from './providers/ConvexClientProvider';
@@ -29,7 +28,7 @@ export default function RootLayout({
             <>{children}</>
           </ConvexClientProvider>
         </Providers>
-        <Notification />
+        {/* <Notification /> */}
       </body>
     </html>
   );

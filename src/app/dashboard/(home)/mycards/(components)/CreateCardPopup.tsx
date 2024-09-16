@@ -37,9 +37,9 @@ export default function CreateCardPopup({ userId }: { userId: string }) {
           Object.prototype.hasOwnProperty.call(createCardResponse, 'data') &&
             (createCardResponse as any).data.slug &&
             router.push(
-              `/dashboard/builder/?slug=${
+              `/dashboard/builder/${
                 (createCardResponse as any).data.slug
-              }&action=create`
+              }/?action=create`
             );
           toggleLoading(false);
         })

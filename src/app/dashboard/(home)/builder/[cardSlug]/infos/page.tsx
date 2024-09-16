@@ -16,10 +16,10 @@ import {
 } from '@/module/cards/cardsType';
 import { StaticImageData } from 'next/image';
 import { useEffect, useState } from 'react';
-import xImage from '../../../../../../public/X_logo.png';
-import facebookImage from '../../../../../../public/facebook_image.png';
-import instagramImage from '../../../../../../public/instagram_image.png';
-import linkedInImage from '../../../../../../public/linkedin_image.png';
+import xImage from '../../../../../../../public/X_logo.png';
+import facebookImage from '../../../../../../../public/facebook_image.png';
+import instagramImage from '../../../../../../../public/instagram_image.png';
+import linkedInImage from '../../../../../../../public/linkedin_image.png';
 
 export interface SocialMediaInfoType {
   socialLinkSchemaName: string;

@@ -3,7 +3,7 @@ import { DesignFromSchemaType } from '@/module/cards/cardsType';
 import { FormikErrors } from 'formik';
 import { ChangeEvent } from 'react';
 import ColorInput from '../Inputs/ColorInput';
-import FileInput from '../Inputs/FileInput';
+import FileInput, { ImageShape } from '../Inputs/FileInput';
 import TextInput from '../Inputs/TextInput';
 import { Card, CardContent, CardHeader } from '../ui/card';
 
@@ -72,6 +72,7 @@ const MyCardsDesignForm = ({
           />
           <FileInput
             id="logo"
+            imageShape={ImageShape.square}
             // className="mb-3 w-[98%]"
             required
             label="Logo"

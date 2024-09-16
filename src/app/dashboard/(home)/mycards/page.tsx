@@ -8,15 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
-import {
-  BoxAdd,
-  Edit,
-  Eye,
-  Heart,
-  Magicpen,
-  SearchNormal,
-  Share,
-} from 'iconsax-react';
+import { Edit, Eye, Heart, Magicpen, SearchNormal, Share } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -41,7 +33,7 @@ const MyCardsPage = () => {
   );
 
   const handleEditCard = (slug: string) => {
-    router.push(`/dashboard/builder/?slug=${slug}&action=update`);
+    router.push(`/dashboard/builder/${slug}/?action=update`);
   };
 
   return (
@@ -112,9 +104,9 @@ const MyCardsPage = () => {
                         )}
                       </div>
                       <span
-                        className={`text-xs font-semibold ${index == 2 || index == 6 ? 'text-rose-500' : 'text-green-500'}`}
+                        className={`text-xs font-semibold ${!card.isPublished ? 'text-rose-500' : 'text-green-500'}`}
                       >
-                        {index == 2 || index == 6 ? 'Inactive' : 'Active'}
+                        {!card.isPublished ? 'Inactive' : 'Active'}
                       </span>
                     </div>
                     {/* top-ends */}
@@ -146,10 +138,7 @@ const MyCardsPage = () => {
                       <Edit size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Edit Card</span>
                     </div>
-                    <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
-                      <BoxAdd size="21" variant="Bulk" />{' '}
-                      <span className="text-xs font-medium">Add Infos</span>
-                    </div>
+
                     {card.slug && card.user?.username ? (
                       <Dialog
                         className="bg-transparent"

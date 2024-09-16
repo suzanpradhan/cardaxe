@@ -65,8 +65,9 @@ const QrModal = ({ slug, username }: { slug: string; username: string }) => {
               }
               shareLink={`https://wa.me/?text=${encodeURIComponent(cardLink)}`}
             />
-
             <button
+              data-tooltip-target="tooltip-animation"
+              type="button"
               className="flex flex-1 grow flex-col items-center gap-2"
               onClick={() => handleCopy()}
             >

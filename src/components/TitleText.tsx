@@ -20,10 +20,13 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
     }
   }, [pathname]);
 
-  // console.log('pathname', pathname);
-
   return (
-    <div className="fixed top-0 z-50 w-full border-b border-zinc-200 bg-white lg:hidden">
+    <div
+      className={cn(
+        'fixed top-0 z-50 block w-full border-b border-zinc-200 bg-white lg:hidden',
+        pathname.includes('builder') ? 'hidden' : 'block'
+      )}
+    >
       <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between px-2 lg:max-w-none">
         <Link href={'/'} className="">
           <h1 className={cn('text-xl font-extrabold lg:text-3xl')}>cardaxe.</h1>

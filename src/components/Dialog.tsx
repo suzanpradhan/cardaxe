@@ -1,3 +1,4 @@
+import { CloseCircle } from 'iconsax-react';
 import React, { useEffect, useRef } from 'react';
 
 type DialogPropsType = {
@@ -68,6 +69,12 @@ const Dialog = ({
           'rounded-xl bg-transparent backdrop:fixed backdrop:-z-50 backdrop:bg-gray-600/90 backdrop:bg-opacity-85'
         }
       >
+        <button
+          onClick={closeDialog}
+          className="flex w-full items-end justify-end lg:hidden"
+        >
+          <CloseCircle size="24" color="red" variant="Bold" />
+        </button>
         {dialogRef ? children : <></>}
       </dialog>
     </div>
