@@ -19,14 +19,14 @@ import {
 } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CreateCardPopup from './(components)/CreateCardPopup';
 
 const MyCardsPage = () => {
   const router = useRouter();
-  const [showQrModal, setShowQrModal] = useState<boolean>(false);
-  const [showCreateCardModal, setShowCreateCardModal] =
-    useState<boolean>(false);
+  // const [showQrModal, setShowQrModal] = useState<boolean>(false);
+  // const [showCreateCardModal, setShowCreateCardModal] =
+  //   useState<boolean>(false);
   const { data: sessionData } = useSession();
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -40,39 +40,16 @@ const MyCardsPage = () => {
       >
   );
 
-  // const hanldeCreateCard = () => {
-  //   toggleLoading(true);
-
-  //   if (sessionData?.user) {
-  //     dispatch(cardsApi.endpoints.createCard.initiate(sessionData?.user.id))
-  //       .then((createCardResponse) => {
-  //         Object.prototype.hasOwnProperty.call(createCardResponse, 'data') &&
-  //           (createCardResponse as any).data.slug &&
-  //           router.push(
-  //             `/dashboard/builder/?slug=${
-  //               (createCardResponse as any).data.slug
-  //             }&action=create`
-  //           );
-  //         toggleLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         toggleLoading(false);
-  //         console.log(error);
-  //         throw error;
-  //       });
-  //   }
-  // };
-
   const handleEditCard = (slug: string) => {
     router.push(`/dashboard/builder/?slug=${slug}&action=update`);
   };
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-12 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
+    <div className="flex flex-col">
+      <div className="mx-auto w-full max-w-sm px-2 lg:max-w-3xl">
         <h3 className="my-4 text-lg font-bold text-zinc-900">My Cards</h3>
-        <div className="my-2 flex h-auto w-full flex-wrap gap-3 lg:flex-nowrap">
-          <div className="flex h-auto grow items-center gap-2 rounded-md bg-zinc-100 px-2 ring-blueTheme/20 ring-offset-2 focus-within:ring-2 md:px-4">
+        <div className="my-2 flex h-auto w-full gap-3 lg:flex-nowrap">
+          <div className="flex h-auto grow items-center gap-2 rounded-md bg-zinc-100 px-2 ring-blueTheme/20 ring-offset-2 focus-within:ring-2 lg:px-4">
             <SearchNormal size="20" variant="Bulk" className="text-zinc-500" />
             <input
               type="search"
@@ -99,7 +76,7 @@ const MyCardsPage = () => {
           </Dialog>
         </div>
       </div>
-      <div className="col-span-12 mb-20 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
+      <div className="mx-auto mb-20 grid w-full max-w-sm grid-cols-6 gap-x-4 gap-y-4 px-2 lg:max-w-3xl">
         {/* <PopUpDialog show={showQrModal} onClose={() => setShowQrModal(false)}>
           
         </PopUpDialog> */}

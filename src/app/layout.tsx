@@ -22,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={cn(inter.className)}>
+        <Toaster />
         <div id="popUpModal" />
         <Providers>
           <ConvexClientProvider>
@@ -29,7 +30,6 @@ export default function RootLayout({
           </ConvexClientProvider>
         </Providers>
         <Notification />
-        <Toaster />
       </body>
     </html>
   );
