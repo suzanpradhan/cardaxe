@@ -235,6 +235,59 @@ const ProfileDescription = ({
           </div>
         </div>
       </div>
+      <div
+        className={`flex items-center gap-2 lg:hidden ${userProfile && userProfile.username !== user?.username ? 'justify-between' : 'justify-start'}`}
+      >
+        {userProfile &&
+        !user?.isConnected &&
+        !user?.isRequested &&
+        user &&
+        userProfile.username !== user?.username ? (
+          <div className="basis-36">
+            <button
+              onClick={() => handleConnect(user, userProfile)}
+              type="button"
+              className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+            >
+              <Flash size="21" variant="Bulk" />
+              Connect
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+        {userProfile &&
+        user?.isConnected &&
+        user &&
+        userProfile.username !== user?.username ? (
+          <div className="basis-36">
+            <button
+              type="button"
+              className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-red-600 px-4 text-sm font-medium text-white shadow-md shadow-red-600/60"
+            >
+              <Flash size="21" variant="Bulk" />
+              Disconnect
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+        {userProfile && userProfile.username !== user?.username ? (
+          <div className="flex shrink-0 items-start justify-start gap-2">
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <Heart size="21" variant="Bulk" />
+            </div>
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <Share size="21" variant="Bulk" />
+            </div>
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <More size="21" variant="TwoTone" />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <div>
         <Description text={values?.bio} />
       </div>

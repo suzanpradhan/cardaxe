@@ -70,7 +70,7 @@ export default function RequestCard({ request }: { request: ConnectionType }) {
   return (
     <li className="flex items-center gap-4">
       <Link
-        className="relative h-16 w-16 rounded-full"
+        className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full"
         href={'/dashboard/account/' + request.from_user.username}
       >
         <Image
@@ -83,36 +83,38 @@ export default function RequestCard({ request }: { request: ConnectionType }) {
           alt="image"
           fill
           sizes="(max-width: 768px) 100vw, 700px"
-          objectFit="contain"
+          objectFit="cover"
         />
       </Link>
-      <div className="grow">
-        <p>
-          <Link
-            href={'/dashboard/account/' + request.from_user.username}
-            className="font-bold"
-          >
-            {request.from_user.fullname}
-          </Link>{' '}
-          sent you a reuest.
-        </p>
-        <p className="text-sm text-grayfont">5h ago</p>
-      </div>
-      {accepted === false ? (
-        <div className="flex gap-4">
-          <button
-            className="rounded-md bg-blueTheme px-3 py-2 text-white"
-            onClick={() => handleAcceptRequest(request.from_user, request.id)}
-          >
-            Accept
-          </button>
-          <button className="rounded-md bg-red-500 px-3 py-2 text-white">
-            Decline
-          </button>
+      <div className="flex grow flex-col gap-2 *:text-sm">
+        <div>
+          <p>
+            <Link
+              href={'/dashboard/account/' + request.from_user.username}
+              className="font-bold"
+            >
+              {request.from_user.fullname}
+            </Link>{' '}
+            sent you a reuest.
+          </p>
+          <p className="text-sm text-grayfont">5h ago</p>
         </div>
-      ) : (
-        <></>
-      )}
+        {accepted === false ? (
+          <div className="flex gap-2 *:text-xs">
+            <button
+              className="h-7 rounded-md bg-blueTheme px-2 text-white"
+              onClick={() => handleAcceptRequest(request.from_user, request.id)}
+            >
+              Accept
+            </button>
+            <button className="h-7 rounded-md bg-red-500 px-2 text-white">
+              Decline
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </li>
   );
 }

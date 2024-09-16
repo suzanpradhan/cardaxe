@@ -105,8 +105,13 @@ const cardsApi = baseApi.injectEndpoints({
         return endpointName;
       },
       merge: (currentCache, newItems) => {
-        currentCache.pagination = newItems.pagination;
-        currentCache.results.push(...newItems.results);
+        if (currentCache.pagination.currentPage === newItems.pagination.currentPage) {
+          currentCache.pagination = newItems.pagination;
+          currentCache.results = newItems.results;
+        } else {
+          currentCache.pagination = newItems.pagination;
+          currentCache.results.push(...newItems.results);
+        }
       },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg !== previousArg;

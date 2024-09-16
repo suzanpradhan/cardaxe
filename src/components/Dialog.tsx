@@ -66,8 +66,7 @@ const Dialog = ({
         ref={dialogRef}
         // onClick={() => setIsDialogOpen(false)}
         className={
-          '-z-50 rounded-xl bg-transparent backdrop:bg-gray-600/90 backdrop:bg-opacity-85' +
-          className
+          'rounded-xl bg-transparent backdrop:fixed backdrop:-z-50 backdrop:bg-gray-600/90 backdrop:bg-opacity-85'
         }
       >
         <button

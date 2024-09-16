@@ -6,19 +6,24 @@ import Facebook from '../../public/logo/facebook.png';
 import WhatsApp from '../../public/logo/whatsapp.png';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import ShareLinkButton, { Alignment } from './ShareLinkButton';
-import { useToast } from './ui/use-toast';
 
 const QrModal = ({ slug, username }: { slug: string; username: string }) => {
-  const { toast } = useToast();
+  // const { toast } = useToast();
+  const [isCopied, setIsCopied] = useState<string | undefined>(undefined);
   const cardLink = `https://www.cardaxe.com/${slug}`;
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(cardLink);
-      toast({
-        description: 'Link Successfully Copied',
-      });
+      setIsCopied('Link Successfully Copied');
+      setTimeout(() => {
+        setIsCopied(undefined);
+      }, 2000);
+      // toast({
+      //   description: 'Link Successfully Copied',
+      // });
       // Reset the copied state after 2 seconds
     } catch (err) {
       console.error('Failed to copy: ', err);
@@ -28,9 +33,14 @@ const QrModal = ({ slug, username }: { slug: string; username: string }) => {
     <div className="w-full">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col items-center gap-4">
+          {isCopied && (
+            <div className="rounded-full bg-gray-50 px-5 py-2 shadow-slate-500 drop-shadow-sm">
+              {isCopied}
+            </div>
+          )}
+
           <div className="flex w-full max-w-[15rem] flex-col items-center gap-3 rounded-xl bg-white p-4 shadow-md shadow-zinc-700/10">
             <div className="share-qr relative aspect-square w-full">
-              {/* <Image src={QR.src} alt="qr-code" fill objectFit="contain" /> */}
               <QrCodeGenerate link={cardLink} />
             </div>
             <span className="text-sm font-semibold text-zinc-900">
@@ -70,15 +80,7 @@ const QrModal = ({ slug, username }: { slug: string; username: string }) => {
             </button>
           </div>
         </div>
-        <div className="relative flex min-w-80 flex-col overflow-hidden rounded-xl bg-white/20 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm lg:min-w-96">
-          {/* <div className="flex h-auto items-center gap-4 border-b border-white/80 px-4 py-4 last-of-type:border-0">
-            <div className="flex aspect-square h-8 items-center justify-center rounded-md bg-white text-2xl text-zinc-900 shadow-md shadow-zinc-500/10">
-              <Sms variant="Bulk" />
-            </div>
-            <p className="text-base font-normal text-zinc-500">
-              Share via Email
-            </p>
-          </div> */}
+        <div className="relative flex min-w-96 flex-col overflow-hidden rounded-xl bg-white/20 shadow-md shadow-zinc-500/10 before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:bg-white/80 before:backdrop-blur-sm">
           <ShareLinkButton
             label="Share via Facebook"
             logo={
