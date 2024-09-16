@@ -82,7 +82,7 @@ const MyProfileCard = ({
               <div className="flex h-full items-center justify-evenly">
                 <button
                   className="mx-auto h-10 w-5/12 rounded-full bg-slate-100 text-sm font-medium text-blueTheme/75 hover:shadow"
-                  onClick={() => router.push('/dashboard/profile/update')}
+                  onClick={() => router.push('/dashboard/account/me/update')}
                 >
                   Edit
                 </button>
@@ -97,7 +97,7 @@ const MyProfileCard = ({
           <div className="flex h-full items-center justify-stretch gap-2">
             <button
               className="h-8 grow rounded-md bg-slate-100 text-xs font-medium text-black hover:shadow"
-              onClick={() => router.push('/dashboard/profile/update')}
+              onClick={() => router.push('/dashboard/account/me/update')}
             >
               Edit profile
             </button>
