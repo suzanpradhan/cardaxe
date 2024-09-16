@@ -20,8 +20,8 @@ const DashboardLayout = ({ children }: RootLayoutProps) => {
       </div>
       <div
         className={cn(
-          'h-screen max-lg:relative max-lg:bottom-10 max-lg:h-[90vh] lg:ml-60',
-          pathname.includes('builder') ? 'max-lg:top-0' : 'max-lg:top-10'
+          'h-screen max-lg:relative max-lg:bottom-14 max-lg:h-[90vh] lg:ml-60',
+          pathname.includes('builder') ? 'max-lg:top-0' : 'max-lg:top-14'
         )}
       >
         {children}

@@ -1,11 +1,13 @@
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch } from '@/core/redux/clientStore';
+import { getMinUserName } from '@/core/utils/generalFunctions';
 import { cn } from '@/lib/utils';
 import cardsApi from '@/module/cards/cardsApi';
 import connectApi from '@/module/connect/connectApi';
 import { UserType } from '@/module/user/userType';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Dialog from '../Dialog';
@@ -118,28 +120,43 @@ const ProfileDescription = ({
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">
         <div className="shrink-0 basis-16 sm:basis-20">
-          <div className="relative aspect-square overflow-hidden rounded-full">
-            <Image
-              src={
-                user?.avatar
-                  ? user.avatar.startsWith('https')
-                    ? user.avatar
-                    : `${apiPaths.serverUrl}${user.avatar}`
-                  : '/square_image.jpg'
-              }
-              alt="user_profile_image"
-              fill
-              sizes="(max-width: 768px) 100vw, 700px"
-              objectFit="cover"
-            />
-          </div>
+          <Link
+            href={`/dashboard/account/` + user?.username}
+            className="relative block aspect-square overflow-hidden rounded-full"
+          >
+            {user?.avatar && user.avatar.startsWith('https') ? (
+              <Image
+                src={
+                  user?.avatar
+                    ? user.avatar.startsWith('https')
+                      ? user.avatar
+                      : `${apiPaths.serverUrl}${user.avatar}`
+                    : '/square_image.jpg'
+                }
+                alt="user_profile_image"
+                fill
+                sizes="(max-width: 768px) 100vw, 700px"
+                objectFit="cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-blue-700">
+                {user?.fullname && (
+                  <h5 className="text-base font-extrabold text-white">
+                    {getMinUserName(user?.fullname)}
+                  </h5>
+                )}
+              </div>
+            )}
+          </Link>
         </div>
         <div className="flex grow flex-col items-stretch justify-between gap-2">
           <div className="flex flex-col items-start justify-start">
-            <h3 className="text-lg font-semibold leading-5 text-zinc-900">
-              {user?.fullname}
+            <h3 className="mb-1 text-base font-semibold leading-5 text-zinc-900 sm:text-lg">
+              <Link href={`/dashboard/account/` + user?.username}>
+                {user?.fullname}
+              </Link>
             </h3>
-            <span className="text-normal text-sm text-zinc-400">
+            <span className="text-xs font-normal leading-5 tracking-tight text-zinc-500 sm:text-sm">
               {values?.address} {values?.designation && '|'}{' '}
               {values?.designation} {values?.company && '-'} {values?.company}
             </span>
@@ -157,7 +174,7 @@ const ProfileDescription = ({
                       )
                 }
                 type="button"
-                className="flex h-8 w-48 items-center justify-center gap-1 rounded-full bg-blueTheme text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+                className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
               >
                 <Flash size="21" variant="Bulk" />
                 Connect

@@ -80,12 +80,12 @@ export default function CreateCardPopup({ userId }: { userId: string }) {
         />
         <button
           onClick={() => hanldeCreateCard()}
-          className="rounded-md bg-blueTheme py-2 text-xs text-white shadow-md shadow-blueTheme/60 lg:w-auto lg:px-3"
+          className="w-full rounded-md bg-blueTheme px-3 py-2 text-xs text-white shadow-md shadow-blueTheme/60"
         >
           {!createLoading ? (
             <p className="flex items-center justify-center gap-2">
               <Magicpen size="20" variant="Bulk" className="text-white" />
-              <span className="hidden lg:block">Go to Builder</span>
+              <span>Go to Builder</span>
             </p>
           ) : (
             <div className="w-full">

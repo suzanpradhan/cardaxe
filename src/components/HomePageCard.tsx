@@ -9,6 +9,7 @@ import { Eye, Flash, Heart, Share } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 // import profileImage from '../../public/profile/profile.png';
+import { getMinUserName } from '@/core/utils/generalFunctions';
 import { useEffect, useState } from 'react';
 import CardLayouts from './CardLayouts.server';
 import Dialog from './Dialog';
@@ -86,18 +87,27 @@ export default function HomePageCard({
   return (
     <div
       key={index}
-      className="mx-auto flex w-full min-w-[20rem] max-w-sm flex-col gap-4 border-b border-zinc-100 px-2 py-5 xs:px-0 sm:min-w-[24rem] sm:max-w-sm"
+      className="mx-auto flex w-full min-w-[20rem] max-w-sm flex-col gap-4 border-b border-zinc-100 px-2 py-5 last-of-type:border-b-0 xs:px-0 sm:min-w-[24rem] sm:max-w-sm"
     >
       <section className="flex items-center gap-2">
-        <div className="relative z-auto h-8 w-8 rounded-full">
-          <Image
-            className="rounded-full"
-            src={card.user?.avatar ?? '/profile/profile.png'}
-            alt="image"
-            fill
-            sizes="(max-width: 768px) 100vw, 700px"
-            objectFit="cover"
-          />
+        <div className="relative z-auto h-8 w-8 overflow-hidden rounded-full">
+          {card.user?.avatar ? (
+            <Image
+              src={card.user?.avatar ?? '/square_image.jpg'}
+              alt="image"
+              fill
+              sizes="(max-width: 768px) 100vw, 700px"
+              objectFit="cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-blue-700">
+              {card.user?.fullname && (
+                <h5 className="text-base font-extrabold text-white">
+                  {getMinUserName(card.user?.fullname)}
+                </h5>
+              )}
+            </div>
+          )}
         </div>
         <Link
           href={'dashboard/account/' + card.user?.username}

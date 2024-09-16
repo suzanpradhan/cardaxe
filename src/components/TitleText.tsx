@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Activity, NotificationBing } from 'iconsax-react';
+import { NotificationBing, Setting } from 'iconsax-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -43,11 +43,18 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
                 )}
               />
             </Link>
-            <Activity
-              size="23"
-              variant="Bulk"
-              className="text-grayfont lg:hidden"
-            />
+            {pathname === '/dashboard/account/me' && (
+              <Link href={'/dashboard/settings'}>
+                <Setting
+                  size="23"
+                  variant="Bulk"
+                  className={cn(
+                    'lg:hidden',
+                    isNotificationroute ? 'text-blueTheme' : 'text-grayfont'
+                  )}
+                />
+              </Link>
+            )}
           </div>
         )}
       </div>

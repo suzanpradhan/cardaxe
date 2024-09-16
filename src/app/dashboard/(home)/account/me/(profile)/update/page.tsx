@@ -1,8 +1,11 @@
 'use client';
+import ButtonForm from '@/components/ButtonForm';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
+import { getMinUserName } from '@/core/utils/generalFunctions';
 import userApi from '@/module/user/userApi';
 import { UserType, userSchema } from '@/module/user/userType';
+import { Pencil } from '@phosphor-icons/react';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -54,7 +57,7 @@ export default function UpdateProfile() {
       gender: user?.gender ?? 'MALE',
       id: user?.id ?? null,
       updateAvatar: undefined,
-      avatar: user?.avatar ? `${user?.avatar}` : '/profile/profile.png',
+      avatar: user?.avatar ? `${user?.avatar}` : '',
     },
     validateOnChange: false,
     validate: validateForm,
@@ -77,34 +80,39 @@ export default function UpdateProfile() {
           <div className="flex flex-col items-stretch gap-5">
             <h3 className="mb-5 text-xl font-semibold">Edit Profile</h3>
             <div className="flex w-full flex-col justify-between gap-2 rounded-lg bg-slate-100 px-4 py-3 md:flex-row md:items-center md:gap-0">
-              <div className="flex flex-col items-center gap-3 sm:flex-row">
-                <div className="relative h-14 w-14 overflow-hidden rounded-full">
-                  <Image
-                    src={
-                      formik.values.updateAvatar
-                        ? (URL.createObjectURL(formik.values.updateAvatar) ??
-                          '/profile/profile.png')
-                        : (formik.values.avatar ?? '/profile/profile.png')
-                    }
-                    alt="profile-image"
-                    objectFit="cover"
-                    layout="fill"
-                    sizes="(max-width: 2000px) 75vw, 33vw"
-                  />
-                </div>
-                <div className="flex flex-col max-md:items-center">
-                  <h3 className="text-base font-semibold">
-                    {formik.values.fullname}
-                  </h3>
-                  <p className="text-sm font-normal">Free Plan</p>
-                </div>
-              </div>
-              <div className="">
-                <label htmlFor="image-input">
-                  <div className="rounded bg-blueTheme px-2 py-2 text-center text-white shadow-lg shadow-blueTheme/60">
-                    Change Profile
+              <div className="flex flex-row items-center gap-3">
+                <div className="relative h-14 w-14">
+                  {formik.values.avatar || formik.values.updateAvatar ? (
+                    <Image
+                      src={
+                        formik.values.updateAvatar
+                          ? (URL.createObjectURL(formik.values.updateAvatar) ??
+                            '/square_image.jpg')
+                          : (formik.values.avatar ?? '/square_image.jpg')
+                      }
+                      alt="profile-image"
+                      objectFit="cover"
+                      layout="fill"
+                      sizes="(max-width: 2000px) 75vw, 33vw"
+                      className="h-full w-full overflow-hidden rounded-full"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-blue-700">
+                      {formik.values.fullname && (
+                        <h5 className="text-base font-extrabold text-white">
+                          {getMinUserName(formik.values.fullname)}
+                        </h5>
+                      )}
+                    </div>
+                  )}
+                  <div className="absolute bottom-0 right-0 lg:hidden">
+                    <label htmlFor="image-input">
+                      <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-white text-center text-blue-700 shadow-lg shadow-black/60">
+                        <Pencil size={15} weight="light" />
+                      </div>
+                    </label>
                   </div>
-                </label>
+                </div>
                 <input
                   id={'image-input'}
                   type="file"
@@ -119,13 +127,20 @@ export default function UpdateProfile() {
                   // }
                   name="updateAvatar"
                 />
+                <div className="flex flex-col">
+                  <h3 className="text-base font-semibold">
+                    {formik.values.fullname}
+                  </h3>
+                  <p className="text-sm font-normal">Free Plan</p>
+                </div>
               </div>
-              {/* <button
-                className=" bg-blueTheme py-2 text-white px-2 rounded shadow-lg shadow-blueTheme/60"
-                onClick={handleImageChange}
-              >
-                Change Profile
-              </button> */}
+              <div className="max-lg:hidden">
+                <label htmlFor="image-input">
+                  <div className="rounded bg-blueTheme px-2 py-2 text-center text-white shadow-lg shadow-blueTheme/60">
+                    Change Profile
+                  </div>
+                </label>
+              </div>
             </div>
             <div className="flex flex-col justify-stretch gap-1">
               <label htmlFor="username" className="text-grayfont">
@@ -225,12 +240,11 @@ export default function UpdateProfile() {
                 ></textarea>
               </div>
             </div>
-            <button
-              type="submit"
-              className="h-10 rounded bg-blueTheme px-2 text-white shadow-lg shadow-blueTheme/60"
-            >
-              Update Profile
-            </button>
+            <ButtonForm
+              label="Update Profile"
+              theme="blue"
+              isLoading={isloading}
+            />
           </div>
         </form>
       </div>

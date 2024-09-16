@@ -91,7 +91,7 @@ const MyCardsPage = () => {
           </Dialog>
         </div>
       </div>
-      <div className="col-span-12 mb-5 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
+      <div className="col-span-12 mb-20 grid grid-cols-6 gap-x-4 gap-y-4 px-2 sm:col-span-10 sm:col-start-2 sm:px-0 xl:col-span-8 xl:col-start-3">
         {/* <PopUpDialog show={showQrModal} onClose={() => setShowQrModal(false)}>
           
         </PopUpDialog> */}

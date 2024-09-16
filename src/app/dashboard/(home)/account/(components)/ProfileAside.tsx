@@ -26,36 +26,10 @@ const SIDEBAR_NAV_ELEMENTS: ProfileAsideElementsProps[] = [
       />
     ),
   },
-  // {
-  //   id: 3,
-  //   label: 'Payments',
-  //   link: 'payments',
-
-  //   icon: (
-  //     <CardPos
-  //       size={ICONS_SIZE}
-  //       variant={ICONS_VARIANT}
-  //       className={ICONS_CLASSNAME}
-  //     />
-  //   ),
-  // },
-  // {
-  //   id: 4,
-  //   label: 'Notifications',
-  //   link: 'notifications',
-
-  //   icon: (
-  //     <NotificationBing
-  //       size={ICONS_SIZE}
-  //       variant={ICONS_VARIANT}
-  //       className={ICONS_CLASSNAME}
-  //     />
-  //   ),
-  // },
   {
     id: 5,
     label: 'Settings',
-    link: 'me/settings',
+    link: '/dashboard/settings',
 
     icon: (
       <Setting
