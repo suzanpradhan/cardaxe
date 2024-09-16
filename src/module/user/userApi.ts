@@ -22,7 +22,7 @@ const userApi = baseApi.injectEndpoints({
             serializeQueryArgs: ({ endpointName, queryArgs }) => {
                 return `${endpointName}-${queryArgs}`;
             },
-            providesTags: ['User'],
+            providesTags: (result, error, arg) => [{ type: 'User', id: arg }],
             transformResponse: (response: any) => {
                 const camelCaseResponse = snakeToCamel(response)
                 return camelCaseResponse;

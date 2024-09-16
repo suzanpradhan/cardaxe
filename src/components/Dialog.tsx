@@ -73,7 +73,7 @@ const Dialog = ({
           onClick={closeDialog}
           className="flex w-full items-end justify-end lg:hidden"
         >
-          <CloseCircle size="24" color="red" variant="Bold" />
+          <CloseCircle size="30" color="white" variant="Bold" />
         </button>
         {dialogRef ? children : <></>}
       </dialog>

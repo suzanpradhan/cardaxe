@@ -7,9 +7,9 @@ export default function FollowItems({
 }) {
   return (
     <div className="col-span-4 row-span-1">
-      <div className="flex flex-col items-center justify-stretch gap-1">
-        <span className="font-bold text-base">{value}</span>
-        <span className="font-normal text-xs text-grayfont">{label}</span>
+      <div className="flex flex-col items-center justify-stretch">
+        <span className="text-base font-bold">{value}</span>
+        <span className="text-xs font-normal text-grayfont">{label}</span>
       </div>
     </div>
   );

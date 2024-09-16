@@ -14,6 +14,7 @@ import { UserType } from '@/module/user/userType';
 import { useEffect } from 'react';
 import CardLayouts, { VariableValueType } from '../CardLayouts.server';
 import FormWrapper from '../FormWrapper';
+import { Separator } from '../ui/separator';
 import ProfileDescription from './ProfileDescription';
 import ProfileDetails from './ProfileDetails';
 
@@ -59,18 +60,6 @@ const PreviewSection = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  // try {
-  //   response = await fetch(
-  //     `${apiPaths.baseUrl}${apiPaths.getCardTemplatesUrl}${layout}`,
-  //     {
-  //       method: 'GET',
-  //       headers: { 'Content-Type': 'application/json' },
-  //     }
-  //   );
-  // } catch (err) {
-  //   console.log(err);
-  // }
-
   const cardTemplate = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries[`getCardTemmplate-${layout}`]
@@ -90,6 +79,7 @@ const PreviewSection = ({
             variableValues={variableValues}
           />
         )}
+        <Separator className="my-4" />
         <ProfileDescription
           values={{
             address: variableValues.address ?? '',
@@ -103,6 +93,7 @@ const PreviewSection = ({
           isLiked={isLiked}
           userProfile={userProfile}
         />
+        <Separator className="my-1" />
         {socialValues ? (
           <ProfileDetails
             cardValues={variableValues}
