@@ -78,7 +78,6 @@ const DashboardPage = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    // console.log('currentPage', currentPage, hasMoreData);
     const fetchData = async (currentPage: number) => {
       const response = await Promise.resolve(
         dispatch(cardsApi.endpoints.getAllCards.initiate(currentPage))

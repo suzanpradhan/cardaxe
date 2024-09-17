@@ -139,7 +139,6 @@ export const cardSlice = createSlice({
         state[formName].errors = {};
       }
 
-      console.log("errorObject", state.cardBasics.errors)
 
 
     },

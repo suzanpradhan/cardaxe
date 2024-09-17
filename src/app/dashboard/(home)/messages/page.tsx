@@ -19,8 +19,6 @@ export default function Page() {
     uuid: session.data?.user?.id.toString() ?? '',
   });
 
-  console.log('roomIds', roomIds);
-
   const [activeRoom, setActiveRoom] = useState<string | undefined>(undefined);
 
   useEffect(() => {

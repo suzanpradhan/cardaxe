@@ -25,7 +25,6 @@ export default function HomePageAside({ userName }: { userName: string }) {
     if (userName) dispatch(cardsApi.endpoints.getCard.initiate(userName));
   }, [dispatch, userName]);
 
-  console.log('defaultCard', defaultCard);
   if (defaultCard) {
     return (
       <>

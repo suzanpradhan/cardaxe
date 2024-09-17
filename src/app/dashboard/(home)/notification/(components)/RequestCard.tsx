@@ -52,7 +52,6 @@ export default function RequestCard({ request }: { request: ConnectionType }) {
       })
     )
       .then((response: any) => {
-        console.log('here');
         createRoom({ name: `${userProfile.id} - ${toUser.id}` });
         addMember({
           profileId: userProfile.id.toString(),

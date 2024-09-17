@@ -7,7 +7,6 @@ export const createRoom = mutation({
     },
     handler: async (ctx, args) => {
         const roomId = await getRoomId(ctx, { name: args.name })
-        console.log("roomId", roomId)
         if (roomId != undefined && roomId != null && roomId != "null") return;
         await ctx.db.insert("rooms", {
             name: args.name

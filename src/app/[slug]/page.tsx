@@ -17,8 +17,6 @@ const page = async (props: any) => {
   try {
     const session = await getServerSession(authOptions);
 
-    console.log('session', session);
-
     if (session) {
       const res = await fetch(cardUrl, {
         headers: {
@@ -29,8 +27,6 @@ const page = async (props: any) => {
       });
       const response = await res.json();
 
-      console.log('response', response);
-
       cardInfo = snakeToCamel(response);
     } else {
       const res = await fetch(cardUrl, {
@@ -40,8 +36,6 @@ const page = async (props: any) => {
         cache: 'no-store',
       });
       const response = await res.json();
-
-      console.log('response', response);
 
       cardInfo = snakeToCamel(response);
     }
@@ -63,8 +57,6 @@ const page = async (props: any) => {
       const response = await res.json();
 
       userProfile = snakeToCamel(response) as UserType;
-
-      console.log('userProfile', userProfile);
     }
   } catch (err) {
     throw Error(err as string);
@@ -94,7 +86,6 @@ const page = async (props: any) => {
     ])
   );
 
-  console.log('cardInfo', cardInfo);
   return (
     <div className="h-screen overflow-y-scroll">
       <div className="mx-auto max-w-md bg-white px-4 py-4 lg:max-w-lg">

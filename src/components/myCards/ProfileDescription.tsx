@@ -57,7 +57,6 @@ const ProfileDescription = ({
   cardSlug?: string;
   isLiked?: boolean;
 }) => {
-  console.log('userProfile', userProfile);
   const [isConnectedOrRequested, toggleConnectedOrRequested] = useState(false);
   const [isCardLiked, toggleCardLike] = useState(false);
 
@@ -82,7 +81,6 @@ const ProfileDescription = ({
   }, [isLiked]);
 
   const handleLike = (cardId: number, userProfile: UserType) => {
-    console.log('likinghere');
     toggleCardLike(true);
     dispatch(
       cardsApi.endpoints.likeCard.initiate({

@@ -112,7 +112,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     const scrollableDiv = scrollableDivRef.current;
-    console.log(scrollableDiv);
     scrollableDiv?.addEventListener('scroll', handleScroll);
     return () => {
       scrollableDiv?.removeEventListener('scroll', handleScroll);
