@@ -61,23 +61,21 @@ const Dialog = ({
       <button className={`${className}`} onClick={openDialog}>
         {triggerComponent}
       </button>
-      <div className={dialogClassName}>
-        <dialog
-          ref={dialogRef}
-          // onClick={() => setIsDialogOpen(false)}
-          className={
-            'rounded-xl bg-transparent backdrop:fixed backdrop:-z-50 backdrop:bg-gray-600/90 backdrop:bg-opacity-85'
-          }
+      <dialog
+        ref={dialogRef}
+        // onClick={() => setIsDialogOpen(false)}
+        className={
+          'rounded-xl bg-transparent backdrop:fixed backdrop:-z-50 backdrop:bg-gray-600/90 backdrop:bg-opacity-85'
+        }
+      >
+        <button
+          onClick={closeDialog}
+          className="flex w-full items-end justify-end lg:hidden"
         >
-          <button
-            onClick={closeDialog}
-            className="flex w-full items-end justify-end lg:hidden"
-          >
-            <CloseCircle size="30" color="white" variant="Bold" />
-          </button>
-          {dialogRef ? children : <></>}
-        </dialog>
-      </div>
+          <CloseCircle size="30" color="white" variant="Bold" />
+        </button>
+        {dialogRef ? children : <></>}
+      </dialog>
     </>
   );
 };

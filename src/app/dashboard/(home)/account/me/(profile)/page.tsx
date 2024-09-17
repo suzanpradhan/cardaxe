@@ -39,7 +39,7 @@ export default function Page() {
   );
 
   return (
-    <div className="my-4 flex w-full flex-col gap-4 px-2 lg:px-5">
+    <div className="my-4 flex w-full flex-col gap-4 max-sm:px-4 lg:px-5">
       {user ? (
         <>
           <div className="mx-auto w-full min-w-min lg:w-110">

@@ -17,9 +17,9 @@ export default function MessageCard({ roomId, profileId }: MessageCardProps) {
 
   return (
     <>
-      <span className="relative h-10 w-10 rounded-full bg-red-600">
+      <span className="relative h-10 w-10 overflow-hidden rounded-full">
         <Image
-          className="rounded-full"
+          className="h-full w-full"
           src={
             roomMembers?.[0]?.avatar != null &&
             roomMembers?.[0]?.avatar != 'null'
@@ -29,7 +29,7 @@ export default function MessageCard({ roomId, profileId }: MessageCardProps) {
           alt="image"
           fill
           sizes="(max-width: 768px) 100vw, 700px"
-          objectFit="contain"
+          objectFit="cover"
         />
       </span>
       <span className="flex w-[80%] flex-1 flex-col">

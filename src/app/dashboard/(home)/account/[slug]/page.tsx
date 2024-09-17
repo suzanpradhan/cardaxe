@@ -89,7 +89,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   console.log('userProfile', userProfile);
 
   return (
-    <div className="mx-auto my-4 flex w-full flex-col gap-4 max-lg:w-96">
+    <div className="mx-auto my-4 flex w-full flex-col gap-4 max-lg:w-96 max-sm:px-4">
       {userProfile ? (
         <div
           className="h-[calc(100vh)] overflow-y-scroll"
