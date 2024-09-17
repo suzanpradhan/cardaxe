@@ -1,5 +1,7 @@
 'use client';
+import Dialog from '@/components/Dialog';
 import Description from '@/components/myCards/Description';
+import QrModal from '@/components/QrModal';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { getMinUserName } from '@/core/utils/generalFunctions';
@@ -89,6 +91,17 @@ const MyProfileCard = ({
                 <button className="mx-auto h-10 w-5/12 rounded-full bg-slate-100 text-sm font-medium text-blueTheme/75 hover:shadow">
                   Share
                 </button>
+                {user?.username && (
+                  <Dialog
+                    triggerComponent={
+                      <button className="mx-auto h-10 w-5/12 rounded-full bg-slate-100 text-sm font-medium text-blueTheme/75 hover:shadow">
+                        Share
+                      </button>
+                    }
+                  >
+                    <QrModal username={user.username} slug={user.username} />
+                  </Dialog>
+                )}
               </div>
             </div>
           </div>
@@ -101,12 +114,21 @@ const MyProfileCard = ({
             >
               Edit profile
             </button>
-            <button className="h-8 grow rounded-md bg-slate-100 text-xs font-medium text-black hover:shadow">
+            {/* <button className="h-8 grow rounded-md bg-slate-100 text-xs font-medium text-black hover:shadow">
               Share profile
             </button>
-            {/* <button className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-xs font-medium text-black hover:shadow">
-              <UserPlus size={16} />
-            </button> */}
+            {user?.username && (
+              <Dialog
+                triggerComponent={<>Share profile</>}
+                className="h-8 grow rounded-md bg-slate-100 text-xs font-medium text-black hover:shadow"
+              >
+                <QrModal
+                  username={user.username}
+                  slug={user.username}
+                  customUrl="/dashboard/account/me"
+                />
+              </Dialog>
+            )} */}
           </div>
         </div>
       </div>
