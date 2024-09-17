@@ -52,7 +52,6 @@ export default function RequestCard({ request }: { request: ConnectionType }) {
       })
     )
       .then((response: any) => {
-        console.log('here');
         createRoom({ name: `${userProfile.id} - ${toUser.id}` });
         addMember({
           profileId: userProfile.id.toString(),
@@ -68,13 +67,13 @@ export default function RequestCard({ request }: { request: ConnectionType }) {
       .catch(Error);
   };
   return (
-    <li className="flex items-center gap-4">
+    <li className="flex items-start gap-4">
       <Link
-        className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full"
+        className="relative aspect-square w-10 flex-shrink-0 overflow-hidden rounded-full"
         href={'/dashboard/account/' + request.from_user.username}
       >
         <Image
-          className="rounded-full"
+          className="h-full w-full"
           src={
             request.from_user.avatar
               ? `${apiPaths.serverUrl}${request.from_user.avatar}`

@@ -69,10 +69,10 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
         pathname.endsWith('messages') ? 'max-lg:hidden' : 'max-lg:flex'
       )}
     >
-      <div className="flex w-full items-center gap-4 border-x-1 border-t-1 border-inputBgGrey bg-inputBgGrey px-4 py-3">
-        <div className="relative h-12 w-12 rounded-full">
+      <div className="flex w-full items-center gap-4 py-2">
+        <div className="relative h-10 w-10 overflow-hidden rounded-full">
           <Image
-            className="rounded-full"
+            className="h-full w-full"
             src={
               roomMembers?.[0]?.avatar != null &&
               roomMembers?.[0]?.avatar != 'null'
@@ -82,7 +82,7 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
             alt="image"
             fill
             sizes="(max-width: 768px) 100vw, 700px"
-            objectFit="contain"
+            objectFit="cover"
           />
         </div>
         <p className="flex-1 text-grayfont">{roomMembers?.[0]?.name}</p>
@@ -97,6 +97,8 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
             {groupedMessages?.map((messages, index) => (
               <ChatGroup
                 isMyChat={messages[0].profile_id === profileId}
+                roomId={roomId}
+                profileId={messages[0].profile_id}
                 key={index}
               >
                 {messages.map((item, index) => (

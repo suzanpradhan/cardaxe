@@ -43,7 +43,7 @@ export default function Page() {
         <Setting2 size="24" variant="Bulk" />
       </div>
       <SearchInput greyBackground={true} requireBorder={false} />
-      <ul className="flex h-full flex-col gap-4 overflow-y-scroll rounded-lg border-1 border-borderMain p-3">
+      <ul className="flex h-full flex-col gap-4 overflow-y-scroll rounded-lg">
         {session.data?.user?.id ? (
           roomIds?.map((item, index) => (
             <li key={index} onClick={() => setActiveRoom(item)}>

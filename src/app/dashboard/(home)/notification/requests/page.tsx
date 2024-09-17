@@ -64,11 +64,11 @@ export default function Page() {
 
   return (
     <div
-      className="mt-8 flex-1 overflow-scroll rounded-md bg-inputBgGrey/50"
+      className="flex-1 overflow-scroll rounded-md bg-inputBgGrey/20"
       ref={scrollableDivRef}
       onScroll={handleScroll}
     >
-      <ul className="flex h-full flex-col gap-4 p-4">
+      <ul className="flex h-full flex-col gap-4 py-2">
         {allRequests?.results.map((request, i) => (
           <RequestCard request={request} key={i} />
         ))}

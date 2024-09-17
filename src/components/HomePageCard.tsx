@@ -98,13 +98,15 @@ export default function HomePageCard({
     >
       <section className="flex items-center gap-2">
         <div className="relative z-auto h-8 w-8 overflow-hidden rounded-full">
-          {card.user?.avatar ? (
+          {card.user?.avatar &&
+          card.user?.avatar != null &&
+          card.user?.avatar != undefined ? (
             <Image
               src={card.user?.avatar ?? '/square_image.jpg'}
               alt="image"
               fill
               sizes="(max-width: 768px) 100vw, 700px"
-              objectFit="cover"
+              className="object-cover"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-blue-700">

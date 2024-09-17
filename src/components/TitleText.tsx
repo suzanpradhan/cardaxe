@@ -27,23 +27,27 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
         pathname.includes('builder') ? 'hidden' : 'block'
       )}
     >
-      <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between px-2 lg:max-w-none">
+      <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between max-sm:px-4 lg:max-w-none">
         <Link href={'/'} className="">
           <h1 className={cn('text-xl font-extrabold lg:text-3xl')}>cardaxe.</h1>
         </Link>
         {isSideBarComp && (
           <div className="flex items-center gap-4">
-            <Link href={'/dashboard/notification'}>
-              <NotificationBing
-                size="23"
-                variant="Bulk"
-                className={cn(
-                  'lg:hidden',
-                  isNotificationroute ? 'text-blueTheme' : 'text-grayfont'
-                )}
-              />
-            </Link>
-            {pathname === '/dashboard/account/me' && (
+            {!pathname.endsWith('settings') &&
+              !pathname.includes('notification') && (
+                <Link href={'/dashboard/notification'}>
+                  <NotificationBing
+                    size="23"
+                    variant="Bulk"
+                    className={cn(
+                      'lg:hidden',
+                      isNotificationroute ? 'text-blueTheme' : 'text-grayfont'
+                    )}
+                  />
+                </Link>
+              )}
+
+            {pathname.endsWith('me') && (
               <Link href={'/dashboard/settings'}>
                 <Setting
                   size="23"

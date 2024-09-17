@@ -30,13 +30,10 @@ export default function HomePageAside({ userName }: { userName: string }) {
     return (
       <>
         <h2 className="font-bold">My Card</h2>
-        <Link href={'dashboard/account/me'}>
+        <Link href={'/dashboard/account/me'}>
           <HomeCardTemplate userName={userName} />
         </Link>
         <div className="flex gap-2">
-          {/* {NAVIGATION_ICONS.map((item, index) => (
-            
-          ))} */}
           <Link
             href={`dashboard/builder?slug=${defaultCard.slug}&action=update`}
           >

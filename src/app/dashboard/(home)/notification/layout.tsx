@@ -11,16 +11,16 @@ export default function NotificationsLayout({
 }) {
   const pathname = usePathname();
   return (
-    <div className="mx-auto flex h-full max-w-xl flex-col pt-6 max-lg:max-w-96">
-      <h2 className="mb-5 px-2 text-xl font-semibold">Notification</h2>
-      <div className="flex gap-2">
+    <div className="mx-auto flex h-full max-w-xl flex-col px-4 py-4 max-lg:max-w-96">
+      <h5 className="text-xs font-medium text-gray-600">Notification</h5>
+      <div className="my-2 flex gap-2 rounded-md bg-inputBgGrey p-2">
         <Link
           href={'/dashboard/notification'}
           className={cn(
-            'min-w-[5rem] rounded-md p-2 text-center',
+            'flex h-7 min-w-[5rem] items-center justify-center rounded-md px-2 text-center text-xs',
             pathname.endsWith('notification')
               ? 'bg-blueBg text-blueTheme'
-              : 'bg-white text-black'
+              : 'bg-white text-black/60'
           )}
         >
           All
@@ -28,7 +28,7 @@ export default function NotificationsLayout({
         <Link
           href={'/dashboard/notification/requests'}
           className={cn(
-            'min-w-[5rem] rounded-md p-2 text-center',
+            'flex h-7 min-w-[5rem] items-center justify-center rounded-md px-2 text-center text-xs',
             pathname.endsWith('requests')
               ? 'bg-blueBg text-blueTheme'
               : 'bg-white text-black'
@@ -37,9 +37,6 @@ export default function NotificationsLayout({
           Request
         </Link>
       </div>
-      {/* <div className="mt-8 flex-1 overflow-scroll rounded-md bg-inputBgGrey/50">
-        {children}
-      </div> */}
       {children}
     </div>
   );

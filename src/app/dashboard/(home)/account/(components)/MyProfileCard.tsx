@@ -1,7 +1,5 @@
 'use client';
-import Dialog from '@/components/Dialog';
 import Description from '@/components/myCards/Description';
-import QrModal from '@/components/QrModal';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch } from '@/core/redux/clientStore';
 import { getMinUserName } from '@/core/utils/generalFunctions';
@@ -88,10 +86,10 @@ const MyProfileCard = ({
                 >
                   Edit
                 </button>
-                <button className="mx-auto h-10 w-5/12 rounded-full bg-slate-100 text-sm font-medium text-blueTheme/75 hover:shadow">
+                {/* <button className="mx-auto h-10 w-5/12 rounded-full bg-slate-100 text-sm font-medium text-blueTheme/75 hover:shadow">
                   Share
-                </button>
-                {user?.username && (
+                </button> */}
+                {/* {user?.username && (
                   <Dialog
                     triggerComponent={
                       <button className="mx-auto h-10 w-5/12 rounded-full bg-slate-100 text-sm font-medium text-blueTheme/75 hover:shadow">
@@ -101,7 +99,7 @@ const MyProfileCard = ({
                   >
                     <QrModal username={user.username} slug={user.username} />
                   </Dialog>
-                )}
+                )} */}
               </div>
             </div>
           </div>

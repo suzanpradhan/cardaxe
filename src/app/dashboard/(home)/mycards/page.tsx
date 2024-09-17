@@ -138,16 +138,15 @@ const MyCardsPage = () => {
                       <Edit size="21" variant="Bulk" />{' '}
                       <span className="text-xs font-medium">Edit Card</span>
                     </div>
-
-                    {card.slug && card.user?.username ? (
+                    {card.slug && card.user?.username && (
                       <Dialog
-                        className="bg-transparent"
+                        className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme"
                         dialogClassName="grow"
                         triggerComponent={
-                          <div className="flex grow cursor-pointer items-center justify-center gap-2 rounded-sm border border-zinc-100 p-1 text-zinc-500 hover:border-blueTheme hover:text-blueTheme">
+                          <>
                             <Share size="21" variant="Bulk" />{' '}
                             <span className="text-xs font-medium">Share</span>
-                          </div>
+                          </>
                         }
                       >
                         <QrModal
@@ -157,8 +156,6 @@ const MyCardsPage = () => {
                           username={card.user?.username}
                         />
                       </Dialog>
-                    ) : (
-                      <></>
                     )}
                   </div>
                 </div>

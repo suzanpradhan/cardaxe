@@ -24,7 +24,7 @@ export default function SettingPage() {
             Statistics
           </Link>
           <Link
-            href="#"
+            href={`/dashboard/notification`}
             className="relative flex cursor-pointer items-center gap-2 py-2 before:absolute before:-left-2 before:-right-2 before:-z-10 before:h-full before:w-full before:rounded-md hover:before:bg-slate-200"
           >
             <Notification1 size={30} variant="Outline" className="text-black" />{' '}
