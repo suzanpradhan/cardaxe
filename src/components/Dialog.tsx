@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 
 type DialogPropsType = {
   children: React.ReactNode;
-  triggerComponent: React.ReactNode;
+  triggerComponent?: React.ReactNode;
   className?: string;
   dialogClassName?: string;
 };
@@ -57,27 +57,28 @@ const Dialog = ({
   }, []);
 
   return (
-    <div className={dialogClassName}>
-      <button className="w-full" onClick={openDialog}>
+    <>
+      <button className={`${className}`} onClick={openDialog}>
         {triggerComponent}
       </button>
-
-      <dialog
-        ref={dialogRef}
-        // onClick={() => setIsDialogOpen(false)}
-        className={
-          'rounded-xl bg-transparent backdrop:fixed backdrop:-z-50 backdrop:bg-gray-600/90 backdrop:bg-opacity-85'
-        }
-      >
-        <button
-          onClick={closeDialog}
-          className="flex w-full items-end justify-end lg:hidden"
+      <div className={dialogClassName}>
+        <dialog
+          ref={dialogRef}
+          // onClick={() => setIsDialogOpen(false)}
+          className={
+            'rounded-xl bg-transparent backdrop:fixed backdrop:-z-50 backdrop:bg-gray-600/90 backdrop:bg-opacity-85'
+          }
         >
-          <CloseCircle size="30" color="white" variant="Bold" />
-        </button>
-        {dialogRef ? children : <></>}
-      </dialog>
-    </div>
+          <button
+            onClick={closeDialog}
+            className="flex w-full items-end justify-end lg:hidden"
+          >
+            <CloseCircle size="30" color="white" variant="Bold" />
+          </button>
+          {dialogRef ? children : <></>}
+        </dialog>
+      </div>
+    </>
   );
 };
 

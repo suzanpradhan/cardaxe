@@ -201,49 +201,43 @@ const UserProfileDescription = ({
             ) : (
               <></>
             )}
+            {user && authUser?.username !== user?.username && (
+              <>
+                <Dialog
+                  className="w-full"
+                  triggerComponent={
+                    <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+                      <Share size="23" variant="Bulk" />
+                    </div>
+                  }
+                >
+                  <QrModal username={user!.username} slug={cardSlug!} />
+                </Dialog>
+                <div className="col-span-5 flex items-center justify-start gap-2">
+                  <button
+                    onClick={() =>
+                      authUser
+                        ? !isCardLiked
+                          ? handleLike(cardId!, authUser)
+                          : handleDislike(cardSlug!)
+                        : router.push(
+                            `/login?callback=${window.location.origin}${pathname}`
+                          )
+                    }
+                    className={cn(
+                      'flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100',
+                      isCardLiked ? 'text-blueTheme' : 'text-grayfont'
+                    )}
+                  >
+                    <Heart size="21" variant="Bulk" />
+                  </button>
 
-            <Dialog
-              className="bg-transparent"
-              triggerComponent={
-                <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-                  <Share size="23" variant="Bulk" />
+                  <button className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+                    <More size="21" variant="TwoTone" />
+                  </button>
                 </div>
-              }
-            >
-              <QrModal username={user!.username} slug={cardSlug!} />
-            </Dialog>
-            <div className="col-span-5 flex items-center justify-start gap-2">
-              <button
-                onClick={() =>
-                  authUser
-                    ? !isCardLiked
-                      ? handleLike(cardId!, authUser)
-                      : handleDislike(cardSlug!)
-                    : router.push(
-                        `/login?callback=${window.location.origin}${pathname}`
-                      )
-                }
-                className={cn(
-                  'flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100',
-                  isCardLiked ? 'text-blueTheme' : 'text-grayfont'
-                )}
-              >
-                <Heart size="21" variant="Bulk" />
-              </button>
-
-              <button
-                onClick={() =>
-                  authUser
-                    ? handleConnect(user!, authUser)
-                    : router.push(
-                        `/login?callback=${window.location.origin}${pathname}`
-                      )
-                }
-                className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme"
-              >
-                <More size="21" variant="TwoTone" />
-              </button>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>

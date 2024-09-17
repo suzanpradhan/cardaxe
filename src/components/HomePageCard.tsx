@@ -29,6 +29,7 @@ export default function HomePageCard({
 }: HomePageCardProps) {
   // const [isConnectionLoading, toggleConnectionLoading] = useState(false);
   const [isLiked, toggleLiked] = useState(false);
+  const [liked, totalLiked] = useState<number>(card.likes);
   const [isConnectedOrRequested, toggleConnectedOrRequested] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -56,6 +57,9 @@ export default function HomePageCard({
 
   const handleLike = (cardId: number) => {
     toggleLiked(true);
+    if (liked <= 10000) {
+      totalLiked((prev) => prev + 1);
+    }
     dispatch(
       cardsApi.endpoints.likeCard.initiate({
         card: cardId.toString(),
@@ -65,7 +69,9 @@ export default function HomePageCard({
   };
   const handleDislike = (cardSlug: string) => {
     toggleLiked(false);
-
+    if (liked <= 10000) {
+      totalLiked((prev) => prev - 1);
+    }
     dispatch(cardsApi.endpoints.dislikeCard.initiate(cardSlug));
   };
 
@@ -127,22 +133,16 @@ export default function HomePageCard({
                 <Flash size="21" variant="Bulk" />
                 Connect
               </button>
-            ) : card.user?.isConnected ? (
-              <button
-                type="button"
-                className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
-              >
-                <Flash size="21" variant="Bulk" />
-                Connected
-              </button>
             ) : (
-              <button
-                type="button"
-                className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
-              >
-                <UserCheck size={21} weight="thin" />
-                Requested
-              </button>
+              !card.user?.isConnected && (
+                <button
+                  type="button"
+                  className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+                >
+                  <UserCheck size={21} weight="thin" />
+                  Requested
+                </button>
+              )
             )
           ) : (
             <></>
@@ -167,40 +167,41 @@ export default function HomePageCard({
       ) : (
         <></>
       )}
-      <section className="flex gap-1">
-        <button
-          className={cn(
-            'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
-            isLiked ? 'text-blueTheme' : 'text-zinc-400'
-          )}
-          onClick={() =>
-            card.id &&
-            card.slug &&
-            (isLiked ? handleDislike(card.slug) : handleLike(card.id))
-          }
-        >
-          <Heart size="23" variant={isLiked ? 'Bulk' : 'TwoTone'} />
-          <p>{card.likes}</p>
-        </button>
-        <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-          <Eye size="23" variant="TwoTone" />
-          <p>{card.views}</p>
-        </button>
-        {card.user?.username && card.slug ? (
-          <Dialog
-            triggerComponent={
-              <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
-                <Share size="23" variant="TwoTone" />
-                <p>0</p>
-              </div>
+      <section className="flex justify-between">
+        <div className="flex gap-1">
+          <button
+            className={cn(
+              'flex items-center gap-2 rounded-xl p-1 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2',
+              isLiked ? 'text-blueTheme' : 'text-zinc-400'
+            )}
+            onClick={() =>
+              card.id &&
+              card.slug &&
+              (isLiked ? handleDislike(card.slug) : handleLike(card.id))
             }
           >
-            <QrModal username={card.user?.username} slug={card.slug} />
-          </Dialog>
-        ) : (
-          <></>
-        )}
-        <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2"></button>
+            <Heart size="23" variant={isLiked ? 'Bulk' : 'TwoTone'} />
+            <p>{liked}</p>
+          </button>
+          <button className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
+            <Eye size="23" variant="TwoTone" />
+            <p>{card.views}</p>
+          </button>
+        </div>
+        <div>
+          {card.user?.username && card.slug && (
+            <Dialog
+              triggerComponent={
+                <div className="flex items-center gap-2 rounded-xl p-1 text-zinc-400 hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2">
+                  <Share size="23" variant="TwoTone" />
+                </div>
+              }
+              className=""
+            >
+              <QrModal username={card.user?.username} slug={card.slug} />
+            </Dialog>
+          )}
+        </div>
       </section>
     </div>
   );
