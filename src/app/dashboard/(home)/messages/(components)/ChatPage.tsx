@@ -70,7 +70,7 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
       )}
     >
       <div className="flex w-full items-center gap-4 py-2">
-        <div className="relative h-12 w-12 overflow-hidden rounded-full">
+        <div className="relative h-10 w-10 overflow-hidden rounded-full">
           <Image
             className="h-full w-full"
             src={
@@ -97,6 +97,8 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
             {groupedMessages?.map((messages, index) => (
               <ChatGroup
                 isMyChat={messages[0].profile_id === profileId}
+                roomId={roomId}
+                profileId={messages[0].profile_id}
                 key={index}
               >
                 {messages.map((item, index) => (

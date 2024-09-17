@@ -164,7 +164,7 @@ const UserProfileDescription = ({
               {values?.designation} {values?.company && '-'} {values?.company}
             </span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 max-sm:hidden">
             {user && authUser?.username !== user?.username ? (
               !isConnectedOrRequested ? (
                 <button
@@ -203,17 +203,17 @@ const UserProfileDescription = ({
             )}
             {user && authUser?.username !== user?.username && (
               <>
-                <Dialog
-                  className="w-full"
-                  triggerComponent={
-                    <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
-                      <Share size="23" variant="Bulk" />
-                    </div>
-                  }
-                >
-                  <QrModal username={user!.username} slug={cardSlug!} />
-                </Dialog>
                 <div className="col-span-5 flex items-center justify-start gap-2">
+                  <Dialog
+                    triggerComponent={
+                      <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+                        <Share size="23" variant="Bulk" />
+                      </div>
+                    }
+                  >
+                    <QrModal username={user!.username} slug={cardSlug!} />
+                  </Dialog>
+
                   <button
                     onClick={() =>
                       authUser
@@ -240,6 +240,94 @@ const UserProfileDescription = ({
             )}
           </div>
         </div>
+      </div>
+      <div className={`flex items-center gap-2 sm:hidden`}>
+        {user && authUser?.username !== user?.username ? (
+          !isConnectedOrRequested ? (
+            <button
+              onClick={() =>
+                authUser
+                  ? handleConnect(user, authUser)
+                  : router.push(
+                      `/login?callback=${window.location.origin}${pathname}`
+                    )
+              }
+              type="button"
+              className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+            >
+              <Flash size="21" variant="Bulk" />
+              Connect
+            </button>
+          ) : user?.isConnected ? (
+            <button
+              type="button"
+              className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+            >
+              <Flash size="21" variant="Bulk" />
+              Connected
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+            >
+              <UserCheck size={21} weight="thin" />
+              Requested
+            </button>
+          )
+        ) : (
+          <></>
+        )}
+        {/* {userProfile && userProfile.username !== user?.username ? (
+          <div className="flex shrink-0 items-start justify-start gap-2">
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <Heart size="21" variant="Bulk" />
+            </div>
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <Share size="21" variant="Bulk" />
+            </div>
+            <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
+              <More size="21" variant="TwoTone" />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )} */}
+        {user && authUser?.username !== user?.username && (
+          <div className="col-span-5 flex items-center justify-start gap-2">
+            <Dialog
+              triggerComponent={
+                <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+                  <Share size="23" variant="Bulk" />
+                </div>
+              }
+            >
+              <QrModal username={user!.username} slug={cardSlug!} />
+            </Dialog>
+
+            <button
+              onClick={() =>
+                authUser
+                  ? !isCardLiked
+                    ? handleLike(cardId!, authUser)
+                    : handleDislike(cardSlug!)
+                  : router.push(
+                      `/login?callback=${window.location.origin}${pathname}`
+                    )
+              }
+              className={cn(
+                'flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100',
+                isCardLiked ? 'text-blueTheme' : 'text-grayfont'
+              )}
+            >
+              <Heart size="21" variant="Bulk" />
+            </button>
+
+            <button className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+              <More size="21" variant="TwoTone" />
+            </button>
+          </div>
+        )}
       </div>
       <div>
         <Description text={values?.bio} />

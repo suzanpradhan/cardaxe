@@ -9,13 +9,11 @@ import { PaginatedResponseType } from '@/core/types/responseTypes';
 import { cn } from '@/lib/utils';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
-import connectApi from '@/module/connect/connectApi';
 import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import { BoxAdd, PenAdd, ScanBarcode, Share } from 'iconsax-react';
 import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import HomePageAside from '../(components)/HomePageAside';
 
 const ICONS_COMMON_CLASS: string = 'p-3 rounded-full h-12 w-12 hover:shadow-lg';
 
@@ -58,27 +56,36 @@ const DashboardPage = () => {
   const [hasMoreData, setHasMoreData] = useState(true);
   const router = useRouter();
   const session = useSession();
-
   useEffect(() => {
     dispatch(userApi.endpoints.getUser.initiate());
   }, [dispatch]);
 
   const handleScroll = useCallback(async () => {
     const scrollableDiv = scrollableDivRef.current;
-
     if (
       scrollableDiv.scrollTop + scrollableDiv.clientHeight >=
-        scrollableDiv.scrollHeight - 100 &&
+        scrollableDiv.scrollHeight - 10 &&
       !isLoading &&
       hasMoreData
     ) {
       setIsLoading(true);
-      setCurrentPage(currentPage + 1);
+      setCurrentPage((prevPage) => prevPage + 1);
     }
-  }, [currentPage]);
+  }, [isLoading, hasMoreData]);
 
   useEffect(() => {
-    // console.log('currentPage', currentPage, hasMoreData);
+    const scrollableDiv = scrollableDivRef.current;
+    if (scrollableDiv) {
+      scrollableDiv.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (scrollableDiv) {
+        scrollableDiv.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [handleScroll]);
+
+  useEffect(() => {
     const fetchData = async (currentPage: number) => {
       const response = await Promise.resolve(
         dispatch(cardsApi.endpoints.getAllCards.initiate(currentPage))
@@ -99,61 +106,21 @@ const DashboardPage = () => {
     setIsLoading(false);
   }, [dispatch, currentPage]);
 
-  useEffect(() => {
-    const scrollableDiv = scrollableDivRef.current;
-    scrollableDiv?.addEventListener('scroll', handleScroll);
-    return () => {
-      scrollableDiv?.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
-
   const allCardsList = useAppSelector(
     (state: RootState) =>
       state.baseApi.queries['getAllCards']?.data as PaginatedResponseType<
         CardResponseType<CardTemplatesType>
       >
   );
-
-  const handleConnect = (user: UserType) => {
-    dispatch(
-      connectApi.endpoints.sendRequest.initiate({
-        to_user: {
-          fullname: user.fullname,
-          email: user.email,
-          username: user.username,
-        },
-        from_user: {
-          fullname: userProfile.fullname,
-          email: userProfile.email,
-          username: userProfile.username,
-        },
-        accepted: false,
-        id: user.id,
-        timestamp: new Date().toISOString(),
-      })
-    );
-  };
-
-  const handleLike = (cardId: number) => {
-    dispatch(
-      cardsApi.endpoints.likeCard.initiate({
-        card: cardId.toString(),
-        user: userProfile.id.toString(),
-      })
-    );
-  };
-  const handleDislike = (cardSlug: string) => {
-    dispatch(cardsApi.endpoints.dislikeCard.initiate(cardSlug));
-  };
-
+  console.log(scrollableDivRef.current + 'current scroll last');
   return (
-    <div className="grid h-full grid-cols-12">
+    <div
+      className="grid h-full grid-cols-12 overflow-y-scroll"
+      ref={scrollableDivRef}
+      onScroll={handleScroll}
+    >
       <div className="col-span-12 grid grid-cols-12 xl:col-span-8 xl:col-start-3">
-        <div
-          className="col-span-12 overflow-y-scroll border-zinc-100 max-lg:mb-20 lg:col-span-6 lg:border-r xl:col-span-7"
-          ref={scrollableDivRef}
-          onScroll={handleScroll}
-        >
+        <div className="col-span-12 border-zinc-100 max-lg:mb-20 lg:col-span-6 lg:border-r xl:col-span-7">
           <div className="mt-2 flex grow flex-col">
             {allCardsList?.results?.map((card, index) => (
               <HomePageCard
@@ -173,7 +140,7 @@ const DashboardPage = () => {
                 fullName={userProfile?.fullname}
                 avatar={userProfile?.avatar ?? undefined}
               />
-              <HomePageAside userName={userProfile?.username} />
+              {/* <HomePageAside userName={userProfile?.username} /> */}
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 border-t border-zinc-100 px-4 pt-2">

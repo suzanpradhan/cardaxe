@@ -1,10 +1,13 @@
 import { apiPaths } from '@/core/api/apiConstants';
-import { useAppDispatch } from '@/core/redux/clientStore';
+import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
+import { RootState } from '@/core/redux/store';
 import { getMinUserName } from '@/core/utils/generalFunctions';
 import { cn } from '@/lib/utils';
 import cardsApi from '@/module/cards/cardsApi';
 import connectApi from '@/module/connect/connectApi';
+import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
+import { UserCheck } from '@phosphor-icons/react';
 import { Flash, Heart, More, MoreCircle, Share } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -60,10 +63,17 @@ const ProfileDescription = ({
   console.log('userProfile', userProfile);
   const [isConnectedOrRequested, toggleConnectedOrRequested] = useState(false);
   const [isCardLiked, toggleCardLike] = useState(false);
-
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
+
+  const authUser = useAppSelector(
+    (state: RootState) => state.baseApi.queries[`getUser`]?.data as UserType
+  );
+
+  useEffect(() => {
+    dispatch(userApi.endpoints.getUser.initiate());
+  }, [dispatch]);
 
   useEffect(() => {
     if (user?.isConnected || user?.isRequested) {
@@ -118,7 +128,7 @@ const ProfileDescription = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-start justify-start gap-4">
+      <div className="flex items-center justify-start gap-4">
         <div className="shrink-0 basis-16 sm:basis-20">
           <Link
             href={`/dashboard/account/` + user?.username}
@@ -127,7 +137,9 @@ const ProfileDescription = ({
             {user?.avatar && user.avatar.startsWith('https') ? (
               <Image
                 src={
-                  user?.avatar
+                  user?.avatar &&
+                  user?.avatar != null &&
+                  user?.avatar != undefined
                     ? user.avatar.startsWith('https')
                       ? user.avatar
                       : `${apiPaths.serverUrl}${user.avatar}`
@@ -161,49 +173,61 @@ const ProfileDescription = ({
               {values?.designation} {values?.company && '-'} {values?.company}
             </span>
           </div>
-          <div className="flex gap-2">
-            {!isConnectedOrRequested &&
-            user &&
-            userProfile?.username !== user?.username ? (
-              <button
-                onClick={() =>
-                  userProfile
-                    ? handleConnect(user, userProfile)
-                    : router.push(
-                        `/login?callback=${window.location.origin}${pathname}`
-                      )
-                }
-                type="button"
-                className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
-              >
-                <Flash size="21" variant="Bulk" />
-                Connect
-              </button>
-            ) : (
-              <></>
-            )}
-            {user && cardId && cardSlug ? (
-              <Dialog
-                className="bg-transparent"
-                triggerComponent={
-                  <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
-                    <Share size="23" variant="Bulk" />
-                  </div>
-                }
-              >
-                <QrModal username={user.username} slug={cardSlug} />
-              </Dialog>
-            ) : (
-              <></>
-            )}
-            {user && cardId && cardSlug ? (
-              <div className="col-span-5 flex items-center justify-start gap-2">
+          <div className="flex gap-2 max-sm:hidden">
+            {user && authUser?.username !== user?.username ? (
+              !isConnectedOrRequested ? (
                 <button
                   onClick={() =>
-                    userProfile
+                    authUser
+                      ? handleConnect(user, authUser)
+                      : router.push(
+                          `/login?callback=${window.location.origin}${pathname}`
+                        )
+                  }
+                  type="button"
+                  className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+                >
+                  <Flash size="21" variant="Bulk" />
+                  Connect
+                </button>
+              ) : user?.isConnected ? (
+                <button
+                  type="button"
+                  className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+                >
+                  <Flash size="21" variant="Bulk" />
+                  Connected
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+                >
+                  <UserCheck size={21} weight="thin" />
+                  Requested
+                </button>
+              )
+            ) : (
+              <></>
+            )}
+            {user && authUser?.username !== user?.username && (
+              <div className="col-span-5 flex items-center justify-start gap-2">
+                <Dialog
+                  triggerComponent={
+                    <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+                      <Share size="23" variant="Bulk" />
+                    </div>
+                  }
+                >
+                  <QrModal username={user!.username} slug={cardSlug!} />
+                </Dialog>
+
+                <button
+                  onClick={() =>
+                    authUser
                       ? !isCardLiked
-                        ? handleLike(cardId, userProfile)
-                        : handleDislike(cardSlug)
+                        ? handleLike(cardId!, authUser)
+                        : handleDislike(cardSlug!)
                       : router.push(
                           `/login?callback=${window.location.origin}${pathname}`
                         )
@@ -216,63 +240,54 @@ const ProfileDescription = ({
                   <Heart size="21" variant="Bulk" />
                 </button>
 
-                <button
-                  onClick={() =>
-                    userProfile
-                      ? handleConnect(user, userProfile)
-                      : router.push(
-                          `/login?callback=${window.location.origin}${pathname}`
-                        )
-                  }
-                  className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme"
-                >
+                <button className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
                   <More size="21" variant="TwoTone" />
                 </button>
               </div>
-            ) : (
-              <></>
             )}
           </div>
         </div>
       </div>
       <div
-        className={`flex items-center gap-2 lg:hidden ${userProfile && userProfile.username !== user?.username ? 'justify-between' : 'justify-start'}`}
+        className={`flex items-center gap-2 sm:hidden ${userProfile && userProfile.username !== user?.username ? 'justify-between' : 'justify-start'}`}
       >
-        {userProfile &&
-        !user?.isConnected &&
-        !user?.isRequested &&
-        user &&
-        userProfile.username !== user?.username ? (
-          <div className="basis-36">
+        {user && authUser?.username !== user?.username ? (
+          !isConnectedOrRequested ? (
             <button
-              onClick={() => handleConnect(user, userProfile)}
+              onClick={() =>
+                authUser
+                  ? handleConnect(user, authUser)
+                  : router.push(
+                      `/login?callback=${window.location.origin}${pathname}`
+                    )
+              }
               type="button"
-              className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+              className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
             >
               <Flash size="21" variant="Bulk" />
               Connect
             </button>
-          </div>
-        ) : (
-          <></>
-        )}
-        {userProfile &&
-        user?.isConnected &&
-        user &&
-        userProfile.username !== user?.username ? (
-          <div className="basis-36">
+          ) : user?.isConnected ? (
             <button
               type="button"
-              className="flex h-8 w-full items-center justify-center gap-1 rounded-full bg-red-600 px-4 text-sm font-medium text-white shadow-md shadow-red-600/60"
+              className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
             >
               <Flash size="21" variant="Bulk" />
-              Disconnect
+              Connected
             </button>
-          </div>
+          ) : (
+            <button
+              type="button"
+              className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+            >
+              <UserCheck size={21} weight="thin" />
+              Requested
+            </button>
+          )
         ) : (
           <></>
         )}
-        {userProfile && userProfile.username !== user?.username ? (
+        {/* {userProfile && userProfile.username !== user?.username ? (
           <div className="flex shrink-0 items-start justify-start gap-2">
             <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-blueTheme">
               <Heart size="21" variant="Bulk" />
@@ -286,6 +301,41 @@ const ProfileDescription = ({
           </div>
         ) : (
           <></>
+        )} */}
+        {user && authUser?.username !== user?.username && (
+          <div className="col-span-5 flex items-center justify-start gap-2">
+            <Dialog
+              triggerComponent={
+                <div className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+                  <Share size="23" variant="Bulk" />
+                </div>
+              }
+            >
+              <QrModal username={user!.username} slug={cardSlug!} />
+            </Dialog>
+
+            <button
+              onClick={() =>
+                authUser
+                  ? !isCardLiked
+                    ? handleLike(cardId!, authUser)
+                    : handleDislike(cardSlug!)
+                  : router.push(
+                      `/login?callback=${window.location.origin}${pathname}`
+                    )
+              }
+              className={cn(
+                'flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100',
+                isCardLiked ? 'text-blueTheme' : 'text-grayfont'
+              )}
+            >
+              <Heart size="21" variant="Bulk" />
+            </button>
+
+            <button className="flex aspect-square w-8 items-center justify-center rounded-full bg-zinc-100 text-grayfont">
+              <More size="21" variant="TwoTone" />
+            </button>
+          </div>
         )}
       </div>
       <div>

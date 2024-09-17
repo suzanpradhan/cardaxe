@@ -40,10 +40,9 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const handleScroll = useCallback(async () => {
     const scrollableDiv = scrollableDivRef.current;
-
     if (
       scrollableDiv.scrollTop + scrollableDiv.clientHeight >=
-        scrollableDiv.scrollHeight - 50 &&
+        scrollableDiv.scrollHeight - 10 &&
       !isLoading &&
       hasMoreData
     ) {
@@ -86,10 +85,8 @@ export default function Page({ params }: { params: { slug: string } }) {
     };
   }, [handleScroll]);
 
-  console.log('userProfile', userProfile);
-
   return (
-    <div className="mx-auto my-4 flex w-full flex-col gap-4 max-lg:w-96 max-sm:px-4">
+    <div className="my-4 flex w-full flex-col gap-4 max-sm:px-4 lg:px-5">
       {userProfile ? (
         <div
           className="h-[calc(100vh)] overflow-y-scroll"

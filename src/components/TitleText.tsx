@@ -33,17 +33,21 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
         </Link>
         {isSideBarComp && (
           <div className="flex items-center gap-4">
-            <Link href={'/dashboard/notification'}>
-              <NotificationBing
-                size="23"
-                variant="Bulk"
-                className={cn(
-                  'lg:hidden',
-                  isNotificationroute ? 'text-blueTheme' : 'text-grayfont'
-                )}
-              />
-            </Link>
-            {pathname === '/dashboard/account/me' && (
+            {!pathname.endsWith('settings') &&
+              !pathname.includes('notification') && (
+                <Link href={'/dashboard/notification'}>
+                  <NotificationBing
+                    size="23"
+                    variant="Bulk"
+                    className={cn(
+                      'lg:hidden',
+                      isNotificationroute ? 'text-blueTheme' : 'text-grayfont'
+                    )}
+                  />
+                </Link>
+              )}
+
+            {pathname.endsWith('me') && (
               <Link href={'/dashboard/settings'}>
                 <Setting
                   size="23"
