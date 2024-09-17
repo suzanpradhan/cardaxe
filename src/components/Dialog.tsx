@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 
 type DialogPropsType = {
   children: React.ReactNode;
-  triggerComponent: React.ReactNode;
+  triggerComponent?: React.ReactNode;
   className?: string;
   dialogClassName?: string;
 };
@@ -57,11 +57,10 @@ const Dialog = ({
   }, []);
 
   return (
-    <div className={dialogClassName}>
-      <button className="w-full" onClick={openDialog}>
+    <>
+      <button className={`${className}`} onClick={openDialog}>
         {triggerComponent}
       </button>
-
       <dialog
         ref={dialogRef}
         // onClick={() => setIsDialogOpen(false)}
@@ -73,11 +72,11 @@ const Dialog = ({
           onClick={closeDialog}
           className="flex w-full items-end justify-end lg:hidden"
         >
-          <CloseCircle size="24" color="red" variant="Bold" />
+          <CloseCircle size="30" color="white" variant="Bold" />
         </button>
         {dialogRef ? children : <></>}
       </dialog>
-    </div>
+    </>
   );
 };
 

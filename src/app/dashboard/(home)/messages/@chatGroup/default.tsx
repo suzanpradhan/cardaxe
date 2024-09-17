@@ -8,8 +8,8 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { api } from '../../../../../convex/_generated/api';
-import MessageCard from './(components)/MessageCard';
+import { api } from '../../../../../../convex/_generated/api';
+import MessageCard from '../../messagesbackup/(components)/MessageCard';
 
 export default function Page() {
   const pathname = usePathname();
@@ -27,8 +27,8 @@ export default function Page() {
   return (
     <aside
       className={cn(
-        'flex h-full max-w-md shrink-0 basis-full flex-col gap-4 lg:basis-110',
-        !pathname.endsWith('messages') ? 'max-lg:hidden' : 'max-lg:flex'
+        'flex h-full max-w-md shrink-0 basis-full flex-col gap-4 lg:basis-110'
+        // !pathname.endsWith('messages') ? 'max-lg:hidden' : 'max-lg:flex'
       )}
     >
       <div className="flex w-full gap-2">
@@ -41,7 +41,7 @@ export default function Page() {
         <Setting2 size="24" variant="Bulk" />
       </div>
       <SearchInput greyBackground={true} requireBorder={false} />
-      <ul className="flex h-full flex-col gap-4 overflow-y-scroll rounded-lg border-1 border-borderMain p-3">
+      <ul className="flex h-full flex-col gap-4 overflow-y-scroll rounded-lg">
         {session.data?.user?.id ? (
           roomIds?.map((item, index) => (
             <li key={index} onClick={() => setActiveRoom(item)}>

@@ -65,11 +65,11 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
   return (
     <section
       className={cn(
-        'mx-auto flex h-full shrink basis-96 flex-col rounded-lg max-lg:w-96 lg:grow',
+        'flex h-full shrink grow basis-0 flex-col rounded-lg max-lg:w-[22rem]',
         pathname.endsWith('messages') ? 'max-lg:hidden' : 'max-lg:flex'
       )}
     >
-      <div className="flex w-full items-center gap-4 bg-componentBgGrey px-1 py-2">
+      <div className="flex w-full items-center gap-4 py-2">
         <div className="relative h-12 w-12 overflow-hidden rounded-full">
           <Image
             className="h-full w-full"
@@ -110,37 +110,38 @@ export default function ChatPage({ roomId, profileId }: ChatPageProps) {
             ))}
           </div>
         </div>
-      </div>
-      <div className="mt-2 flex w-full items-center gap-4 overflow-hidden rounded-md border-1 border-borderMain px-2 has-[:focus]:border has-[:focus]:border-blueTheme">
-        <textarea
-          name="chat"
-          id="chat"
-          className="h-10 grow resize-none overflow-auto pt-2 focus:border-0 focus:outline-0"
-          value={message}
-          onChange={(e) => {
-            e.preventDefault();
-            setMessage(e.target.value);
-          }}
-        ></textarea>
-        <button
-          className="active:text-blueTheme"
-          onKeyDown={(e) => handleKeyDown(e)}
-          onClick={() => {
-            sendMessage({
-              content: message,
-              profile_id: profileId,
-              read: false,
-              room_id: roomId,
-            });
-            setMessage('');
-          }}
-        >
-          <Send
-            size="28"
-            variant="Bulk"
-            className="rounded-sm bg-inputBgGrey p-1"
-          />
-        </button>
+
+        <div className="flex w-full items-center gap-4 overflow-hidden rounded-md border-1 border-borderMain px-2 has-[:focus]:outline has-[:focus]:outline-blueTheme">
+          <textarea
+            name="chat"
+            id="chat"
+            className="h-10 grow resize-none overflow-auto pt-2 focus:border-0 focus:outline-0"
+            value={message}
+            onChange={(e) => {
+              e.preventDefault();
+              setMessage(e.target.value);
+            }}
+          ></textarea>
+          <button
+            className="active:text-blueTheme"
+            onKeyDown={(e) => handleKeyDown(e)}
+            onClick={() => {
+              sendMessage({
+                content: message,
+                profile_id: profileId,
+                read: false,
+                room_id: roomId,
+              });
+              setMessage('');
+            }}
+          >
+            <Send
+              size="28"
+              variant="Bulk"
+              className="rounded-sm bg-inputBgGrey p-1"
+            />
+          </button>
+        </div>
       </div>
     </section>
   );

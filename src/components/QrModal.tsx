@@ -9,10 +9,20 @@ import Link from 'next/link';
 import { useState } from 'react';
 import ShareLinkButton, { Alignment } from './ShareLinkButton';
 
-const QrModal = ({ slug, username }: { slug: string; username: string }) => {
+const QrModal = ({
+  slug,
+  username,
+  customUrl,
+}: {
+  slug: string;
+  username: string;
+  customUrl?: string;
+}) => {
   // const { toast } = useToast();
   const [isCopied, setIsCopied] = useState<string | undefined>(undefined);
-  const cardLink = `https://www.cardaxe.com/${slug}`;
+  const cardLink = customUrl
+    ? `https://www.cardaxe.com/${customUrl}`
+    : `https://www.cardaxe.com/${slug}`;
 
   const handleCopy = async () => {
     try {

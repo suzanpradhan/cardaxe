@@ -87,18 +87,18 @@ const page = async (props: any) => {
   );
 
   return (
-    <div className="h-screen overflow-y-scroll">
-      <div className="mx-auto max-w-md bg-white px-4 py-4 lg:max-w-lg">
-        <PreviewSection
-          variableValues={variableValues}
-          layout={cardInfo?.cardTemplate.id}
-          socialValues={socialsValues}
-          user={cardInfo?.user}
-          isLiked={cardInfo.isLiked}
-          userProfile={userProfile}
-        />
-      </div>
+    // <div className="h-screen overflow-y-scroll">
+    <div className="mx-auto max-w-md bg-white px-4 py-4 lg:max-w-lg">
+      <PreviewSection
+        variableValues={variableValues}
+        layout={cardInfo?.cardTemplate.id}
+        socialValues={socialsValues}
+        user={cardInfo?.user}
+        isLiked={cardInfo.isLiked}
+        userProfile={userProfile}
+      />
     </div>
+    // </div>
   );
 };
 

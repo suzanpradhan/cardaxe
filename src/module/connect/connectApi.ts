@@ -23,7 +23,6 @@ const connectApi = baseApi.injectEndpoints({
                     formData: true,
                 }
             },
-
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
@@ -31,8 +30,7 @@ const connectApi = baseApi.injectEndpoints({
                     console.log(err);
                 }
             },
-
-            invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: "LIST" }, { type: 'Card', id: "LIST" },],
+            invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: "LIST" }, { type: 'Card', id: "LIST" }, { type: 'User', id: "LIST" }, { type: 'User', id: arg.to_user.username }],
             transformResponse: (response) => {
                 return response
             }

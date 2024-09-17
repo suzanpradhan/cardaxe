@@ -1,7 +1,7 @@
 'use client';
 
 import CardLayouts from '@/components/CardLayouts.server';
-import ProfileDescription from '@/components/myCards/ProfileDescription';
+import { Separator } from '@/components/ui/separator';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -11,6 +11,7 @@ import userApi from '@/module/user/userApi';
 import { UserType } from '@/module/user/userType';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import MyProfileCard from '../../(components)/MyProfileCard';
 
 export default function Page() {
   const dispatch = useAppDispatch();
@@ -38,11 +39,11 @@ export default function Page() {
   );
 
   return (
-    <div className="my-4 flex w-full flex-col gap-4 px-2 lg:px-5">
+    <div className="my-4 flex w-full flex-col gap-4 max-sm:px-4 lg:px-5">
       {user ? (
         <>
           <div className="mx-auto w-full min-w-min lg:w-110">
-            <ProfileDescription
+            <MyProfileCard
               values={{
                 address: user.address ?? '',
                 designation: '',
@@ -51,7 +52,17 @@ export default function Page() {
               }}
               user={user}
             />
+            {/* <ProfileDescription
+              values={{
+                address: user.address ?? '',
+                designation: '',
+                company: '',
+                bio: user.bio ?? '',
+              }}
+              user={user}
+            /> */}
           </div>
+          <Separator className="mx-auto my-4 min-w-min lg:w-110" />
           <div className="mx-auto mb-16 w-full min-w-min lg:w-110">
             <h3 className="text-base font-semibold leading-5 text-zinc-900">
               Business card

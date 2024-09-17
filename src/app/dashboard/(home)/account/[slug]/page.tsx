@@ -1,7 +1,8 @@
 'use client';
 
 import CardLayouts from '@/components/CardLayouts.server';
-import ProfileDescription from '@/components/myCards/ProfileDescription';
+import UserProfileDescription from '@/components/myCards/UserProfileDescription';
+import { Separator } from '@/components/ui/separator';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -36,39 +37,6 @@ export default function Page({ params }: { params: { slug: string } }) {
         CardResponseType<CardTemplatesType>
       >
   );
-
-  // useEffect(() => {
-  //   const fetchData = async (currentPage: number) => {
-  //     const response = await Promise.resolve(
-  //       dispatch(
-  //         cardsApi.endpoints.getUsersCard.initiate({
-  //           pageNumber: currentPage,
-  //           slug: params.slug,
-  //         })
-  //       )
-  //     );
-  //     if (response.data) {
-  //       if (
-  //         response.data!.pagination.currentPage >=
-  //         response.data!.pagination.totalPage
-  //       ) {
-  //         setHasMoreData(false);
-  //       }
-  //     }
-  //   };
-
-  //   if (hasMoreData) {
-  //     fetchData(currentPage);
-  //   }
-  //   setIsLoading(false);
-  // }, [dispatch, currentPage]);
-
-  // const userCards = useAppSelector(
-  //   (state: RootState) =>
-  //     state.baseApi.queries['getUsersCard']?.data as PaginatedResponseType<
-  //       CardResponseType<CardTemplatesType>
-  //     >
-  // );
 
   const handleScroll = useCallback(async () => {
     const scrollableDiv = scrollableDivRef.current;
@@ -118,16 +86,18 @@ export default function Page({ params }: { params: { slug: string } }) {
     };
   }, [handleScroll]);
 
+  console.log('userProfile', userProfile);
+
   return (
-    <div className="mx-auto flex w-full flex-col gap-4 max-lg:w-96">
+    <div className="mx-auto my-4 flex w-full flex-col gap-4 max-lg:w-96 max-sm:px-4">
       {userProfile ? (
         <div
           className="h-[calc(100vh)] overflow-y-scroll"
           ref={scrollableDivRef}
           onScroll={handleScroll}
         >
-          <div className="mx-auto w-full p-4 lg:w-140">
-            <ProfileDescription
+          <div className="mx-auto w-full min-w-min lg:w-110">
+            <UserProfileDescription
               values={{
                 address: userProfile.address!,
                 designation: '',
@@ -137,8 +107,8 @@ export default function Page({ params }: { params: { slug: string } }) {
               user={userProfile}
             />
           </div>
-          <div className="mx-auto mb-16 w-full px-4 lg:w-140">
-            <h2></h2>
+          <Separator className="mx-auto my-4 min-w-min lg:w-110" />
+          <div className="mx-auto mb-16 w-full min-w-min lg:w-110">
             <h3 className="text-base font-semibold leading-5 text-zinc-900">
               Business card
             </h3>

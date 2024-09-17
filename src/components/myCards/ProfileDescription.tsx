@@ -115,8 +115,8 @@ const ProfileDescription = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-start gap-4">
+    <div className="flex flex-col gap-2">
+      <div className="flex items-start justify-start gap-4">
         <div className="shrink-0 basis-16 sm:basis-20">
           <Link
             href={`/dashboard/account/` + user?.username}

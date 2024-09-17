@@ -27,7 +27,7 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
         pathname.includes('builder') ? 'hidden' : 'block'
       )}
     >
-      <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between px-2 lg:max-w-none">
+      <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between max-sm:px-4 lg:max-w-none">
         <Link href={'/'} className="">
           <h1 className={cn('text-xl font-extrabold lg:text-3xl')}>cardaxe.</h1>
         </Link>
