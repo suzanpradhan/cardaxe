@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 // import profileImage from '../../public/profile/profile.png';
 import { getMinUserName } from '@/core/utils/generalFunctions';
+import { UserCheck } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 import CardLayouts from './CardLayouts.server';
 import Dialog from './Dialog';
@@ -28,12 +29,12 @@ export default function HomePageCard({
 }: HomePageCardProps) {
   // const [isConnectionLoading, toggleConnectionLoading] = useState(false);
   const [isLiked, toggleLiked] = useState(false);
-  const [isConnected, toggleConnected] = useState(false);
+  const [isConnectedOrRequested, toggleConnectedOrRequested] = useState(false);
 
   const dispatch = useAppDispatch();
 
   const handleConnect = (user: UserType) => {
-    toggleConnected(true);
+    toggleConnectedOrRequested(true);
     dispatch(
       connectApi.endpoints.sendRequest.initiate({
         to_user: {
@@ -70,9 +71,9 @@ export default function HomePageCard({
 
   useEffect(() => {
     if (card.user?.isConnected || card.user?.isRequested) {
-      toggleConnected(true);
+      toggleConnectedOrRequested(true);
     } else {
-      toggleConnected(false);
+      toggleConnectedOrRequested(false);
     }
   }, [card.user?.isConnected, card.user?.isRequested]);
 
@@ -116,22 +117,36 @@ export default function HomePageCard({
           {card.user?.fullname}
         </Link>
         <div className="flex items-center gap-1">
-          {card.user?.username !== userProfile.username && !isConnected ? (
-            <button
-              className={cn(
-                'text-x flex h-8 items-center gap-1 rounded-sm bg-blueTheme px-3 text-white hover:text-zinc-900 active:bg-blueBg active:text-zinc-900 active:ring-2'
-              )}
-              onClick={() => card.user?.id && handleConnect(card.user)}
-            >
-              <>
-                <Flash size="15" variant={'Bulk'} />{' '}
-                <p className="text-sm">Connect</p>
-              </>
-            </button>
+          {card.user && card.user?.username !== userProfile.username ? (
+            !isConnectedOrRequested ? (
+              <button
+                onClick={() => card.user?.id && handleConnect(card.user)}
+                type="button"
+                className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+              >
+                <Flash size="21" variant="Bulk" />
+                Connect
+              </button>
+            ) : card.user?.isConnected ? (
+              <button
+                type="button"
+                className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
+              >
+                <Flash size="21" variant="Bulk" />
+                Connected
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+              >
+                <UserCheck size={21} weight="thin" />
+                Requested
+              </button>
+            )
           ) : (
             <></>
           )}
-          {/* <More size="30" className="text-zinc-500" /> */}
         </div>
       </section>
       {card.user?.username && card.slug ? (
