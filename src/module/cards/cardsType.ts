@@ -56,6 +56,21 @@ export type CardResponseType<T> = {
   user?: UserType
   likes: number,
   views: number,
+  isConnected: boolean,
+  request: RequestResponseType,
+}
+
+export type RequestResponseType = {
+  accepted: boolean,
+  fromUser: RequestUserInfos,
+  toUser: RequestUserInfos,
+  id: number,
+  timestamp: string,
+}
+
+export type RequestUserInfos = {
+  id: number,
+  username: string,
 }
 
 export type LikeCardResponse = {

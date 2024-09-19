@@ -76,12 +76,18 @@ export default function HomePageCard({
   };
 
   useEffect(() => {
-    if (card.user?.isConnected || card.user?.isRequested) {
-      toggleConnectedOrRequested(true);
+    if (card.request) {
+      console.log('is_requested: ' + card.request);
+      toggleConnectedOrRequested((prev) => {
+        const newValue = !prev;
+        console.log('requested: ' + newValue);
+        return newValue;
+      });
     } else {
-      toggleConnectedOrRequested(false);
+      console.log('not_requested: ' + card.request);
+      console.log('request is null: ' + isConnectedOrRequested);
     }
-  }, [card.user?.isConnected, card.user?.isRequested]);
+  }, [card.request]);
 
   useEffect(() => {
     if (card.isLiked) {
@@ -133,18 +139,26 @@ export default function HomePageCard({
                 className="flex h-8 w-max items-center justify-center gap-1 rounded-full bg-blueTheme px-4 text-sm font-medium text-white shadow-md shadow-blueTheme/60"
               >
                 <Flash size="21" variant="Bulk" />
-                Connect
+                Connect {isConnectedOrRequested ? 'T' : 'F'}
+              </button>
+            ) : card.request &&
+              !card.request.accepted &&
+              card.request.fromUser.id !== card.user!.id ? (
+              <button
+                type="button"
+                className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+              >
+                <UserCheck size={21} weight="thin" />
+                Sent {isConnectedOrRequested ? 'T' : 'F'}
               </button>
             ) : (
-              !card.user?.isConnected && (
-                <button
-                  type="button"
-                  className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
-                >
-                  <UserCheck size={21} weight="thin" />
-                  Requested
-                </button>
-              )
+              <Link
+                href={'/notification/requests'}
+                className="flex h-8 w-max items-center justify-center gap-2 rounded-full bg-componentBgGrey px-4 text-sm font-medium text-slate-600 shadow-md shadow-componentBgGrey/60"
+              >
+                <UserCheck size={21} weight="thin" />
+                Requested {isConnectedOrRequested ? 'T' : 'F'}
+              </Link>
             )
           ) : (
             <></>
