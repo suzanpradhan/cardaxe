@@ -55,7 +55,7 @@ export const initialState: CardState<string> = {
   cardInfos:
     { values: {}, errors: {} }
   ,
-  cardTemplate: "2"
+  cardTemplate: "1"
 
 };
 
@@ -139,7 +139,6 @@ export const cardSlice = createSlice({
         state[formName].errors = {};
       }
 
-      console.log("errorObject", state.cardBasics.errors)
 
 
     },
