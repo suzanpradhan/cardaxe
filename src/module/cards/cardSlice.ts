@@ -1,5 +1,6 @@
 'use client';
 
+import { DEFAULT_CARD_TEMPLATE } from '@/constants/appConstants';
 import { CardBasicsSchema, CardBasicsType, CardState, ContentFormSchema, ContentFormSchemaType, DesignFormUpdateSchema, DesignFromSchemaType, InfosFormsUpdateSchema } from '@/module/cards/cardsType';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ZodSchema } from 'zod';
@@ -55,7 +56,7 @@ export const initialState: CardState<string> = {
   cardInfos:
     { values: {}, errors: {} }
   ,
-  cardTemplate: "1"
+  cardTemplate: `${DEFAULT_CARD_TEMPLATE}`
 
 };
 

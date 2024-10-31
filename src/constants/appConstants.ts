@@ -1,3 +1,5 @@
+export const DEFAULT_CARD_TEMPLATE = 1
+
 interface MenuDataType {
     title: string;
     link: string;

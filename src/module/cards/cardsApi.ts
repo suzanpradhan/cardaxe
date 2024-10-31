@@ -1,3 +1,4 @@
+import { DEFAULT_CARD_TEMPLATE } from "@/constants/appConstants";
 import { apiPaths } from "@/core/api/apiConstants";
 import { baseApi } from "@/core/api/apiQuery";
 import { PaginatedResponseType } from "@/core/types/responseTypes";
@@ -136,7 +137,7 @@ const cardsApi = baseApi.injectEndpoints({
           'card_design': {},
           'user': user,
           'title': title,
-          "card_template": 2
+          "card_template": `${DEFAULT_CARD_TEMPLATE}`
         }
         return {
           url: `${apiPaths.cardsUrl}`,
