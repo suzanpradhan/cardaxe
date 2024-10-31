@@ -27,7 +27,7 @@ const connectApi = baseApi.injectEndpoints({
                 try {
                     await queryFulfilled;
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
             invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: "LIST" }, { type: 'Card', id: "LIST" }, { type: 'User', id: "LIST" }, { type: 'User', id: arg.to_user.username }],
@@ -58,7 +58,7 @@ const connectApi = baseApi.injectEndpoints({
                 try {
                     await queryFulfilled;
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
             invalidatesTags: (result, error, arg) => [{ type: 'Connections', id: arg.id }, { type: "Card", id: "LIST" }],

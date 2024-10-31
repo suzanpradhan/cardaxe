@@ -17,8 +17,6 @@ const page = async (props: any) => {
   try {
     const session = await getServerSession(authOptions);
 
-    console.log('session', session);
-
     if (session) {
       const res = await fetch(cardUrl, {
         headers: {
@@ -86,7 +84,6 @@ const page = async (props: any) => {
     ])
   );
 
-  console.log('cardInfo', cardInfo);
   return (
     <div className="mx-auto max-w-md bg-white px-4 py-4 lg:max-w-lg">
       <PreviewSection

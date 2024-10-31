@@ -32,8 +32,6 @@ const FileInput = ({
   imageShape = ImageShape.rectangle,
   ...props
 }: FileInputProps) => {
-  console.log(props.value);
-
   const cardState = useAppSelector((state: RootState) => state.card);
 
   const dispatch = useAppDispatch();
@@ -66,7 +64,6 @@ const FileInput = ({
                 if (props.name) {
                   // await caches.delete(props.name);
                   const myFile = await fecthCachedImage(props.name);
-                  console.log('myFile', myFile);
                   const cache = await caches.open('filesCache');
                   await cache.delete(`${props.name}`);
                   const updatedFormState: CardState<string>['cardDesign']['values'] =

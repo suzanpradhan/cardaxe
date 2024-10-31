@@ -73,11 +73,7 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
     if (cardSlug) dispatch(cardsApi.endpoints.getCard.initiate(cardSlug));
     // dispatch(cardsApi.endpoints.getCardsTemplate.initiate());
     dispatch(userApi.endpoints.getUser.initiate());
-    console.log('card refetched');
   }, [dispatch, params]);
-
-  console.log('card', card);
-  console.log('cardState', cardState);
 
   useEffect(() => {
     const updateCardState = (action: string) => {
@@ -114,7 +110,6 @@ const BuilderLayout = ({ children }: { children: React.ReactNode }) => {
           dispatch(validateForms('cardFields'));
           break;
       }
-      console.log('>>>>>>>>>cardState', cardState);
     };
 
     if (cardAction) updateCardState(cardAction);
