@@ -49,11 +49,9 @@ const userApi = baseApi.injectEndpoints({
             async onQueryStarted(payload, { queryFulfilled }) {
                 try {
                     await queryFulfilled;
-                    // toast.success('Profile updated.');
                 } catch (err) {
-                    console.log(err);
-                    // toast.error();
-                    // toast.error('Failed updating profile.');
+                    console.error(err);
+
                 }
             },
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }, { type: 'Card', id: "LIST" }],

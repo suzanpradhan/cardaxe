@@ -32,6 +32,7 @@ const CardLayouts = ({
   Handlebars.registerHelper('isNotNull', function (value) {
     return value != null && value != undefined;
   });
+
   Object.entries(snakeCaseVariablesValues).forEach(([variable, value]) => {
     Handlebars.registerHelper(variable, () => value);
   });
@@ -42,6 +43,9 @@ const CardLayouts = ({
   ) as HandlebarsTemplateFunction;
 
   const processedHtml = template();
+
+  console.log('htmlSource', htmlSource);
+  console.log('variableValues', variableValues);
 
   return (
     <div

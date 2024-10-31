@@ -58,13 +58,11 @@ const RegisterationForm: React.FC = () => {
           password: data.password,
         })
       );
-      if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
-        console.log('regsister response', responseData);
-      } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
+      if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
         router.push('/');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setIsLoading(false);
   };

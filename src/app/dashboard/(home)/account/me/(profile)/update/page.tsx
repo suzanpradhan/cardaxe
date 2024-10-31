@@ -28,7 +28,7 @@ export default function UpdateProfile() {
       userSchema.parse(values);
     } catch (error) {
       if (error instanceof ZodError) {
-        console.log(error);
+        console.error(error);
         return error.formErrors.fieldErrors;
       }
     }

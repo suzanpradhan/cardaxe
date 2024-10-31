@@ -59,13 +59,11 @@ const ChangeCurrentPassword = () => {
           new_repassword: data.new_repassword,
         })
       );
-      if (Object.prototype.hasOwnProperty.call(responseData, 'error')) {
-        console.log('change passowrd response', responseData);
-      } else if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
+      if (Object.prototype.hasOwnProperty.call(responseData, 'data')) {
         router.push('/login');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

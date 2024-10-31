@@ -149,7 +149,7 @@ const cardsApi = baseApi.injectEndpoints({
           await queryFulfilled;
           // toast.success('Card successfully created.');
         } catch (err) {
-          console.log(err);
+          console.error(err);
           // toast.error('Failed createing card!!');
         }
       },
@@ -172,7 +172,7 @@ const cardsApi = baseApi.injectEndpoints({
           await queryFulfilled;
           // toast.success('Card successfully created.');
         } catch (err) {
-          console.log(err);
+          console.error(err);
           // toast.error('Failed createing card!!');
         }
       },
@@ -196,7 +196,7 @@ const cardsApi = baseApi.injectEndpoints({
           await queryFulfilled;
           // toast.success('Card successfully created.');
         } catch (err) {
-          console.log(err);
+          console.error(err);
           // toast.error('Failed createing card!!');
         }
       },
@@ -220,7 +220,6 @@ const cardsApi = baseApi.injectEndpoints({
 
         }
 
-        console.log("payload", payload)
         const formData = new FormData();
         if (payload.cardFields.id != undefined) formData.append('card_fields.id', payload.cardFields.id.toString())
         if (payload.cardFields.title != undefined) formData.append('card_fields.title', payload.cardFields.title)
@@ -242,7 +241,7 @@ const cardsApi = baseApi.injectEndpoints({
         if (payload.cardDesign.foregroundColor != undefined) formData.append('card_design.foreground_color', payload.cardDesign.foregroundColor)
         if (payload.cardDesign.backgroundImage != undefined && payload.cardDesign.backgroundImage.length > 0) {
           fecthCachedImage('backgroundImage').then((response) => {
-            if (response) { console.log("cathched image", response); formData.append('card_design.background_image', new File([response], 'filename.png')) }
+            if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) }
             else { formData.append('card_design.background_image', payload.cardDesign.backgroundImage!) }
           });
         } else { formData.append('card_design.background_image', '') }

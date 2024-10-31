@@ -89,7 +89,6 @@ const UserProfileDescription = ({
   }, [isLiked]);
 
   const handleLike = (cardId: number, userProfile: UserType) => {
-    console.log('likinghere');
     toggleCardLike(true);
     dispatch(
       cardsApi.endpoints.likeCard.initiate({
@@ -123,7 +122,6 @@ const UserProfileDescription = ({
       })
     );
   };
-  console.log('userProfile', user);
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-start gap-4">

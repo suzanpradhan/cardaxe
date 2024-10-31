@@ -112,7 +112,6 @@ const DashboardPage = () => {
         CardResponseType<CardTemplatesType>
       >
   );
-  console.log(scrollableDivRef.current + 'current scroll last');
   return (
     <div
       className="grid h-full grid-cols-12 overflow-y-scroll"

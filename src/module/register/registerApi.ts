@@ -23,7 +23,7 @@ export const registerApi = baseApi.injectEndpoints({
                     await queryFulfilled;
                     // toast.success('Registration Successful');
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                     // toast.error((err as any).error.data.errors.errors[0]);
                 }
             },
@@ -49,7 +49,7 @@ export const registerApi = baseApi.injectEndpoints({
                     await queryFulfilled;
                     // toast.success('Registration Successful');
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                     // toast.error('Failed to Registration');
                 }
             },
@@ -73,7 +73,7 @@ export const registerApi = baseApi.injectEndpoints({
                     await queryFulfilled;
                     // toast.success('Successfully send email');
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                     // toast.error('Please check your email');
                 }
             },

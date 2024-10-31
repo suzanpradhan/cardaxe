@@ -32,7 +32,7 @@ const teamsApi = baseApi.injectEndpoints({
                 try {
                     await queryFulfilled;
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
 
@@ -77,7 +77,7 @@ const teamsApi = baseApi.injectEndpoints({
                 try {
                     await queryFulfilled;
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
 
@@ -168,7 +168,7 @@ const teamsApi = baseApi.injectEndpoints({
                 try {
                     await queryFulfilled;
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
                 }
             },
             transformResponse: (response: any) => {
