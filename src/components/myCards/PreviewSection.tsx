@@ -12,7 +12,7 @@ import {
 } from '@/module/cards/cardsType';
 import { UserType } from '@/module/user/userType';
 import { useEffect } from 'react';
-import CardLayouts, { VariableValueType } from '../CardLayouts.server';
+import CardLayouts, { VariableValueType } from '../CardLayouts';
 import FormWrapper from '../FormWrapper';
 import { Separator } from '../ui/separator';
 import ProfileDescription from './ProfileDescription';

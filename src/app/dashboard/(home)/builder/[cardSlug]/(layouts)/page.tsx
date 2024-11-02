@@ -1,6 +1,6 @@
 'use client';
 
-import CardLayouts from '@/components/CardLayouts.server';
+import CardLayouts from '@/components/CardLayouts';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
@@ -103,8 +103,10 @@ const LayoutPage = () => {
                         ...card.defaultCardFields,
                         ...card.defaultCardDesign,
                         ...card.cardTemplateCategory,
-                        logoUrl: `${card.defaultCardDesign.logo}`,
-                        backgroundUrl: `${apiPaths.serverUrl}${card.defaultCardDesign.backgroundImage}`,
+                        logoUrl: card.defaultCardDesign.logo ?? '',
+                        backgroundUrl: card.defaultCardDesign.backgroundImage
+                          ? `${apiPaths.serverUrl}${card.defaultCardDesign.backgroundImage}`
+                          : '',
                       }}
                     />
                   </div>

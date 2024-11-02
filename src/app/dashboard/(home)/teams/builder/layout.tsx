@@ -1,7 +1,7 @@
 'use client';
 
 import ButtonForm from '@/components/ButtonForm';
-import { VariableValueType } from '@/components/CardLayouts.server';
+import { VariableValueType } from '@/components/CardLayouts';
 import PreviewSection from '@/components/myCards/PreviewSection';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';

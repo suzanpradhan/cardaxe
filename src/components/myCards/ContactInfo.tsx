@@ -3,7 +3,7 @@ import {
   DesignFormUpdateSchemaType,
 } from '@/module/cards/cardsType';
 import { Call, Location, Send2, Sms } from 'iconsax-react';
-import { VariableValueType } from '../CardLayouts.server';
+import { VariableValueType } from '../CardLayouts';
 import HeadingTitles from '../HeadingTitles';
 
 const ICON_SIZE = '24';

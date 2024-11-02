@@ -29,23 +29,14 @@ const CardLayouts = ({
   const snakeCaseVariablesValues = {
     ...camelToSnake(variableValues),
   };
-  Handlebars.registerHelper('isNotNull', function (value) {
-    return value != null && value != undefined;
-  });
 
   Object.entries(snakeCaseVariablesValues).forEach(([variable, value]) => {
     Handlebars.registerHelper(variable, () => value);
   });
 
-  const template = Handlebars.compile(
-    htmlSource,
-    {}
-  ) as HandlebarsTemplateFunction;
+  const template = Handlebars.compile(htmlSource);
 
-  const processedHtml = template();
-
-  console.log('htmlSource', htmlSource);
-  console.log('variableValues', variableValues);
+  const processedHtml = template(snakeCaseVariablesValues);
 
   return (
     <div

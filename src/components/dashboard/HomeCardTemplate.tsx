@@ -6,7 +6,7 @@ import { RootState } from '@/core/redux/store';
 import cardsApi from '@/module/cards/cardsApi';
 import { CardResponseType, CardTemplatesType } from '@/module/cards/cardsType';
 import { useEffect } from 'react';
-import CardLayouts from '../CardLayouts.server';
+import CardLayouts from '../CardLayouts';
 
 interface HomeCardTemplateProps {
   userName: string;

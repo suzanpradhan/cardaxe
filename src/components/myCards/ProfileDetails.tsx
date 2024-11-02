@@ -12,7 +12,7 @@ import instagram_image from '../../../public/instagram_image.png';
 import linkedin_image from '../../../public/linkedin_image.png';
 import openSea from '../../../public/openSea.png';
 import paypal_image from '../../../public/paypal_image.png';
-import { VariableValueType } from '../CardLayouts.server';
+import { VariableValueType } from '../CardLayouts';
 import AdditionalLinks from './AdditionalLinks';
 import ContactInfo from './ContactInfo';
 

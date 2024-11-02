@@ -1,6 +1,6 @@
 'use client';
 
-import CardLayouts from '@/components/CardLayouts.server';
+import CardLayouts from '@/components/CardLayouts';
 import ProfileDescription from '@/components/myCards/ProfileDescription';
 import ProfileDetails from '@/components/myCards/ProfileDetails';
 import { apiPaths } from '@/core/api/apiConstants';
