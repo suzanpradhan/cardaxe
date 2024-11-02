@@ -15,28 +15,16 @@ const page = async (props: any) => {
   const profileUrl = `${apiPaths.baseUrl}${apiPaths.profileUrl}`;
 
   try {
-    const session = await getServerSession(authOptions);
+    const res = await fetch(cardUrl, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      cache: 'no-store',
+    });
+    const response = await res.json();
+    cardInfo = snakeToCamel(response);
 
-    if (session) {
-      const res = await fetch(cardUrl, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          Authorization: `Bearer ${session.user?.token}`,
-        },
-        cache: 'no-store',
-      });
-      const response = await res.json();
-      cardInfo = snakeToCamel(response);
-    } else {
-      const res = await fetch(cardUrl, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-        cache: 'no-store',
-      });
-      const response = await res.json();
-      cardInfo = snakeToCamel(response);
-    }
+    console.log('cardInfo', cardInfo);
   } catch (err) {
     throw Error(err as string);
   }
