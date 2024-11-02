@@ -30,8 +30,19 @@ const CardLayouts = ({
     ...camelToSnake(variableValues),
   };
 
+  Handlebars.registerHelper('isNotNull', function (value) {
+    return (
+      value != 'null' &&
+      value != null &&
+      value != undefined &&
+      (value as String).length != 0
+    );
+  });
+
   Object.entries(snakeCaseVariablesValues).forEach(([variable, value]) => {
-    Handlebars.registerHelper(variable, () => value);
+    Handlebars.registerHelper(variable, () => {
+      return value;
+    });
   });
 
   const template = Handlebars.compile(htmlSource);
