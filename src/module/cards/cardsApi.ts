@@ -245,13 +245,13 @@ const cardsApi = baseApi.injectEndpoints({
             if (response) { formData.append('card_design.background_image', new File([response], 'filename.png')) }
             else { formData.append('card_design.background_image', payload.cardDesign.backgroundImage!) }
           });
-        } else { formData.append('card_design.background_image', '') }
-        if (payload.cardDesign.backgroundImage != undefined && payload.cardDesign.backgroundImage.length > 0) {
+        }
+        if (payload.cardDesign.logo != undefined && payload.cardDesign.logo.length > 0) {
           fecthCachedImage('logo').then((response) => {
             if (response) { formData.append('card_design.logo', new File([response], 'filename.png')) }
             else { formData.append('card_design.logo', payload.cardDesign.logo!) }
           });
-        } else { formData.append('card_design.logo', '') }
+        }
         if (payload.cardDesign.showLogo != undefined) formData.append('card_design.show_logo', payload.cardDesign.showLogo.toString())
         if (payload.cardDesign.showSocialIcons != undefined) formData.append('card_design.show_social_icons', payload.cardDesign.showSocialIcons.toString())
         if (payload.cardDesign.darkMode != undefined) formData.append('card_design.dark_mode', payload.cardDesign.darkMode.toString())
