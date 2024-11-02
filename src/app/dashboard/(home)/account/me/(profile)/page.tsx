@@ -1,6 +1,6 @@
 'use client';
 
-import CardLayouts from '@/components/CardLayouts.server';
+import CardLayouts from '@/components/CardLayouts';
 import { Separator } from '@/components/ui/separator';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';

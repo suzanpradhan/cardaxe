@@ -1,6 +1,6 @@
 'use client';
 
-import CardLayouts from '@/components/CardLayouts.server';
+import CardLayouts from '@/components/CardLayouts';
 import Dialog from '@/components/Dialog';
 import QrModal from '@/components/QrModal';
 import { apiPaths } from '@/core/api/apiConstants';

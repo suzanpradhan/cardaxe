@@ -1,6 +1,6 @@
 'use client';
 
-import { VariableValueType } from '@/components/CardLayouts.server';
+import { VariableValueType } from '@/components/CardLayouts';
 import { apiPaths } from '@/core/api/apiConstants';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { updatedDiff } from 'deep-object-diff';

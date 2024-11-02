@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { getMinUserName } from '@/core/utils/generalFunctions';
 import { UserCheck } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
-import CardLayouts from './CardLayouts.server';
+import CardLayouts from './CardLayouts';
 import Dialog from './Dialog';
 import QrModal from './QrModal';
 

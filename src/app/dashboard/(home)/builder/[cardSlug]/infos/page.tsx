@@ -6,7 +6,6 @@ import SocialMediaForm, {
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAppDispatch, useAppSelector } from '@/core/redux/clientStore';
 import { RootState } from '@/core/redux/store';
-import { useTimeoutDispatch } from '@/hooks/useTimeoutDispatch';
 import { setErrors, updateInfosForm } from '@/module/cards/cardSlice';
 import cardsApi from '@/module/cards/cardsApi';
 import {
@@ -15,7 +14,7 @@ import {
   SocialMediaInfo,
 } from '@/module/cards/cardsType';
 import { StaticImageData } from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import xImage from '../../../../../../../public/X_logo.png';
 import facebookImage from '../../../../../../../public/facebook_image.png';
 import instagramImage from '../../../../../../../public/instagram_image.png';
@@ -71,12 +70,8 @@ const SOCIAL_MEDIA_FEILDS: Record<string, SocialMediaInfoType> = {
 };
 
 const CardInfosFormPage = () => {
-  const timeout = useTimeoutDispatch();
   const dispatch = useAppDispatch();
   const cardState = useAppSelector((state: RootState) => state.card);
-
-  const [socialMediaFields, setSocialMediaFields] =
-    useState(SOCIAL_MEDIA_FEILDS);
 
   const linksInfo = useAppSelector(
     (state: RootState) =>
@@ -104,10 +99,6 @@ const CardInfosFormPage = () => {
       } as InfoSchemaType,
     };
     dispatch(updateInfosForm(updateFormState));
-    // const result =
-    //   InfosFormsUpdateSchema.shape[name as keyof DesignFromSchemaType].safeParse(
-    //     value
-    //   );
     const result =
       InfoSchema.shape[name as keyof InfoSchemaType].safeParse(value);
     if (!result.success && value.length > 0) {
@@ -138,6 +129,8 @@ const CardInfosFormPage = () => {
       );
     }
   };
+
+  console.log('socialMediaInfo', socialMediaInfo);
 
   return (
     <div className="h-[calc(100vh-17rem)] overflow-y-scroll lg:h-[calc(100vh-6rem)]">
