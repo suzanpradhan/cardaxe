@@ -125,7 +125,7 @@ export default function HomePageCard({
           {card.user?.fullname}
         </Link>
         <div className="flex items-center gap-1">
-          {card.user && card.user?.username !== userProfile.username ? (
+          {card.user && card.user?.username !== userProfile?.username ? (
             !isConnectedOrRequested ? (
               <button
                 onClick={() => card.user?.id && handleConnect(card.user)}

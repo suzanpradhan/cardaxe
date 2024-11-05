@@ -61,8 +61,12 @@ const page = async (props: any) => {
     ...cardInfo.cardDesign,
     slug: cardInfo.slug,
     id: cardInfo.id,
-    logoUrl: `${apiPaths.serverUrl}${cardInfo.cardDesign?.logo}`,
-    backgroundUrl: `${apiPaths.serverUrl}${cardInfo.cardDesign?.backgroundImage}`,
+    logoUrl: cardInfo.cardDesign?.logo
+      ? `${apiPaths.serverUrl}${cardInfo.cardDesign?.logo}`
+      : undefined,
+    backgroundUrl: cardInfo.cardDesign?.backgroundImage
+      ? `${apiPaths.serverUrl}${cardInfo.cardDesign?.backgroundImage}`
+      : undefined,
   };
 
   const socialsValues = Object.fromEntries(
