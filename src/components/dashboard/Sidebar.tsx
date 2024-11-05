@@ -7,8 +7,10 @@ import {
   Profile2User,
   ProfileCircle,
 } from 'iconsax-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import cardaxeLogo from '../../../public/cardaxe_logo.png';
 import SidebarElements from './SidebarElements';
 
 export type SidebarNavElementsProps = {
@@ -116,8 +118,11 @@ const SIDEBAR_NAV_ELEMENTS: SidebarNavElementsProps[] = [
 const Sidebar = () => {
   return (
     <ul className="mx-auto flex w-full max-w-sm justify-between lg:max-w-none lg:flex-col lg:justify-normal lg:gap-y-2">
-      <Link href={'/'} className="hidden h-14 lg:block">
+      {/* <Link href={'/'} className="hidden h-14 lg:block">
         <h1 className="text-xl font-extrabold lg:text-3xl">cardaxe.</h1>
+      </Link> */}
+      <Link href={'/'} className="relative hidden h-8 w-28 lg:block">
+        <Image src={cardaxeLogo} alt="logo" sizes="" fill objectFit="cover" />
       </Link>
       {SIDEBAR_NAV_ELEMENTS.map((item) => (
         <SidebarElements item={item} key={item.id} />
