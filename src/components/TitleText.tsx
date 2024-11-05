@@ -1,8 +1,10 @@
 import { cn } from '@/lib/utils';
 import { NotificationBing, Setting } from 'iconsax-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import cardaxeLogo from '../../public/cardaxe_logo.png';
 
 type TitleTextProps = {
   isSideBarComp?: boolean;
@@ -28,8 +30,8 @@ const TitleText = ({ isSideBarComp }: TitleTextProps) => {
       )}
     >
       <div className="mx-auto flex h-14 w-full max-w-sm items-center justify-between max-sm:px-4 lg:max-w-none">
-        <Link href={'/'} className="">
-          <h1 className={cn('text-xl font-extrabold lg:text-3xl')}>cardaxe.</h1>
+        <Link href={'/'} className="relative h-8 w-28">
+          <Image src={cardaxeLogo} alt="logo" sizes="" fill objectFit="cover" />
         </Link>
         {isSideBarComp && (
           <div className="flex items-center gap-4">

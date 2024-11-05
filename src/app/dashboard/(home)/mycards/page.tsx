@@ -86,7 +86,9 @@ const MyCardsPage = () => {
                       logoUrl: card.cardDesign.logo
                         ? `${apiPaths.serverUrl}${card.cardDesign.logo}`
                         : undefined,
-                      backgroundUrl: `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`,
+                      backgroundUrl: card.cardDesign.backgroundImage
+                        ? `${apiPaths.serverUrl}${card.cardDesign.backgroundImage}`
+                        : undefined,
                     }}
                   />
                 </div>

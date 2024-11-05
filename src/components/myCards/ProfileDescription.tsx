@@ -233,7 +233,7 @@ const ProfileDescription = ({
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         className={`flex items-center gap-2 lg:hidden ${userProfile && userProfile.username !== user?.username ? 'justify-between' : 'justify-start'}`}
       >
         {userProfile &&
@@ -285,7 +285,7 @@ const ProfileDescription = ({
         ) : (
           <></>
         )}
-      </div>
+      </div> */}
       <div>
         <Description text={values?.bio} />
       </div>
